@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="ask@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="ask">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bkxt"/>
+    <schema id="4" parent="1" name="blog"/>
+    <schema id="5" parent="1" name="book"/>
+    <schema id="6" parent="1" name="catchbest"/>
+    <schema id="7" parent="1" name="chatrobot"/>
+    <schema id="8" parent="1" name="dblog"/>
+    <schema id="9" parent="1" name="effective+mysql之sql语句最优化"/>
+    <schema id="10" parent="1" name="employees"/>
+    <schema id="11" parent="1" name="forest_blog"/>
+    <schema id="12" parent="1" name="hahu"/>
+    <schema id="13" parent="1" name="hrm_db"/>
+    <schema id="14" parent="1" name="icloud"/>
+    <schema id="15" parent="1" name="information_schema"/>
+    <schema id="16" parent="1" name="javaweb"/>
+    <schema id="17" parent="1" name="jd"/>
+    <schema id="18" parent="1" name="jeesite"/>
+    <schema id="19" parent="1" name="library"/>
+    <schema id="20" parent="1" name="miaosha"/>
+    <schema id="21" parent="1" name="micro_message"/>
+    <schema id="22" parent="1" name="mysql"/>
+    <schema id="23" parent="1" name="o2odb"/>
+    <schema id="24" parent="1" name="performance_schema"/>
+    <schema id="25" parent="1" name="qingcailuobo"/>
+    <schema id="26" parent="1" name="ry"/>
+    <schema id="27" parent="1" name="sakila"/>
+    <schema id="28" parent="1" name="sampledb"/>
+    <schema id="29" parent="1" name="seckill"/>
+    <schema id="30" parent="1" name="spring"/>
+    <schema id="31" parent="1" name="springbootdemo"/>
+    <schema id="32" parent="1" name="ssm"/>
+    <schema id="33" parent="1" name="ssm_crud"/>
+    <schema id="34" parent="1" name="sys"/>
+    <schema id="35" parent="1" name="test"/>
+    <schema id="36" parent="1" name="wenda"/>
+    <schema id="37" parent="1" name="world"/>
+    <table id="38" parent="2" name="user"/>
+    <column id="39" parent="38" name="id">
+      <Position>1</Position>
+      <Comment>用户ID</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="40" parent="38" name="email">
+      <Position>2</Position>
+      <Comment>用户邮箱</Comment>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="41" parent="38" name="password">
+      <Position>3</Position>
+      <Comment>用户密码</Comment>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="42" parent="38" name="username">
+      <Position>4</Position>
+      <Comment>用户昵称</Comment>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="43" parent="38" name="role">
+      <Position>5</Position>
+      <Comment>用户身份</Comment>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="44" parent="38" name="status">
+      <Position>6</Position>
+      <Comment>用户状态</Comment>
+      <DataType>int(1)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="45" parent="38" name="regTime">
+      <Position>7</Position>
+      <Comment>注册时间</Comment>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="46" parent="38" name="regIp">
+      <Position>8</Position>
+      <Comment>注册IP</Comment>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="47" parent="38" name="email">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="48" parent="38" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="49" parent="38" name="email">
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>email</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>
