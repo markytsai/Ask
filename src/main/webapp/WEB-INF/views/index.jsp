@@ -46,7 +46,7 @@
         <form class="navbar-form navbar-right" role="search">
             <div class="form-group">
                 <label for="keyword" class="sr-only">关键字</label>
-                <input type="text" id="keyword" class="form-control" placeholder="输入关键字">
+                <input type="text" id="keyword" class="form-control" placeholder="输入关键字" />
             </div>
             <button type="submit" class="btn btn-default">搜索</button>
         </form>
