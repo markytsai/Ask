@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为QuestionDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.QuestionDao">
+
+    <resultMap id="QuestionList" type="com.ilsxh.entity.Question">
+        <id property="questionId" column="question_id"/>
+        <result property="questionTitle" column="question_title"/>
+        <result property="questionContent" column="question_content"/>
+        <result property="followedCount" column="followed_count"/>
+        <result property="scannedCount" column="scanned_count"/>
+        <result property="createTime" column="create_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="answerCount" column="answer_count"/>
+        <!--<association property="user" javaType="com.ilsxh.entity.User">-->
+            <!--<id property="userId" column="user_id"/>-->
+            <!--<result property="username" column="username"/>-->
+
+        <!--</association>-->
+    </resultMap>
+
+    <select id="selectFollowingQuestionByUserId" parameterType="Integer" resultMap="QuestionList">
+
+        SELECT
+            q.question_id,
+            q.question_title,
+            q.question_content,
+            q.followed_count,
+            q.scanned_count,
+            q.create_time,
+            q.user_id,
+            q.answer_count
+        FROM
+            question AS q
+            INNER JOIN user_question_mid AS qum ON qum.question_id = q.question_id
+        WHERE
+            qum.user_id = #{userId}
+    </select>
+
+
+</mapper>
+

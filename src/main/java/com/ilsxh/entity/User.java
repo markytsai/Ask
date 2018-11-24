@@ -2,6 +2,8 @@ package com.ilsxh.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class User {
     /**
@@ -95,6 +97,8 @@ public class User {
      *
      */
     private Long joinTime;
+
+    private List<Question> followingQustionList;
 
     public Integer getUserId() {
         return userId;

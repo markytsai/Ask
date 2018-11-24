@@ -1,14 +1,17 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.service.UserService;
 import com.ilsxh.util.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @Controller
 @RequestMapping
@@ -17,37 +20,21 @@ public class UserController {
     private static final Integer LOGIN_SUCCESS = 1;
     private static final Integer LOGIN_FAILURE = 0;
 
-//    @RequestMapping(value = "/test", method = RequestMethod.GET)
-//    public String test() {
-//        return "test";
-//    }
 
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/toLogin")
     @ResponseBody
-    public Response login(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public Response login(@RequestParam("email") String email, @RequestParam("password") String password,
+                          HttpServletRequest request, HttpServletResponse response) {
 
-        Response response = new Response();
-        if ("admin@qq.com".equals(email) && "admin".equals(password)) {
-            response.setState(LOGIN_SUCCESS);
-            response.setMessage("登陆成功");
+        Map<String, Object> userInfoMap = userService.login(email, password, response);
+
+        if (userInfoMap.get("errorInfo") == null) {
+            return new Response(LOGIN_SUCCESS, "", userInfoMap);
         } else {
-            response.setState(LOGIN_FAILURE);
-            response.setMessage("用户名或密码不对");
+            return new Response(LOGIN_FAILURE, userInfoMap.get("errorInfo").toString());
         }
-
-        return response;
     }
-
-    @RequestMapping("/test")
-    public String test(ModelMap map) {
-        map.put("thText", "设置文本内容");
-        map.put("thUText", "设置文本内容");
-        map.put("thValue", "设置当前元素的value值");
-        map.put("thEach", Arrays.asList("列表", "遍历列表"));
-        map.put("thIf", "msg is not null");
-
-        return "test";
-    }
-
 }

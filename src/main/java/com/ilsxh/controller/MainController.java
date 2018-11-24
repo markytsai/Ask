@@ -22,9 +22,13 @@ public class MainController {
         return new ModelAndView("login", "", null);
     }
 
+    /**
+     * 进入首页，问题关注模块
+     * @return
+     */
     @RequestMapping(value = {"index"}, method = RequestMethod.GET)
     public String index() {
-        return "redirect:/focus";
+        return "redirect:/following";
 //        return new ModelAndView("index", "", null);
     }
 

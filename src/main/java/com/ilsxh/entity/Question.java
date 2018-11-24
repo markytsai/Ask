@@ -26,7 +26,7 @@ public class Question {
 	/**
 	 * 浏览次数
 	 */
-	private Integer scanedCount;
+	private Integer scannedCount;
 	/**
 	 * 创建时间
 	 */
@@ -48,16 +48,6 @@ public class Question {
 
 
 	public Question() {
-	}
-
-	public Question(Integer questionId, String questionTitle, String questionContent, Integer followedCount, Long createTime, Integer userId, Integer answerCount) {
-		this.questionId = questionId;
-		this.questionTitle = questionTitle;
-		this.questionContent = questionContent;
-		this.followedCount = followedCount;
-		this.createTime = createTime;
-		this.userId = userId;
-		this.answerCount = answerCount;
 	}
 
 	public Integer getQuestionId() {
@@ -93,11 +83,11 @@ public class Question {
 	}
 
 	public Integer getScanedCount() {
-		return scanedCount;
+		return scannedCount;
 	}
 
-	public void setScanedCount(Integer scanedCount) {
-		this.scanedCount = scanedCount;
+	public void setScanedCount(Integer scannedCount) {
+		this.scannedCount = scannedCount;
 	}
 
 	public Long getCreateTime() {
