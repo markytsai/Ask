@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @date
  */
 @Controller
+@RequestMapping
 public class MainController {
 
     /**
@@ -24,6 +25,7 @@ public class MainController {
 
     /**
      * 进入首页，问题关注模块
+     *
      * @return
      */
     @RequestMapping(value = {"index"}, method = RequestMethod.GET)
@@ -32,5 +34,9 @@ public class MainController {
 //        return new ModelAndView("index", "", null);
     }
 
+    @RequestMapping(value = {"register"}, method = RequestMethod.GET)
+    public ModelAndView register() {
+        return new ModelAndView("register", "", null);
+    }
 
 }

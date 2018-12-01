@@ -24,5 +24,17 @@
 
     </select>
 
+    <insert id="regiterNewUser">
+        insert into user(username, email, password) values(#{username}, #{email}, #{password});
+        <selectKey keyColumn="user_id" resultType="Integer" keyProperty="userId" order="AFTER">
+            SELECT user_id
+        </selectKey>
+    </insert>
+
+    <select id="selectUserByEmail" resultType="com.ilsxh.entity.User">
+        select * from user
+        where email = #{email}
+    </select>
+
 </mapper>
 
