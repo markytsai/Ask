@@ -2,8 +2,8 @@ package com.ilsxh.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.thymeleaf.util.ArrayUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -16,9 +16,9 @@ import java.util.List;
 
 import static com.ilsxh.service.UserService.COOKIE_NAME_TOKEN;
 
-public class Globalinterceptor implements HandlerInterceptor {
+public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-        private List<String> excludedUrls = Arrays.asList("/", "/login", "/register");
+    private List<String> excludedUrls = Arrays.asList("/login", "/toLogin", "/register", "/doRegister");
 //    private List<String> excludedUrls;
 
     @Autowired
@@ -40,8 +40,8 @@ public class Globalinterceptor implements HandlerInterceptor {
         // 是否有cookie
         Cookie[] cookies = request.getCookies();
         if (ArrayUtils.isEmpty(cookies)) {
-            response.sendRedirect("/view/login.html");
-//            request.getRequestDispatcher("login").forward(request, response);
+//            response.sendRedirect("login");
+            request.getRequestDispatcher("login").forward(request, response);
             return false;
         } else {
             for (Cookie cookie : cookies) {
@@ -65,6 +65,10 @@ public class Globalinterceptor implements HandlerInterceptor {
         if (StringUtils.isEmpty(userId)) {
             request.getRequestDispatcher("login").forward(request, response);
             return false;
+        } else {
+            if ("/".equals(requestUri)) {
+                request.getRequestDispatcher("/following").forward(request, response);
+            }
         }
         return true;
     }

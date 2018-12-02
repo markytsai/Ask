@@ -47,12 +47,11 @@
 
     <mvc:default-servlet-handler/>
 
-    <!--<mvc:interceptors>-->
-        <!--<bean class="com.ilsxh.interceptor.Globalinterceptor"/>-->
-        <!--<mvc:interceptor>-->
-            <!--&lt;!&ndash; 拦截所有URL中包含/user/的请求 &ndash;&gt;-->
-            <!--<mvc:mapping path="/*"/>-->
-            <!--<bean class="com.ilsxh.interceptor.Globalinterceptor"></bean>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有URL中包含/user/的请求 -->
+            <mvc:mapping path="/*"/>
+            <bean class="com.ilsxh.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
