@@ -20,7 +20,7 @@
         <!--</association>-->
     </resultMap>
 
-    <select id="selectFollowingQuestionByUserId" parameterType="Integer" resultMap="QuestionList">
+    <select id="selectFollowingQuestionByUserId" parameterType="String" resultMap="QuestionList">
 
         SELECT
             q.question_id,
@@ -33,7 +33,7 @@
             q.answer_count
         FROM
             question AS q
-            INNER JOIN user_question_mid AS qum ON qum.question_id = q.question_id
+            INNER JOIN mid_user_question AS qum ON qum.question_id = q.question_id
         WHERE
             qum.user_id = #{userId}
     </select>

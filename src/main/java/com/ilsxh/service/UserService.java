@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 @Service
@@ -42,7 +43,7 @@ public class UserService {
     public Map<String, Object> login(String email, String password, HttpServletResponse response) {
         Map<String, Object> loginUserMap = new HashMap<>();
 
-        Integer userId = userDao.selectUserIdByEmailAndPassword(email, password);
+        String userId = userDao.selectUserIdByEmailAndPassword(email, password);
         if (userId == null) {
             loginUserMap.put("loginError", "用户名或密码错误");
             return loginUserMap;
@@ -58,9 +59,10 @@ public class UserService {
     public Map<String, Object> registerNewUser(String email, String username, String password, HttpServletResponse response) {
         Map<String, Object> registerUserMap = new HashMap<>();
 
-        Integer userId = userDao.regiterNewUser(email, username, password);
-        if (userId == null) {
-            registerUserMap.put("errorInfo", "用户名或密码错误");
+        String userId = UUIDUtil.uuid();
+        Integer effectRow = userDao.regiterNewUser(userId, email, username, password);
+        if (effectRow == null) {
+            registerUserMap.put("loginError", "用户名或密码错误");
         }
         User user = userDao.selectUserByUserId(userId);
 //        addCookie(user, response);
@@ -90,7 +92,7 @@ public class UserService {
     }
 
 
-    private void autoGenCookie(HttpServletResponse response, Integer userId) {
+    private void autoGenCookie(HttpServletResponse response, String userId) {
         // generate cookies to backward browsers
         String loginToken = UUIDUtil.uuid();
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, loginToken);

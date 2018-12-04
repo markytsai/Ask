@@ -16,7 +16,7 @@ public interface QuestionDao {
      * @param userId
      * @return
      */
-    List<Question> selectFollowingQuestionByUserId(@Param("userId") Integer userId);
+    List<Question> selectFollowingQuestionByUserId(@Param("userId") String userId);
 
 
 }

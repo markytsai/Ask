@@ -34,7 +34,7 @@ public class Question {
 	/**
 	 * 问题提出者ID
 	 */
-	private Integer userId;
+	private String userId;
 	/**
 	 * 问题提出者
 	 */
@@ -98,11 +98,11 @@ public class Question {
 		this.createTime = createTime;
 	}
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

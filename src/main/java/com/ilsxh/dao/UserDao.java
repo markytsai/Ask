@@ -13,7 +13,7 @@ public interface UserDao {
      * @param userId
      * @return
      */
-    User selectUserByUserId(@Param("userId") Integer userId);
+    User selectUserByUserId(@Param("userId") String userId);
 
     /**
      *
@@ -21,13 +21,12 @@ public interface UserDao {
      * @param passworde
      * @return
      */
-    Integer selectUserIdByEmailAndPassword(@Param("email") String email, @Param("password") String passworde);
+    String selectUserIdByEmailAndPassword(@Param("email") String email, @Param("password") String passworde);
 
     User selectUserByEmail(@Param("email") String email);
 
-    String selectUsernameByUserId(@Param("userId") Integer userId);
+    String selectUsernameByUserId(@Param("userId") String userId);
 
-
-    Integer regiterNewUser(@Param("email") String email, @Param("username") String username, @Param("password") String password);
+    Integer regiterNewUser(@Param("userId")String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password);
 }
 

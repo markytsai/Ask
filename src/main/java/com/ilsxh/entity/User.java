@@ -9,7 +9,7 @@ public class User {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private String userId;
     /**
      * 用户登陆邮箱
      */
@@ -100,11 +100,11 @@ public class User {
 
     private List<Question> followingQustionList;
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

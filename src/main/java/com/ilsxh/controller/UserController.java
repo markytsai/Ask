@@ -35,7 +35,7 @@ public class UserController {
         if (userInfoMap.get("loginError") == null) {
             return new Response(LOGIN_SUCCESS, "", userInfoMap);
         } else {
-            return new Response(LOGIN_FAILURE, userInfoMap.get("errorInfo").toString());
+            return new Response(LOGIN_FAILURE, userInfoMap.get("loginError").toString());
         }
     }
 

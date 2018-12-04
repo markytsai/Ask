@@ -26,7 +26,7 @@ public class QuestionService {
     private UserDao userDao;
 
 
-    public List<Question> getFollowingQuestionByUserId(Integer userId) {
+    public List<Question> getFollowingQuestionByUserId(String userId) {
         List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId);
 
         for (Question question : questionList) {

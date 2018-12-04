@@ -4,19 +4,19 @@
 <!-- 设置为IUserDao接口方法提供sql语句配置 -->
 <mapper namespace="com.ilsxh.dao.UserDao">
 
-    <select id="selectUserByUserId" resultType="User" parameterType="int">
+    <select id="selectUserByUserId" resultType="User" parameterType="String">
         SELECT *
         FROM user
         WHERE user_id = #{userId}
     </select>
 
-    <select id="selectUserIdByEmailAndPassword" resultType="Integer">
+    <select id="selectUserIdByEmailAndPassword" resultType="String">
         SELECT user_id
         FROM user
         WHERE email = #{email} AND password = #{password}
     </select>
 
-    <select id="selectUsernameByUserId" parameterType="Integer" resultType="String">
+    <select id="selectUsernameByUserId" parameterType="String" resultType="String">
 
         SELECT username
         FROM user
@@ -25,10 +25,8 @@
     </select>
 
     <insert id="regiterNewUser">
-        insert into user(username, email, password) values(#{username}, #{email}, #{password});
-        <selectKey keyColumn="user_id" resultType="Integer" keyProperty="userId" order="AFTER">
-            SELECT user_id
-        </selectKey>
+        insert into user(user_id, username, email, password) values(#{userId}, #{username}, #{email}, #{password});
+
     </insert>
 
     <select id="selectUserByEmail" resultType="com.ilsxh.entity.User">

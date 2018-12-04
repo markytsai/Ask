@@ -6,6 +6,7 @@ import com.ilsxh.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.util.StringUtils;
 import redis.clients.jedis.Jedis;
@@ -42,16 +43,21 @@ public class QuestionController {
             }
         }
 
-        Integer userId = null;
+        String userId = null;
         if (!StringUtils.isEmpty(loginToken)) {
             Jedis jedis = jedisPool.getResource();
-            userId = Integer.parseInt(jedis.get(loginToken));
+            userId = jedis.get(loginToken);
             model.addAttribute("username", userDao.selectUsernameByUserId(userId));
         }
 
         List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
         model.addAttribute("questionList", questionList);
         return "index";
+    }
+
+    @RequestMapping("/question/{questionId}")
+    public String QuestionDetail(@PathVariable("question")String questionId) {
+        return "questionDetail";
     }
 }
 
