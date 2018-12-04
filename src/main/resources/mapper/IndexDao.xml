@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为QuestionDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.IndexDao">
+
+    <select id="selectProfileInfoByUserId" resultType="com.ilsxh.entity.User" parameterType="String">
+
+        select user_id,username,avatar_url,gender,simple_desc,position,industry,career,education,full_desc,
+        liked_count,collected_count,follow_count,followed_count,scanned_count
+    	from user where user_id = #{userId}
+    </select>
+
+
+</mapper>
+

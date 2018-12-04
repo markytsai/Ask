@@ -79,7 +79,7 @@
                 <div id="mainContainerRepleace">
                     <div class="card mb-4" th:each="question : ${questionList}">
                         <div class="card-block">
-                            <h4 class="card-title">
+                            <h3 class="card-title">
                                 <span>
                                     <!--<a href="/question/${question.questionId}"-->
                                     <!--title="${question.questionTitle}"></a>-->
@@ -88,7 +88,7 @@
                                    th:text="${question.questionTitle}">
                                     XXXXXXX
                                 </a>
-                            </h4>
+                            </h3>
                             <p class="card-text" th:text="${question.questionContent}">
                                 默认问题内容
                             </p>

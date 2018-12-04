@@ -60,6 +60,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         Jedis jedis = jedisPool.getResource();
         String userId = jedis.get(loginToken);
+        jedis.close();
 
         // 根据loginToken是否能从redis中获取userId
         if (StringUtils.isEmpty(userId)) {

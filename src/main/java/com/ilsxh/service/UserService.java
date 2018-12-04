@@ -105,4 +105,26 @@ public class UserService {
         jedis.set(loginToken, userId.toString(), "nx", "ex", EXPIRE_TIME);
         jedis.close();
     }
+
+    /**
+     * 根据cookie值来获取用户唯一ID
+     * @param request
+     * @return
+     */
+    public String getUserIdFromRedis(HttpServletRequest request) {
+        String loginToken = null;
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
+                loginToken = cookie.getValue();
+                break;
+            }
+        }
+
+        Jedis jedis = jedisPool.getResource();
+        String userId = jedis.get(loginToken);
+        jedis.close();
+
+        return userId;
+    }
 }
