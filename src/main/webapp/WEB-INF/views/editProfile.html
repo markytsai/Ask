@@ -2,90 +2,50 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>编辑信息</title>
-    <link rel="stylesheet" type="text/css" href="${base}/css/wangEditor.css">
-    <link rel="stylesheet" type="text/css" href="${base}/css/base.css">
-    <link rel="stylesheet" type="text/css" href="${base}/css/nav.css">
-    <link rel="stylesheet" type="text/css" href="${base}/css/mask.css">
-    <link rel="stylesheet" type="text/css" href="${base}/css/editProfile.css?asd">
+    <link rel="stylesheet" type="text/css" href="css/wangEditor.css"/>
+    <link rel="stylesheet" type="text/css" href="css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="css/nav.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mask.css"/>
+    <link rel="stylesheet" type="text/css" href="css/editProfile.css"/>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="css/navbar-static-top.css" rel="stylesheet"/>
 </head>
 <body>
-<!--navigator bar starts-->
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" th:href="@{/index}">沙问</a>
-        </div>
 
-        <form class="navbar-form navbar-right" role="search">
-            <div class="form-group">
-                <label for="keyword" class="sr-only">关键字</label>
-                <input type="text" id="keyword" class="form-control" placeholder="输入关键字"/>
-            </div>
-            <button type="submit" class="btn btn-default">搜索</button>
-        </form>
 
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a th:href="@{/following}">关注</a></li>
-                <li><a th:href="@{/recommend}">推荐</a></li>
-                <li><a th:href="@{/activity}">活动</a></li>
-
-            </ul>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true"
-                       aria-expanded="false"><span th:text="${username != null} ? ${username} : '我的'">我的</span><span
-                            class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/personInfo}">主页</a></li>
-                        <li><a th:href="@{/settings}">设置</a></li>
-                        <li><a th:href="@{/logout}">退出</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
-<!--navigator bar ends-->
+<div th:include="navigator :: nav"></div>
 
 <div class="main" style="width:960px;margin:0 auto;">
     <div class="edit-header"><span></span>&nbsp;编辑信息</div>
     <form action="editProfile" method="post">
         <div class="edit-title">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            用户名：<input type="text" name="username" th:value="${user.username}">
+            用户名：<input type="text" name="username" th:value="${user.username}"/>
         </div>
         <div class="edit-title">
-            一句话介绍：<input type="text" name="simpleDesc" th:value="${user.simpleDesc}">
+            一句话介绍：<input type="text" name="simpleDesc" th:value="${user.simpleDesc}"/>
         </div>
         <div class="edit-title">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            居住地：<input type="text" name="position" th:value="${user.position}">
+            居住地：<input type="text" name="position" th:value="${user.position}"/>
         </div>
         <div class="edit-title">
             &nbsp;&nbsp;&nbsp;
-            所在行业：<input type="text" name="industry" th:value="${user.industry}">
+            所在行业：<input type="text" name="industry" th:value="${user.industry}"/>
         </div>
         <div class="edit-title">
             &nbsp;&nbsp;&nbsp;
-            职业经历：<input type="text" name="career" th:value="${user.career}">
+            职业经历：<input type="text" name="career" th:value="${user.career}"/>
         </div>
         <div class="edit-title">
             &nbsp;&nbsp;&nbsp;
-            教育背景：<input type="text" name="education" th:value="${user.education}">
+            教育背景：<input type="text" name="education" th:value="${user.education}"/>
         </div>
         <div class="edit-title">
             &nbsp;&nbsp;&nbsp;
-            个人简介：<input type="text" name="fullDesc" th:value="${user.fullDesc}">
+            个人简介：<input type="text" name="fullDesc" th:value="${user.fullDesc}"/>
         </div>
         <div class="relative">
             <button type="submit" class="edit-submit">确认编辑</button>
@@ -96,11 +56,11 @@
     <div class="edit-header"><span></span>&nbsp;修改密码</div>
     <form action="updatePassword" method="post">
         <div class="edit-title">
-            <div class="text-danger">${error!}</div>
-            原密码：<input type="password" name="password">
+            <div class="text-danger" th:text="${error}"></div>
+            原密码：<input type="password" name="password" />
         </div>
         <div class="edit-title">
-            新密码：<input type="password" name="newpassword">
+            新密码：<input type="password" name="newpassword" />
         </div>
         <div class="relative">
             <button type="submit" class="edit-submit">确认修改</button>
@@ -112,7 +72,7 @@
     <form action="updateAvatarUrl" method="post" enctype="multipart/form-data">
         <div class="edit-title">
             <span class="text-danger"></span>
-            <input type="file" name="paramName">
+            <input type="file" name="paramName" />
         </div>
         <div class="relative">
             <button type="submit" class="edit-submit">确认更新</button>
@@ -122,8 +82,10 @@
 </div><!-- 主体结束 -->
 
 
-<#include "mask.html"/>
+<!--<#include "mask.html"/>-->
 
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="js/wangEditor.js"></script>
 <script type="text/javascript" src="js/mask.js"></script>

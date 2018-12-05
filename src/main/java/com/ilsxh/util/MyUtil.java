@@ -1,5 +1,10 @@
 package com.ilsxh.util;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -85,5 +90,22 @@ public class MyUtil {
 //        }
 //    }
 //
+
+    public static final String AVATAR_BASE_DIR = "E:\\IdeaProjects\\Ask\\src\\main\\webapp\\images\\userAvatar\\";
+
+    /**
+     * 需要建立全局异常捕捉器
+     *
+     * @param file
+     * @param avatarUrl
+     * @throws IOException
+     */
+    public static void saveToLocal(byte[] file, String avatarUrl) throws IOException {
+
+        FileUtils.writeByteArrayToFile(new File(avatarUrl), file);
+
+    }
+
+
 
 }

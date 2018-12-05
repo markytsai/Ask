@@ -6,11 +6,37 @@
 
     <select id="selectProfileInfoByUserId" resultType="com.ilsxh.entity.User" parameterType="String">
 
-        select user_id,username,avatar_url,gender,simple_desc,position,industry,career,education,full_desc,
+        select user_id as userId,username,avatar_url as avatarUrl,gender,simple_desc as simpleDesc,position,industry,career,education,full_desc,
         liked_count,collected_count,follow_count,followed_count,scanned_count
     	from user where user_id = #{userId}
     </select>
 
+    <update id="updateProfile" parameterType="com.ilsxh.entity.User">
+        update user
+        set username=#{username},
+        simple_desc=#{simpleDesc},
+        position=#{position},
+        industry=#{industry},
+        career=#{career},
+        education=#{education},
+        full_desc=#{fullDesc}
+        where user_id=#{userId}
+    </update>
+
+    <select id="selectUserCountByUserIdAndPassword" resultType="Integer">
+        select count(1) from user
+        where user_id = #{userId} and password = #{password}
+    </select>
+
+    <update id="updatePassword">
+        update user set password = #{newpassword}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateAvatarUrl">
+        update user set avatar_url = #{avatarUrl}
+        where user_id= #{userId}
+    </update>
 
 </mapper>
 

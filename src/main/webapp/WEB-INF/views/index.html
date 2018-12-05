@@ -52,9 +52,10 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li class="dropdown">
+                    <img id="profile-avatar" th:src="${user.avatarUrl}" />
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                        aria-haspopup="true"
-                       aria-expanded="false"><span th:text="${username != null} ? ${username} : '我的'">我的</span><span
+                       aria-expanded="false"><span th:text="${user.username != null} ? ${user.username} : '我的'">我的</span><span
                             class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">

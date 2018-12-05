@@ -4,6 +4,7 @@ import com.ilsxh.entity.User;
 import com.ilsxh.service.IndexService;
 import com.ilsxh.service.UserService;
 import com.ilsxh.util.MyConstant;
+import com.ilsxh.util.MyUtil;
 import com.ilsxh.util.QiniuyunUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class IndexController {
      * @param model
      * @return
      */
-    @RequestMapping("/setting")
+    @RequestMapping("/settings")
     public String setting(HttpServletRequest request, Model model) {
         String userId = userService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
@@ -46,19 +47,21 @@ public class IndexController {
     }
 
     /**
-     * 用户信息修改控制器
+     * 用户个人信息修改
      *
      * @param user
      * @param request
      * @return
      */
     @RequestMapping("/editProfile")
-    public String editProfile(User user, HttpServletRequest request) {
+    public String editProfile(User user, HttpServletRequest request, Model model) {
         String userId = userService.getUserIdFromRedis(request);
         user.setUserId(userId);
 
         indexService.updateProfile(user);
-        return "redirect:/profile/" + userId;
+        model.addAttribute("user", user);
+        return "editProfile";
+//        return "redirect:/profile/" + userId;
     }
 
     /**
@@ -91,10 +94,11 @@ public class IndexController {
         // 提取文件拓展名
         String fileNameExtension = fi.substring(fi.indexOf("."), fi.length());
         // 生成云端的真实文件名
-        String remoteFileName = UUID.randomUUID().toString() + fileNameExtension;
-        QiniuyunUtil.upload(paramName.getBytes(), remoteFileName);
+//        String remoteFileName = UUID.randomUUID().toString() + fileNameExtension;
+//        QiniuyunUtil.upload(paramName.getBytes(), remoteFileName);
         // 返回图片的URL地址
-        String avatarUrl = MyConstant.QINIU_IMAGE_URL + remoteFileName;
+        String avatarUrl = MyUtil.AVATAR_BASE_DIR + userId + ".jpg";
+        MyUtil.saveToLocal(paramName.getBytes(), avatarUrl);
 
         indexService.updateAvatarUrl(userId, avatarUrl);
         return "redirect:/profile/" + userId;

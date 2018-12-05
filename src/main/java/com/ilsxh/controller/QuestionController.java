@@ -48,6 +48,7 @@ public class QuestionController {
             Jedis jedis = jedisPool.getResource();
             userId = jedis.get(loginToken);
             jedis.close();
+            model.addAttribute("user", userDao.selectUserByUserId(userId));
             model.addAttribute("username", userDao.selectUsernameByUserId(userId));
         }
 

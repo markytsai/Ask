@@ -28,12 +28,12 @@ public class IndexService {
     public Map<String, String> updatePassword(String userId, String password, String newpassword) {
 
         Map<String, String> map = new HashMap<>();
-        int userCount = indexDao.selectUserCountByUserIdAndPassword(userId, password);
-        if (userCount < 1) {
+        Integer userCount = indexDao.selectUserCountByUserIdAndPassword(userId, password);
+        if (userCount == null) {
             map.put("error", "原密码不正确");
             return map;
         }
-        indexDao.updatePassword(userId, password);
+        indexDao.updatePassword(userId, newpassword);
         return map;
     }
 

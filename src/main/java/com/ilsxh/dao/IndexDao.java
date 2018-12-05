@@ -17,7 +17,7 @@ public interface IndexDao {
      * @param password
      * @return
      */
-    int selectUserCountByUserIdAndPassword(@Param("userId") String userId, @Param("password") String password);
+    Integer selectUserCountByUserIdAndPassword(@Param("userId") String userId, @Param("password") String password);
 
     /**
      * 更新用户头像
