@@ -29,7 +29,7 @@
             q.followed_count,
             q.scanned_count,
             q.create_time,
-            q.user_id,
+            qum.user_id,
             q.answer_count
         FROM
             question AS q
@@ -39,5 +39,34 @@
     </select>
 
 
+    <select id="selectAnswersByQuestionId" resultType="com.ilsxh.entity.Answer">
+
+        select answer_id, answer_content, liked_count, disliked_count, create_time, user_id
+        from answer
+        where question_id = #{questionId}
+    </select>
+
+    <select id="selectQuestionByQuestionId" resultType="com.ilsxh.entity.Question">
+
+        select question_id, question_title, question_content, followed_count, scanned_count, answer_count, create_time, user_id
+        from question
+        where question_id = #{questionId}
+    </select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

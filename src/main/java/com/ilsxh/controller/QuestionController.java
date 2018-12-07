@@ -1,6 +1,7 @@
 package com.ilsxh.controller;
 
 import com.ilsxh.dao.UserDao;
+import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import java.util.List;
 import static com.ilsxh.service.UserService.COOKIE_NAME_TOKEN;
 
 @Controller
-@RequestMapping
 public class QuestionController {
 
     @Autowired
@@ -58,7 +58,13 @@ public class QuestionController {
     }
 
     @RequestMapping("/question/{questionId}")
-    public String QuestionDetail(@PathVariable("question")String questionId) {
+    public String QuestionDetail(@PathVariable("questionId") String questionId, Model model) {
+
+        List<Answer> answerList = questionService.getAnswersByQuestionId(questionId);
+        Question question = questionService.getQuestionByQuestionid(questionId);
+
+        model.addAttribute("answerList", answerList);
+        model.addAttribute("questionDetail", question);
         return "questionDetail";
     }
 }

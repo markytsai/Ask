@@ -1,5 +1,6 @@
 package com.ilsxh.dao;
 
+import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
@@ -17,6 +18,10 @@ public interface QuestionDao {
      * @return
      */
     List<Question> selectFollowingQuestionByUserId(@Param("userId") String userId);
+
+    List<Answer> selectAnswersByQuestionId(@Param("questionId") String questionId);
+
+    Question selectQuestionByQuestionId(@Param("questionId") String questionId);
 
 
 }

@@ -45,7 +45,7 @@
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/following}">关注</a></li>
                 <li><a th:href="@{/recommend}">推荐</a></li>
-                <li><a th:href="@{/activity}">活动</a></li>
+                <li><a th:href="@{/notification}">消息</a></li>
 
             </ul>
             <ul class="nav navbar-nav">
@@ -80,7 +80,7 @@
                                 th:src="${userModel.user.avatar} == null
 										? '/images/avatar-defualt.jpg'
 										: ${userModel.user.avatar}"
-                                class="blog-avatar blog-avatar-230" />
+                                class="blog-avatar blog-avatar-230"/>
 						</a>
 						</span>
                 </div>
@@ -103,7 +103,8 @@
                                 th:value="*{username}" readonly="readonly">
 
                         </div>
-        git                 <div class="form-group">
+                        git
+                        <div class="form-group">
                             <label for="email" class="col-form-label">邮箱</label> <input
                                 type="email" class="form-control" id="email" name="email"
                                 th:value="*{email}" maxlength="50" placeholder="请输入邮箱">
@@ -147,9 +148,11 @@
             <div class="modal-body" id="avatarFormContainer"></div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal"
-                        id="submitEditAvatar">提交</button>
+                        id="submitEditAvatar">提交
+                </button>
                 <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close</button>
+                        data-dismiss="modal">Close
+                </button>
             </div>
         </div>
     </div>

@@ -10,12 +10,13 @@
 
     <title>Static Top Navbar Example for Bootstrap</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
 
-    <!-- Custom styles for this template -->
-    <link href="css/navbar-static-top.css" rel="stylesheet"/>
-
+    <!--<style>-->
+        <!--@import "/css/navbar-static-top.css";-->
+        <!--@import "/css/bootstrap.min.css";-->
+    <!--</style>-->
 
 </head>
 
@@ -33,7 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" th:href="@{/index}">沙问</a>
+                <a class="navbar-brand" th:href="@{/index}">沙雕问答</a>
             </div>
 
             <form class="navbar-form navbar-right" role="search">
@@ -48,28 +49,48 @@
                 <ul class="nav navbar-nav">
                     <li><a th:href="@{/following}">关注</a></li>
                     <li><a th:href="@{/recommend}">推荐</a></li>
-                    <li><a th:href="@{/activity}">活动</a></li>
+                    <li><a th:href="@{/notification}">消息</a></li>
 
                 </ul>
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true"
-                           aria-expanded="false"><span th:text="${username != null} ? ${username} : '我的'">我的</span><span
-                                class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a th:href="@{/personInfo}">主页</a></li>
-                            <li><a th:href="@{/settings}">设置</a></li>
-                            <li><a th:href="@{/logout}">退出</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <div class="nav-profile">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false"><span
+                                    th:text="${username != null} ? ${username} : '我的'">我的</span><span
+                                    class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/personInfo}">主页</a></li>
+                                <li><a th:href="@{/settings}">设置</a></li>
+                                <li><a th:href="@{/logout}">退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
 </div>
 
+<!--<script>-->
+
+
+    <!--$(function () {-->
+
+        <!--//下拉菜单处理-->
+        <!--var profile = $(".nav-profile");-->
+        <!--var downMenu = $(".dropdown-menu");-->
+
+        <!--profile.mouseover(function () {-->
+            <!--downMenu.show();-->
+        <!--}).mouseout(function () {-->
+            <!--downMenu.hide();-->
+        <!--});-->
+    <!--});-->
+
+<!--</script>-->
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </body>

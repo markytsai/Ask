@@ -17,6 +17,11 @@ public class Answer {
 	 */
 	private Integer likedCount;
 	/**
+	 * 被反对次数
+	 */
+	private Integer dislikedCount;
+
+	/**
 	 * 回答时间
 	 */
 	private Long createTime;
@@ -27,7 +32,7 @@ public class Answer {
 	/**
 	 * 回答用户
 	 */
-	private Integer userId;
+	private String userId;
 	/**
 	 * 回答的问题实体
 	 */
@@ -37,13 +42,83 @@ public class Answer {
 	 */
 	private User user;
 
-	private String likeState;
 	/**
 	 * 回答的评论个数
 	 */
-	private Integer commentCount;
+//	private Integer commentCount;
 
 //	private List<AnswerComment> answerCommentList;
 
 
+	public Integer getAnswerId() {
+		return answerId;
+	}
+
+	public void setAnswerId(Integer answerId) {
+		this.answerId = answerId;
+	}
+
+	public String getAnswerContent() {
+		return answerContent;
+	}
+
+	public void setAnswerContent(String answerContent) {
+		this.answerContent = answerContent;
+	}
+
+	public Integer getLikedCount() {
+		return likedCount;
+	}
+
+	public void setLikedCount(Integer likedCount) {
+		this.likedCount = likedCount;
+	}
+
+	public Integer getDislikedCount() {
+		return dislikedCount;
+	}
+
+	public void setDislikedCount(Integer dislikedCount) {
+		this.dislikedCount = dislikedCount;
+	}
+
+	public Long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Integer questionId) {
+		this.questionId = questionId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

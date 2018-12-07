@@ -2,10 +2,12 @@ package com.ilsxh.service;
 
 import com.ilsxh.dao.QuestionDao;
 import com.ilsxh.dao.UserDao;
+import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -37,6 +39,20 @@ public class QuestionService {
         }
         return questionList;
 
+    }
+
+    public List<Answer> getAnswersByQuestionId(String questionId) {
+
+        List<Answer> answerList = questionDao.selectAnswersByQuestionId(questionId);
+        for (Answer answer : answerList) {
+            answer.setUser(userDao.selectUserByUserId(answer.getUserId()));
+        }
+
+        return answerList;
+    }
+
+    public Question getQuestionByQuestionid(String questionID) {
+        return questionDao.selectQuestionByQuestionId(questionID);
     }
 
 }
