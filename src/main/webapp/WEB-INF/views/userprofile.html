@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -11,150 +11,197 @@
 
     <title>Static Top Navbar Example for Bootstrap</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
 
-    <!-- Custom styles for this template -->
-    <link href="css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/nav2.css?asd"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile.css"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile-follow-tab.css"/>
+
 </head>
 <body>
 
 <!-- Static navbar -->
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" th:href="@{/index}">沙问</a>
+<div th:include="navigator :: nav"/>
+
+
+<div class="profile-wrap">
+    <div class="profile-header">
+        <div class="profile-bgc">
         </div>
-
-        <form class="navbar-form navbar-right" role="search">
-            <div class="form-group">
-                <label for="keyword" class="sr-only">关键字</label>
-                <input type="text" id="keyword" class="form-control" placeholder="输入关键字"/>
+        <div class="profile-info">
+            <div class="profile-avatar">
+                <img src="${user.avatarUrl}"/>
             </div>
-            <button type="submit" class="btn btn-default">搜索</button>
-        </form>
 
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a th:href="@{/following}">关注</a></li>
-                <li><a th:href="@{/recommend}">推荐</a></li>
-                <li><a th:href="@{/notification}">消息</a></li>
+            <div class="two-button" id="isSelf" data-id="${isLoginUser}">
+                <div th:if="${isLoginUser} eq 'true'">
+                    <a th:href="@{/settings}" class="follow-button">编辑信息</a>
+                </div>
+                <div th:if="${isLoginUser} eq 'false'">
+                    <button id="followUserButton" class="follow-button">关注</button>
+                    <button id="unfollowUserButton" class="unfollow-button">取消关注</button>
+                </div>
+            </div>
 
-            </ul>
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-haspopup="true"
-                       aria-expanded="false"><span th:text="${username != null} ? ${username} : '我的'">我的</span><span
-                            class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/personInfo}">主页</a></li>
-                        <li><a th:href="@{/settings}">设置</a></li>
-                        <li><a th:href="@{/logout}">退出</a></li>
-                    </ul>
+            <div class="info-title">
+                <span id="userId" data-id="${user.userId}" th:text="${user.username}"></span>
+                <span th:text="${user.simpleDesc}"></span>
+            </div>
+            <div class="info-item">
+                <span class="item-key">居住地</span>
+                <div class="item-value" th:text="${user.position}"></div>
+            </div>
+            <div class="info-item">
+                <span class="item-key">所在行业</span>
+                <div class="item-value" th:text="${user.industry}"></div>
+            </div>
+            <div class="info-item">
+                <span class="item-key">职业经历</span>
+                <div class="item-value" th:text="${user.career}"></div>
+            </div>
+            <div class="info-item">
+                <span class="item-key">教育背景</span>
+                <div class="item-value" th:text="${user.education}"></div>
+            </div>
+            <div class="info-item">
+                <span class="item-key">个人简介</span>
+                <div class="item-value" th:text="${user.fullDesc}"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="content" id="content">
+            <ul class="tab-header">
+                <li><a th:href="@{'/profile/' + ${user.userId}}" id="tab-header-answer" class="tab-header-active">回答</a>
                 </li>
+                <li><a th:href="@{'/profileQuestion/' + ${user.userId}}" id="tab-header-question">提问</a></li>
+                <li><a th:href="@{'/profileCollection/' + ${user.userId}}" id="tab-header-collection">收藏</a></li>
+                <li><a th:href="@{'/profileFollowPeople/' + ${user.userId}}" id="tab-header-follow">关注</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
 
+            <div class="answer-tab">
+                <div class="tab-title">
+                    <h3>他的回答</h3>
+                </div>
 
-<!-- Page Content -->
-<div class="container blog-content-container">
-    <div class="row">
-        <!-- 左侧栏目 -->
-        <div class="col-md-4 col-xl-3">
-            <div class="row">
-                <div class="col-md-12">
-						<span> <a class="blog-edit-avatar" data-toggle="modal"
-                                  data-target="#flipFlop" role="button"
-                                  data-th-attr="userName=${userModel.user.username}"> <img
-                                th:src="${userModel.user.avatar} == null
-										? '/images/avatar-defualt.jpg'
-										: ${userModel.user.avatar}"
-                                class="blog-avatar blog-avatar-230"/>
-						</a>
-						</span>
+                <div class="answer-list" id="answerList" th:each="answer : ${answerList}">
+                    <ul>
+                        <li>
+                            <div class="answer-title"><a
+                                    th:href="@{'/question/' + ${answer.question.questionId}}"
+                                    th:text="${answer.question.questionTitle}"></a>
+                            </div>
+                            <div class="answer-meta">
+                                <img src="${answer.user.avatarUrl}" />
+                                <h4 th:text="${answer.user.username}"></h4>
+                                <h5 th:text="${answer.user.simpleDesc}"></h5>
+                                <h6 th:text="'${answer.likedCount} ' + '人赞同了该回答'"></h6>
+                            </div>
+                            <div class="answer-content">
+                                <div th:text="${answer.answerContent}"></div>
+                                <!--<div><a href="#">发布于 ${answer.createTime?number_to_date}</a></div>-->
+                            </div>
+                            <div class="answer-action">
+                                <div class="votebar">
+                                    <button class="vote-up"><i></i><span th:text="${answer.likedCount}"></span></button>
+                                </div>
+                                <div class="other-action">
+                                    <a href="@{'/question/' + ${answer.question.questionId}"
+                                       class="comment"><i class="sprite-comment"></i> 查看评论</a>
+                                    <a href="@{'/question/' + ${answer.question.questionId}"
+                                       class="collect"><i class="sprite-collect"></i> 收藏</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!--<div class="pagination">-->
+                        <!--<div class="buttons">-->
+                            <!--<a class="pre-page" href="${base}/profile/${user.userId}?page=1">首页</a>-->
+                            <!--&lt;!&ndash; 上一页处理 &ndash;&gt;-->
+                            <!--<a class="pre-page" href="${base}/profile/${user.userId}?page=${pageBean.curPage-1}">上一页</a>-->
+                            <!--<span>上一页</span>-->
+
+                            <!--&lt;!&ndash; 中间页码 &ndash;&gt;-->
+                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+
+                            <!--&lt;!&ndash; 下一页处理 &ndash;&gt;-->
+                            <!--<a class="next-page"-->
+                               <!--href="${base}/profile/${user.userId}?page=${pageBean.curPage+1}">下一页</a>-->
+                            <!--<span>下一页</span>-->
+                            <!--<a class="next-page" href="${base}/profile/${user.userId}?page=${pageBean.allPage}">尾页</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
             </div>
-        </div>
-        <!-- 右侧栏目 -->
-        <div class="col-md-8 col-xl-9">
-            <!-- 个人设置 -->
-            <div class="card ">
-                <h5 class="card-header">
-                    <i class="fa fa-cog" aria-hidden="true"></i> 个人设置
-                </h5>
-                <div class="card-block">
-                    <form th:action="'/u/'+${userModel.user.username}+'/profile'"
-                          method="post" th:object="${userModel.user}" id="userForm">
-                        <input type="hidden" name="id" id="userId" th:value="*{id}">
-                        <div class="form-group ">
-                            <label for="username" class="col-form-label">账号</label> <input
-                                type="text" class="form-control" id="username" name="username"
-                                th:value="*{username}" readonly="readonly">
 
-                        </div>
-                        git
-                        <div class="form-group">
-                            <label for="email" class="col-form-label">邮箱</label> <input
-                                type="email" class="form-control" id="email" name="email"
-                                th:value="*{email}" maxlength="50" placeholder="请输入邮箱">
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-form-label">姓名</label> <input
-                                type="text" class="form-control" id="name" name="name"
-                                th:value="*{name}" maxlength="20"
-                                placeholder="请输入姓名，至少2个字符，至多20个">
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-form-label">密码</label> <input
-                                type="password" class="form-control" id="password"
-                                name="password" th:value="*{password}" maxlength="30"
-                                placeholder="请输入密码，至少3个字符，至多30个">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">保存</button>
-                        </div>
-                    </form>
+        </div>
+
+
+        <div class="sidebar">
+            <div class="profile-achieve">
+                <h3>个人成就</h3>
+                <div class="achieve-info">
+                    <p><i class="sprite-thumb"></i>&nbsp;&nbsp;&nbsp;获得<span> ${user.likedCount} </span>次赞同</p>
+                    <p>获得<span> ${user.collectedCount} </span>次收藏</p>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- /.row -->
-</div>
-<!-- /.container -->
-<!-- The modal -->
-<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog"
-     aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modalLabel">编辑头像</h4>
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
 
+            <div class="follow-info">
+                <div class="follow-people">
+                    <div class="wrap">
+                        <h4>
+                            <p>关注了</p>
+                            <p>${user.followCount}</p>
+                        </h4>
+                        <h4>
+                            <p>关注者</p>
+                            <p>${user.followedCount}</p>
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="follow-other" id="follow-other">
+                    <ul>
+                        <li>
+                            <a id="sidebar-following-topic" href="${base}/profileFollowTopic/${user.userId}">
+                                <span>关注的话题</span>
+                                <span>${user.followTopicCount}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="sidebar-following-question" href="${base}/profileFollowQuestion/${user.userId}">
+                                <span>关注的问题</span>
+                                <span>${user.followQuestionCount}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="sidebar-following-collection" href="${base}/profileFollowCollection/${user.userId}">
+                                <span>关注的收藏夹</span>
+                                <span>${user.followCollectionCount}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="modal-body" id="avatarFormContainer"></div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal"
-                        id="submitEditAvatar">提交
-                </button>
-                <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close
-                </button>
+
+            <div class="footer">
+                <a href="#">建议反馈</a>
+                <span> • </span>
+                <a href="#">联系我们</a>
+                <div></div>
+                <span>@ 2017 蛤乎</span>
             </div>
         </div>
+
+
     </div>
 </div>
 

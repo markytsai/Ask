@@ -127,4 +127,28 @@ public class UserService {
 
         return userId;
     }
+
+    /**
+     * 根据传来的参数和token里面的userId，判断是不是登录用户
+     * @param userId
+     * @param localUserId
+     * @return
+     */
+    public Map<String, Object> getUserProfile(String userId, String localUserId) {
+        Map<String, Object> map = new HashMap<>();
+        User user = userDao.selectUserByUserId(userId);
+
+        if (userId.equals(localUserId)) {
+            map.put("isLoginUser", "true");
+        } else {
+            map.put("isLoginUser", "false");
+        }
+
+        map.put("user", user);
+        return map;
+    }
+
+    public User getUserByUserId(String userId) {
+        return userDao.selectUserByUserId(userId);
+    }
 }

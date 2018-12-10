@@ -45,7 +45,7 @@ public class QuestionService {
 
         List<Answer> answerList = questionDao.selectAnswersByQuestionId(questionId);
         for (Answer answer : answerList) {
-            answer.setUser(userDao.selectUserByUserId(answer.getUserId()));
+            answer.setUser(userDao.selectUserByUserId(answer.getAnswerUserId()));
         }
 
         return answerList;

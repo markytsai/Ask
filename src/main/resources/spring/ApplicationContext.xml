@@ -59,7 +59,7 @@
         <constructor-arg index="2" value="${redis.port}"/>
         <constructor-arg index="3" value="${redis.timeout}"/>
         <!--Redis密码-->
-        <!--<constructor-arg index="4" value="${redis.password}" />-->
+        <constructor-arg index="4" value="${redis.password}" />
     </bean>
 
     <!-- 使用mybatis的接口代理开发模式(必须保证接口和对应的mybatis的xml名称相同，且在一个文件夹内) -->

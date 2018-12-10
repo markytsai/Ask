@@ -41,7 +41,7 @@
 
     <select id="selectAnswersByQuestionId" resultType="com.ilsxh.entity.Answer">
 
-        select answer_id, answer_content, liked_count, disliked_count, create_time, user_id
+        select answer_id, answer_content, liked_count, disliked_count, create_time, answer_user_id
         from answer
         where question_id = #{questionId}
     </select>

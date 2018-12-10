@@ -28,11 +28,11 @@ public class Answer {
 	/**
 	 * 回答对应的问题ID
 	 */
-	private Integer questionId;
+	private String questionId;
 	/**
 	 * 回答用户
 	 */
-	private String userId;
+	private String answerUserId;
 	/**
 	 * 回答的问题实体
 	 */
@@ -90,20 +90,20 @@ public class Answer {
 		this.createTime = createTime;
 	}
 
-	public Integer getQuestionId() {
+	public String getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(Integer questionId) {
+	public void setQuestionId(String questionId) {
 		this.questionId = questionId;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getAnswerUserId() {
+		return answerUserId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setAnswerUserId(String userId) {
+		this.answerUserId = userId;
 	}
 
 	public Question getQuestion() {

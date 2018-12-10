@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为AnswerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.AnswerDao">
+
+    <select id="getAnswersByUserId" resultType="Answer">
+        select answer_id, answer_content, liked_count, disliked_count, create_time, answer_user_id, question_id
+        from answer
+        where answer_user_id = #{userId}
+    </select>
+
+</mapper>
+

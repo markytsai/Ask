@@ -3,7 +3,10 @@ package com.ilsxh.controller;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.entity.User;
+import com.ilsxh.service.IndexService;
 import com.ilsxh.service.QuestionService;
+import com.ilsxh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,12 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private IndexService indexService;
 
     @Autowired
     private JedisPool jedisPool;
@@ -58,11 +67,15 @@ public class QuestionController {
     }
 
     @RequestMapping("/question/{questionId}")
-    public String QuestionDetail(@PathVariable("questionId") String questionId, Model model) {
+    public String QuestionDetail(@PathVariable("questionId") String questionId, HttpServletRequest request, Model model) {
+
+        String userId = userService.getUserIdFromRedis(request);
+        User user = indexService.getProfileInfo(userId);
 
         List<Answer> answerList = questionService.getAnswersByQuestionId(questionId);
         Question question = questionService.getQuestionByQuestionid(questionId);
 
+        model.addAttribute("user", user);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionDetail", question);
         return "questionDetail";
