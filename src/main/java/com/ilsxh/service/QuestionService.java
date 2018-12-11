@@ -38,7 +38,6 @@ public class QuestionService {
             question.setUser(user);
         }
         return questionList;
-
     }
 
     public List<Answer> getAnswersByQuestionId(String questionId) {
@@ -51,8 +50,30 @@ public class QuestionService {
         return answerList;
     }
 
+    public List<Question> getRaisedQuestionByUserId(String userId) {
+        List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId);
+
+        for (Question question : questionList) {
+            User user = new User();
+            user.setUserId(question.getUserId());
+            user.setUsername(userDao.selectUsernameByUserId(question.getUserId()));
+            question.setUser(user);
+        }
+        return questionList;
+    }
+
     public Question getQuestionByQuestionid(String questionID) {
         return questionDao.selectQuestionByQuestionId(questionID);
     }
 
+    public String hasUserFollowQuestion(String userId, String questionId) {
+
+        Integer ret = questionDao.hasUserFollowQuestion(userId, questionId);
+        if (ret != null) {
+            return "true";
+        } else {
+            return "false";
+        }
+
+    }
 }

@@ -1,7 +1,9 @@
 package com.ilsxh.controller;
 
 import com.ilsxh.entity.Answer;
+import com.ilsxh.entity.Question;
 import com.ilsxh.service.AnswerService;
+import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.UserService;
 import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class UserController {
 
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @RequestMapping(value = "/toLogin")
     @ResponseBody
@@ -71,6 +76,20 @@ public class UserController {
 
         model.addAllAttributes(map);
         return "userprofile";
+    }
+
+    @RequestMapping("/userProfileQuestion/{userId}")
+    public String getProfileQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
+        String localUserId = userService.getUserIdFromRedis(request);
+        // 获取用户信息
+        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+        // 获取问题列表
+
+        List<Question> questionList = questionService.getRaisedQuestionByUserId(userId);
+        map.put("questionList", questionList);
+
+        model.addAllAttributes(map);
+        return "userProfileQuestion";
     }
 
     @RequestMapping("/logout")

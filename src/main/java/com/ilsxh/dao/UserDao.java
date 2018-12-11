@@ -2,6 +2,7 @@ package com.ilsxh.dao;
 
 import com.ilsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -9,14 +10,12 @@ import org.apache.ibatis.annotations.Param;
 public interface UserDao {
 
     /**
-     *
      * @param userId
      * @return
      */
     User selectUserByUserId(@Param("userId") String userId);
 
     /**
-     *
      * @param email
      * @param passworde
      * @return
@@ -27,6 +26,8 @@ public interface UserDao {
 
     String selectUsernameByUserId(@Param("userId") String userId);
 
-    Integer regiterNewUser(@Param("userId")String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password);
+    Integer regiterNewUser(@Param("userId") String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password);
+
+    Integer followQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
 }
 

@@ -10,6 +10,10 @@
 
     <title>沙雕问答</title>
 
+
+    <!--<link href="@{${#httpServletRequest.getContextPath()} + + '/css/bootstrap.min.css'" rel="stylesheet"/>-->
+    <!--<link href="@{${#httpServletRequest.getContextPath()} + + '/css/avbar-static-top.css'" rel="stylesheet"/>-->
+
     <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
 </head>
@@ -34,18 +38,18 @@
                             </p>
 
                             <div class="card-text">
-                                <a href="/user/${question.userId}" th:href="@{'/user/' + ${question.userId}}"
+                                <a href="/userProfile/${question.userId}" th:href="@{'/userProfile/' + ${question.userId}}"
                                    class="card-link"
                                    th:text="${question.user.username}">waylau</a> 发表于2019年
 
-                                <i class="fa fa-eye" aria-hidden="true">浏览了<span
-                                        th:text="${question.scanedCount} == null ? 1000 : ${question.scanedCount}"></span>次</i>
+                                <i class="fa fa-eye" aria-hidden="true"> 浏览 <span
+                                        th:text="${question.scanedCount} == null ? 1000 : ${question.scanedCount}"></span>次 </i>
 
-                                <i class="fa fa-heart-o" aria-hidden="true">被关注<span
-                                        th:text="${question.followedCount}"></span>次</i>
+                                <i class="fa fa-heart-o" aria-hidden="true"> 被关注 <span
+                                        th:text="${question.followedCount}"></span></i>
 
-                                <i class="fa fa-comment-o" aria-hidden="true">共<span
-                                        th:text="${question.answerCount}"></span>个回答</i>
+                                <i class="fa fa-comment-o" aria-hidden="true">回答<span
+                                        th:text="${question.answerCount}"></span></i>
                             </div>
                             <hr color="#f8f8f8"/>
                         </div>

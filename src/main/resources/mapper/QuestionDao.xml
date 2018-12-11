@@ -14,8 +14,8 @@
         <result property="userId" column="user_id"/>
         <result property="answerCount" column="answer_count"/>
         <!--<association property="user" javaType="com.ilsxh.entity.User">-->
-            <!--<id property="userId" column="user_id"/>-->
-            <!--<result property="username" column="username"/>-->
+        <!--<id property="userId" column="user_id"/>-->
+        <!--<result property="username" column="username"/>-->
 
         <!--</association>-->
     </resultMap>
@@ -33,7 +33,7 @@
             q.answer_count
         FROM
             question AS q
-            INNER JOIN mid_user_question AS qum ON qum.question_id = q.question_id
+            INNER JOIN mid_user_follow_question AS qum ON qum.question_id = q.question_id
         WHERE
             qum.user_id = #{userId}
     </select>
@@ -52,6 +52,35 @@
         from question
         where question_id = #{questionId}
     </select>
+
+    <select id="selectRaisedQuestionByUserId" resultType="Question">
+          SELECT
+            question_id,
+            question_title,
+            question_content,
+            followed_count,
+            scanned_count,
+            create_time,
+            user_id,
+            answer_count
+        FROM
+            question
+        WHERE
+            user_id = #{userId}
+
+    </select>
+
+    <select id="hasUserFollowQuestion" resultType="Integer">
+        select count(1)
+        from mid_user_follow_question
+        where userId = #{user_id}
+        and  questionId = #{questionId}
+    </select>
+
+    <select id="hasUserFollowQuestion" resultType="Integer">
+        insert into mid_user_follow_question(user_id, question_id) values(#{userId}, #{questionId})
+    </select>
+
 </mapper>
 
 

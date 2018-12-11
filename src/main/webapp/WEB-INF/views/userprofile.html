@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -26,184 +26,192 @@
 <!-- Static navbar -->
 <div th:include="navigator :: nav"/>
 
-
-<div class="profile-wrap">
-    <div class="profile-header">
-        <div class="profile-bgc">
-        </div>
-        <div class="profile-info">
-            <div class="profile-avatar">
-                <img src="${user.avatarUrl}"/>
+<div class="container">
+    <div class="profile-wrap">
+        <div class="profile-header">
+            <div class="profile-bgc">
             </div>
-
-            <div class="two-button" id="isSelf" data-id="${isLoginUser}">
-                <div th:if="${isLoginUser} eq 'true'">
-                    <a th:href="@{/settings}" class="follow-button">编辑信息</a>
-                </div>
-                <div th:if="${isLoginUser} eq 'false'">
-                    <button id="followUserButton" class="follow-button">关注</button>
-                    <button id="unfollowUserButton" class="unfollow-button">取消关注</button>
-                </div>
-            </div>
-
-            <div class="info-title">
-                <span id="userId" data-id="${user.userId}" th:text="${user.username}"></span>
-                <span th:text="${user.simpleDesc}"></span>
-            </div>
-            <div class="info-item">
-                <span class="item-key">居住地</span>
-                <div class="item-value" th:text="${user.position}"></div>
-            </div>
-            <div class="info-item">
-                <span class="item-key">所在行业</span>
-                <div class="item-value" th:text="${user.industry}"></div>
-            </div>
-            <div class="info-item">
-                <span class="item-key">职业经历</span>
-                <div class="item-value" th:text="${user.career}"></div>
-            </div>
-            <div class="info-item">
-                <span class="item-key">教育背景</span>
-                <div class="item-value" th:text="${user.education}"></div>
-            </div>
-            <div class="info-item">
-                <span class="item-key">个人简介</span>
-                <div class="item-value" th:text="${user.fullDesc}"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="main">
-        <div class="content" id="content">
-            <ul class="tab-header">
-                <li><a th:href="@{'/profile/' + ${user.userId}}" id="tab-header-answer" class="tab-header-active">回答</a>
-                </li>
-                <li><a th:href="@{'/profileQuestion/' + ${user.userId}}" id="tab-header-question">提问</a></li>
-                <li><a th:href="@{'/profileCollection/' + ${user.userId}}" id="tab-header-collection">收藏</a></li>
-                <li><a th:href="@{'/profileFollowPeople/' + ${user.userId}}" id="tab-header-follow">关注</a></li>
-            </ul>
-
-            <div class="answer-tab">
-                <div class="tab-title">
-                    <h3>他的回答</h3>
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    <img src="${user.avatarUrl}"/>
                 </div>
 
-                <div class="answer-list" id="answerList" th:each="answer : ${answerList}">
-                    <ul>
-                        <li>
-                            <div class="answer-title"><a
-                                    th:href="@{'/question/' + ${answer.question.questionId}}"
-                                    th:text="${answer.question.questionTitle}"></a>
-                            </div>
-                            <div class="answer-meta">
-                                <img src="${answer.user.avatarUrl}" />
-                                <h4 th:text="${answer.user.username}"></h4>
-                                <h5 th:text="${answer.user.simpleDesc}"></h5>
-                                <h6 th:text="'${answer.likedCount} ' + '人赞同了该回答'"></h6>
-                            </div>
-                            <div class="answer-content">
-                                <div th:text="${answer.answerContent}"></div>
-                                <!--<div><a href="#">发布于 ${answer.createTime?number_to_date}</a></div>-->
-                            </div>
-                            <div class="answer-action">
-                                <div class="votebar">
-                                    <button class="vote-up"><i></i><span th:text="${answer.likedCount}"></span></button>
-                                </div>
-                                <div class="other-action">
-                                    <a href="@{'/question/' + ${answer.question.questionId}"
-                                       class="comment"><i class="sprite-comment"></i> 查看评论</a>
-                                    <a href="@{'/question/' + ${answer.question.questionId}"
-                                       class="collect"><i class="sprite-collect"></i> 收藏</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <!--<div class="pagination">-->
-                        <!--<div class="buttons">-->
-                            <!--<a class="pre-page" href="${base}/profile/${user.userId}?page=1">首页</a>-->
-                            <!--&lt;!&ndash; 上一页处理 &ndash;&gt;-->
-                            <!--<a class="pre-page" href="${base}/profile/${user.userId}?page=${pageBean.curPage-1}">上一页</a>-->
-                            <!--<span>上一页</span>-->
-
-                            <!--&lt;!&ndash; 中间页码 &ndash;&gt;-->
-                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
-                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
-                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
-                            <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
-
-                            <!--&lt;!&ndash; 下一页处理 &ndash;&gt;-->
-                            <!--<a class="next-page"-->
-                               <!--href="${base}/profile/${user.userId}?page=${pageBean.curPage+1}">下一页</a>-->
-                            <!--<span>下一页</span>-->
-                            <!--<a class="next-page" href="${base}/profile/${user.userId}?page=${pageBean.allPage}">尾页</a>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                </div>
-            </div>
-
-        </div>
-
-
-        <div class="sidebar">
-            <div class="profile-achieve">
-                <h3>个人成就</h3>
-                <div class="achieve-info">
-                    <p><i class="sprite-thumb"></i>&nbsp;&nbsp;&nbsp;获得<span> ${user.likedCount} </span>次赞同</p>
-                    <p>获得<span> ${user.collectedCount} </span>次收藏</p>
-                </div>
-            </div>
-
-            <div class="follow-info">
-                <div class="follow-people">
-                    <div class="wrap">
-                        <h4>
-                            <p>关注了</p>
-                            <p>${user.followCount}</p>
-                        </h4>
-                        <h4>
-                            <p>关注者</p>
-                            <p>${user.followedCount}</p>
-                        </h4>
+                <div class="two-button" id="isSelf" data-id="${isLoginUser}">
+                    <div th:if="${isLoginUser} eq 'true'">
+                        <a th:href="@{/settings}" class="btn btn-default">编辑信息</a>
+                    </div>
+                    <div th:if="${isLoginUser} eq 'false'">
+                        <button id="followUserButton" class="follow-button">关注</button>
+                        <button id="unfollowUserButton" class="unfollow-button">取消关注</button>
                     </div>
                 </div>
 
-                <div class="follow-other" id="follow-other">
-                    <ul>
-                        <li>
-                            <a id="sidebar-following-topic" href="${base}/profileFollowTopic/${user.userId}">
-                                <span>关注的话题</span>
-                                <span>${user.followTopicCount}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a id="sidebar-following-question" href="${base}/profileFollowQuestion/${user.userId}">
-                                <span>关注的问题</span>
-                                <span>${user.followQuestionCount}</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a id="sidebar-following-collection" href="${base}/profileFollowCollection/${user.userId}">
-                                <span>关注的收藏夹</span>
-                                <span>${user.followCollectionCount}</span>
-                            </a>
-                        </li>
-                    </ul>
+                <div class="info-title">
+                    <span id="userId" data-id="${user.userId}" th:text="${user.username}"></span>
+                    <span th:text="${user.simpleDesc}"></span>
                 </div>
-            </div>
-
-            <div class="footer">
-                <a href="#">建议反馈</a>
-                <span> • </span>
-                <a href="#">联系我们</a>
-                <div></div>
-                <span>@ 2017 蛤乎</span>
+                <div class="info-item">
+                    <span class="item-key">居住地</span>
+                    <div class="item-value" th:text="${user.position}"></div>
+                </div>
+                <div class="info-item">
+                    <span class="item-key">所在行业</span>
+                    <div class="item-value" th:text="${user.industry}"></div>
+                </div>
+                <div class="info-item">
+                    <span class="item-key">职业经历</span>
+                    <div class="item-value" th:text="${user.career}"></div>
+                </div>
+                <div class="info-item">
+                    <span class="item-key">教育背景</span>
+                    <div class="item-value" th:text="${user.education}"></div>
+                </div>
+                <div class="info-item">
+                    <span class="item-key">个人简介</span>
+                    <div class="item-value" th:text="${user.fullDesc}"></div>
+                </div>
             </div>
         </div>
 
+        <div class="main">
+            <div class="content" id="content">
+                <ul class="tab-header">
+                    <li><a th:href="@{'/profile/' + ${user.userId}}" id="tab-header-answer"
+                           class="tab-header-active">回答</a>
+                    </li>
+                    <li><a th:href="@{'/userProfileQuestion/' + ${user.userId}}" id="tab-header-question">提问</a></li>
+                    <li><a th:href="@{'/profileCollection/' + ${user.userId}}" id="tab-header-collection">收藏</a></li>
+                    <li><a th:href="@{'/profileFollowPeople/' + ${user.userId}}" id="tab-header-follow">关注</a></li>
+                </ul>
 
+                <div class="answer-tab">
+                    <div class="tab-title">
+                        <h3>他的回答</h3>
+                    </div>
+
+                    <div class="answer-list" id="answerList" th:each="answer : ${answerList}">
+                        <ul>
+                            <li>
+                                <div class="answer-title"><a
+                                        th:href="@{'/question/' + ${answer.question.questionId}}"
+                                        th:text="${answer.question.questionTitle}"></a>
+                                </div>
+                                <div class="answer-meta">
+                                    <img src="${answer.user.avatarUrl}"/>
+                                    <h4 th:text="${answer.user.username}"></h4>
+                                    <h5 th:text="${answer.user.simpleDesc}"></h5>
+                                    <h6 th:text="${answer.likedCount} + '人赞同了该回答'"></h6>
+                                </div>
+                                <div class="answer-content">
+                                    <div th:text="${answer.answerContent}"></div>
+                                    <!--<div><a href="#">发布于 ${answer.createTime?number_to_date}</a></div>-->
+                                </div>
+                                <div class="answer-action">
+                                    <div class="votebar">
+                                        <button class="vote-up"><i></i><span th:text="${answer.likedCount}"></span>
+                                        </button>
+                                    </div>
+                                    <div class="other-action">
+                                        <a href="@{'/question/' + ${answer.question.questionId}"
+                                           class="comment"><i class="sprite-comment"></i> 查看评论</a>
+                                        <a href="@{'/question/' + ${answer.question.questionId}"
+                                           class="collect"><i class="sprite-collect"></i> 收藏</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <!--<div class="pagination">-->
+                        <!--<div class="buttons">-->
+                        <!--<a class="pre-page" href="${base}/profile/${user.userId}?page=1">首页</a>-->
+                        <!--&lt;!&ndash; 上一页处理 &ndash;&gt;-->
+                        <!--<a class="pre-page" href="${base}/profile/${user.userId}?page=${pageBean.curPage-1}">上一页</a>-->
+                        <!--<span>上一页</span>-->
+
+                        <!--&lt;!&ndash; 中间页码 &ndash;&gt;-->
+                        <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+                        <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+                        <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+                        <!--<a href="${base}/profile/${user.userId}?page=${i}">${i}</a>-->
+
+                        <!--&lt;!&ndash; 下一页处理 &ndash;&gt;-->
+                        <!--<a class="next-page"-->
+                        <!--href="${base}/profile/${user.userId}?page=${pageBean.curPage+1}">下一页</a>-->
+                        <!--<span>下一页</span>-->
+                        <!--<a class="next-page" href="${base}/profile/${user.userId}?page=${pageBean.allPage}">尾页</a>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="sidebar">
+                <div class="profile-achieve">
+                    <h3>个人成就</h3>
+                    <div class="achieve-info">
+                        <p><i class="sprite-thumb"></i>&nbsp;&nbsp;&nbsp;获得<span th:text="${user.likedCount}"></span>次赞同
+                        </p>
+                        <p>获得<span th:text="${user.collectedCount}"></span>次收藏</p>
+                    </div>
+                </div>
+
+                <div class="follow-info">
+                    <div class="follow-people">
+                        <div class="wrap">
+                            <h4>
+                                <p>关注了</p>
+                                <p th:text="${user.followCount}"></p>
+                            </h4>
+                            <h4>
+                                <p>关注者</p>
+                                <p th:text="${user.followedCount}"></p>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="follow-other" id="follow-other">
+                        <ul>
+                            <li>
+                                <a id="sidebar-following-topic" href="${base}/profileFollowTopic/${user.userId}">
+                                    <span>关注的话题</span>
+                                    <span th:text="${user.followTopicCount}"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="sidebar-following-question" href="${base}/profileFollowQuestion/${user.userId}">
+                                    <span>关注的问题</span>
+                                    <span th:text="${user.followQuestionCount}"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="sidebar-following-collection"
+                                   href="${base}/profileFollowCollection/${user.userId}">
+                                    <span>关注的收藏夹</span>
+                                    <span th:text="${user.followCollectionCount}"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    <a href="#">建议反馈</a>
+                    <span> • </span>
+                    <a href="#">联系我们</a>
+                    <div></div>
+                    <span>@ 2017 蛤乎</span>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="http://localhost:8088/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
 
 
 </body>

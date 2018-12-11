@@ -14,6 +14,7 @@ public interface QuestionDao {
 
     /**
      * 查询登陆用户关注的问题列表
+     *
      * @param userId
      * @return
      */
@@ -22,6 +23,10 @@ public interface QuestionDao {
     List<Answer> selectAnswersByQuestionId(@Param("questionId") String questionId);
 
     Question selectQuestionByQuestionId(@Param("questionId") String questionId);
+
+    List<Question> selectRaisedQuestionByUserId(@Param("userId") String userId);
+
+    Integer hasUserFollowQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
 
 
 }

@@ -7,6 +7,7 @@ import com.ilsxh.entity.User;
 import com.ilsxh.service.IndexService;
 import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.UserService;
+import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,14 +72,28 @@ public class QuestionController {
 
         String userId = userService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
+        String hasFollowQuestion = questionService.hasUserFollowQuestion(userId, questionId);
 
         List<Answer> answerList = questionService.getAnswersByQuestionId(questionId);
         Question question = questionService.getQuestionByQuestionid(questionId);
 
         model.addAttribute("user", user);
+        model.addAttribute("hasFollowQuestion", hasFollowQuestion);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionDetail", question);
         return "questionDetail";
+    }
+
+    @RequestMapping("/questionFollow/{questionId}")
+    public void followQuestion(@PathVariable("questionId") String questionId, HttpServletRequest request) {
+
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        Integer effectRow = userService.followQuestion(localUserId, questionId);
+        if (effectRow != null) {
+            return;
+        }
+        return;
     }
 }
 

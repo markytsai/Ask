@@ -148,6 +148,10 @@ public class UserService {
         return map;
     }
 
+    public Integer followQuestion(String localUserId, String questionId) {
+        return userDao.followQuestion(localUserId, questionId);
+    }
+
     public User getUserByUserId(String userId) {
         return userDao.selectUserByUserId(userId);
     }

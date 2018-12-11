@@ -28,8 +28,21 @@
                                 <p class="card-text text-dark" th:text="${questionDetail.questionTitle}"/>
                             </h3>
                             <p class="card-text" th:text="${questionDetail.questionContent}"/>
-                            <input id="focusQuestion" class="btn btn-default" th:type="button" th:value="关注问题"
+
+                            <input id="focusQuestion" class="btn btn-default" th:type="button"
+                                   th:value="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"
                                    th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>
+
+                            <!--<div th:if="${hasFollowQuestion} eq 'true'" th:inline="true">-->
+                            <!--<input id="focusQuestion" class="btn btn-default" th:type="button" th:value="取消关注"-->
+                            <!--th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>-->
+                            <!--</div>-->
+                            <!--<div th:if="${hasFollowQuestion} eq 'false'">-->
+                            <!--<input id="focusQuestion" class="btn btn-default" th:type="button" th:value="关注问题"-->
+                            <!--th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>-->
+                            <!--</div>-->
+
+
                             <input id="wantAnswer" class="btn btn-default" th:type="button" th:value="我要回答"
                                    th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>
                             <input id="invite" class="btn btn-default" th:type="button" th:value="邀请回答"
@@ -39,17 +52,23 @@
                     <h5 class="page-header"></h5>
                     <div class="card mb-4" th:each="answer : ${answerList}">
                         <div class="card-block">
-                            <p class="card-title">
-                                <a href="'/user/' + ${answer.user.userId}" class="card-link"
-                                   th:text="${answer.user.simpleDesc}">
-                                </a>
-                            </p>
+                            <div class="card-title answer-meta">
+                                <div style="float:left; width:45px; height:45px;">
+                                    <img th:src="${answer.user.avatarUrl}" width="100%" height="100%"/>
+                                </div>
+                                <div style="margin-left: 55px">
+                                    <h4><a href="'/userProfile/' + ${answer.user.userId}"
+                                           th:href="@{'/userProfile/' + ${answer.user.userId}}"
+                                           class="card-link"
+                                           th:text="${answer.user.username}"></a></h4>
+                                    <h5 th:text="${answer.user.simpleDesc}"></h5>
+
+                                </div>
+                                <h6 th:text="${answer.likedCount} + '人赞同了该回答'"></h6>
+                            </div>
                             <p class="card-text" th:text="${answer.answerContent}"/>
 
                             <div class="card-text">
-                                <a href="'/user/' + ${answer.user.userId}" th:href="@{'/user/' + ${answer.user.userId}}"
-                                   class="card-link"
-                                   th:text="${answer.user.username}">waylau</a> 回答于2019年
                                 <i class="" aria-hidden="true">赞同<span th:text="${answer.likedCount}"/>次</i>
                                 <i class="" aria-hidden="true">反对<span th:text="${answer.dislikedCount}"/>次</i>
                             </div>
@@ -120,7 +139,6 @@
                         <!--class="list-group-item" th:text="*{title}"> </a>-->
                         <!--</ul>-->
                     </div>
-
                 </div>
             </div>
         </div>
@@ -138,6 +156,7 @@
 <script>
     var btnFocusQuestion = $("#focusQuestion");
     btnFocusQuestion.click(function () {
+        // 取消关注问题
         if (btnFocusQuestion.val() == '关注问题') {
             btnFocusQuestion.val('取消关注');
         } else {
@@ -145,6 +164,30 @@
         }
         btnFocusQuestion.blur();
     });
+
+    $(function () {
+
+        var userData = {
+            "email": $("#inputEmail").val(),
+            "password": $("#inputPassword").val()
+        }
+
+        $.ajax({
+            url: "/isFollowQuestion",
+            type: "get",
+            data: userData,
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+                    // localStorage.setItem("userId", response.data.loginUserInfo.userId);
+                    // localStorage.setItem("username", response.data.loginUserInfo.username);
+                    window.location.href = "/index";
+                } else {
+                    $("#login-password-error").text(response.message);
+                }
+            }
+        });
+    })
 </script>
 </body>
 </html>

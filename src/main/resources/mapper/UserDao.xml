@@ -5,7 +5,9 @@
 <mapper namespace="com.ilsxh.dao.UserDao">
 
     <select id="selectUserByUserId" resultType="User" parameterType="String">
-        SELECT *
+        select user_id, email, password, join_time, username, avatar_url, gender, simple_desc,
+        position, industry, career, education, full_desc, liked_count, collected_count, follow_count,
+        followed_count, scanned_count
         FROM user
         WHERE user_id = #{userId}
     </select>
