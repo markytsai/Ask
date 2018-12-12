@@ -2,7 +2,6 @@ package com.ilsxh.controller;
 
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
-import com.ilsxh.service.AnswerService;
 import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.UserService;
 import com.ilsxh.util.Response;
@@ -31,9 +30,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private AnswerService answerService;
 
     @Autowired
     private QuestionService questionService;
@@ -71,7 +67,7 @@ public class UserController {
         Map<String, Object> map = userService.getUserProfile(userId, localUserId);
 
         // 获取回答列表
-        List<Answer> answerList = answerService.getAnswersByUserId(userId);
+        List<Answer> answerList = userService.getAnswersByUserId(userId);
         map.put("answerList", answerList);
 
         model.addAllAttributes(map);

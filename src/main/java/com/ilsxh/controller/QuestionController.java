@@ -1,5 +1,6 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.dao.QuestionDao;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -31,6 +33,9 @@ public class QuestionController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private QuestionDao questionDao;
 
     @Autowired
     private IndexService indexService;
@@ -84,17 +89,62 @@ public class QuestionController {
         return "questionDetail";
     }
 
-    @RequestMapping("/questionFollow/{questionId}")
+    @RequestMapping("/followQuestion/{questionId}")
     public void followQuestion(@PathVariable("questionId") String questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
-        Integer effectRow = userService.followQuestion(localUserId, questionId);
-        if (effectRow != null) {
-            return;
+        String hasUserFollowQuestion = questionService.hasUserFollowQuestion(localUserId, questionId);
+
+        Integer effectRow = null;
+        if (hasUserFollowQuestion != null && hasUserFollowQuestion == "true") {
+            questionService.unfollowQuestion(localUserId, questionId);
+        } else {
+            questionService.followQuestion(localUserId, questionId);
         }
+
         return;
     }
+
+    @RequestMapping("/submitAnswer/{questionId}")
+    public void submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") String questionId, HttpServletRequest request) {
+
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        questionService.submitAnswer(localUserId, answerContent, questionId);
+    }
+
+    /**
+     * 此处链接不应该跳转，bug to fix
+     * @param answerId
+     * @param request
+     */
+    @RequestMapping("/deleteAnswer/{answerId}")
+    public void deleteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
+
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        questionService.deleteAnswer(answerId);
+    }
+
+
+    @RequestMapping("/upvoteAnswer/{answerId}")
+    public void upvoteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        questionService.upvoteAnswer(localUserId, answerId);
+
+    }
+
+
+    @RequestMapping("/downvoteAnswer/{answerId}")
+    public void downvoteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        questionService.downvoteAnswer(localUserId, answerId);
+
+    }
+
 }
 
 

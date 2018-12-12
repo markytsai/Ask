@@ -1,5 +1,6 @@
 package com.ilsxh.service;
 
+import com.ilsxh.dao.AnswerDao;
 import com.ilsxh.dao.QuestionDao;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
@@ -26,6 +27,9 @@ public class QuestionService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private AnswerDao answerDao;
 
 
     public List<Question> getFollowingQuestionByUserId(String userId) {
@@ -69,11 +73,36 @@ public class QuestionService {
     public String hasUserFollowQuestion(String userId, String questionId) {
 
         Integer ret = questionDao.hasUserFollowQuestion(userId, questionId);
-        if (ret != null) {
+        if (ret != null && ret.equals(1)) {
             return "true";
         } else {
             return "false";
         }
 
+    }
+
+    public Integer followQuestion(String localUserId, String questionId) {
+        return questionDao.followQuestion(localUserId, questionId);
+    }
+
+    public Integer unfollowQuestion(String localUserId, String questionId) {
+        return questionDao.unfollowQuestion(localUserId, questionId);
+    }
+
+    public void submitAnswer(String userId, String answerContent, String questionId) {
+        questionDao.submitAnswer(userId, answerContent, questionId);
+    }
+
+    public void deleteAnswer(String answerId) {
+        questionDao.deleteAnswer(answerId);
+    }
+
+    public void upvoteAnswer(String localUserId, String answerId){
+        questionDao.upvoteAnswer(localUserId, answerId);
+    }
+
+    public void downvoteAnswer(String localUserId, String answerId){
+        questionDao.downvoteAnswer(localUserId, answerId);
+        answerDao.increAnswerUpVote(answerId);
     }
 }

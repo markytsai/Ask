@@ -28,5 +28,18 @@ public interface QuestionDao {
 
     Integer hasUserFollowQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
 
+    Integer followQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
+
+    Integer unfollowQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
+
+    void submitAnswer(@Param("userId") String userId, @Param("answerContent") String answerContent, @Param("questionId") String questionId);
+
+    void deleteAnswer(@Param("answerId") String answerId);
+
+    void upvoteAnswer(@Param("userId") String userId, @Param("answerId") String answerId);
+
+    void downvoteAnswer(@Param("userId") String userId, @Param("answerId") String answerId);
+
+
 
 }

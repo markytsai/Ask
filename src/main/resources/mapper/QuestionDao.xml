@@ -73,14 +73,34 @@
     <select id="hasUserFollowQuestion" resultType="Integer">
         select count(1)
         from mid_user_follow_question
-        where userId = #{user_id}
-        and  questionId = #{questionId}
+        where user_id = #{userId}
+        and  question_id = #{questionId}
     </select>
 
-    <select id="hasUserFollowQuestion" resultType="Integer">
+    <select id="followQuestion" resultType="Integer">
         insert into mid_user_follow_question(user_id, question_id) values(#{userId}, #{questionId})
     </select>
 
+    <select id="unfollowQuestion" resultType="Integer">
+        delete from mid_user_follow_question where user_id = #{userId} and question_id = #{questionId}
+    </select>
+
+
+    <insert id="submitAnswer">
+        insert into answer(answer_content, question_id, answer_user_id) values(#{answerContent}, #{questionId}, #{userId})
+    </insert>
+
+    <delete id="deleteAnswer">
+        delete from answer where answer_id = #{answerId}
+    </delete>
+
+    <update id="upvoteAnswer">
+        update mid_user_vote_answer set vote = 1 where user_id = #{userId} and answer_id = #{answerId}
+    </update>
+
+    <update id="downvoteAnswer">
+        update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}
+    </update>
 </mapper>
 
 

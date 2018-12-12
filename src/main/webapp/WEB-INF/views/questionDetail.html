@@ -11,6 +11,7 @@
 
     <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+
 </head>
 
 <body style='background-color: #f6f6f6;'>
@@ -31,22 +32,21 @@
 
                             <input id="focusQuestion" class="btn btn-default" th:type="button"
                                    th:value="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"
-                                   th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>
+                                   th:href="@{'followQuestion/' + ${questionDetail.questionId}}"/>
+                            <input id="iWantAnswer" class="btn btn-default" th:type="button" th:value="我要回答"
+                                   th:href="@{'iWantAnswer/' + ${questionDetail.questionId}}"/>
+                            <input id="inviteOtherAnswer" class="btn btn-default" th:type="button" th:value="邀请回答"
+                                   th:href="@{'inviteOtherAnswer/' + ${questionDetail.questionId}}"/>
+                            <input id="getQuestionId" th:type="hidden" th:value="${questionDetail.questionId}"/>
+                        </div>
+                        <br/><br/>
+                        <div id="editFrame" style="display:none;">
+                            <textarea id="answerContent" style="width:100%; height:80px;"></textarea>
+                            <!--<iframe src="build/document.html" width="100%" />-->
 
-                            <!--<div th:if="${hasFollowQuestion} eq 'true'" th:inline="true">-->
-                            <!--<input id="focusQuestion" class="btn btn-default" th:type="button" th:value="取消关注"-->
-                            <!--th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>-->
-                            <!--</div>-->
-                            <!--<div th:if="${hasFollowQuestion} eq 'false'">-->
-                            <!--<input id="focusQuestion" class="btn btn-default" th:type="button" th:value="关注问题"-->
-                            <!--th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>-->
-                            <!--</div>-->
-
-
-                            <input id="wantAnswer" class="btn btn-default" th:type="button" th:value="我要回答"
-                                   th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>
-                            <input id="invite" class="btn btn-default" th:type="button" th:value="邀请回答"
-                                   th:href="@{'questionFollow' + ${questionDetail.questionId}}"/>
+                            <input id="quitAnswer" class="btn btn-default" th:type="button" th:value="取消回答"/>
+                            <input id="submitAnswer" class="btn btn-default" th:type="button" th:value="提交回答"
+                                   th:href="@{'/submitAnswer/' + ${questionDetail.questionId}}" align="right"/>
                         </div>
                     </div>
                     <h5 class="page-header"></h5>
@@ -69,9 +69,17 @@
                             <p class="card-text" th:text="${answer.answerContent}"/>
 
                             <div class="card-text">
-                                <i class="" aria-hidden="true">赞同<span th:text="${answer.likedCount}"/>次</i>
-                                <i class="" aria-hidden="true">反对<span th:text="${answer.dislikedCount}"/>次</i>
+                                <input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>
+                                <input id="upvoteButton" type="button" class="btn btn-default" th:value="'赞同' + ${answer.likedCount} + '次'"/>
+                                <input id="downvoteButton" type="button" class="btn btn-default" th:value="'反对' + ${answer.dislikedCount} + '次'"/>
+
+                                <!--<i class="" aria-hidden="true">赞同<span th:text="${answer.likedCount}"/>次</i>-->
+                                <!--<i class="" aria-hidden="true">反对<span th:text="${answer.dislikedCount}"/>次</i>-->
+
+                                <a th:href="@{'/deleteAnswer/' + ${answer.answerId}}">删除</a>
                             </div>
+
+
                         </div>
                         <br/>
                     </div>
@@ -154,40 +162,94 @@
 <script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
 
 <script>
-    var btnFocusQuestion = $("#focusQuestion");
-    btnFocusQuestion.click(function () {
+    $('#focusQuestion').click(function () {
+        var btnFocusQuestion = $("#focusQuestion");
+        followQuestion();
         // 取消关注问题
         if (btnFocusQuestion.val() == '关注问题') {
             btnFocusQuestion.val('取消关注');
+
         } else {
             btnFocusQuestion.val('关注问题');
         }
         btnFocusQuestion.blur();
     });
 
-    $(function () {
+    $('#iWantAnswer').click(function () {
+        $('#editFrame').show();
+    });
 
-        var userData = {
-            "email": $("#inputEmail").val(),
-            "password": $("#inputPassword").val()
-        }
+    $('#submitAnswer').click(function () {
+        $('#editFrame').hide();
+    });
+    $('#quitAnswer').click(function () {
+        $('#editFrame').hide();
+    });
 
+    $('#upvoteButton').click(function () {
+        var answerId = $('#getAnswerId').val();
         $.ajax({
-            url: "/isFollowQuestion",
+            url: "/upvoteAnswer/" + answerId,
             type: "get",
-            data: userData,
             dataType: 'json',
             success: function (response) {
                 if (response.state == 1) {
-                    // localStorage.setItem("userId", response.data.loginUserInfo.userId);
-                    // localStorage.setItem("username", response.data.loginUserInfo.username);
-                    window.location.href = "/index";
                 } else {
-                    $("#login-password-error").text(response.message);
                 }
             }
         });
-    })
+    });
+
+    $('#downvoteButton').click(function () {
+        var answerId = $('#getAnswerId').val();
+        $.ajax({
+            url: "/downvoteAnswer/" + answerId,
+            type: "get",
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+                } else {
+                }
+            }
+        });
+    });
+
+
+
+    $('#submitAnswer').click(function () {
+
+        var answerContent = $('#answerContent').val();
+        var questionId = $('#getQuestionId').val();
+
+        $.ajax({
+            url: "/submitAnswer/" + questionId,
+            type: "get",
+            data: {'answerContent': answerContent},
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+                } else {
+                }
+            }
+        });
+    });
+
+    function followQuestion() {
+
+        var questionId = $('#getQuestionId').val();
+
+        $.ajax({
+            url: "/followQuestion/" + questionId,
+            type: "get",
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+                } else {
+                }
+            }
+        });
+    }
+
 </script>
 </body>
 </html>

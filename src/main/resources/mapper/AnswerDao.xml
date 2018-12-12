@@ -4,11 +4,15 @@
 <!-- 设置为AnswerDao接口方法提供sql语句配置 -->
 <mapper namespace="com.ilsxh.dao.AnswerDao">
 
-    <select id="getAnswersByUserId" resultType="Answer">
-        select answer_id, answer_content, liked_count, disliked_count, create_time, answer_user_id, question_id
-        from answer
-        where answer_user_id = #{userId}
-    </select>
+    <update id="increAnswerUpVote">
+        update answer set
+
+        liked_count = liked_count + 1, disliked_count = disliked_count - 1 where answer_id = #{answerId}
+    </update>
+
+    <update id="increAnswerDownVote">
+        update answer set liked_count = liked_count - 1, disliked_count = disliked_count + 1 where answer_id = #{answerId}
+    </update>
 
 </mapper>
 

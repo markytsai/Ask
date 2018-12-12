@@ -1,8 +1,11 @@
 package com.ilsxh.dao;
 
+import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 /**
  *
@@ -28,6 +31,6 @@ public interface UserDao {
 
     Integer regiterNewUser(@Param("userId") String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password);
 
-    Integer followQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
+    List<Answer> getAnswersByUserId(String userId);
 }
 

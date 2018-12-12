@@ -36,5 +36,11 @@
         where email = #{email}
     </select>
 
+    <select id="getAnswersByUserId" resultType="Answer">
+        select answer_id, answer_content, liked_count, disliked_count, create_time, answer_user_id, question_id
+        from answer
+        where answer_user_id = #{userId}
+    </select>
+
 </mapper>
 

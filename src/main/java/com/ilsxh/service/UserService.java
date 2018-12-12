@@ -1,6 +1,10 @@
 package com.ilsxh.service;
 
+import com.ilsxh.dao.AnswerDao;
+import com.ilsxh.dao.QuestionDao;
 import com.ilsxh.dao.UserDao;
+import com.ilsxh.entity.Answer;
+import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
 import com.ilsxh.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +16,20 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
 
 @Service
 public class UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private AnswerDao answerDao;
+
+    @Autowired
+    private QuestionDao questionDao;
 
     @Autowired
     private JedisPool jedisPool;
@@ -108,6 +117,7 @@ public class UserService {
 
     /**
      * 根据cookie值来获取用户唯一ID
+     *
      * @param request
      * @return
      */
@@ -130,6 +140,7 @@ public class UserService {
 
     /**
      * 根据传来的参数和token里面的userId，判断是不是登录用户
+     *
      * @param userId
      * @param localUserId
      * @return
@@ -148,11 +159,20 @@ public class UserService {
         return map;
     }
 
-    public Integer followQuestion(String localUserId, String questionId) {
-        return userDao.followQuestion(localUserId, questionId);
-    }
-
     public User getUserByUserId(String userId) {
         return userDao.selectUserByUserId(userId);
+    }
+
+    public List<Answer> getAnswersByUserId(String userId) {
+
+        List<Answer> answerList = userDao.getAnswersByUserId(userId);
+
+        for (Answer answer : answerList) {
+            Question question = questionDao.selectQuestionByQuestionId(answer.getQuestionId());
+            User user = getUserByUserId(answer.getAnswerUserId());
+            answer.setQuestion(question);
+            answer.setUser(user);
+        }
+        return answerList;
     }
 }
