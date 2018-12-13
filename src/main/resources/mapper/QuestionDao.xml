@@ -94,13 +94,6 @@
         delete from answer where answer_id = #{answerId}
     </delete>
 
-    <update id="upvoteAnswer">
-        update mid_user_vote_answer set vote = 1 where user_id = #{userId} and answer_id = #{answerId}
-    </update>
-
-    <update id="downvoteAnswer">
-        update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}
-    </update>
 </mapper>
 
 

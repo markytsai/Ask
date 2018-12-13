@@ -36,9 +36,6 @@ public interface QuestionDao {
 
     void deleteAnswer(@Param("answerId") String answerId);
 
-    void upvoteAnswer(@Param("userId") String userId, @Param("answerId") String answerId);
-
-    void downvoteAnswer(@Param("userId") String userId, @Param("answerId") String answerId);
 
 
 

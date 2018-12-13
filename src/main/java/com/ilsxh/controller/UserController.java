@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @RequestMapping("/userProfile/{userId}")
-    public String profile(@PathVariable String userId, Integer page, HttpServletRequest request, Model model) {
+    public String profile(@PathVariable String userId, HttpServletRequest request, Model model) {
         String localUserId = userService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
         Map<String, Object> map = userService.getUserProfile(userId, localUserId);

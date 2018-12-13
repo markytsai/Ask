@@ -98,6 +98,8 @@ public class User {
      */
     private Long joinTime;
 
+    private byte vote;
+
     private List<Question> followingQustionList;
 
     public String getUserId() {
@@ -282,5 +284,13 @@ public class User {
 
     public void setJoinTime(Long joinTime) {
         this.joinTime = joinTime;
+    }
+
+    public byte getVote() {
+        return vote;
+    }
+
+    public void setVote(byte vote) {
+        this.vote = vote;
     }
 }

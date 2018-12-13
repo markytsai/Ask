@@ -6,12 +6,42 @@
 
     <update id="increAnswerUpVote">
         update answer set
-
         liked_count = liked_count + 1, disliked_count = disliked_count - 1 where answer_id = #{answerId}
     </update>
 
     <update id="increAnswerDownVote">
         update answer set liked_count = liked_count - 1, disliked_count = disliked_count + 1 where answer_id = #{answerId}
+    </update>
+
+    <update id="increAnswerUpVoteOnly">
+        update answer set
+        liked_count = liked_count + 1 where answer_id = #{answerId}
+    </update>
+
+    <update id="increAnswerDownVoteOnly">
+        update answer set disliked_count = disliked_count + 1 where answer_id = #{answerId}
+    </update>
+
+    <update id="decreAnswerUpVoteOnly">
+        update answer set
+        liked_count = liked_count - 1 where answer_id = #{answerId}
+    </update>
+
+    <update id="decreAnswerDownVoteOnly">
+        update answer set disliked_count = disliked_count - 1 where answer_id = #{answerId}
+    </update>
+
+    <!--判断是否已经投票-->
+    <select id="userVote" resultType="Byte">
+        SELECT vote from mid_user_vote_answer where answer_id = #{answerId} and user_id = #{userId}
+    </select>
+
+    <update id="voteAnswer">
+        update mid_user_vote_answer set vote = #{whichVote} where user_id = #{userId} and answer_id = #{answerId}
+    </update>
+
+    <update id="downvoteAnswer">
+        update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}
     </update>
 
 </mapper>

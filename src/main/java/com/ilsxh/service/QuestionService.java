@@ -44,13 +44,17 @@ public class QuestionService {
         return questionList;
     }
 
-    public List<Answer> getAnswersByQuestionId(String questionId) {
+    public List<Answer> getAnswersByQuestionId(String questionId, String userId) {
 
         List<Answer> answerList = questionDao.selectAnswersByQuestionId(questionId);
         for (Answer answer : answerList) {
-            answer.setUser(userDao.selectUserByUserId(answer.getAnswerUserId()));
+            User user = userDao.selectUserByUserId(answer.getAnswerUserId());
+            Byte upOrDownVote = answerDao.userVote(answer.getAnswerId(), userId);
+            if (upOrDownVote != null) {
+                user.setVote(upOrDownVote);
+            }
+            answer.setUser(user);
         }
-
         return answerList;
     }
 
@@ -95,14 +99,5 @@ public class QuestionService {
 
     public void deleteAnswer(String answerId) {
         questionDao.deleteAnswer(answerId);
-    }
-
-    public void upvoteAnswer(String localUserId, String answerId){
-        questionDao.upvoteAnswer(localUserId, answerId);
-    }
-
-    public void downvoteAnswer(String localUserId, String answerId){
-        questionDao.downvoteAnswer(localUserId, answerId);
-        answerDao.increAnswerUpVote(answerId);
     }
 }

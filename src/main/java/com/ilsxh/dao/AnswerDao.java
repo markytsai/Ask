@@ -10,4 +10,18 @@ public interface AnswerDao {
     void increAnswerUpVote(@Param("answerId") String answerId);
 
     void increAnswerDownVote(@Param("answerId") String answerId);
+
+    void increAnswerUpVoteOnly(@Param("answerId") String answerId);
+
+    void increAnswerDownVoteOnly(@Param("answerId") String answerId);
+
+    void decreAnswerUpVoteOnly(@Param("answerId") String answerId);
+
+    void decreAnswerDownVoteOnly(@Param("answerId") String answerId);
+
+
+    void voteAnswer(@Param("userId") String userId, @Param("answerId") String answerId, @Param("whichVote") Integer whichVote);
+
+
+    Byte userVote(@Param("answerId") Integer answerId, @Param("userId") String userId);
 }

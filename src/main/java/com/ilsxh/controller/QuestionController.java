@@ -72,6 +72,13 @@ public class QuestionController {
         return "index";
     }
 
+    /**
+     * 问题详情页面
+     * @param questionId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/question/{questionId}")
     public String QuestionDetail(@PathVariable("questionId") String questionId, HttpServletRequest request, Model model) {
 
@@ -79,7 +86,7 @@ public class QuestionController {
         User user = indexService.getProfileInfo(userId);
         String hasFollowQuestion = questionService.hasUserFollowQuestion(userId, questionId);
 
-        List<Answer> answerList = questionService.getAnswersByQuestionId(questionId);
+        List<Answer> answerList = questionService.getAnswersByQuestionId(questionId, userId);
         Question question = questionService.getQuestionByQuestionid(questionId);
 
         model.addAttribute("user", user);
@@ -89,6 +96,11 @@ public class QuestionController {
         return "questionDetail";
     }
 
+    /**
+     * 关注问题页面
+     * @param questionId
+     * @param request
+     */
     @RequestMapping("/followQuestion/{questionId}")
     public void followQuestion(@PathVariable("questionId") String questionId, HttpServletRequest request) {
 
@@ -106,6 +118,12 @@ public class QuestionController {
         return;
     }
 
+    /**
+     * 回答提交
+     * @param answerContent
+     * @param questionId
+     * @param request
+     */
     @RequestMapping("/submitAnswer/{questionId}")
     public void submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") String questionId, HttpServletRequest request) {
 
@@ -128,22 +146,6 @@ public class QuestionController {
     }
 
 
-    @RequestMapping("/upvoteAnswer/{answerId}")
-    public void upvoteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
-        String localUserId = userService.getUserIdFromRedis(request);
-
-        questionService.upvoteAnswer(localUserId, answerId);
-
-    }
-
-
-    @RequestMapping("/downvoteAnswer/{answerId}")
-    public void downvoteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
-        String localUserId = userService.getUserIdFromRedis(request);
-
-        questionService.downvoteAnswer(localUserId, answerId);
-
-    }
 
 }
 

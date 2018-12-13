@@ -70,8 +70,13 @@
 
                             <div class="card-text">
                                 <input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>
-                                <input id="upvoteButton" type="button" class="btn btn-default" th:value="'赞同' + ${answer.likedCount} + '次'"/>
-                                <input id="downvoteButton" type="button" class="btn btn-default" th:value="'反对' + ${answer.dislikedCount} + '次'"/>
+                                <input id="userVote" th:type="hidden" th:value="${answer.user.vote}"/>
+                                <input id="upvoteCount" th:type="hidden" th:value="${answer.likedCount}"/>
+                                <input id="upvoteButton" type="button" class="btn btn-default"
+                                       th:value="${answer.user.vote == 1} ? '已赞同'+ ${answer.likedCount} + '次' : '赞同'+ ${answer.likedCount} + '次' "/>
+                                <input id="downvoteCount" th:type="hidden" th:value="${answer.dislikedCount}"/>
+                                <input id="downvoteButton" type="button" class="btn btn-default"
+                                       th:value="${answer.user.vote == -1} ? '已反对'+ ${answer.dislikedCount} + '次' : '反对'+ ${answer.dislikedCount} + '次' "/>
 
                                 <!--<i class="" aria-hidden="true">赞同<span th:text="${answer.likedCount}"/>次</i>-->
                                 <!--<i class="" aria-hidden="true">反对<span th:text="${answer.dislikedCount}"/>次</i>-->
@@ -188,13 +193,17 @@
 
     $('#upvoteButton').click(function () {
         var answerId = $('#getAnswerId').val();
+        var userVote = $('#userVote').val();
+        // var upvoteCount = $('#downvoteButton') + 1;
+        // $('#upvoteButton').val(upvoteCount);
         $.ajax({
             url: "/upvoteAnswer/" + answerId,
             type: "get",
+            data: {"userVote": userVote},
             dataType: 'json',
             success: function (response) {
-                if (response.state == 1) {
-                } else {
+                if (response.data == 1) {
+                    alert("a");
                 }
             }
         });
@@ -202,9 +211,11 @@
 
     $('#downvoteButton').click(function () {
         var answerId = $('#getAnswerId').val();
+        var userVote = $('#userVote').val();
         $.ajax({
             url: "/downvoteAnswer/" + answerId,
             type: "get",
+            data: {"userVote": userVote},
             dataType: 'json',
             success: function (response) {
                 if (response.state == 1) {
@@ -213,7 +224,6 @@
             }
         });
     });
-
 
 
     $('#submitAnswer').click(function () {

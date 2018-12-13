@@ -60,8 +60,7 @@ public class IndexController {
 
         indexService.updateProfile(user);
         model.addAttribute("user", user);
-        return "editProfile";
-//        return "redirect:/profile/" + userId;
+        return "redirect:/userProfile/" + user.getUserId();
     }
 
     /**
