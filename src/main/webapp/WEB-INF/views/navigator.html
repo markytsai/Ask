@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -12,11 +12,6 @@
 
     <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
-
-    <!--<style>-->
-        <!--@import "/css/navbar-static-top.css";-->
-        <!--@import "/css/bootstrap.min.css";-->
-    <!--</style>-->
 
 </head>
 
@@ -69,19 +64,17 @@
                         </li>
                     </ul>
                 </div>
+                <div><input class="ask-question open-mask" th:type="button" th:value="我要提问"/></div>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
 </div>
 
 <!--<script>-->
-
-
     <!--$(function () {-->
-
         <!--//下拉菜单处理-->
         <!--var profile = $(".nav-profile");-->
-        <!--var downMenu = $(".dropdown-menu");-->
+        <!--var downMenu = $(".dropdown");-->
 
         <!--profile.mouseover(function () {-->
             <!--downMenu.show();-->
@@ -89,10 +82,11 @@
             <!--downMenu.hide();-->
         <!--});-->
     <!--});-->
-
 <!--</script>-->
+
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/mask.js"></script>
 </body>
 </html>
 

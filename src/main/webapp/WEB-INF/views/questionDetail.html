@@ -81,10 +81,14 @@
                                 <!--<i class="" aria-hidden="true">赞同<span th:text="${answer.likedCount}"/>次</i>-->
                                 <!--<i class="" aria-hidden="true">反对<span th:text="${answer.dislikedCount}"/>次</i>-->
 
+
+                                <button id="collectBtn" type="button" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                    <span id="collectBtnSpan">收藏</span>
+                                </button>
+
                                 <a th:href="@{'/deleteAnswer/' + ${answer.answerId}}">删除</a>
                             </div>
-
-
                         </div>
                         <br/>
                     </div>
@@ -212,6 +216,29 @@
     $('#downvoteButton').click(function () {
         var answerId = $('#getAnswerId').val();
         var userVote = $('#userVote').val();
+        $.ajax({
+            url: "/downvoteAnswer/" + answerId,
+            type: "get",
+            data: {"userVote": userVote},
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+                } else {
+                }
+            }
+        });
+    });
+
+    $('#collectBtn').click(function () {
+        var answerId = $('#getAnswerId').val();
+
+        $('#collectBtnSpan').toggleClass("glyphicon glyphicon-star");
+        var isCollected = $('#collectBtnSpan').val();
+        if (isCollected.equals("收藏")) {
+            $('#collectBtnSpan').text("已收藏");
+        } else {
+            $('#collectBtnSpan').text("收藏");
+        }
         $.ajax({
             url: "/downvoteAnswer/" + answerId,
             type: "get",
