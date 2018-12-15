@@ -69,6 +69,7 @@
                             <p class="card-text" th:text="${answer.answerContent}"/>
 
                             <div class="card-text">
+                                <input id="isCollect" th:type="hidden" th:value="${answer.collectAnswer}"/>
                                 <input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>
                                 <input id="userVote" th:type="hidden" th:value="${answer.user.vote}"/>
                                 <input id="upvoteCount" th:type="hidden" th:value="${answer.likedCount}"/>
@@ -82,9 +83,14 @@
                                 <!--<i class="" aria-hidden="true">反对<span th:text="${answer.dislikedCount}"/>次</i>-->
 
 
-                                <button id="collectBtn" type="button" class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                    <span id="collectBtnSpan">收藏</span>
+                                <button id="collectBtn" th:href="@{'/collectAnswer/' + ${answer.answerId}}" type="button" class="btn btn-default btn-sm">
+                                    <div th:if="${answer.collectAnswer == false}">
+                                        <span id="notCollect" class="glyphicon glyphicon-star-empty"></span>
+                                    </div>
+                                    <div th:if="${answer.collectAnswer == true}">
+                                        <span id="collected" class="glyphicon glyphicon-star"></span>
+                                    </div>
+                                    <span id="collectBtnValue" th:text="${answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>
                                 </button>
 
                                 <a th:href="@{'/deleteAnswer/' + ${answer.answerId}}">删除</a>
@@ -229,28 +235,36 @@
         });
     });
 
-    $('#collectBtn').click(function () {
-        var answerId = $('#getAnswerId').val();
-
-        $('#collectBtnSpan').toggleClass("glyphicon glyphicon-star");
-        var isCollected = $('#collectBtnSpan').val();
-        if (isCollected.equals("收藏")) {
-            $('#collectBtnSpan').text("已收藏");
-        } else {
-            $('#collectBtnSpan').text("收藏");
-        }
-        $.ajax({
-            url: "/downvoteAnswer/" + answerId,
-            type: "get",
-            data: {"userVote": userVote},
-            dataType: 'json',
-            success: function (response) {
-                if (response.state == 1) {
-                } else {
-                }
-            }
-        });
-    });
+    // $('#collectBtn').click(function () {
+    //     var answerId = $('#getAnswerId').val();
+    //
+    //     // $('#collectBtnSymbol').toggleClass("glyphicon glyphicon-star");
+    //     var isCollect = $('#isCollect').val();
+    //
+    //     var isCollected = $('#collectBtnValue').text();
+    //     if (isCollect == false) {
+    //         $('#isCollect').val(true);
+    //         $('#collectBtnValue').text("已收藏");
+    //         $('#notCollect').hide();
+    //         $('#collected').show();
+    //     } else {
+    //         $('#isCollect').val(false);
+    //         $('#collectBtnValue').text("收藏");
+    //         $('#collected').hide();
+    //         $('#notCollect').show();
+    //     }
+    //     $.ajax({
+    //         url: "/collectAnswer/" + answerId,
+    //         type: "get",
+    //         data: {"isCollect": isCollect},
+    //         dataType: 'json',
+    //         success: function (response) {
+    //             if (response.state == 1) {
+    //             } else {
+    //             }
+    //         }
+    //     });
+    // });
 
 
     $('#submitAnswer').click(function () {

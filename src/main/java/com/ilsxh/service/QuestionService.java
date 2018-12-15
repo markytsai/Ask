@@ -50,8 +50,14 @@ public class QuestionService {
         for (Answer answer : answerList) {
             User user = userDao.selectUserByUserId(answer.getAnswerUserId());
             Byte upOrDownVote = answerDao.userVote(answer.getAnswerId(), userId);
+            Integer isCollectAnswer = answerDao.isCollectAnswer(answer.getAnswerId(), userId);
             if (upOrDownVote != null) {
                 user.setVote(upOrDownVote);
+            }
+            if (isCollectAnswer != null && isCollectAnswer == 1) {
+                answer.setCollectAnswer(Boolean.TRUE);
+            } else {
+                answer.setCollectAnswer(Boolean.FALSE);
             }
             answer.setUser(user);
         }
@@ -99,5 +105,11 @@ public class QuestionService {
 
     public void deleteAnswer(String answerId) {
         questionDao.deleteAnswer(answerId);
+    }
+
+    public void addQuestion(Question question, String userId){
+
+        questionDao.addQuestion(question, userId);
+
     }
 }

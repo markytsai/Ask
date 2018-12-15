@@ -12,9 +12,7 @@ import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -74,6 +72,7 @@ public class QuestionController {
 
     /**
      * 问题详情页面
+     *
      * @param questionId
      * @param request
      * @param model
@@ -98,6 +97,7 @@ public class QuestionController {
 
     /**
      * 关注问题页面
+     *
      * @param questionId
      * @param request
      */
@@ -120,6 +120,7 @@ public class QuestionController {
 
     /**
      * 回答提交
+     *
      * @param answerContent
      * @param questionId
      * @param request
@@ -134,6 +135,7 @@ public class QuestionController {
 
     /**
      * 此处链接不应该跳转，bug to fix
+     *
      * @param answerId
      * @param request
      */
@@ -145,7 +147,18 @@ public class QuestionController {
         questionService.deleteAnswer(answerId);
     }
 
-
+    /**
+     * 提问题
+     *
+     * @param question
+     */
+    @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
+    public Response askQuestion(@RequestBody Question question, HttpServletRequest request) {
+        String userId = userService.getUserIdFromRedis(request);
+        question.setUserId(userId);
+        questionService.addQuestion(question, userId);
+        return new Response(1, "", question.getQuestionId());
+    }
 
 }
 

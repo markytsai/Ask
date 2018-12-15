@@ -1,0 +1,65 @@
+﻿<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="../../favicon.ico"/>
+
+    <title>Static Top Navbar Example for Bootstrap</title>
+
+    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+
+</head>
+<body>
+
+<div class="mask text-center">
+    <div class="upon-mask" id="ask-modal">
+        <h3>
+            <span>提问</span>
+            <span class="close-mask">×</span>
+        </h3>
+        <form id="askForm">
+            <input id="questionTitle" type="text" name="title" placeholder="写下你的问题"/>
+            <div>问题（可选）：</div>
+            <textarea name="content" id="questionContent" style="height: 95px;"></textarea>
+            <button id="askButton" class="btn btn-default" type="button">发布</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script>
+
+
+    $('#askButton').click(function () {
+
+        var questionTitle = $("#questionTitle").val();
+        var questionContent = $("#questionContent").val();
+
+        if (questionTitle.trim() == "" || questionContent.trim == "") {
+            return;
+        }
+        $.ajax({
+            url: "/addQuestion",
+            type: "post",
+            data: {"questionTitle": questionTitle, "questionContent": questionContent},
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+                    window.location.href = "/following/" + response.data;
+                } else {
+                    alert("出现了错误...");
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+
+</html>

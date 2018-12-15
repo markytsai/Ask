@@ -24,4 +24,10 @@ public interface AnswerDao {
 
 
     Byte userVote(@Param("answerId") Integer answerId, @Param("userId") String userId);
+
+    Integer isCollectAnswer(@Param("answerId") Integer answerId, @Param("userId") String userId);
+
+    void cancelCollectAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId);
+
+    void collectAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId);
 }

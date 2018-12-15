@@ -51,5 +51,13 @@ public class AnswerService {
         }
     }
 
+    public void cancelCollectAnswer(String localUserId, Integer answerId) {
+        answerDao.cancelCollectAnswer(localUserId, answerId);
+    }
+
+    public void collectAnswer(String localUserId, Integer answerId) {
+        answerDao.collectAnswer(localUserId, answerId);
+    }
+
 
 }

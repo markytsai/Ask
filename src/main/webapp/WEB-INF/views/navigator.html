@@ -64,29 +64,32 @@
                         </li>
                     </ul>
                 </div>
-                <div><input class="ask-question open-mask" th:type="button" th:value="我要提问"/></div>
+                <div>
+                    <input id="askWindow" class="ask-question open-mask btn btn-default" th:type="button"
+                           th:value="我要提问" th:href="@{/askWindow}"/>
+                </div>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
 </div>
 
 <!--<script>-->
-    <!--$(function () {-->
-        <!--//下拉菜单处理-->
-        <!--var profile = $(".nav-profile");-->
-        <!--var downMenu = $(".dropdown");-->
+<!--$(function () {-->
+<!--//下拉菜单处理-->
+<!--var profile = $(".nav-profile");-->
+<!--var downMenu = $(".dropdown");-->
 
-        <!--profile.mouseover(function () {-->
-            <!--downMenu.show();-->
-        <!--}).mouseout(function () {-->
-            <!--downMenu.hide();-->
-        <!--});-->
-    <!--});-->
+<!--profile.mouseover(function () {-->
+<!--downMenu.show();-->
+<!--}).mouseout(function () {-->
+<!--downMenu.hide();-->
+<!--});-->
+<!--});-->
 <!--</script>-->
 
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/mask.js"></script>
+
 </body>
 </html>
 

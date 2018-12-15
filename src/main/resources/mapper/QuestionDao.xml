@@ -94,6 +94,10 @@
         delete from answer where answer_id = #{answerId}
     </delete>
 
+    <insert id="addQuestion" useGeneratedKeys="true" keyProperty="question.questionId">
+        insert into question(question_title, question_content, user_id) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId})
+    </insert>
+
 </mapper>
 
 

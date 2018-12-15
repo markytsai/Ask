@@ -44,5 +44,16 @@
         update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}
     </update>
 
+    <select id="isCollectAnswer" resultType="Integer">
+        select count(1) from mid_user_collect_answer where answer_id = #{answerId} and user_id = #{userId}
+    </select>
+
+    <update id="cancelCollectAnswer">
+        delete from mid_user_collect_answer where user_id = #{userId} and answer_id = #{answerId}
+    </update>
+
+    <update id="collectAnswer">
+        insert into mid_user_collect_answer(user_id, answer_id, favorite_id) values(#{userId}, #{answerId}, 1)
+    </update>
 </mapper>
 

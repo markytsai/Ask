@@ -2,7 +2,6 @@ package com.ilsxh.controller;
 
 import com.ilsxh.service.AnswerService;
 import com.ilsxh.service.UserService;
-import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,4 +31,16 @@ public class AnswerController {
         String localUserId = userService.getUserIdFromRedis(request);
         answerService.downvoteAnswer(localUserId, answerId, userVote);
     }
+
+    @RequestMapping("/collectAnswer/{answerId}")
+    public void collectAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("isCollect") Boolean isCollect, HttpServletRequest request) {
+        String localUserId = userService.getUserIdFromRedis(request);
+        if (isCollect == Boolean.TRUE) {
+            answerService.cancelCollectAnswer(localUserId, answerId);
+        } else {
+            answerService.collectAnswer(localUserId, answerId);
+        }
+    }
+
+
 }

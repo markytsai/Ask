@@ -41,6 +41,10 @@ public class Answer {
 	 * 回答的用户实体
 	 */
 	private User user;
+	/**
+	 * 回答是否被收藏
+	 */
+	private Boolean collectAnswer;
 
 	/**
 	 * 回答的评论个数
@@ -121,4 +125,12 @@ public class Answer {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+    public Boolean getCollectAnswer() {
+        return collectAnswer;
+    }
+
+    public void setCollectAnswer(Boolean collectAnswer) {
+        this.collectAnswer = collectAnswer;
+    }
 }

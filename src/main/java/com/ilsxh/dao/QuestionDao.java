@@ -36,7 +36,7 @@ public interface QuestionDao {
 
     void deleteAnswer(@Param("answerId") String answerId);
 
-
+    void addQuestion(@Param("question") Question question, @Param("userId") String userId);
 
 
 }

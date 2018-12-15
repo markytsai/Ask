@@ -1,17 +1,30 @@
-$(function(){
+$(function () {
     /*提问模态框处理*/
     var openMask = $(".open-mask");
     var closeMask = $(".close-mask");
     var mask = $(".mask");
     var askModal = $("#ask-modal");
 
-    openMask.click(function(){
+    openMask.click(function () {
         mask.show();
         askModal.show();
     });
-    closeMask.click(function(){
+    closeMask.click(function () {
         mask.hide();
         askModal.hide();
+    });
+
+    $('#askWindow').click(function () {
+        $.ajax({
+            url: "/askWindow",
+            type: "get",
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+                } else {
+                }
+            }
+        });
     });
     //
     // /*富文本编辑器创建*/

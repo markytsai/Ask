@@ -39,4 +39,8 @@ public class MainController {
         return new ModelAndView("register", "", null);
     }
 
+    @RequestMapping(value = "/askWindow", method = RequestMethod.GET)
+    public String askWindow() {
+        return "mask";
+    }
 }

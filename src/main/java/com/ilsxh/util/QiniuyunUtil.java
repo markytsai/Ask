@@ -1,5 +1,7 @@
 package com.ilsxh.util;
 
+import com.qiniu.common.Zone;
+import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,10 @@ public class QiniuyunUtil {
     private static String BUCKET_NAME = MyConstant.QINIU_BUCKET_NAME;
     // 密钥配置
     private static Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+
+    private static Configuration configuration = new Configuration(Zone.zone2());
     // 创建上传对象
-    private static UploadManager uploadManager = new UploadManager();
+    private static UploadManager uploadManager = new UploadManager(configuration);
 
     // 简单上传，使用默认策略，只需要设置上传的空间名就可以了
     public static String getUpToken() {
