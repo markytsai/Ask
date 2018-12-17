@@ -1,25 +1,24 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <link rel="icon" href="../../favicon.ico"/>
-
-    <title>Static Top Navbar Example for Bootstrap</title>
-
-    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
-
-</head>
-
-<body>
-
 <!-- Static navbar -->
-<div th:fragment="nav">
-    <nav class="navbar navbar-default navbar-static-top">
+<div th:fragment="ask" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <div class="smartBox_header">
+            标题
+        </div>
+        <div class="smartBox_body">
+            <p>smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。
+                弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a target="_blank"
+                                                href="http://smartbox.huangsw.com/cn/introduce.html">官方文档</a>。查看源码以及demo可以访问<a
+                        href="https://github.com/huangshuwei/jquery.smartbox" target="_blank">我的github</a>。
+            </p>
+        </div>
+        <div class="smartBox_footer">
+            footer 内容
+        </div>
+    </div>
+</div>
+
+<div th:fragment="nav" xmlns:th="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-default navbar-static-top" style='background-color: #fff;'>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -29,7 +28,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" th:href="@{/index}">沙雕问答</a>
+                <a class="navbar-brand" th:href="@{/index}">沙问</a>
             </div>
 
             <form class="navbar-form navbar-right" role="search">
@@ -37,7 +36,7 @@
                     <label for="keyword" class="sr-only">关键字</label>
                     <input type="text" id="keyword" class="form-control" placeholder="输入关键字"/>
                 </div>
-                <button type="submit" class="btn btn-default">搜索</button>
+                <button id="searchBtn" type="submit" class="btn btn-default">搜索</button>
             </form>
 
             <div id="navbar" class="navbar-collapse collapse">
@@ -47,6 +46,7 @@
                     <li><a th:href="@{/notification}">消息</a></li>
 
                 </ul>
+
                 <div class="nav-profile">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
@@ -64,32 +64,15 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <input id="askWindow" class="ask-question open-mask btn btn-default" th:type="button"
-                           th:value="我要提问" th:href="@{/askWindow}"/>
-                </div>
-            </div><!--/.nav-collapse -->
+                <ul class="nav navbar-nav vertical-align" style="float:right">
+                    <button class="btn btn-default" id="askWindow" th:href="@{/following}">我要提问</button>
+                    <!--<li><button id="askWindow" class="ask-question open-mask btn btn-default vertical-align">我要提问</button></li>-->
+                </ul>
+            </div>
         </div>
     </nav>
 </div>
 
-<!--<script>-->
-<!--$(function () {-->
-<!--//下拉菜单处理-->
-<!--var profile = $(".nav-profile");-->
-<!--var downMenu = $(".dropdown");-->
+<!--不要包含任何js文件-->
 
-<!--profile.mouseover(function () {-->
-<!--downMenu.show();-->
-<!--}).mouseout(function () {-->
-<!--downMenu.hide();-->
-<!--});-->
-<!--});-->
-<!--</script>-->
-
-<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-
-</body>
-</html>
 

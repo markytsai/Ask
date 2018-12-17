@@ -11,12 +11,15 @@
 
     <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/answer.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/jquery.smartbox.css" rel="stylesheet"/>
 
 </head>
 
-<body style='background-color: #f6f6f6;'>
+<body style='background-color: #f8f8f8;'>
 
-<div th:include="navigator :: nav"></div>
+<div th:include="navigator :: nav" style='background-color: #fff;'></div>
+<div th:include="navigator :: ask" id="contentByHtmlElement" style="display:none;"></div>
 
 <div class="container">
     <div class="row">
@@ -24,24 +27,32 @@
             <div id="mainContainer">
                 <div id="mainContainerRepleace">
                     <div class="card mb-4">
+
                         <div class="card-block">
                             <h3 class="card-title">
                                 <p class="card-text text-dark" th:text="${questionDetail.questionTitle}"/>
                             </h3>
                             <p class="card-text" th:text="${questionDetail.questionContent}"/>
 
-                            <input id="focusQuestion" class="btn btn-default" th:type="button"
-                                   th:value="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"
-                                   th:href="@{'followQuestion/' + ${questionDetail.questionId}}"/>
-                            <input id="iWantAnswer" class="btn btn-default" th:type="button" th:value="我要回答"
-                                   th:href="@{'iWantAnswer/' + ${questionDetail.questionId}}"/>
-                            <input id="inviteOtherAnswer" class="btn btn-default" th:type="button" th:value="邀请回答"
-                                   th:href="@{'inviteOtherAnswer/' + ${questionDetail.questionId}}"/>
-                            <input id="getQuestionId" th:type="hidden" th:value="${questionDetail.questionId}"/>
+                            <span class="glyphicon glyphicon-eye-open"></span><span
+                                th:text="${questionDetail.scanedCount}"></span>次&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-user"></span>关注<span th:text="123"></span>人<br/>
+                            <br/>
+                            <div>
+                                <input id="focusQuestion" class="btn btn-default" th:type="button"
+                                       th:value="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"
+                                       th:href="@{'followQuestion/' + ${questionDetail.questionId}}"/>
+                                <input id="iWantAnswer" class="btn btn-default" th:type="button" th:value="我要回答"
+                                       th:href="@{'iWantAnswer/' + ${questionDetail.questionId}}"/>
+                                <input id="inviteOtherAnswer" class="btn btn-default" th:type="button" th:value="邀请回答"
+                                       th:href="@{'inviteOtherAnswer/' + ${questionDetail.questionId}}"/>
+                                <input id="getQuestionId" th:type="hidden" th:value="${questionDetail.questionId}"/>
+                            </div>
                         </div>
-                        <br/><br/>
+
+                        <br/>
                         <div id="editFrame" style="display:none;">
-                            <textarea id="answerContent" style="width:100%; height:80px;"></textarea>
+                            <textarea id="answerContent" style="width:100%; height:80px;"></textarea><br/>
                             <!--<iframe src="build/document.html" width="100%" />-->
 
                             <input id="quitAnswer" class="btn btn-default" th:type="button" th:value="取消回答"/>
@@ -49,7 +60,9 @@
                                    th:href="@{'/submitAnswer/' + ${questionDetail.questionId}}" align="right"/>
                         </div>
                     </div>
-                    <h5 class="page-header"></h5>
+                    <br/>
+
+                    <!--<h5 class="page-header"></h5>-->
                     <div class="card mb-4" th:each="answer : ${answerList}">
                         <div class="card-block">
                             <div class="card-title answer-meta">
@@ -57,13 +70,21 @@
                                     <img th:src="${answer.user.avatarUrl}" width="100%" height="100%"/>
                                 </div>
                                 <div style="margin-left: 55px">
-                                    <h4><a href="'/userProfile/' + ${answer.user.userId}"
+                                    <h5><a href="'/userProfile/' + ${answer.user.userId}"
                                            th:href="@{'/userProfile/' + ${answer.user.userId}}"
                                            class="card-link"
-                                           th:text="${answer.user.username}"></a></h4>
-                                    <h5 th:text="${answer.user.simpleDesc}"></h5>
+                                           th:text="${answer.user.username}"></a>&nbsp;
+                                        <span th:text="${answer.user.position}"/>&nbsp;
+                                        <span th:text="${answer.user.simpleDesc}"/></h5>
+                                    <!--<h5 th:text="${answer.user.simpleDesc}"></h5>-->
 
                                 </div>
+                                &nbsp;<a th:href="@{'/userProfile/' + ${answer.user.userId}}">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </a><span th:text="${answer.user.username}"/>刚刚回答了该问题
+                                <a href="#" style="float:right">
+                                    <span class="glyphicon glyphicon-plus-sign">关注</span>
+                                </a>
                                 <h6 th:text="${answer.likedCount} + '人赞同了该回答'"></h6>
                             </div>
                             <p class="card-text" th:text="${answer.answerContent}"/>
@@ -73,27 +94,43 @@
                                 <input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>
                                 <input id="userVote" th:type="hidden" th:value="${answer.user.vote}"/>
                                 <input id="upvoteCount" th:type="hidden" th:value="${answer.likedCount}"/>
-                                <input id="upvoteButton" type="button" class="btn btn-default"
-                                       th:value="${answer.user.vote == 1} ? '已赞同'+ ${answer.likedCount} + '次' : '赞同'+ ${answer.likedCount} + '次' "/>
                                 <input id="downvoteCount" th:type="hidden" th:value="${answer.dislikedCount}"/>
-                                <input id="downvoteButton" type="button" class="btn btn-default"
-                                       th:value="${answer.user.vote == -1} ? '已反对'+ ${answer.dislikedCount} + '次' : '反对'+ ${answer.dislikedCount} + '次' "/>
 
-                                <!--<i class="" aria-hidden="true">赞同<span th:text="${answer.likedCount}"/>次</i>-->
-                                <!--<i class="" aria-hidden="true">反对<span th:text="${answer.dislikedCount}"/>次</i>-->
+                                <i id="upvoteButton" class="glyphicon glyphicon-thumbs-up" th:href="@{upvote}"></i>
+                                <span class="label label-primary"
+                                      th:text="${answer.user.vote == 1} ? '已赞同'+ ${answer.likedCount} + '次' : '赞同'+ ${answer.likedCount} + '次' "></span>
+                                <i class="glyphicon glyphicon-thumbs-down" th:href="@{downvote}"></i>
+                                <span id="downvoteButton" class="label label-primary"
+                                      th:text="${answer.user.vote == -1} ? '已反对'+ ${answer.dislikedCount} + '次' : '反对'+ ${answer.dislikedCount} + '次' "></span>
 
+                                <!--<input id="upvoteButton" type="button" class="btn btn-default"-->
+                                <!--th:value="${answer.user.vote == 1} ? '已赞同'+ ${answer.likedCount} + '次' : '赞同'+ ${answer.likedCount} + '次' "/>-->
+                                <!--<input id="downvoteButton" type="button" class="btn btn-default"-->
+                                <!--th:value="${answer.user.vote == -1} ? '已反对'+ ${answer.dislikedCount} + '次' : '反对'+ ${answer.dislikedCount} + '次' "/>-->
+                                &nbsp;&nbsp;
+                                <a>
+                                    <span th:href="@{'/collectAnswer/' + ${answer.answerId}}"
+                                          class="glyphicon glyphicon-star"></span>
+                                </a>
+                                <span id="collectBtnValue"
+                                      th:text="${answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>&nbsp;&nbsp;
 
-                                <button id="collectBtn" th:href="@{'/collectAnswer/' + ${answer.answerId}}" type="button" class="btn btn-default btn-sm">
-                                    <div th:if="${answer.collectAnswer == false}">
-                                        <span id="notCollect" class="glyphicon glyphicon-star-empty"></span>
-                                    </div>
-                                    <div th:if="${answer.collectAnswer == true}">
-                                        <span id="collected" class="glyphicon glyphicon-star"></span>
-                                    </div>
-                                    <span id="collectBtnValue" th:text="${answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>
+                                <!--<button id="collectBtn" th:href="@{'/collectAnswer/' + ${answer.answerId}}"-->
+                                <!--type="button" class="btn btn-default btn-sm">-->
+                                <!--<div th:if="${answer.collectAnswer == false}">-->
+                                <!--<span id="notCollect" class="glyphicon glyphicon-star-empty"></span>-->
+                                <!--</div>-->
+                                <!--<div th:if="${answer.collectAnswer == true}">-->
+                                <!--<span id="collected" class="glyphicon glyphicon-star"></span>-->
+                                <!--</div>-->
+                                <!--<span id="collectBtnValue"-->
+                                <!--th:text="${answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>-->
+                                <!--</button>-->
+
+                                <button class="btn btn-xs" th:href="@{'/deleteAnswer/' + ${answer.answerId}}">
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </button>
-
-                                <a th:href="@{'/deleteAnswer/' + ${answer.answerId}}">删除</a>
+                                <!--<a th:href="@{'/deleteAnswer/' + ${answer.answerId}}">删除</a>-->
                             </div>
                         </div>
                         <br/>
@@ -103,41 +140,57 @@
         </div>
 
         <!-- 右侧栏目 -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div>
-                <!-- 热门标签 -->
-                <div class="card ">
-                    <h5 class="card-header"><i class="fa fa-tags" aria-hidden="true"></i> 热门标签</h5>
-                    <div class="card-block">
-                        <div class="row">
-                            <div class="col-lg-12">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- 热门问题 -->
-                <div class="card my-4">
+                <!-- 热门用户 根据关注量排序-->
+                <div class="card my-4" style='background-color: #fff;'>
                     <h5 class="card-header"><i class="fa fa-users" aria-hidden="true"></i> 热门问题</h5>
                     <div class="card-block">
                         <div class="row">
                             <div class="col-lg-12">
-                                <!--<span th:each="user: ${users}" th:object="${user}">-->
-                                <!--<a href="/u/waylau" th:href="'/u/' + *{username}" title="waylau"-->
-                                <!--th:title="*{username}"> <img src="/images/avatar-defualt.jpg"-->
-                                <!--th:src="*{avatar} == null ? '/images/avatar-defualt.jpg' : *{avatar}"-->
-                                <!--class="blog-avatar-50"/>-->
-                                <!--</a>-->
-                                <!--</span>-->
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                <span th:each="user: ${users}" th:object="${user}">
+                                <a th:href="@{/userProfile/‘ + *{username}}" th:title="*{username}">
+                                    <img src="/images/avatar-defualt.jpg"
+                                         th:src="*{avatar} == null ? '/images/avatar-defualt.jpg' : *{avatar}"
+                                         class="blog-avatar-50"/>
+                                </a>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 热门文章 -->
-                <div class="card my-4">
-                    <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i> 热门文章</h5>
 
+                <!-- 热门标签 -->
+                <div class="card" style='background-color: #fff;'>
+                    <h5 class="card-header"><i class="fa fa-tags" aria-hidden="true"></i> 热门标签</h5>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                                啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 热门问题 根据关注量排序-->
+                <div class="card my-4" style='background-color: #fff;'>
+                    <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i> 热门文章</h5>
+                    啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                    啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                    啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                    啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                    啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
                     <!--<ul class="list-group" th:each="hotblog , hotblogStat : ${hotest}"-->
                     <!--th:object="${hotblog}">-->
                     <!--<a th:href="'/u/'+*{username} +'/blogs/'+ *{blogId}"-->
@@ -153,9 +206,14 @@
                 </div>
 
                 <!-- 最新发布 -->
-                <div class="card my-4">
+                <div class="card my-4" style='background-color: #fff;'>
                     <h5 class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i> 最新发布</h5>
                     <div class="list-group">
+                        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                        啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
                         <!--<ul class="list-group" th:each="newblog : ${newest}"-->
                         <!--th:object="${newblog}">-->
                         <!--<a th:href="'/u/'+*{username} +'/blogs/'+ *{blogId}"-->
@@ -165,16 +223,13 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <!-- /.row -->
-
 </div>
-<!-- /.container -->
 
-<!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="http://localhost:8088/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/mask.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/jquery.smartbox.js"></script>
 
 <script>
     $('#focusQuestion').click(function () {
