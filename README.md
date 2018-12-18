@@ -7,4 +7,4 @@ The recommendation module is implemented by user-based and item-based algorithms
 
 Here are several rederings.
 
-![](./src/main/webapp/images/avatar-defualt.jpg)
+![](https://github.com/markytsai/Ask/blob/ask-question/src/main/webapp/samples/index.png    )

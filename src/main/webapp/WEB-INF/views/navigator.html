@@ -1,24 +1,42 @@
-<!-- Static navbar -->
+
+
 <div th:fragment="ask" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div>
-        <div class="smartBox_header">
-            标题
-        </div>
-        <div class="smartBox_body">
-            <p>smartbox.js 是一款基于jquery 的<span style="color: red;">开源的</span>弹出层插件，它小巧但功能强大，允许用户在一个界面同时弹出多个对话框。
-                弹出的内容支持多种形式，样式简洁多样。想要了解更多可以查看<a target="_blank"
-                                                href="http://smartbox.huangsw.com/cn/introduce.html">官方文档</a>。查看源码以及demo可以访问<a
-                        href="https://github.com/huangshuwei/jquery.smartbox" target="_blank">我的github</a>。
-            </p>
-        </div>
-        <div class="smartBox_footer">
-            footer 内容
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">我的问题</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="askForm">
+                        <div class="form-group">
+                            <label for="questionTitle" class="col-form-label">问题名称</label>
+                            <input id="questionTitle" type="text" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="questionContent" class="col-form-label">问题详情（如果有的话）</label>
+                            <textarea  id="questionContent" class="form-control" style="height: 30%;"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button id="askBtn" type="button" class="btn btn-primary">发布</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Static navbar -->
 <div th:fragment="nav" xmlns:th="http://www.w3.org/1999/xhtml">
+
     <nav class="navbar navbar-default navbar-static-top" style='background-color: #fff;'>
+
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -32,12 +50,17 @@
             </div>
 
             <form class="navbar-form navbar-right" role="search">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@mdo">我要提问
+                </button>
                 <div class="form-group">
                     <label for="keyword" class="sr-only">关键字</label>
                     <input type="text" id="keyword" class="form-control" placeholder="输入关键字"/>
                 </div>
                 <button id="searchBtn" type="submit" class="btn btn-default">搜索</button>
+
             </form>
+
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -64,10 +87,6 @@
                         </li>
                     </ul>
                 </div>
-                <ul class="nav navbar-nav vertical-align" style="float:right">
-                    <button class="btn btn-default" id="askWindow" th:href="@{/following}">我要提问</button>
-                    <!--<li><button id="askWindow" class="ask-question open-mask btn btn-default vertical-align">我要提问</button></li>-->
-                </ul>
             </div>
         </div>
     </nav>

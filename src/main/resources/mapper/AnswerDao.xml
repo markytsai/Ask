@@ -40,6 +40,10 @@
         update mid_user_vote_answer set vote = #{whichVote} where user_id = #{userId} and answer_id = #{answerId}
     </update>
 
+    <update id="insertVoteAnswer">
+        insert into mid_user_vote_answer(user_id, answer_id, vote) values(#{userId}, #{answerId}, #{whichVote})
+    </update>
+
     <update id="downvoteAnswer">
         update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}
     </update>

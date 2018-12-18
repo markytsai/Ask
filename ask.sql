@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2018-12-17 22:05:33
+Date: 2018-12-18 21:29:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `answer` (
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
@@ -42,8 +42,12 @@ INSERT INTO `answer` VALUES ('42', '测试一下', '122', '213', null, '2', '45e
 INSERT INTO `answer` VALUES ('44', 'qaaaaaa', '2', '1212', null, '2', '45e6c1985fe640e09cd770d95e6e2c8b');
 INSERT INTO `answer` VALUES ('45', '222222222222222', '0', '0', null, '2', '45e6c1985fe640e09cd770d95e6e2c8b');
 INSERT INTO `answer` VALUES ('46', '33333333', '0', '0', null, '2', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('47', 'tengfei', '0', '0', null, '3', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('48', '腾飞', '0', '0', null, '3', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('63', '11111212312312312', '0', '0', null, '3', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('65', '可视区域宽 ：document.documentElement.clientWidth  （width + padding）\n\n可视区域高 ：document.documentElement.clientHeight （height + padding）\n\n可视区域宽： document.body.offsetWidth (包括边线的宽： width + padding + border)\n\n可视区域高： document.body.offsetHeight (包括边线的高：height + padding + border)\n\n内容高 ： document.body.scrollHeight\n\n文档高 ： document.body.offsetHeight\n\n纵向滚动的距离 ： document.body.scrollTop || document.documentElement.scrollTop\n\n横向滚动的距离 ： document.body.scrollLeft || document.documentElement.scrollLeft', '0', '0', null, '3', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('66', '啊啊啊啊', '0', '1', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('67', '不不不', '0', '0', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('68', '踩踩踩踩踩踩', '0', '0', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('69', '顶顶顶顶顶顶', '0', '0', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -295,13 +299,13 @@ CREATE TABLE `mid_user_collect_answer` (
   `answer_id` int(11) NOT NULL,
   `favorite_id` int(11) NOT NULL COMMENT '收藏夹的编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_collect_answer
 -- ----------------------------
-INSERT INTO `mid_user_collect_answer` VALUES ('19', '45e6c1985fe640e09cd770d95e6e2c8b', '42', '1');
-INSERT INTO `mid_user_collect_answer` VALUES ('20', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '1');
+INSERT INTO `mid_user_collect_answer` VALUES ('24', '45e6c1985fe640e09cd770d95e6e2c8b', '47', '1');
+INSERT INTO `mid_user_collect_answer` VALUES ('25', '45e6c1985fe640e09cd770d95e6e2c8b', '48', '1');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_question
@@ -312,7 +316,7 @@ CREATE TABLE `mid_user_follow_question` (
   `user_id` varchar(128) DEFAULT NULL COMMENT '用户ID',
   `question_id` int(11) DEFAULT NULL COMMENT '问题ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
@@ -330,6 +334,7 @@ INSERT INTO `mid_user_follow_question` VALUES ('29', '45e6c1985fe640e09cd770d95e
 INSERT INTO `mid_user_follow_question` VALUES ('30', '45e6c1985fe640e09cd770d95e6e2c8b', '36');
 INSERT INTO `mid_user_follow_question` VALUES ('31', '45e6c1985fe640e09cd770d95e6e2c8b', '37');
 INSERT INTO `mid_user_follow_question` VALUES ('32', '45e6c1985fe640e09cd770d95e6e2c8b', '38');
+INSERT INTO `mid_user_follow_question` VALUES ('33', '45e6c1985fe640e09cd770d95e6e2c8b', '45');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -341,12 +346,15 @@ CREATE TABLE `mid_user_vote_answer` (
   `answer_id` int(11) NOT NULL,
   `vote` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'upvate:1;downvote:-1;not vote:0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
 INSERT INTO `mid_user_vote_answer` VALUES ('1', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('2', '45e6c1985fe640e09cd770d95e6e2c8b', '47', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '48', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '66', '0');
 
 -- ----------------------------
 -- Table structure for question
@@ -363,7 +371,7 @@ CREATE TABLE `question` (
   `user_id` varchar(128) NOT NULL,
   `answer_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of question
@@ -378,6 +386,13 @@ INSERT INTO `question` VALUES ('35', '零基础自学 Android 并去找工作可
 INSERT INTO `question` VALUES ('36', '为什么程序代码被编译成机器码就不能跨平台运行？', 'muyou', '{219:\"计算机科学\",212:\"C / C++\",196:\"C（编程语言）\",40:\"Java\"}', '0', '0', '1493871361605', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('37', 'Spring，Django，Rails，Express这些框架技术的出现都是为了解决什么问题，现在这些框架都应用在哪些方面？', 'muyou', '{220:\"Ruby on Rails\",221:\"Django（框架）\",222:\"设计模式\",223:\"Express（框架）\",43:\"Spring\"}', '0', '0', '1493871361819', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('38', '请问有详细介绍threadlocal的书籍吗？或者有哪位大神能详细说明下threadlocal？', 'muyou', '{40:\"Java\",224:\"ThreadLocal\"}', '0', '0', '1493871362010', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('39', 'aaaaa', 'aaaaaaaaaaaa', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('40', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('41', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('42', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('43', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('44', 'ccc', 'ccccccc', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('45', 'dddd', 'dddddd', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 
 -- ----------------------------
 -- Table structure for topic

@@ -22,6 +22,7 @@ public interface AnswerDao {
 
     void voteAnswer(@Param("userId") String userId, @Param("answerId") String answerId, @Param("whichVote") Integer whichVote);
 
+    void insertVoteAnswer(@Param("userId") String userId, @Param("answerId") String answerId, @Param("whichVote") Integer whichVote);
 
     Byte userVote(@Param("answerId") Integer answerId, @Param("userId") String userId);
 

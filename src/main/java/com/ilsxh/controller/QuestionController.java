@@ -149,13 +149,18 @@ public class QuestionController {
 
     /**
      * 提问题
-     *
-     * @param question
+     * @param questionTitle
+     * @param questionContent
      */
     @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
-    public Response askQuestion(@RequestBody Question question, HttpServletRequest request) {
+    @ResponseBody
+    public Response askQuestion(@RequestParam String questionTitle, @RequestParam String questionContent, HttpServletRequest request) {
         String userId = userService.getUserIdFromRedis(request);
+        Question question = new Question();
+        question.setQuestionTitle(questionTitle);
+        question.setQuestionContent(questionContent);
         question.setUserId(userId);
+
         questionService.addQuestion(question, userId);
         return new Response(1, "", question.getQuestionId());
     }
