@@ -7,24 +7,26 @@ import java.util.List;
 
 public interface AnswerDao {
 
-    void increAnswerUpVote(@Param("answerId") String answerId);
+    void increAnswerUpVote(@Param("answerId") Integer answerId);
 
-    void increAnswerDownVote(@Param("answerId") String answerId);
+    void increAnswerDownVote(@Param("answerId") Integer answerId);
 
-    void increAnswerUpVoteOnly(@Param("answerId") String answerId);
+    void increAnswerUpVoteOnly(@Param("answerId") Integer answerId);
 
-    void increAnswerDownVoteOnly(@Param("answerId") String answerId);
+    void increAnswerDownVoteOnly(@Param("answerId") Integer answerId);
 
-    void decreAnswerUpVoteOnly(@Param("answerId") String answerId);
+    void decreAnswerUpVoteOnly(@Param("answerId") Integer answerId);
 
-    void decreAnswerDownVoteOnly(@Param("answerId") String answerId);
+    void decreAnswerDownVoteOnly(@Param("answerId") Integer answerId);
 
 
-    void voteAnswer(@Param("userId") String userId, @Param("answerId") String answerId, @Param("whichVote") Integer whichVote);
+    void voteAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("whichVote") Integer whichVote);
 
-    void insertVoteAnswer(@Param("userId") String userId, @Param("answerId") String answerId, @Param("whichVote") Integer whichVote);
+    void insertVoteAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("whichVote") Integer whichVote);
 
-    Byte userVote(@Param("answerId") Integer answerId, @Param("userId") String userId);
+    Integer userVoteExisted(@Param("answerId") Integer answerId, @Param("userId") String userId);
+
+    Integer getUserVoteStatus(@Param("answerId") Integer answerId, @Param("userId") String userId);
 
     Integer isCollectAnswer(@Param("answerId") Integer answerId, @Param("userId") String userId);
 

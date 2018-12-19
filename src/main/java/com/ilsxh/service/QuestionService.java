@@ -49,10 +49,12 @@ public class QuestionService {
         List<Answer> answerList = questionDao.selectAnswersByQuestionId(questionId);
         for (Answer answer : answerList) {
             User user = userDao.selectUserByUserId(answer.getAnswerUserId());
-            Byte upOrDownVote = answerDao.userVote(answer.getAnswerId(), userId);
+            Integer upOrDownVote = answerDao.getUserVoteStatus(answer.getAnswerId(), userId);
             Integer isCollectAnswer = answerDao.isCollectAnswer(answer.getAnswerId(), userId);
             if (upOrDownVote != null) {
                 user.setVote(upOrDownVote);
+            } else {
+                user.setVote(0);
             }
             if (isCollectAnswer != null && isCollectAnswer == 1) {
                 answer.setCollectAnswer(Boolean.TRUE);

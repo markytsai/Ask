@@ -20,16 +20,11 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
-    @RequestMapping("/upvoteAnswer/{answerId}")
-    public void upvoteAnswer(@PathVariable("answerId") String answerId, @RequestParam("userVote") Integer userVote, HttpServletRequest request) {
+    @RequestMapping("/voteAnswer/{answerId}")
+    public void voteAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("userVote") Integer currVoteStatus,
+                           @RequestParam("upOrDownClick") Integer upOrDownClick, HttpServletRequest request) {
         String localUserId = userService.getUserIdFromRedis(request);
-        answerService.upvoteAnswer(localUserId, answerId, userVote);
-    }
-
-    @RequestMapping("/downvoteAnswer/{answerId}")
-    public void downvoteAnswer(@PathVariable("answerId") String answerId, @RequestParam("userVote") Integer userVote, HttpServletRequest request) {
-        String localUserId = userService.getUserIdFromRedis(request);
-        answerService.downvoteAnswer(localUserId, answerId, userVote);
+        answerService.vote(localUserId, answerId, currVoteStatus, upOrDownClick);
     }
 
     @RequestMapping("/collectAnswer/{answerId}")

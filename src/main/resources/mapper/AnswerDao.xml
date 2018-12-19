@@ -32,7 +32,11 @@
     </update>
 
     <!--判断是否已经投票-->
-    <select id="userVote" resultType="Byte">
+    <select id="userVoteExisted" resultType="Integer">
+        SELECT count(1) from mid_user_vote_answer where answer_id = #{answerId} and user_id = #{userId}
+    </select>
+
+    <select id="getUserVoteStatus" resultType="Integer">
         SELECT vote from mid_user_vote_answer where answer_id = #{answerId} and user_id = #{userId}
     </select>
 

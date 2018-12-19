@@ -20,36 +20,59 @@ public class AnswerService {
     @Autowired
     private AnswerDao answerDao;
 
-    public void upvoteAnswer(String localUserId, String answerId, Integer userVote) {
-        Boolean isVoteSucessful = Boolean.FALSE;
-        Boolean isupdateVoteSucessful = Boolean.FALSE;
+    /**
+     * 投票活动（点赞，反对）
+     *
+     * @param userId
+     * @param answerId
+     * @param currVoteStatus currrent status for answers
+     * @param upOrDownClick  点击了赞同按钮(Integer:1) or 反对按钮(Integer:-1)
+     */
+    public void vote(String userId, Integer answerId, Integer currVoteStatus, Integer upOrDownClick) {
 
-        if (userVote != null && userVote == DOWNVOTE_FOR_ANSWER) {
-            // mid_user_vote_answer中间表更新vote字段为1，赞同
-            answerDao.voteAnswer(localUserId, answerId, UPVOTE_FOR_ANSWER);
-            // 更新answer表赞同反对统计次数
-            answerDao.increAnswerUpVote(answerId);
-        } else if (userVote == NOT_VOTE_FOR_ANSWER) {
-            answerDao.voteAnswer(localUserId, answerId, UPVOTE_FOR_ANSWER);
-            answerDao.increAnswerUpVoteOnly(answerId);
-        } else {
-            answerDao.voteAnswer(localUserId, answerId, NOT_VOTE_FOR_ANSWER);
-            answerDao.decreAnswerUpVoteOnly(answerId);
+        Integer voteExisted = answerDao.userVoteExisted(answerId, userId);
+        if (voteExisted != null && voteExisted == 1) { // 曾经进行过投票活动,数据库中存在记录
+
+            if (upOrDownClick == 1) { // 点击赞同按钮
+
+                if (currVoteStatus != null && currVoteStatus == UPVOTE_FOR_ANSWER) { // 已经赞同
+                    // mid_user_vote_answer中间表更新vote字段为1，赞同
+                    answerDao.voteAnswer(userId, answerId, NOT_VOTE_FOR_ANSWER);
+                    // 更新answer表赞同反对统计次数
+                    answerDao.decreAnswerUpVoteOnly(answerId);
+                } else if (currVoteStatus == NOT_VOTE_FOR_ANSWER) { // 未投票
+                    answerDao.voteAnswer(userId, answerId, UPVOTE_FOR_ANSWER);
+                    answerDao.increAnswerUpVoteOnly(answerId);
+                } else {                                        // 反对
+                    answerDao.voteAnswer(userId, answerId, UPVOTE_FOR_ANSWER);
+                    answerDao.increAnswerUpVote(answerId);
+                }
+
+            } else { // 点击反对按钮
+
+                if (currVoteStatus != null && currVoteStatus == DOWNVOTE_FOR_ANSWER) {
+                    answerDao.voteAnswer(userId, answerId, NOT_VOTE_FOR_ANSWER);
+                    answerDao.decreAnswerDownVoteOnly(answerId);
+                } else if (currVoteStatus == NOT_VOTE_FOR_ANSWER) {
+                    answerDao.voteAnswer(userId, answerId, DOWNVOTE_FOR_ANSWER);
+                    answerDao.increAnswerDownVoteOnly(answerId);
+                } else {
+                    answerDao.voteAnswer(userId, answerId, DOWNVOTE_FOR_ANSWER);
+                    answerDao.increAnswerDownVote(answerId);
+                }
+            }
+
+        } else { // 数据库中不存在记录
+            if (upOrDownClick == 1) {
+                answerDao.increAnswerUpVoteOnly(answerId);
+                answerDao.insertVoteAnswer(userId, answerId, UPVOTE_FOR_ANSWER); // 赞成或者反对，根据voteToWhich判断
+            } else {
+                answerDao.insertVoteAnswer(userId, answerId, DOWNVOTE_FOR_ANSWER); // 赞成或者反对，根据voteToWhich判断
+                answerDao.increAnswerDownVoteOnly(answerId);
+            }
         }
     }
 
-    public void downvoteAnswer(String localUserId, String answerId, Integer userVote) {
-        if (userVote != null && userVote == DOWNVOTE_FOR_ANSWER) {
-            answerDao.voteAnswer(localUserId, answerId, NOT_VOTE_FOR_ANSWER);
-            answerDao.decreAnswerDownVoteOnly(answerId);
-        } else if (userVote == NOT_VOTE_FOR_ANSWER) {
-            answerDao.voteAnswer(localUserId, answerId, DOWNVOTE_FOR_ANSWER);
-            answerDao.increAnswerDownVoteOnly(answerId);
-        } else {
-            answerDao.voteAnswer(localUserId, answerId, DOWNVOTE_FOR_ANSWER);
-            answerDao.increAnswerDownVote(answerId);
-        }
-    }
 
     public void cancelCollectAnswer(String localUserId, Integer answerId) {
         answerDao.cancelCollectAnswer(localUserId, answerId);

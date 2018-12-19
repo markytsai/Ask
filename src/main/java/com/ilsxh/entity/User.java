@@ -98,7 +98,7 @@ public class User {
      */
     private Long joinTime;
 
-    private byte vote;
+    private Integer vote;
 
     private List<Question> followingQustionList;
 
@@ -286,11 +286,11 @@ public class User {
         this.joinTime = joinTime;
     }
 
-    public byte getVote() {
+    public Integer getVote() {
         return vote;
     }
 
-    public void setVote(byte vote) {
+    public void setVote(Integer vote) {
         this.vote = vote;
     }
 }

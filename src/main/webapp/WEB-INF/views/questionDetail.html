@@ -275,9 +275,9 @@
         }
 
         $.ajax({
-            url: "/upvoteAnswer/" + answerId,
-            type: "get",
-            data: {"userVote": userVote},
+            url: "/voteAnswer/" + answerId,
+            type: "post",
+            data: {"userVote": userVote, "upOrDownClick" : 1},
             dataType: 'json',
             success: function (response) {
                 if (response.state == 1) {
@@ -315,9 +315,9 @@
         }
 
         $.ajax({
-            url: "/downvoteAnswer/" + answerId,
-            type: "get",
-            data: {"userVote": userVote},
+            url: "/voteAnswer/" + answerId,
+            type: "post",
+            data: {"userVote": userVote, "upOrDownClick" : -1},
             dataType: 'json',
             success: function (response) {
                 if (response.state == 1) {
