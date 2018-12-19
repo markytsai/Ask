@@ -43,6 +43,7 @@ public class IndexController {
         String userId = userService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
         model.addAttribute("user", user);
+        System.out.println();
         return "editProfile";
     }
 

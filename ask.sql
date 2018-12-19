@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2018-12-18 21:29:54
+Date: 2018-12-19 23:48:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,32 +22,21 @@ DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer` (
   `answer_id` int(11) NOT NULL AUTO_INCREMENT,
   `answer_content` text,
-  `disliked_count` int(11) unsigned NOT NULL DEFAULT '0',
   `liked_count` int(11) NOT NULL DEFAULT '0',
+  `disliked_count` int(11) unsigned NOT NULL DEFAULT '0',
   `create_time` datetime DEFAULT NULL,
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
-INSERT INTO `answer` VALUES ('1', '测试', '1212', '12', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('33', '<p>前端不太熟~调的蛮久的..</p>', '12', '1', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('34', '<p>我既然提了这个问题 应该自动关注啊</p>', '12', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('35', '<p>买个阿里云部署下就行了～</p>', '12', '2', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('36', '<p><img src=\"http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/15/j_thumb.gif\"><br></p><p><br></p>', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('42', '测试一下', '122', '213', null, '2', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('44', 'qaaaaaa', '2', '1212', null, '2', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('45', '222222222222222', '0', '0', null, '2', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('46', '33333333', '0', '0', null, '2', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('63', '11111212312312312', '0', '0', null, '3', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('65', '可视区域宽 ：document.documentElement.clientWidth  （width + padding）\n\n可视区域高 ：document.documentElement.clientHeight （height + padding）\n\n可视区域宽： document.body.offsetWidth (包括边线的宽： width + padding + border)\n\n可视区域高： document.body.offsetHeight (包括边线的高：height + padding + border)\n\n内容高 ： document.body.scrollHeight\n\n文档高 ： document.body.offsetHeight\n\n纵向滚动的距离 ： document.body.scrollTop || document.documentElement.scrollTop\n\n横向滚动的距离 ： document.body.scrollLeft || document.documentElement.scrollLeft', '0', '0', null, '3', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('66', '啊啊啊啊', '0', '1', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('67', '不不不', '0', '0', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('68', '踩踩踩踩踩踩', '0', '0', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('69', '顶顶顶顶顶顶', '0', '0', null, '45', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('71', 'bbbbb', '1', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('72', '1111111', '1', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('73', '333333', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('74', '4444444', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -299,13 +288,14 @@ CREATE TABLE `mid_user_collect_answer` (
   `answer_id` int(11) NOT NULL,
   `favorite_id` int(11) NOT NULL COMMENT '收藏夹的编号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_collect_answer
 -- ----------------------------
 INSERT INTO `mid_user_collect_answer` VALUES ('24', '45e6c1985fe640e09cd770d95e6e2c8b', '47', '1');
 INSERT INTO `mid_user_collect_answer` VALUES ('25', '45e6c1985fe640e09cd770d95e6e2c8b', '48', '1');
+INSERT INTO `mid_user_collect_answer` VALUES ('28', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '1');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_question
@@ -316,25 +306,12 @@ CREATE TABLE `mid_user_follow_question` (
   `user_id` varchar(128) DEFAULT NULL COMMENT '用户ID',
   `question_id` int(11) DEFAULT NULL COMMENT '问题ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
 -- ----------------------------
-INSERT INTO `mid_user_follow_question` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '4');
-INSERT INTO `mid_user_follow_question` VALUES ('5', '45e6c1985fe640e09cd770d95e6e2c8b', '5');
-INSERT INTO `mid_user_follow_question` VALUES ('6', '45e6c1985fe640e09cd770d95e6e2c8b', '6');
-INSERT INTO `mid_user_follow_question` VALUES ('23', '45e6c1985fe640e09cd770d95e6e2c8b', '3');
-INSERT INTO `mid_user_follow_question` VALUES ('24', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
-INSERT INTO `mid_user_follow_question` VALUES ('25', '45e6c1985fe640e09cd770d95e6e2c8b', '2');
-INSERT INTO `mid_user_follow_question` VALUES ('26', '45e6c1985fe640e09cd770d95e6e2c8b', '32');
-INSERT INTO `mid_user_follow_question` VALUES ('27', '45e6c1985fe640e09cd770d95e6e2c8b', '33');
-INSERT INTO `mid_user_follow_question` VALUES ('28', '45e6c1985fe640e09cd770d95e6e2c8b', '34');
-INSERT INTO `mid_user_follow_question` VALUES ('29', '45e6c1985fe640e09cd770d95e6e2c8b', '35');
-INSERT INTO `mid_user_follow_question` VALUES ('30', '45e6c1985fe640e09cd770d95e6e2c8b', '36');
-INSERT INTO `mid_user_follow_question` VALUES ('31', '45e6c1985fe640e09cd770d95e6e2c8b', '37');
-INSERT INTO `mid_user_follow_question` VALUES ('32', '45e6c1985fe640e09cd770d95e6e2c8b', '38');
-INSERT INTO `mid_user_follow_question` VALUES ('33', '45e6c1985fe640e09cd770d95e6e2c8b', '45');
+INSERT INTO `mid_user_follow_question` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -351,10 +328,8 @@ CREATE TABLE `mid_user_vote_answer` (
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
-INSERT INTO `mid_user_vote_answer` VALUES ('1', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '0');
-INSERT INTO `mid_user_vote_answer` VALUES ('2', '45e6c1985fe640e09cd770d95e6e2c8b', '47', '0');
-INSERT INTO `mid_user_vote_answer` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '48', '0');
-INSERT INTO `mid_user_vote_answer` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '66', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '71', '1');
+INSERT INTO `mid_user_vote_answer` VALUES ('5', '45e6c1985fe640e09cd770d95e6e2c8b', '72', '1');
 
 -- ----------------------------
 -- Table structure for question
@@ -371,7 +346,7 @@ CREATE TABLE `question` (
   `user_id` varchar(128) NOT NULL,
   `answer_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of question
@@ -393,6 +368,7 @@ INSERT INTO `question` VALUES ('42', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c
 INSERT INTO `question` VALUES ('43', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('44', 'ccc', 'ccccccc', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('45', 'dddd', 'dddddd', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('46', 'bbbbb', 'bbbbbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 
 -- ----------------------------
 -- Table structure for topic
@@ -403,7 +379,6 @@ CREATE TABLE `topic` (
   `topic_name` varchar(30) NOT NULL DEFAULT '',
   `topic_desc` text,
   `topic_image` varchar(255) NOT NULL DEFAULT 'http://localhost/image/topic3.png',
-  `parent_topic_id` int(11) DEFAULT '1',
   `followed_count` int(11) DEFAULT '0',
   PRIMARY KEY (`topic_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=258 DEFAULT CHARSET=utf8;
@@ -411,262 +386,261 @@ CREATE TABLE `topic` (
 -- ----------------------------
 -- Records of topic
 -- ----------------------------
-INSERT INTO `topic` VALUES ('1', '根话题', '根话题', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('2', 'Python 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('3', 'python', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '1');
-INSERT INTO `topic` VALUES ('4', 'list', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '0');
-INSERT INTO `topic` VALUES ('5', 'django', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '0');
-INSERT INTO `topic` VALUES ('6', 'flask', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '0');
-INSERT INTO `topic` VALUES ('7', 'tornado', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '0');
-INSERT INTO `topic` VALUES ('8', 'web.py', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '0');
-INSERT INTO `topic` VALUES ('9', 'sqlalchemy', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '0');
-INSERT INTO `topic` VALUES ('10', 'virtualenv', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2', '0');
-INSERT INTO `topic` VALUES ('11', '搜索', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('12', '搜索引擎', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('13', '中文分词', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('14', '全文检索', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('15', 'lucene', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('16', 'solr', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('17', 'sphinx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('18', 'analyzer', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('19', 'elasticsearch', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '11', '0');
-INSERT INTO `topic` VALUES ('20', '开放平台', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('21', '新浪微博', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '20', '0');
-INSERT INTO `topic` VALUES ('22', '人人网', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '20', '0');
-INSERT INTO `topic` VALUES ('23', '微信', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '20', '0');
-INSERT INTO `topic` VALUES ('24', '腾讯微博', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '20', '0');
-INSERT INTO `topic` VALUES ('25', '百度', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '20', '0');
-INSERT INTO `topic` VALUES ('26', 'facebook', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '20', '0');
-INSERT INTO `topic` VALUES ('27', 'twitter', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '20', '0');
-INSERT INTO `topic` VALUES ('28', '前端开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('29', 'html', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('30', 'html5', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('31', 'css', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('32', 'css3', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('33', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('34', 'jquery', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('35', 'json', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('36', 'ajax', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('37', '正则表达式', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('38', 'bootstrap', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '28', '0');
-INSERT INTO `topic` VALUES ('39', 'JAVA 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '3');
-INSERT INTO `topic` VALUES ('40', 'java', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '10');
-INSERT INTO `topic` VALUES ('41', 'java-ee', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('42', 'jar', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('43', 'spring', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '2');
-INSERT INTO `topic` VALUES ('44', 'hibernate', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('45', 'struts', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('46', 'tomcat', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('47', 'maven', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('48', 'eclipse', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('49', 'intellij-idea', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '39', '0');
-INSERT INTO `topic` VALUES ('50', 'PHP 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('51', 'php', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('52', 'mysql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('53', 'apache', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('54', 'nginx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('55', 'mvc', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('56', 'codeigniter', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('57', 'symfony', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('58', 'zend-framework', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('59', 'composer', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('60', 'laravel', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '50', '0');
-INSERT INTO `topic` VALUES ('61', 'JavaScript 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('62', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '2');
-INSERT INTO `topic` VALUES ('63', 'jquery', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('64', 'node.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('65', 'chrome', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('66', 'firefox', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('67', 'internet-explorer', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('68', 'angular.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('69', 'typescript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('70', 'ecmascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('71', 'vue.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('72', 'react.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '61', '0');
-INSERT INTO `topic` VALUES ('73', '.NET 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('74', '.net', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '73', '0');
-INSERT INTO `topic` VALUES ('75', 'c#', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '73', '0');
-INSERT INTO `topic` VALUES ('76', 'asp.net', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '73', '0');
-INSERT INTO `topic` VALUES ('77', 'visual-studio', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '73', '0');
-INSERT INTO `topic` VALUES ('78', 'mvc', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '73', '0');
-INSERT INTO `topic` VALUES ('79', 'microsoft', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '73', '0');
-INSERT INTO `topic` VALUES ('80', '开发工具', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('81', 'vim', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('82', 'emacs', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('83', 'ide', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('84', 'eclipse', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('85', 'xcode', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('86', 'intellij-idea', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('87', 'textmate', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('88', 'sublime-text', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('89', 'visual-studio', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('90', 'git', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('91', 'github', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('92', 'svn', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('93', 'hg', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('94', 'docker', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('95', 'ci', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '80', '0');
-INSERT INTO `topic` VALUES ('96', 'Android 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('97', 'android', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('98', 'java', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('99', 'eclipse', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('100', 'xml', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('101', 'phonegap', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('102', 'json', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('103', 'webview', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('104', 'android-studio', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '96', '0');
-INSERT INTO `topic` VALUES ('105', 'Ruby 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('106', 'ruby', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '105', '0');
-INSERT INTO `topic` VALUES ('107', 'ruby-on-rails', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '105', '0');
-INSERT INTO `topic` VALUES ('108', 'rubygems', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '105', '0');
-INSERT INTO `topic` VALUES ('109', 'rvm', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '105', '0');
-INSERT INTO `topic` VALUES ('110', 'macosx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '105', '0');
-INSERT INTO `topic` VALUES ('111', 'bundle', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '105', '0');
-INSERT INTO `topic` VALUES ('112', '服务器', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('113', 'linux', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('114', 'unix', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('115', 'ubuntu', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('116', 'windows-server', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('117', 'centos', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('118', '负载均衡', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('119', '缓存', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('120', 'apache', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('121', 'nginx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '112', '0');
-INSERT INTO `topic` VALUES ('122', 'iOS 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('123', 'ios', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('124', 'objective-c', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('125', 'sqlite', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('126', 'safari', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('127', 'xcode', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('128', 'phonegap', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('129', 'cocoa', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('130', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('131', 'macos', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('132', 'iphone', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('133', 'ipad', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('134', 'swift', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '122', '0');
-INSERT INTO `topic` VALUES ('135', '数据库', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('136', '数据库', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('137', 'mysql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('138', 'sqlite', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('139', 'oracle', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('140', 'sql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('141', 'nosql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('142', 'redis', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('143', 'mongodb', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('144', 'memcached', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('145', 'postgresql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '135', '0');
-INSERT INTO `topic` VALUES ('146', '云计算', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('147', '云计算', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('148', '又拍云存储', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('149', '七牛云存储', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('150', 'google-app-engine', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('151', 'sina-app-engine', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('152', 'amazon-web-services', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('153', '百度云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('154', '金山云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('155', '美团云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('156', '腾讯云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '146', '0');
-INSERT INTO `topic` VALUES ('157', '开发语言', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0', '0');
-INSERT INTO `topic` VALUES ('158', 'java', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('159', 'c', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('160', 'c++', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '1');
-INSERT INTO `topic` VALUES ('161', 'php', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('162', 'perl', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('163', 'python', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('164', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('165', 'c#', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('166', 'ruby', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('167', 'objective-c', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('168', 'go', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('169', 'lua', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('170', 'node.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('171', 'erlang', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('172', 'scala', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('173', 'bash', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('174', 'actionscript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '157', '0');
-INSERT INTO `topic` VALUES ('176', '编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '1');
-INSERT INTO `topic` VALUES ('177', '编程语言', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('178', '数据结构', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('179', '', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('180', '算法', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('181', 'javaee', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('182', '面向对象编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '2');
-INSERT INTO `topic` VALUES ('183', '编程语言比较', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('184', '程序员', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('185', '互联网工作', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('186', 'IT 行业', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('187', 'Java 程序员', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('188', '社交网络', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('189', '手机', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('190', '用户界面设计', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('191', '招商银行', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('192', '学习方法', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('193', 'Android 应用设计', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('194', '调查类问题', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('195', '独立开发者', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('196', 'C（编程语言）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('197', 'Java 编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('198', '自学编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('199', '互联网', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('200', 'BAT（公司集合）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('201', '计算机', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('202', '长沙', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('203', '高并发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('204', '转行', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('205', '产品', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('206', '手机游戏', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('207', 'Cocos2d-x', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('208', 'Flappy Bird', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('209', 'CocosEditor', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('210', 'Java EE', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('211', '软件开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('212', 'C / C++', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('213', '电子信息工程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('214', 'IT 培训', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('215', '教育培训机构', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('216', 'Java Web', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('217', 'IT 男', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('218', '女程序员', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('219', '计算机科学', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('220', 'Ruby on Rails', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('221', 'Django（框架）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('222', '设计模式', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('223', 'Express（框架）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('224', 'ThreadLocal', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('225', '移动互联网', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('226', '移动开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('227', '问答', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('228', 'qwe', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('229', 'sadsa', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('230', '[i\'[', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('231', '222', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('232', 'fdsfsdfds', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('233', 'htrhtrhjtr', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('234', '蛤', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('235', 'aaa', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('236', 'token', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('237', '的', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('238', 'D~~D', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('239', 't', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('240', '蛤，乎', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('241', '发送到', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('242', '对对对', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('243', '，，，', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('244', '123', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('245', '第三方', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('246', '羡慕', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('247', 'dd', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('248', 'introduction', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('249', '爱你妹啊', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('250', '编程；学习；', '暂无描述', 'http://localhost/image/topic3.png', '1', '1');
-INSERT INTO `topic` VALUES ('251', '11111', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('252', '发的', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('253', 'dddd;', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('254', '55', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('255', '啦啦啦啦', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('256', '老哥稳', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
-INSERT INTO `topic` VALUES ('257', '人生，诗词', '暂无描述', 'http://localhost/image/topic3.png', '1', '0');
+INSERT INTO `topic` VALUES ('2', 'Python 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('3', 'python', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1');
+INSERT INTO `topic` VALUES ('4', 'list', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('5', 'django', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('6', 'flask', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('7', 'tornado', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('8', 'web.py', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('9', 'sqlalchemy', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('10', 'virtualenv', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('11', '搜索', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('12', '搜索引擎', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('13', '中文分词', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('14', '全文检索', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('15', 'lucene', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('16', 'solr', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('17', 'sphinx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('18', 'analyzer', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('19', 'elasticsearch', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('20', '开放平台', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('21', '新浪微博', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('22', '人人网', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('23', '微信', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('24', '腾讯微博', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('25', '百度', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('26', 'facebook', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('27', 'twitter', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('28', '前端开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('29', 'html', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('30', 'html5', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('31', 'css', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('32', 'css3', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('33', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('34', 'jquery', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('35', 'json', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('36', 'ajax', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('37', '正则表达式', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('38', 'bootstrap', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('39', 'JAVA 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '3');
+INSERT INTO `topic` VALUES ('40', 'java', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '10');
+INSERT INTO `topic` VALUES ('41', 'java-ee', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('42', 'jar', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('43', 'spring', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2');
+INSERT INTO `topic` VALUES ('44', 'hibernate', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('45', 'struts', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('46', 'tomcat', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('47', 'maven', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('48', 'eclipse', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('49', 'intellij-idea', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('50', 'PHP 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('51', 'php', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('52', 'mysql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('53', 'apache', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('54', 'nginx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('55', 'mvc', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('56', 'codeigniter', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('57', 'symfony', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('58', 'zend-framework', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('59', 'composer', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('60', 'laravel', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('61', 'JavaScript 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('62', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2');
+INSERT INTO `topic` VALUES ('63', 'jquery', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('64', 'node.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('65', 'chrome', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('66', 'firefox', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('67', 'internet-explorer', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('68', 'angular.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('69', 'typescript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('70', 'ecmascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('71', 'vue.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('72', 'react.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('73', '.NET 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('74', '.net', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('75', 'c#', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('76', 'asp.net', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('77', 'visual-studio', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('78', 'mvc', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('79', 'microsoft', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('80', '开发工具', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('81', 'vim', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('82', 'emacs', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('83', 'ide', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('84', 'eclipse', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('85', 'xcode', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('86', 'intellij-idea', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('87', 'textmate', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('88', 'sublime-text', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('89', 'visual-studio', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('90', 'git', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('91', 'github', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('92', 'svn', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('93', 'hg', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('94', 'docker', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('95', 'ci', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('96', 'Android 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('97', 'android', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('98', 'java', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('99', 'eclipse', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('100', 'xml', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('101', 'phonegap', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('102', 'json', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('103', 'webview', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('104', 'android-studio', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('105', 'Ruby 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('106', 'ruby', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('107', 'ruby-on-rails', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('108', 'rubygems', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('109', 'rvm', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('110', 'macosx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('111', 'bundle', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('112', '服务器', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('113', 'linux', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('114', 'unix', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('115', 'ubuntu', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('116', 'windows-server', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('117', 'centos', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('118', '负载均衡', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('119', '缓存', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('120', 'apache', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('121', 'nginx', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('122', 'iOS 开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('123', 'ios', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('124', 'objective-c', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('125', 'sqlite', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('126', 'safari', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('127', 'xcode', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('128', 'phonegap', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('129', 'cocoa', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('130', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('131', 'macos', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('132', 'iphone', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('133', 'ipad', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('134', 'swift', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('135', '数据库', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('136', '数据库', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('137', 'mysql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('138', 'sqlite', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('139', 'oracle', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('140', 'sql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('141', 'nosql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('142', 'redis', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('143', 'mongodb', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('144', 'memcached', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('145', 'postgresql', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('146', '云计算', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('147', '云计算', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('148', '又拍云存储', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('149', '七牛云存储', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('150', 'google-app-engine', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('151', 'sina-app-engine', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('152', 'amazon-web-services', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('153', '百度云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('154', '金山云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('155', '美团云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('156', '腾讯云', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('157', '开发语言', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('158', 'java', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('159', 'c', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('160', 'c++', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1');
+INSERT INTO `topic` VALUES ('161', 'php', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('162', 'perl', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('163', 'python', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('164', 'javascript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('165', 'c#', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('166', 'ruby', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('167', 'objective-c', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('168', 'go', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('169', 'lua', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('170', 'node.js', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('171', 'erlang', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('172', 'scala', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('173', 'bash', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('174', 'actionscript', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('176', '编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '1');
+INSERT INTO `topic` VALUES ('177', '编程语言', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('178', '数据结构', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('179', '', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('180', '算法', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('181', 'javaee', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('182', '面向对象编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '2');
+INSERT INTO `topic` VALUES ('183', '编程语言比较', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('184', '程序员', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('185', '互联网工作', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('186', 'IT 行业', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('187', 'Java 程序员', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('188', '社交网络', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('189', '手机', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('190', '用户界面设计', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('191', '招商银行', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('192', '学习方法', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('193', 'Android 应用设计', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('194', '调查类问题', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('195', '独立开发者', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('196', 'C（编程语言）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('197', 'Java 编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('198', '自学编程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('199', '互联网', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('200', 'BAT（公司集合）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('201', '计算机', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('202', '长沙', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('203', '高并发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('204', '转行', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('205', '产品', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('206', '手机游戏', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('207', 'Cocos2d-x', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('208', 'Flappy Bird', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('209', 'CocosEditor', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('210', 'Java EE', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('211', '软件开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('212', 'C / C++', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('213', '电子信息工程', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('214', 'IT 培训', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('215', '教育培训机构', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('216', 'Java Web', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('217', 'IT 男', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('218', '女程序员', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('219', '计算机科学', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('220', 'Ruby on Rails', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('221', 'Django（框架）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('222', '设计模式', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('223', 'Express（框架）', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('224', 'ThreadLocal', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('225', '移动互联网', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('226', '移动开发', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('227', '问答', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('228', 'qwe', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('229', 'sadsa', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('230', '[i\'[', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('231', '222', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('232', 'fdsfsdfds', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('233', 'htrhtrhjtr', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('234', '蛤', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('235', 'aaa', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('236', 'token', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('237', '的', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('238', 'D~~D', '暂无描述', 'http://od6v5lenq.bkt.clouddn.com/f3da5acb-8cf6-4d78-9dff-9ca23c1f7b85.jpg', '0');
+INSERT INTO `topic` VALUES ('239', 't', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('240', '蛤，乎', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('241', '发送到', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('242', '对对对', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('243', '，，，', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('244', '123', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('245', '第三方', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('246', '羡慕', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('247', 'dd', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('248', 'introduction', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('249', '爱你妹啊', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('250', '编程；学习；', '暂无描述', 'http://localhost/image/topic3.png', '1');
+INSERT INTO `topic` VALUES ('251', '11111', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('252', '发的', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('253', 'dddd;', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('254', '55', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('255', '啦啦啦啦', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('256', '老哥稳', '暂无描述', 'http://localhost/image/topic3.png', '0');
+INSERT INTO `topic` VALUES ('257', '人生，诗词', '暂无描述', 'http://localhost/image/topic3.png', '0');
 
 -- ----------------------------
 -- Table structure for user

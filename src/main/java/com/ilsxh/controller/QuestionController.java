@@ -5,6 +5,7 @@ import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.service.HotService;
 import com.ilsxh.service.IndexService;
 import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.UserService;
@@ -44,6 +45,9 @@ public class QuestionController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private HotService hotService;
+
     @RequestMapping("/following")
     public String getFollowingQuestionsByUserId(HttpServletRequest request, Model model) {
 
@@ -67,6 +71,10 @@ public class QuestionController {
 
         List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
         model.addAttribute("questionList", questionList);
+        model.addAttribute("hotQuestions", hotService.getHotQuestion());
+        model.addAttribute("hotUsers", hotService.getHotUsers());
+        model.addAttribute("hotTopics", hotService.getHotTopic());
+        model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
         return "index";
     }
 
@@ -92,6 +100,10 @@ public class QuestionController {
         model.addAttribute("hasFollowQuestion", hasFollowQuestion);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionDetail", question);
+        model.addAttribute("hotQuestions", hotService.getHotQuestion());
+        model.addAttribute("hotUsers", hotService.getHotUsers());
+        model.addAttribute("hotTopics", hotService.getHotTopic());
+        model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
         return "questionDetail";
     }
 
@@ -149,6 +161,7 @@ public class QuestionController {
 
     /**
      * 提问题
+     *
      * @param questionTitle
      * @param questionContent
      */

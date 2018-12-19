@@ -1,0 +1,78 @@
+<div th:fragment="sideCards" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <div class="col-md-3">
+        <!-- 热门问题 根据关注量排序-->
+        <div class="card my-4" style='background-color: #fff;'>
+            <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</h5>
+
+            <ul class="list-group" th:each="question : ${hotQuestions}">
+                <div class="card-block border-black">
+                    <a th:href="@{/#}" th:text="${question.questionTitle}"></a><i
+                        class="glyphicon glyphicon-fire"/>
+                </div>
+                <div style="float:right;">
+                    <a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注
+                    <a th:href="@{/#}" th:text="1000">10</a>个回答
+                </div>
+                <!--<hr color="#f8f8f8"/>-->
+            </ul><br/>
+            <div>
+                <a th:href="@{/#}" style="float: right;">更多热门问题>>></a>
+            </div>
+
+        </div>
+
+        <!-- 热门用户 根据关注量排序-->
+        <br/>
+        <div class="card my-4" style='background-color: #fff;'>
+            <h5 class="card-header"><i class="fa fa-users" aria-hidden="true"></i>活跃用户</h5>
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span th:each="user : ${hotUsers}">
+                            <a th:href="@{/#}">
+                                <img src="images/avatar-defualt.jpg"
+                                     th:src="@{/images/avatar-defualt.jpg}"
+                                     class="blog-avatar-50" width="30px" height="30px" style="border-radius: 30px"/>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div><br/>
+
+        <!-- 热门标签 根据问题相关度-->
+        <div class="card" style='background-color: #fff;'>
+            <h5 class="card-header">
+                <i class="fa fa-tags" aria-hidden="true"></i>热门标签
+            </h5>
+            <div class="card-block">
+                <div class="row">
+
+                    <ul class="topic-list">
+                        <span th:each="topic : ${hotTopics}" class="topicItem"
+                              style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;"><a
+                                th:href="@{/#}" data-id="1" th:text="${topic.topicName}">戏曲</a></span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 最新发布 -->
+        <div class="card my-4" style='background-color: #fff;'>
+            <h5 class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i>最新发问</h5>
+            <div class="list-group">
+                <!--<ul class="list-group" th:each="newblog : ${newest}"-->
+                <!--th:object="${newblog}">-->
+                <ul class="list-group" th:each="question : ${newestQuestions}">
+                    <div class="card-block border-black">
+                        <a th:href="@{/#}" th:text="${question.questionTitle}"></a>
+                    </div>
+                    <div><p style="float:right;">提问于<span th:text="3"></span>分钟前</p></div>
+                    <hr color="#f8f8f8"/>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

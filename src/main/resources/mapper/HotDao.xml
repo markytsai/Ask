@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为AnswerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.HotDao">
+
+    <select id="getHotQuestions" resultType="Question">
+        select * from question limit 3;
+    </select>
+
+    <select id="getHotUsers" resultType="User">
+        select * from user limit 3;
+    </select>
+
+    <select id="getHotTopics" resultType="Topic">
+        select * from topic limit 20;
+    </select>
+
+    <select id="getNewestRaisedQuestions" resultType="Question">
+        select * from question limit 3;
+    </select>
+
+</mapper>
+
