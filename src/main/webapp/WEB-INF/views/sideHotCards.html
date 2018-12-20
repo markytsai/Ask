@@ -5,7 +5,7 @@
         <div class="card my-4" style='background-color: #fff;'>
             <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</h5>
 
-            <ul class="list-group" th:each="question : ${hotQuestions}">
+            <ul class="list-group" th:each="question, userStat : ${hotQuestions}">
                 <div class="card-block border-black">
                     <a th:href="@{/#}" th:text="${question.questionTitle}"></a><i
                         class="glyphicon glyphicon-fire"/>
@@ -14,8 +14,10 @@
                     <a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注
                     <a th:href="@{/#}" th:text="1000">10</a>个回答
                 </div>
-                <!--<hr color="#f8f8f8"/>-->
-            </ul><br/>
+                <div th:if="${userStat.index} lt ${userStat.size - 1}">
+                    <hr color="#f8f8f8"/>
+                </div>
+            </ul>
             <div>
                 <a th:href="@{/#}" style="float: right;">更多热门问题>>></a>
             </div>
@@ -39,7 +41,8 @@
                     </div>
                 </div>
             </div>
-        </div><br/>
+        </div>
+        <br/>
 
         <!-- 热门标签 根据问题相关度-->
         <div class="card" style='background-color: #fff;'>

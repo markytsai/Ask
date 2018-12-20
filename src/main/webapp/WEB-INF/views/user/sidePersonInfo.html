@@ -1,0 +1,105 @@
+<div th:fragment="sidePersonInfo" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <div class="col-md-3 col-md-offset-1">
+
+        <div class="card my-4" style='background-color: #fff;'>
+            <div class="personinfo" th:id="personInfoCard">
+                <div class="personcard" style="overflow: hidden;">
+                    <img src="/images/avatar-defualt.jpg" style="width:80%; border-radius: 50%"/>
+                    <h3 th:text="${user.username}">caizhenya</h3>
+                    <!--<p class="persontitle" th:text="${user.position}">学生</p>-->
+                    <p class="persontitle">职业：<span th:text="${user.position}"></span></p>
+                    <p>个人简介：<span th:text="${user.industry}"></span></p>
+                    <p>现从事：<span th:text="${user.industry}"></span>行业</p>
+                    <p>教育经历：<span th:text="${user.education}"></span></p>
+                    <div style="margin: 24px 0;">
+                        <a href="#" class="persona"><i class="fa fa-dribbble"></i></a>
+                        <a href="#" class="persona"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="persona"><i class="fa fa-linkedin"></i></a>
+                        <a href="#" class="persona"><i class="fa fa-facebook"></i></a>
+                    </div>
+                    <div th:switch="${isLoginUser}">
+                        <p th:case="true">
+                            <input class="personbutton" th:type="button" style="width: 50%; float: left;"
+                                   th:href="@{/settings}" th:value="修改信息"/>
+                            <!--<button class="personbutton" th:href="@{/settings}" style="width: 50%; float: left;">修改信息</button>-->
+                            <button class="personbutton" style="width: 50%; float: right;">通知我</button>
+                        </p>
+                        <p th:case="false">
+                            <button class="personbutton" style="width: 50%; float: left;">关注他</button>
+                            <button class="personbutton" style="width: 50%; float: right;">通知我</button>
+                        </p>
+
+                        <p th:case="'admin'">User is an administrator</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card my-4" style='background-color: #fff;'>
+
+
+            <div class="personinfo" th:id="personInfoCard">
+                <div class="personcard" style="overflow: hidden;">
+
+                    <div class="follow-info">
+                        <div class="follow-people">
+                            <div class="wrap">
+                                <h4>
+                                    <p>关注了</p>
+                                    <p th:text="1111"></p>
+                                </h4>
+                                <h4>
+                                    <p>关注者</p>
+                                    <p th:text="11111"></p>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="follow-other" id="follow-other">
+                            <ul>
+                                <li>
+                                    <a id="sidebar-following-topic" href="/profileFollowTopic/">
+                                        <span>关注的话题</span>
+                                        <span th:text="2222"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="sidebar-following-question" href="/profileFollowQuestion/">
+                                        <span>关注的问题</span>
+                                        <span th:text="222"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a id="sidebar-following-collection"
+                                       href="/profileFollowCollection/">
+                                        <span>关注的收藏夹</span>
+                                        <span th:text="23232"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--<div class="follow-info">-->
+                    <!--<div class="follow-people">-->
+                    <!--<div class="wrap">-->
+                    <!--<div style="display:inline;">-->
+                    <!--<h4>-->
+                    <!--<p class="glyphicon label label-default" th:text="12333关注"></p>-->
+                    <!--</h4>-->
+                    <!--</div><br/>-->
+                    <!--<div style="display:inline;">-->
+                    <!--<h4>-->
+                    <!--<span class="glyphicon label label-default" th:text="12333粉丝"></span>-->
+                    <!--</h4>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

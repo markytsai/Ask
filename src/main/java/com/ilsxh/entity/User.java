@@ -98,7 +98,15 @@ public class User {
      */
     private Long joinTime;
 
+    /**
+     * 是否已经投票：1：赞同；0：未投票；-1：反对
+     */
     private Integer vote;
+
+    /**
+     * 是否被关注：1：被关注；0：未被关注
+     */
+    private Integer followStatus;
 
     private List<Question> followingQustionList;
 
@@ -292,5 +300,13 @@ public class User {
 
     public void setVote(Integer vote) {
         this.vote = vote;
+    }
+
+    public Integer getFollowStatus() {
+        return followStatus;
+    }
+
+    public void setFollowStatus(Integer followStatus) {
+        this.followStatus = followStatus;
     }
 }

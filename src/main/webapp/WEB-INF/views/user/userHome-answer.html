@@ -7,7 +7,7 @@
     <meta name="author" content=""/>
     <link rel="icon" href="../../favicon.ico"/>
 
-    <title>沙答</title>
+    <title>个人主页</title>
 
     <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
@@ -15,11 +15,12 @@
     <link href="http://localhost:8088/css/jquery.smartbox.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile.css"/>
 
     <style>
         .personcard {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            max-width: 200px;
+            max-width: 100%;
             max-height: 3000px;
             margin: auto;
             text-align: center;
@@ -62,65 +63,31 @@
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
 <div th:include="navigator :: ask"></div>
 
-<div class="personinfo" th:id="personInfoCard" style="display: none">
-    <div class="personcard">
-        <img src="/images/avatar-defualt.jpg" style="width:100%"/>
-        <h3>蔡振亚</h3>
-        <p class="persontitle">学生</p>
-        <p>The smartest man in the world</p>
-        <p>shenzhen University</p>
-        <!--<div style="margin: 24px 0;">-->
-        <!--<a href="#" class="persona"><i class="fa fa-dribbble"></i></a>-->
-        <!--<a href="#" class="persona"><i class="fa fa-twitter"></i></a>-->
-        <!--<a href="#" class="persona"><i class="fa fa-linkedin"></i></a>-->
-        <!--<a href="#" class="persona"><i class="fa fa-facebook"></i></a>-->
-        <!--</div>-->
-        <p>
-            <button class="personbutton">关注</button>
-        </p>
-    </div>
-</div>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-7 col-md-offset-1" style='background-color: #fff;'>
+
+        <!-- 左侧个人信息 -->
+        <div th:include="user/sidePersonInfo :: sidePersonInfo"></div>
+
+        <div class="col-md-7" style='background-color: #fff;'>
             <div id="mainContainer">
                 <div id="mainContainerRepleace">
-                    <div class="card mb-4">
 
-                        <div class="card-block">
-                            <h3 class="card-title">
-                                <p class="card-text text-dark" th:text="${questionDetail.questionTitle}"/>
-                            </h3>
-                            <p class="card-text" th:text="${questionDetail.questionContent}"/>
-
-                            <span class="glyphicon glyphicon-eye-open"></span>浏览<span
-                                th:text="${questionDetail.scanedCount}"></span>次&nbsp;&nbsp;
-                            <span class="glyphicon glyphicon-user"></span>关注<span th:text="123"></span>人<br/>
-                            <br/>
-                            <div>
-                                <input id="focusQuestion" class="btn btn-default" th:type="button"
-                                       th:value="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"
-                                       th:href="@{'followQuestion/' + ${questionDetail.questionId}}"/>
-                                <input id="iWantAnswer" class="btn btn-default" th:type="button" th:value="我要回答"
-                                       th:href="@{'iWantAnswer/' + ${questionDetail.questionId}}"/>
-                                <input id="inviteOtherAnswer" class="btn btn-default" th:type="button" th:value="邀请回答"
-                                       th:href="@{'inviteOtherAnswer/' + ${questionDetail.questionId}}"/>
-                                <input id="getQuestionId" th:type="hidden" th:value="${questionDetail.questionId}"/>
-                            </div>
-                        </div>
-
-                        <br/>
-                        <div id="editFrame" style="display:none;">
-                            <textarea id="answerContent" style="width:100%; height:80px;"></textarea><br/>
-                            <!--<iframe src="build/document.html" width="100%" />-->
-
-                            <input id="quitAnswer" class="btn btn-default" th:type="button" th:value="取消回答"/>
-                            <input id="submitAnswer" class="btn btn-default" th:type="button" th:value="提交回答"
-                                   th:href="@{'/submitAnswer/' + ${questionDetail.questionId}}" align="right"/>
-                        </div>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${user.userId}}">动态</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${user.userId}}">问题</a></li>
+                        <li role="presentation" class="active"><a
+                                th:href="@{'/userHome/answer/' + ${user.userId}}">回答</a></li>
+                        <li role="presentation"><a href="#">收藏</a></li>
+                        <li role="presentation"><a href="#">关注问题</a></li>
+                        <li role="presentation"><a href="#">关注用户</a></li>
+                        <li role="presentation"><a href="#">关注话题</a></li>
+                    </ul>
+                    <div class="tab-title" th:switch="${isLoginUser}">
+                        <h5 th:if="${isLoginUser} == 'true'">我的回答</h5>
+                        <h5 th:if="${isLoginUser} == 'false'">他的回答</h5>
                     </div>
-                    <br/>
 
                     <!--<h5 class="page-header"></h5>-->
                     <div class="card mb-4" th:each="answer : ${answerList}">
@@ -139,9 +106,6 @@
                                         </a>&nbsp;
                                         <span th:text="${answer.user.position}"/>&nbsp;
                                         <span th:text="${answer.user.simpleDesc}"/>
-                                        <span th:id="userId + '-' + ${answer.user.userId}"
-                                              class="glyphicon label label-primary followUser" style="float:right"
-                                              th:text="${answer.user.followStatus == 1} ? '已关注答主' : '关注答主'">关注答主</span>
                                     </h5>
                                 </div>
                                 &nbsp;<a th:href="@{'/userHome/question/' + ${answer.user.userId}}">
@@ -182,9 +146,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 右侧栏目 -->
-        <div th:include="sideHotCards :: sideCards"></div>
 
     </div>
 </div>

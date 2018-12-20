@@ -102,7 +102,6 @@ public class QuestionController {
         model.addAttribute("questionDetail", question);
         model.addAttribute("hotQuestions", hotService.getHotQuestion());
         model.addAttribute("hotUsers", hotService.getHotUsers());
-        model.addAttribute("hotTopics", hotService.getHotTopic());
         model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
         return "questionDetail";
     }

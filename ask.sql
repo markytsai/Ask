@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2018-12-19 23:48:26
+Date: 2018-12-20 21:49:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,22 +21,25 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `answer`;
 CREATE TABLE `answer` (
   `answer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `answer_content` text,
+  `answer_content` longtext NOT NULL,
   `liked_count` int(11) NOT NULL DEFAULT '0',
   `disliked_count` int(11) unsigned NOT NULL DEFAULT '0',
   `create_time` datetime DEFAULT NULL,
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
-INSERT INTO `answer` VALUES ('71', 'bbbbb', '1', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('72', '1111111', '1', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('73', '333333', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('74', '4444444', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('71', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('72', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '1', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('73', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('74', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('77', 'Containers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.', '0', '0', null, '47', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('78', '这个还不太清楚，winter is on the way!!', '1', '0', null, '48', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('79', '作为tengfei，表示还行，winter is on the way!!!??', '0', '0', null, '48', '6a99cf86555243ba8b23927c0748b562');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -306,12 +309,35 @@ CREATE TABLE `mid_user_follow_question` (
   `user_id` varchar(128) DEFAULT NULL COMMENT '用户ID',
   `question_id` int(11) DEFAULT NULL COMMENT '问题ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
 -- ----------------------------
-INSERT INTO `mid_user_follow_question` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `mid_user_follow_question` VALUES ('39', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `mid_user_follow_question` VALUES ('40', '45e6c1985fe640e09cd770d95e6e2c8b', '2');
+INSERT INTO `mid_user_follow_question` VALUES ('41', '45e6c1985fe640e09cd770d95e6e2c8b', '3');
+INSERT INTO `mid_user_follow_question` VALUES ('42', '45e6c1985fe640e09cd770d95e6e2c8b', '47');
+INSERT INTO `mid_user_follow_question` VALUES ('43', '6a99cf86555243ba8b23927c0748b562', '1');
+INSERT INTO `mid_user_follow_question` VALUES ('44', '6a99cf86555243ba8b23927c0748b562', '48');
+INSERT INTO `mid_user_follow_question` VALUES ('45', '45e6c1985fe640e09cd770d95e6e2c8b', '48');
+
+-- ----------------------------
+-- Table structure for mid_user_follow_user
+-- ----------------------------
+DROP TABLE IF EXISTS `mid_user_follow_user`;
+CREATE TABLE `mid_user_follow_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(128) NOT NULL,
+  `user_followed_id` varchar(128) NOT NULL,
+  `follow_status` int(1) NOT NULL COMMENT '1:following;0:not follow',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of mid_user_follow_user
+-- ----------------------------
+INSERT INTO `mid_user_follow_user` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -323,13 +349,17 @@ CREATE TABLE `mid_user_vote_answer` (
   `answer_id` int(11) NOT NULL,
   `vote` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'upvate:1;downvote:-1;not vote:0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
-INSERT INTO `mid_user_vote_answer` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '71', '1');
+INSERT INTO `mid_user_vote_answer` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '71', '0');
 INSERT INTO `mid_user_vote_answer` VALUES ('5', '45e6c1985fe640e09cd770d95e6e2c8b', '72', '1');
+INSERT INTO `mid_user_vote_answer` VALUES ('6', '45e6c1985fe640e09cd770d95e6e2c8b', '77', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('7', '6a99cf86555243ba8b23927c0748b562', '72', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('8', '6a99cf86555243ba8b23927c0748b562', '78', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '78', '1');
 
 -- ----------------------------
 -- Table structure for question
@@ -346,7 +376,7 @@ CREATE TABLE `question` (
   `user_id` varchar(128) NOT NULL,
   `answer_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of question
@@ -369,6 +399,8 @@ INSERT INTO `question` VALUES ('43', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c
 INSERT INTO `question` VALUES ('44', 'ccc', 'ccccccc', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('45', 'dddd', 'dddddd', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('46', 'bbbbb', 'bbbbbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('47', '今天星期几？', '今天星期几？今天星期几？今天星期几？今天星期几？今天星期几？今天星期几？', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('48', '如何看待蘑菇街对员工的欺骗？', '如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？', '', '0', '0', '0', '6a99cf86555243ba8b23927c0748b562', '0');
 
 -- ----------------------------
 -- Table structure for topic
@@ -654,7 +686,7 @@ CREATE TABLE `user` (
   `activation_code` varchar(50) NOT NULL DEFAULT '',
   `join_time` bigint(20) NOT NULL DEFAULT '0',
   `username` varchar(50) NOT NULL DEFAULT '',
-  `avatar_url` varchar(200) NOT NULL DEFAULT '',
+  `avatar_url` varchar(200) NOT NULL DEFAULT 'http://localhost:8088/images/20181211191204.png',
   `gender` int(11) NOT NULL DEFAULT '1',
   `simple_desc` varchar(50) NOT NULL DEFAULT '',
   `position` varchar(100) NOT NULL DEFAULT '',
@@ -675,4 +707,4 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'caizhenya', 'http://localhost:8088/images/20181211191204.png', '1', '世界上最聪明的人', '学生', '互联网', 'java实习生', '本科', '修改密码', '0', '0', '0', '0', '0', '2312312');
-INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', 'tengfei', '', '1', '', '', '', '', '', '', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', 'tengfei', 'http://localhost:8088/images/20181211191204.png', '1', '世界上最帅的人', '学生', '金融', '', '本科', '', '0', '0', '0', '0', '0', '');

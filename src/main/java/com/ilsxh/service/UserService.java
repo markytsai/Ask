@@ -6,9 +6,11 @@ import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.util.Response;
 import com.ilsxh.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -84,7 +86,7 @@ public class UserService {
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
                 loginToken = cookie.getValue();
-                // 从缓存中清除loginToken
+                // 从Redis缓存中清除loginToken
                 Jedis jedis = jedisPool.getResource();
                 jedis.del(loginToken);
                 jedis.close();
@@ -174,5 +176,18 @@ public class UserService {
             answer.setUser(user);
         }
         return answerList;
+    }
+
+    public void followUser(String userIdToBeFollowed, String userId) {
+
+        Integer followExisted = userDao.getUserFollowStatus(userId, userIdToBeFollowed);
+        if (followExisted == null) { // 第一次关注答主
+            userDao.insertUserFollowStatus(userId, userIdToBeFollowed, 1);
+        } else if (followExisted == 0) { // 曾经关注过，再次关注操作
+            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 1);
+        } else { // 取关操作
+            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0);
+        }
+
     }
 }

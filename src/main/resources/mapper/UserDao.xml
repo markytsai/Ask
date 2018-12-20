@@ -41,6 +41,18 @@
         from answer
         where answer_user_id = #{userId}
     </select>
+    
+    <select id="getUserFollowStatus" resultType="Integer">
+        select follow_status from mid_user_follow_user where user_id = #{userId} and user_followed_id = #{userIdToBeFollowed}
+    </select>
+
+    <insert id="insertUserFollowStatus">
+        insert into mid_user_follow_user(user_id, user_followed_id, follow_status) values(#{userId}, #{userIdToBeFollowed}, #{followStatus});
+
+    </insert>
+    <update id="updateUserFollowStatus">
+        update mid_user_follow_user set follow_status = #{followStatus} where user_id = #{userId} and user_followed_id = #{userIdToBeFollowed}
+    </update>
 
 </mapper>
 

@@ -29,7 +29,7 @@
             q.followed_count,
             q.scanned_count,
             q.create_time,
-            qum.user_id,
+            q.user_id,
             q.answer_count
         FROM
             question AS q

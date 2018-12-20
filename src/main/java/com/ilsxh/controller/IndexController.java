@@ -1,7 +1,10 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.entity.Answer;
+import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
 import com.ilsxh.service.IndexService;
+import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.UserService;
 import com.ilsxh.util.MyConstant;
 import com.ilsxh.util.MyUtil;
@@ -9,11 +12,13 @@ import com.ilsxh.util.QiniuyunUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,6 +35,9 @@ public class IndexController {
 
     @Autowired
     private IndexService indexService;
+
+    @Autowired
+    private QuestionService questionService;
 
     /**
      * 跳转到用户信息设置页面
@@ -61,7 +69,7 @@ public class IndexController {
 
         indexService.updateProfile(user);
         model.addAttribute("user", user);
-        return "redirect:/userProfile/" + user.getUserId();
+        return "redirect:/userHome/question/" + user.getUserId();
     }
 
     /**
@@ -102,5 +110,37 @@ public class IndexController {
 
         indexService.updateAvatarUrl(userId, avatarUrl);
         return "redirect:/profile/" + userId;
+    }
+
+    @RequestMapping("/userHomeAnswer/{userId}")
+    public String getProfileQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
+        String localUserId = userService.getUserIdFromRedis(request);
+        // 获取用户信息
+        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+        // 获取问题列表
+
+        List<Question> questionList = questionService.getRaisedQuestionByUserId(userId);
+        map.put("questionList", questionList);
+
+        model.addAllAttributes(map);
+        return "userProfileQuestion";
+    }
+
+    @RequestMapping("/userHome/question/{userId}")
+    public String profile(@PathVariable String userId, HttpServletRequest request, Model model) {
+
+//        model.addAttribute("user", userDao.selectUserByUserId(userId));
+
+        String localUserId = userService.getUserIdFromRedis(request);
+        // 获取用户信息,userId from parameter, localhost from token
+        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+
+        // 获取提问列表
+        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
+        map.put("questionList", questionList);
+
+        model.addAllAttributes(map);
+
+        return "user/userHome-question";
     }
 }
