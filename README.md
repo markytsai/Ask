@@ -8,13 +8,13 @@ The recommendation module is implemented by user-based and item-based algorithms
 Here are several rederings.
 
 1. Login page
-![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/login.jpg)
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/samples/login.jpg)
 2. Question index page
-![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/index-following.png)
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/samples/index-following.png)
 3. Question detail page
-![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/question-detail.jpg)
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/samples/question-detail.jpg)
 4. User home page
-![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/user-homepage.jpg)
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/samples/user-homepage.jpg)
 
 
 #### To-do list
