@@ -31,7 +31,6 @@ public class MainController {
     @RequestMapping(value = {"index"}, method = RequestMethod.GET)
     public String index() {
         return "redirect:/following";
-//        return new ModelAndView("index", "", null);
     }
 
     @RequestMapping(value = {"register"}, method = RequestMethod.GET)

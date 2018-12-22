@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2018-12-20 21:49:37
+Date: 2018-12-22 22:56:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,22 +24,32 @@ CREATE TABLE `answer` (
   `answer_content` longtext NOT NULL,
   `liked_count` int(11) NOT NULL DEFAULT '0',
   `disliked_count` int(11) unsigned NOT NULL DEFAULT '0',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` bigint(13) DEFAULT '0',
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
-INSERT INTO `answer` VALUES ('71', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('72', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '1', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('73', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('74', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', null, '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('77', 'Containers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.', '0', '0', null, '47', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('78', '这个还不太清楚，winter is on the way!!', '1', '0', null, '48', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('79', '作为tengfei，表示还行，winter is on the way!!!??', '0', '0', null, '48', '6a99cf86555243ba8b23927c0748b562');
+INSERT INTO `answer` VALUES ('71', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', '1545360334381', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('72', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '1', '0', '1545360334381', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('73', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', '1545360334381', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('74', '本文章将介绍Thymeleaf标准表达式语法中的概念。我们将使用th:each标记在模板中迭代产品列表。编辑源代码以便将产品列表显示为表格行。已经将Product类的对象列表设置为具有变量名称productList的上下文模型(参考:MyController.java中的实现)。如果要上机实践，请参考:Thymeleaf+SpringMVC5示例项目。这里不再重复创建项目的过程，这里将只介绍如何使用Thymeleaf标准表达式和标签。', '0', '0', '1545360334381', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('77', 'Containers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.\n\nContainers are the most basic layout element in Bootstrap and are required when using our default grid system. Choose from a responsive, fixed-width container (meaning its max-width changes at each breakpoint) or fluid-width (meaning it’s 100% wide all the time).\n\nWhile containers can be nested, most layouts do not require a nested container.', '0', '0', '1545360334381', '47', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('78', '这个还不太清楚，winter is on the way!!', '1', '0', '1545360334381', '48', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('79', '作为tengfei，表示还行，winter is on the way!!!??', '0', '0', '1545360334381', '48', '6a99cf86555243ba8b23927c0748b562');
+INSERT INTO `answer` VALUES ('80', '1111', '0', '0', '1545360334381', '51', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('81', '2222', '0', '0', '1545360334381', '51', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('82', '3333333', '0', '0', '1545360334381', '51', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('83', '111', '0', '0', '1545365176819', '3', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('84', '很多吧', '0', '0', '1545366525226', '50', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('85', '怎么可能呢？做梦！！！！', '0', '0', '1545404625979', '2', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('86', '快点问啊，问的啥？？？？', '0', '0', '1545479248847', '33', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('87', '快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？快点问啊，问的啥？？？？', '0', '0', '1545479339617', '33', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('88', '很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很多很', '0', '0', '1545483275817', '3', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('89', '三四年吧，或许更多。', '0', '0', '1545488547289', '2', '45e6c1985fe640e09cd770d95e6e2c8b');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -309,7 +319,7 @@ CREATE TABLE `mid_user_follow_question` (
   `user_id` varchar(128) DEFAULT NULL COMMENT '用户ID',
   `question_id` int(11) DEFAULT NULL COMMENT '问题ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
@@ -321,6 +331,8 @@ INSERT INTO `mid_user_follow_question` VALUES ('42', '45e6c1985fe640e09cd770d95e
 INSERT INTO `mid_user_follow_question` VALUES ('43', '6a99cf86555243ba8b23927c0748b562', '1');
 INSERT INTO `mid_user_follow_question` VALUES ('44', '6a99cf86555243ba8b23927c0748b562', '48');
 INSERT INTO `mid_user_follow_question` VALUES ('45', '45e6c1985fe640e09cd770d95e6e2c8b', '48');
+INSERT INTO `mid_user_follow_question` VALUES ('46', '45e6c1985fe640e09cd770d95e6e2c8b', '49');
+INSERT INTO `mid_user_follow_question` VALUES ('47', '45e6c1985fe640e09cd770d95e6e2c8b', '50');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_user
@@ -330,14 +342,15 @@ CREATE TABLE `mid_user_follow_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(128) NOT NULL,
   `user_followed_id` varchar(128) NOT NULL,
-  `follow_status` int(1) NOT NULL COMMENT '1:following;0:not follow',
+  `follow_status` int(1) NOT NULL DEFAULT '0' COMMENT '1:following;0:not follow',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_follow_user
 -- ----------------------------
-INSERT INTO `mid_user_follow_user` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `mid_user_follow_user` VALUES ('44', '6a99cf86555243ba8b23927c0748b562', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `mid_user_follow_user` VALUES ('45', '45e6c1985fe640e09cd770d95e6e2c8b', '6a99cf86555243ba8b23927c0748b562', '0');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -349,7 +362,7 @@ CREATE TABLE `mid_user_vote_answer` (
   `answer_id` int(11) NOT NULL,
   `vote` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'upvate:1;downvote:-1;not vote:0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_vote_answer
@@ -360,6 +373,8 @@ INSERT INTO `mid_user_vote_answer` VALUES ('6', '45e6c1985fe640e09cd770d95e6e2c8
 INSERT INTO `mid_user_vote_answer` VALUES ('7', '6a99cf86555243ba8b23927c0748b562', '72', '0');
 INSERT INTO `mid_user_vote_answer` VALUES ('8', '6a99cf86555243ba8b23927c0748b562', '78', '0');
 INSERT INTO `mid_user_vote_answer` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '78', '1');
+INSERT INTO `mid_user_vote_answer` VALUES ('10', '45e6c1985fe640e09cd770d95e6e2c8b', '84', '0');
+INSERT INTO `mid_user_vote_answer` VALUES ('11', '45e6c1985fe640e09cd770d95e6e2c8b', '86', '0');
 
 -- ----------------------------
 -- Table structure for question
@@ -372,35 +387,38 @@ CREATE TABLE `question` (
   `topic_kv_list` varchar(200) NOT NULL DEFAULT '',
   `followed_count` int(11) NOT NULL DEFAULT '0',
   `scanned_count` int(11) NOT NULL DEFAULT '0',
-  `create_time` bigint(20) NOT NULL DEFAULT '0',
+  `create_time` bigint(13) NOT NULL DEFAULT '0',
   `user_id` varchar(128) NOT NULL,
   `answer_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('1', '高在哪里？', '高在哪里？啊啊啊啊啊啊啊啊啊啊啊', '{40:\"Java\",160:\"C++\",182:\"面向对象编程\",183:\"编程语言比较\"}', '0', '123', '1493871294174', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('2', '在北京做Java开发如何月薪达到两万，需要技术水平达到什么程度？', '在北京做Java开发如何月薪达到两万，需要技术水平达到什么程度？啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', '{184:\"程序员\",185:\"互联网工作\",40:\"Java\",176:\"编程\"}', '0', '123', '1493871303329', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('3', '中国现在有多少程序员？', '中国现在有多少程序员？啊啊啊啊啊啊啊啊', '{186:\"IT 行业\",187:\"Java 程序员\",184:\"程序员\"}', '0', '3', '1493871312466', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('32', 'Java培训哪家好？', 'muyou', '{187:\"Java 程序员\",214:\"IT 培训\",40:\"Java\",215:\"教育培训机构\"}', '0', '0', '1493871360843', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('33', '请问一个JavaScript、java高手，node.js的一个问题？', 'muyou', '{216:\"Java Web\",64:\"Node.js\",40:\"Java\"}', '0', '0', '1493871361050', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('34', '程序员带孩子是怎样一种体验？', 'muyou', '{186:\"IT 行业\",187:\"Java 程序员\",184:\"程序员\",217:\"IT 男\",218:\"女程序员\"}', '0', '0', '1493871361224', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('35', '零基础自学 Android 并去找工作可行性大么？', 'muyou', '{184:\"程序员\",96:\"Android 开发\",197:\"Java 编程\",176:\"编程\"}', '0', '0', '1493871361434', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('36', '为什么程序代码被编译成机器码就不能跨平台运行？', 'muyou', '{219:\"计算机科学\",212:\"C / C++\",196:\"C（编程语言）\",40:\"Java\"}', '0', '0', '1493871361605', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('37', 'Spring，Django，Rails，Express这些框架技术的出现都是为了解决什么问题，现在这些框架都应用在哪些方面？', 'muyou', '{220:\"Ruby on Rails\",221:\"Django（框架）\",222:\"设计模式\",223:\"Express（框架）\",43:\"Spring\"}', '0', '0', '1493871361819', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('38', '请问有详细介绍threadlocal的书籍吗？或者有哪位大神能详细说明下threadlocal？', 'muyou', '{40:\"Java\",224:\"ThreadLocal\"}', '0', '0', '1493871362010', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('39', 'aaaaa', 'aaaaaaaaaaaa', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('40', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('41', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('42', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('43', 'bbbbb', 'bbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('44', 'ccc', 'ccccccc', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('45', 'dddd', 'dddddd', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('46', 'bbbbb', 'bbbbbbbb', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('47', '今天星期几？', '今天星期几？今天星期几？今天星期几？今天星期几？今天星期几？今天星期几？', '', '0', '0', '0', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('48', '如何看待蘑菇街对员工的欺骗？', '如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？', '', '0', '0', '0', '6a99cf86555243ba8b23927c0748b562', '0');
+INSERT INTO `question` VALUES ('1', '高在哪里？', '高在哪里？啊啊啊啊啊啊啊啊啊啊啊', '{40:\"Java\",160:\"C++\",182:\"面向对象编程\",183:\"编程语言比较\"}', '0', '123', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('2', '在北京做Java开发如何月薪达到两万，需要技术水平达到什么程度？', '在北京做Java开发如何月薪达到两万，需要技术水平达到什么程度？啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', '{184:\"程序员\",185:\"互联网工作\",40:\"Java\",176:\"编程\"}', '0', '123', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('3', '中国现在有多少程序员？', '中国现在有多少程序员？啊啊啊啊啊啊啊啊', '{186:\"IT 行业\",187:\"Java 程序员\",184:\"程序员\"}', '0', '3', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('32', 'Java培训哪家好？', 'muyou', '{187:\"Java 程序员\",214:\"IT 培训\",40:\"Java\",215:\"教育培训机构\"}', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('33', '请问一个JavaScript、java高手，node.js的一个问题？', 'muyou', '{216:\"Java Web\",64:\"Node.js\",40:\"Java\"}', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('34', '程序员带孩子是怎样一种体验？', 'muyou', '{186:\"IT 行业\",187:\"Java 程序员\",184:\"程序员\",217:\"IT 男\",218:\"女程序员\"}', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('35', '零基础自学 Android 并去找工作可行性大么？', 'muyou', '{184:\"程序员\",96:\"Android 开发\",197:\"Java 编程\",176:\"编程\"}', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('36', '为什么程序代码被编译成机器码就不能跨平台运行？', 'muyou', '{219:\"计算机科学\",212:\"C / C++\",196:\"C（编程语言）\",40:\"Java\"}', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('37', 'Spring，Django，Rails，Express这些框架技术的出现都是为了解决什么问题，现在这些框架都应用在哪些方面？', 'muyou', '{220:\"Ruby on Rails\",221:\"Django（框架）\",222:\"设计模式\",223:\"Express（框架）\",43:\"Spring\"}', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('38', '请问有详细介绍threadlocal的书籍吗？或者有哪位大神能详细说明下threadlocal？', 'muyou', '{40:\"Java\",224:\"ThreadLocal\"}', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('39', 'aaaaa', 'aaaaaaaaaaaa', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('40', 'bbbbb', 'bbbbb', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('41', 'bbbbb', 'bbbbb', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('42', 'bbbbb', 'bbbbb', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('43', 'bbbbb', 'bbbbb', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('44', 'ccc', 'ccccccc', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('45', 'dddd', 'dddddd', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('46', 'bbbbb', 'bbbbbbbb', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('47', '今天星期几？', '今天星期几？今天星期几？今天星期几？今天星期几？今天星期几？今天星期几？', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('48', '如何看待蘑菇街对员工的欺骗？', '如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？如何看待蘑菇街对员工的欺骗？', '', '0', '0', '1545360334381', '6a99cf86555243ba8b23927c0748b562', '0');
+INSERT INTO `question` VALUES ('49', '测试日期', 'i测试日期', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('50', '测试', 'c测试', '', '0', '0', '1545360334381', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('51', '测试', '测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试', '', '0', '0', '1545360899845', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 
 -- ----------------------------
 -- Table structure for topic
@@ -689,6 +707,7 @@ CREATE TABLE `user` (
   `avatar_url` varchar(200) NOT NULL DEFAULT 'http://localhost:8088/images/20181211191204.png',
   `gender` int(11) NOT NULL DEFAULT '1',
   `simple_desc` varchar(50) NOT NULL DEFAULT '',
+  `residence_place` varchar(255) NOT NULL,
   `position` varchar(100) NOT NULL DEFAULT '',
   `industry` varchar(100) NOT NULL DEFAULT '',
   `career` varchar(100) NOT NULL DEFAULT '',
@@ -706,5 +725,12 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'caizhenya', 'http://localhost:8088/images/20181211191204.png', '1', '世界上最聪明的人', '学生', '互联网', 'java实习生', '本科', '修改密码', '0', '0', '0', '0', '0', '2312312');
-INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', 'tengfei', 'http://localhost:8088/images/20181211191204.png', '1', '世界上最帅的人', '学生', '金融', '', '本科', '', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'tsaizhenya', 'http://localhost:8088/images/author.jpg', '1', '社会主义的接班人', '深圳市', '软件工程师', '互联网行业', '杭州有赞科技有限公司java工程师', '本科', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
+INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', 'http://localhost:8088/images/tengfei.jpg', '1', '世界上最帅的人', '深圳市', '学生', '金融', '', '本科', '', '3', '234', '345', '45', '345', '');
+DROP TRIGGER IF EXISTS `build_user_follow_user`;
+DELIMITER ;;
+CREATE TRIGGER `build_user_follow_user` AFTER INSERT ON `user` FOR EACH ROW BEGIN
+	INSERT INTO mid_user_follow_user (user_id,user_followed_id)VALUES(NEW.user_id,NEW.user_id);
+END
+;;
+DELIMITER ;

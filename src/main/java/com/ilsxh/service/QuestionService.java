@@ -74,7 +74,7 @@ public class QuestionService {
     }
 
     public List<Question> getRaisedQuestionByUserId(String userId) {
-        List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId);
+        List<Question> questionList = questionDao.getRaisedQuestionByUserId(userId);
 
         for (Question question : questionList) {
             User user = new User();
@@ -108,8 +108,8 @@ public class QuestionService {
         return questionDao.unfollowQuestion(localUserId, questionId);
     }
 
-    public void submitAnswer(String userId, String answerContent, String questionId) {
-        questionDao.submitAnswer(userId, answerContent, questionId);
+    public void submitAnswer(String userId, String answerContent, Long createTime, String questionId) {
+        questionDao.submitAnswer(userId, answerContent, createTime, questionId);
     }
 
     public void deleteAnswer(String answerId) {

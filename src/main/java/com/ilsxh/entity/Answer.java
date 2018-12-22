@@ -1,8 +1,5 @@
 package com.ilsxh.entity;
 
-import lombok.Data;
-
-@Data
 public class Answer {
 	/**
 	 * 回答ID

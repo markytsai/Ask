@@ -38,5 +38,109 @@
         where user_id= #{userId}
     </update>
 
+
+    <select id="getFollowedQuestion" resultType="Activity">
+        SELECT
+            q.question_id "answer.question.questionId",
+            q.question_title "answer.question.questionTitle",
+            q.question_content "answer.question.questionContent",
+            q.followed_count "answer.question.followedCount",
+            q.scanned_count "answer.question.ScannedCount",
+            q.create_time "answer.question.createTime",
+            q.user_id "answer.question.userId",
+            q.answer_count "answer.question.answerCount",
+
+            u.username "answer.user.username",
+            u.avatar_url "answer.user.avatarUrl",
+            u.simple_desc "answer.user.simpleDesc",
+            u.position "answer.user.position"
+
+        FROM
+            question AS q
+            INNER JOIN mid_user_follow_question AS qum ON qum.question_id = q.question_id
+            inner join user as u on q.user_id = u.user_id
+        WHERE
+            qum.user_id = #{userId}
+    </select>
+
+    <select id="getVotedAnswer" resultType="Activity">
+        SELECT
+            q.question_id "answer.question.questionId",
+            q.question_title "answer.question.questionTitle",
+            q.question_content "answer.question.questionContent",
+            q.followed_count "answer.question.followedCount",
+            q.scanned_count "answer.question.ScannedCount",
+            q.create_time "answer.question.createTime",
+            q.user_id "answer.question.userId",
+            q.answer_count "answer.question.answerCount",
+
+            a.answer_id "answer.answerId",
+            a.answer_content "answer.answerContent",
+            a.liked_count "answer.likedCount",
+            a.disliked_count "answer.dislikedCount",
+            a.create_time "answer.createTime",
+            a.answer_user_id "answer.answerUserId",
+
+            u.username "answer.user.username",
+            u.avatar_url "answer.user.avatarUrl",
+            u.simple_desc "answer.user.simpleDesc",
+            u.position "answer.user.position"
+
+
+            from answer as a inner join mid_user_vote_answer as uva on a.answer_id = uva.answer_id
+            inner join question as q on q.question_id = a.question_id
+            inner join user as u on uva.user_id = u.user_id
+            where uva.vote = 1 and uva.user_id = #{userId}
+    </select>
+
+    <select id="getRaisedQuestion" resultType="Activity">
+        SELECT
+            q.question_id "answer.question.questionId",
+            q.question_title "answer.question.questionTitle",
+            q.question_content "answer.question.questionContent",
+            q.followed_count "answer.question.followedCount",
+            q.scanned_count "answer.question.ScannedCount",
+            q.create_time "answer.question.createTime",
+            q.user_id "answer.question.userId",
+            q.answer_count "answer.question.answerCount",
+
+            u.username "answer.user.username",
+            u.avatar_url "answer.user.avatarUrl",
+            u.simple_desc "answer.user.simpleDesc",
+            u.position "answer.user.position"
+        from question as q
+        inner join user as u on u.user_id = q.user_id
+        where q.user_id = #{userId}
+
+    </select>
+
+    <select id="getAnswer" resultType="Activity">
+        SELECT
+            q.question_id "answer.question.questionId",
+            q.question_title "answer.question.questionTitle",
+            q.question_content "answer.question.questionContent",
+            q.followed_count "answer.question.followedCount",
+            q.scanned_count "answer.question.ScannedCount",
+            q.create_time "answer.question.createTime",
+            q.user_id "answer.question.userId",
+            q.answer_count "answer.question.answerCount",
+
+            a.answer_id "answer.answerId",
+            a.answer_content "answer.answerContent",
+            a.liked_count "answer.likedCount",
+            a.disliked_count "answer.dislikedCount",
+            a.create_time "answer.createTime",
+            a.answer_user_id "answer.answerUserId",
+
+            u.username "answer.user.username",
+            u.avatar_url "answer.user.avatarUrl",
+            u.simple_desc "answer.user.simpleDesc",
+            u.position "answer.user.position"
+        from answer as a
+        inner join question as q on q.question_id = a.question_id
+        inner join user as u on a.answer_user_id = u.user_id
+        where a.answer_user_id = #{userId}
+    </select>
+
 </mapper>
 

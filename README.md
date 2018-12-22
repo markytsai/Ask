@@ -7,16 +7,32 @@ The recommendation module is implemented by user-based and item-based algorithms
 
 Here are several rederings.
 
+1. Login page
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/login.jpg)
+2. Question index page
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/index-following.png)
+3. Question detail page
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/question-detail.jpg)
+4. User home page
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/images/user-homepage.jpg)
+
+
 #### To-do list
 
-1. 收藏，添加到收藏夹
-2. 写答案，集成富文本编辑器
-3. 提问：提问后自动关注该问题
-4. 文检索（用户+问题）
-5. 收藏夹页面，弹出
-6. 个人主页（紧急）
-7. 返回Response对象
-8. 异常捕捉
-9. 头像hover展示名片
-10. 个人回答答案置顶
-11. 回答折叠
+1. collection function, put the answer into favorites;
+2. answering function, integrated with rich text editor;
+3. users automatically following questions they raise;
+4. full text search including username and question name as search target;
+5. pop out a favorites box for user to choose which favorite to store answers for themselves;
+6. user personal home page（emergency）
+7. returning Response entity as a message carrier;
+8. global exceptions capture;
+9. person cards floating nearby when the cursor hovers the users' avatar;
+10. top the newest answers;
+11. folding extra contents of answer(in the process);
+12. foreign Q&A community analysis including algorithm, product feature;
+13. personal home page with collection tab, for one more submenu distinguishing answers from different favorites;
+14. uploading avatar on clicking avatar picture;
+15. uploaded avatar must support being cropped
+16. storing pictures in [qiniuyun](https://www.qiniu.com/)
+17. tourist login

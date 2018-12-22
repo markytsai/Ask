@@ -7,7 +7,7 @@
 
             <ul class="list-group" th:each="question, userStat : ${hotQuestions}">
                 <div class="card-block border-black">
-                    <a th:href="@{/#}" th:text="${question.questionTitle}"></a><i
+                    <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"></a><i
                         class="glyphicon glyphicon-fire"/>
                 </div>
                 <div style="float:right;">
@@ -70,9 +70,9 @@
                 <!--th:object="${newblog}">-->
                 <ul class="list-group" th:each="question : ${newestQuestions}">
                     <div class="card-block border-black">
-                        <a th:href="@{/#}" th:text="${question.questionTitle}"></a>
+                        <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"></a>
                     </div>
-                    <div><p style="float:right;">提问于<span th:text="3"></span>分钟前</p></div>
+                    <div><p style="float:right;">提问于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>
                     <hr color="#f8f8f8"/>
                 </ul>
             </div>

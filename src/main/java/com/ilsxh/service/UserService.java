@@ -149,15 +149,23 @@ public class UserService {
      */
     public Map<String, Object> getUserProfile(String userId, String localUserId) {
         Map<String, Object> map = new HashMap<>();
-        User user = userDao.selectUserByUserId(userId);
+        // 登录用户
+        User loginUser = userDao.selectUserByUserId(localUserId);
+        User homeUser = null;
+        homeUser = userDao.selectUserByUserId(userId);
 
         if (userId.equals(localUserId)) {
+            // 即将被访问主页的用户
             map.put("isLoginUser", "true");
         } else {
             map.put("isLoginUser", "false");
+            if (userDao.selectUserByUserIdWithFollowingStatus(userId) == null) {
+                homeUser.setFollowStatus(0);
+            }
         }
 
-        map.put("user", user);
+        map.put("user", loginUser);
+        map.put("homeUser", homeUser);
         return map;
     }
 
@@ -178,7 +186,7 @@ public class UserService {
         return answerList;
     }
 
-    public void followUser(String userIdToBeFollowed, String userId) {
+    public void followUser(String userId, String userIdToBeFollowed) {
 
         Integer followExisted = userDao.getUserFollowStatus(userId, userIdToBeFollowed);
         if (followExisted == null) { // 第一次关注答主
@@ -189,5 +197,9 @@ public class UserService {
             userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0);
         }
 
+    }
+
+    public List<User> getollowingUserByUserId(String userId) {
+        return userDao.getollowingUserByUserId(userId);
     }
 }

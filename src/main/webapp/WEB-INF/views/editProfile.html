@@ -22,31 +22,25 @@
             <div class="edit-header"><span></span>&nbsp;编辑信息</div>
             <form class="card-block" action="editProfile" method="post">
                 <div class="edit-title">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    用户名：<input type="text" name="username" th:value="${user.username}"/>
+                    用户名：&nbsp;<input type="text" name="username" th:value="${user.username}"/>
                 </div>
                 <div class="edit-title">
-                    一句话介绍：<input type="text" name="simpleDesc" th:value="${user.simpleDesc}"/>
+                    个人简介：<input type="text" name="simpleDesc" th:value="${user.simpleDesc}"/>
                 </div>
                 <div class="edit-title">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    居住地：<input type="text" name="position" th:value="${user.position}"/>
+                    职业：&nbsp;&nbsp;<input type="text" name="position" th:value="${user.position}"/>
                 </div>
                 <div class="edit-title">
-                    &nbsp;&nbsp;&nbsp;
                     所在行业：<input type="text" name="industry" th:value="${user.industry}"/>
                 </div>
                 <div class="edit-title">
-                    &nbsp;&nbsp;&nbsp;
                     职业经历：<input type="text" name="career" th:value="${user.career}"/>
                 </div>
                 <div class="edit-title">
-                    &nbsp;&nbsp;&nbsp;
                     教育背景：<input type="text" name="education" th:value="${user.education}"/>
                 </div>
                 <div class="edit-title">
-                    &nbsp;&nbsp;&nbsp;
-                    个人简介：<input type="text" name="fullDesc" th:value="${user.fullDesc}"/>
+                    详细介绍：<input type="text" name="fullDesc" th:value="${user.fullDesc}"/>
                 </div>
                 <div class="relative">
                     <button type="submit" class="edit-submit btn btn-default">确认编辑</button>
@@ -55,7 +49,7 @@
 
             <div style="margin-top: 60px;"></div>
             <div class="edit-header"><span></span>&nbsp;修改密码</div>
-            <form  class="card-block" action="updatePassword" method="post">
+            <form class="card-block" action="updatePassword" method="post">
                 <div class="edit-title">
                     <div class="text-danger" th:text="${error}"></div>
                     原密码：<input type="password" name="password"/>
@@ -70,7 +64,7 @@
 
             <div style="margin-top: 60px;"></div>
             <div class="edit-header"><span></span>&nbsp;更换头像</div>
-            <form  class="card-block" action="updateAvatarUrl" method="post" enctype="multipart/form-data">
+            <form class="card-block" action="updateAvatarUrl" method="post" enctype="multipart/form-data">
                 <div class="edit-title">
                     <span class="text-danger"></span>
                     <input type="file" name="paramName"/>

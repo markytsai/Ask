@@ -19,6 +19,13 @@ public interface UserDao {
     User selectUserByUserId(@Param("userId") String userId);
 
     /**
+     * returned user with follow_status by the login user
+     * @param userId
+     * @return
+     */
+    User selectUserByUserIdWithFollowingStatus(@Param("userId") String userId);
+
+    /**
      * @param email
      * @param passworde
      * @return
@@ -38,6 +45,8 @@ public interface UserDao {
     Integer insertUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus);
 
     Integer updateUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus);
+
+    List<User> getollowingUserByUserId(@Param("userId") String userId);
 
 }
 

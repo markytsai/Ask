@@ -16,45 +16,7 @@
     <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile.css"/>
-
-    <style>
-        .personcard {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            max-width: 100%;
-            max-height: 3000px;
-            margin: auto;
-            text-align: center;
-            font-family: arial;
-        }
-
-        .persontitle {
-            color: grey;
-            font-size: 18px;
-        }
-
-        .personbutton {
-            border: none;
-            outline: 0;
-            display: inline-block;
-            padding: 8px;
-            color: white;
-            background-color: #000;
-            text-align: center;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-        }
-
-        .persona {
-            text-decoration: none;
-            font-size: 22px;
-            color: black;
-        }
-
-        button:hover, a:hover {
-            opacity: 0.7;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/sidePersonCard.css"/>
 
 </head>
 
@@ -75,21 +37,25 @@
                 <div id="mainContainerRepleace">
 
                     <ul class="nav nav-tabs">
-                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${user.userId}}">动态</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${user.userId}}">问题</a></li>
-                        <li role="presentation" class="active"><a
-                                th:href="@{'/userHome/answer/' + ${user.userId}}">回答</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${homeUser.userId}}">动态</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId}}">问题</a></li>
+                        <li role="presentation" class="active"><a th:href="@{'/userHome/answer/' + ${homeUser.userId}}">回答</a></li>
                         <li role="presentation"><a href="#">收藏</a></li>
-                        <li role="presentation"><a href="#">关注问题</a></li>
-                        <li role="presentation"><a href="#">关注用户</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a></li>
                         <li role="presentation"><a href="#">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
-                        <h5 th:if="${isLoginUser} == 'true'">我的回答</h5>
-                        <h5 th:if="${isLoginUser} == 'false'">他的回答</h5>
+                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-transfer"/> 我的回答</h4>
+                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-transfer"/>他的回答</h4>
                     </div>
 
-                    <!--<h5 class="page-header"></h5>-->
+                    <!--底部提示信息-->
+                    <div th:if="${answerList.size() == 0}" style="text-align: center;">
+                        <span th:if="${isLoginUser} == 'true'">你还没有回答任何问题鸭(:&nbsp;</span>
+                        <span>到<a th:href="@{/recommend}">这里</a>去看一看推荐的问题吧</span>
+                        <span th:if="${isLoginUser} == 'false'">他还没有回答任何问题(:&nbsp;</span>
+                    </div>
                     <div class="card mb-4" th:each="answer : ${answerList}">
                         <div class="card-block">
                             <div class="card-title answer-meta">
@@ -110,7 +76,8 @@
                                 </div>
                                 &nbsp;<a th:href="@{'/userHome/question/' + ${answer.user.userId}}">
                                 <span class="glyphicon glyphicon-user"></span>
-                            </a><span th:text="${answer.user.username}"/>刚刚回答了该问题
+                            </a><span th:text="${answer.user.username}"/>于
+                                <span th:text="${#dates.format(answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>回答了该问题
 
                                 <h6 th:text="${answer.likedCount} + '人赞同了该回答'"></h6>
                             </div>
@@ -141,7 +108,11 @@
                                 </button>
                             </div>
                         </div>
-                        <br/>
+                        <hr color="#f8f8f8"/>
+                    </div>
+                    <div style="text-align: center;">
+                        <span th:if="${isLoginUser} == 'true'">你只有这么多回答了(:</span>
+                        <span th:if="${isLoginUser} == 'false'">他只有这么多回答了(:</span>
                     </div>
                 </div>
             </div>

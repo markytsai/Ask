@@ -20,6 +20,8 @@ public interface QuestionDao {
      */
     List<Question> selectFollowingQuestionByUserId(@Param("userId") String userId);
 
+    List<Question> getRaisedQuestionByUserId(@Param("userId") String userId);
+
     List<Answer> selectAnswersByQuestionId(@Param("questionId") String questionId);
 
     Question selectQuestionByQuestionId(@Param("questionId") String questionId);
@@ -32,7 +34,7 @@ public interface QuestionDao {
 
     Integer unfollowQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
 
-    void submitAnswer(@Param("userId") String userId, @Param("answerContent") String answerContent, @Param("questionId") String questionId);
+    void submitAnswer(@Param("userId") String userId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") String questionId);
 
     void deleteAnswer(@Param("answerId") String answerId);
 

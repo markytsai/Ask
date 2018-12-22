@@ -1,0 +1,75 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="../../favicon.ico"/>
+
+    <title>沙问</title>
+
+    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/jquery.smartbox.css" rel="stylesheet"/>
+</head>
+
+<body style='background-color: #f8f8f8;'>
+
+<div th:include="navigator :: nav"></div>
+<div th:include="navigator :: ask"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1" style='background-color: #fff;'>
+            <div id="mainContainer">
+                <div id="mainContainerRepleace">
+                    <div class="card mb-4" th:each="question : ${questionList}">
+                        <div class="card-block border-dark">
+                            <h4 class="card-title text-dark" style="font-weight: bolder;">
+                                <a th:href="@{'/question/' + ${question.questionId}}" class="card-link text-dark"
+                                   th:text="${question.questionTitle}">
+                                </a>
+                            </h4>
+                            <p class="card-text" th:text="${question.questionContent}">
+                            </p>
+
+                            <div class="card-text">
+                                <a href="/userHome/activity/${question.userId}"
+                                   th:href="@{'/userHome/activity/' + ${question.userId}}"
+                                   class="card-link"
+                                   th:text="${question.user.username}">waylau</a>
+
+                                发表于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
+
+                                <span class="glyphicon glyphicon-eye-open"></span>围观<span
+                                    th:text="${question.scanedCount} == null ? 1000 : ${question.scanedCount}"></span>次&nbsp;&nbsp;
+
+                                <i class="glyphicon glyphicon-apple" aria-hidden="true">关注<span
+                                        th:text="${question.followedCount}"></span>人</i>&nbsp;&nbsp;
+
+                                <i class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">回答<span
+                                        th:text="${question.answerCount}"></span>条</i>
+                            </div>
+                            <hr color="#f8f8f8"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧栏目 -->
+        <div th:include="sideHotCards :: sideCards"></div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="http://localhost:8088/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/nav.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/jquery.smartbox.js"></script>
+
+</body>
+</html>
+

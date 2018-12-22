@@ -25,9 +25,9 @@
         <div class="col-md-7 col-md-offset-1" style='background-color: #fff;'>
             <div id="mainContainer">
                 <div id="mainContainerRepleace">
-                    <div class="card mb-4" th:each="question : ${questionList}">
+                    <div class="card mb-4" th:each="question : ${recommendQuestionList}">
                         <div class="card-block border-dark">
-                            <h4 class="card-title text-dark">
+                            <h4 class="card-title text-dark" style="font-weight: bolder;">
                                 <a th:href="@{'/question/' + ${question.questionId}}" class="card-link text-dark"
                                    th:text="${question.questionTitle}">
                                 </a>
@@ -36,12 +36,13 @@
                             </p>
 
                             <div class="card-text">
-                                <a href="/userHome/question/${question.userId}" th:href="@{'/userHome/question/' + ${question.userId}}"
+                                <a href="/userHome/activity/${question.userId}"
+                                   th:href="@{'/userHome/activity/' + ${question.userId}}"
                                    class="card-link"
-                                   th:text="${question.user.username}">waylau</a> 发表于2019年&nbsp;&nbsp;
+                                   th:text="${question.user.username}">waylau</a>
 
-                                <!--<i class="fa fa-eye" aria-hidden="true"> 浏览 <span-->
-                                        <!--th:text="${question.scanedCount} == null ? 1000 : ${question.scanedCount}"></span>次 </i>-->
+                                发表于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
+
                                 <span class="glyphicon glyphicon-eye-open"></span>围观<span
                                     th:text="${question.scanedCount} == null ? 1000 : ${question.scanedCount}"></span>次&nbsp;&nbsp;
 

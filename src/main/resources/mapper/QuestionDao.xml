@@ -38,6 +38,22 @@
             qum.user_id = #{userId}
     </select>
 
+    <select id="getRaisedQuestionByUserId" resultType="Question">
+          SELECT
+            q.question_id,
+            q.question_title,
+            q.question_content,
+            q.followed_count,
+            q.scanned_count,
+            q.create_time,
+            q.user_id,
+            q.answer_count
+        FROM
+            question AS q
+        WHERE
+            user_id = #{userId}
+    </select>
+
 
     <select id="selectAnswersByQuestionId" resultType="com.ilsxh.entity.Answer">
 
@@ -87,7 +103,7 @@
 
 
     <insert id="submitAnswer">
-        insert into answer(answer_content, question_id, answer_user_id) values(#{answerContent}, #{questionId}, #{userId})
+        insert into answer(answer_content, question_id, answer_user_id, create_time) values(#{answerContent}, #{questionId}, #{userId}, #{createTime})
     </insert>
 
     <delete id="deleteAnswer">
@@ -95,7 +111,7 @@
     </delete>
 
     <insert id="addQuestion" useGeneratedKeys="true" keyProperty="question.questionId">
-        insert into question(question_title, question_content, user_id) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId})
+        insert into question(question_title, question_content, user_id, create_time) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId}, #{question.createTime})
     </insert>
 
 </mapper>

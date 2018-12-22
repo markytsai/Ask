@@ -5,13 +5,13 @@
         <div class="card my-4" style='background-color: #fff;'>
             <div class="personinfo" th:id="personInfoCard">
                 <div class="personcard" style="overflow: hidden;">
-                    <img src="/images/avatar-defualt.jpg" style="width:80%; border-radius: 50%"/>
-                    <h3 th:text="${user.username}">caizhenya</h3>
-                    <!--<p class="persontitle" th:text="${user.position}">学生</p>-->
-                    <p class="persontitle">职业：<span th:text="${user.position}"></span></p>
-                    <p>个人简介：<span th:text="${user.industry}"></span></p>
-                    <p>现从事：<span th:text="${user.industry}"></span>行业</p>
-                    <p>教育经历：<span th:text="${user.education}"></span></p>
+                    <img src="/images/avatar-defualt.jpg" th:src="${homeUser.avatarUrl}"
+                         style="width:80%; border-radius: 50%"/>
+                    <h3 th:text="${homeUser.username}">caizhenya</h3>
+                    <p>个人简介：<span th:text="${homeUser.simpleDesc}"></span></p>
+                    <!--<p>居住地：<span th:text="${homeUser.residencePlace}"></span></p>-->
+                    <p>现从事：<span th:text="${homeUser.industry}"></span></p>
+                    <p>教育经历：<span th:text="${homeUser.education}"></span></p>
                     <div style="margin: 24px 0;">
                         <a href="#" class="persona"><i class="fa fa-dribbble"></i></a>
                         <a href="#" class="persona"><i class="fa fa-twitter"></i></a>
@@ -19,18 +19,17 @@
                         <a href="#" class="persona"><i class="fa fa-facebook"></i></a>
                     </div>
                     <div th:switch="${isLoginUser}">
-                        <p th:case="true">
-                            <input class="personbutton" th:type="button" style="width: 50%; float: left;"
-                                   th:href="@{/settings}" th:value="修改信息"/>
-                            <!--<button class="personbutton" th:href="@{/settings}" style="width: 50%; float: left;">修改信息</button>-->
-                            <button class="personbutton" style="width: 50%; float: right;">通知我</button>
+                        <p th:case="'true'">
+                            <button th:id="modify + '-' + ${homeUser.userId}" class="personbutton modifyBtn" th:type="button" style="width: 50%; float: left;"
+                                    th:text="修改信息"/>
+                            <button class="personbutton" style="width: 50%; float: right;" th:text="通知我"/>
                         </p>
-                        <p th:case="false">
-                            <button class="personbutton" style="width: 50%; float: left;">关注他</button>
-                            <button class="personbutton" style="width: 50%; float: right;">通知我</button>
+                        <p th:case="'false'">
+                            <button th:id="followHim + '-' + ${homeUser.userId}" class="personbutton followHimclass"
+                                    style="width: 50%; float: left;"
+                                    th:text="${homeUser.followStatus} == 1 ? '取消关注' : '关注他'"/>
+                            <button class="personbutton" style="width: 50%; float: right;" th:text="通知我"/>
                         </p>
-
-                        <p th:case="'admin'">User is an administrator</p>
                     </div>
                 </div>
             </div>

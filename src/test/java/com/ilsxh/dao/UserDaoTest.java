@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
+import java.util.Date;
 
 public class UserDaoTest extends BaseTest {
 
@@ -54,5 +55,12 @@ public class UserDaoTest extends BaseTest {
         }
 
         MyUtil.saveToLocal(bytes, "images/userAvatar/" + "8a829463a9cc47a787dd179c3f23fa66" + ".jpg");
+    }
+
+    @Test
+    public void getTime() {
+        Date now = new Date();
+        System.out.println(now);
+        System.out.println(now.getTime());
     }
 }

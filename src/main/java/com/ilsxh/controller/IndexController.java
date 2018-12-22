@@ -1,5 +1,6 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.entity.Activity;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
@@ -48,7 +49,7 @@ public class IndexController {
      */
     @RequestMapping("/settings")
     public String setting(HttpServletRequest request, Model model) {
-        String userId = userService.getUserIdFromRedis(request);
+            String userId = userService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
         model.addAttribute("user", user);
         System.out.println();
@@ -69,7 +70,7 @@ public class IndexController {
 
         indexService.updateProfile(user);
         model.addAttribute("user", user);
-        return "redirect:/userHome/question/" + user.getUserId();
+        return "redirect:/userHome/activity/" + user.getUserId();
     }
 
     /**
@@ -93,6 +94,14 @@ public class IndexController {
 
     }
 
+    /**
+     * update user's avatar
+     *
+     * @param paramName
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/updateAvatarUrl")
     public String updateAvatarUrl(MultipartFile paramName, HttpServletRequest request) throws IOException {
         String userId = userService.getUserIdFromRedis(request);
@@ -112,22 +121,60 @@ public class IndexController {
         return "redirect:/profile/" + userId;
     }
 
-    @RequestMapping("/userHomeAnswer/{userId}")
-    public String getProfileQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
+    /**
+     * user home page with activity tab
+     *
+     * @param userId
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/userHome/activity/{userId}")
+    public String userHomeActivity(@PathVariable String userId, HttpServletRequest request, Model model) {
         String localUserId = userService.getUserIdFromRedis(request);
-        // 获取用户信息
+        // 获取用户信息,userId from parameter, localhost from token
         Map<String, Object> map = userService.getUserProfile(userId, localUserId);
-        // 获取问题列表
 
-        List<Question> questionList = questionService.getRaisedQuestionByUserId(userId);
-        map.put("questionList", questionList);
-
+        // 获取动态列表
+        List<Activity> activityList = indexService.getActivityByUserId(userId);
+        map.put("activityList", activityList);
         model.addAllAttributes(map);
-        return "userProfileQuestion";
+
+        return "user/userHome-activity";
     }
 
+    /**
+     * user home page with answer tab
+     *
+     * @param userId
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/userHome/answer/{userId}")
+    public String userHomeAnswer(@PathVariable String userId, HttpServletRequest request, Model model) {
+        String localUserId = userService.getUserIdFromRedis(request);
+        // 获取用户信息,userId from parameter, localhost from token
+        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+
+        // 获取回答列表
+        List<Answer> answerList = userService.getAnswersByUserId(userId);
+        map.put("answerList", answerList);
+        model.addAllAttributes(map);
+
+        return "user/userHome-answer";
+    }
+
+    /**
+     * user home page with question tab
+     *
+     * @param userId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/userHome/question/{userId}")
-    public String profile(@PathVariable String userId, HttpServletRequest request, Model model) {
+    public String userHomeRaisedQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
 
 //        model.addAttribute("user", userDao.selectUserByUserId(userId));
 
@@ -136,11 +183,48 @@ public class IndexController {
         Map<String, Object> map = userService.getUserProfile(userId, localUserId);
 
         // 获取提问列表
-        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
+        List<Question> questionList = questionService.getRaisedQuestionByUserId(userId);
         map.put("questionList", questionList);
 
         model.addAllAttributes(map);
 
         return "user/userHome-question";
+    }
+
+    @RequestMapping("/userHome/followingQuestion/{userId}")
+    public String userHomeFollowingQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
+        String localUserId = userService.getUserIdFromRedis(request);
+        // 获取用户信息,userId from parameter, localhost from token
+        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+
+        // 获取关注问题列表
+        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
+        map.put("questionList", questionList);
+
+        model.addAllAttributes(map);
+
+        return "user/userHome-following-question";
+    }
+
+    /**
+     * 获取用户主页的关注用户
+     * @param userId
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/userHome/followingUser/{userId}")
+    public String userHomeFollowingUser(@PathVariable String userId, HttpServletRequest request, Model model) {
+        String localUserId = userService.getUserIdFromRedis(request);
+        // 获取用户信息,userId from parameter, localhost from token
+        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+
+        // 获取关注用户列表
+        List<User> followingUserList = userService.getollowingUserByUserId(userId);
+        map.put("followingUserList", followingUserList);
+
+        model.addAllAttributes(map);
+
+        return "user/userHome-following-user";
     }
 }

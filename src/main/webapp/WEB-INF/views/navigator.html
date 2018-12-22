@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" th:href="@{/index}">沙问</a>
+                <a class="navbar-brand" th:href="@{/}">沙问</a>
             </div>
 
             <form class="navbar-form navbar-right" role="search">
@@ -80,7 +80,7 @@
                                     class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a th:href="@{'/userHome/answer/' + ${user.userId}}">主页</a></li>
+                                <li><a th:href="@{'/userHome/activity/' + ${user.userId}}">主页</a></li>
                                 <li><a th:href="@{/settings}">设置</a></li>
                                 <li><a th:href="@{/logout}">退出</a></li>
                             </ul>

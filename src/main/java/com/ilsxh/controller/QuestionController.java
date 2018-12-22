@@ -20,6 +20,7 @@ import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 import static com.ilsxh.service.UserService.COOKIE_NAME_TOKEN;
@@ -51,23 +52,9 @@ public class QuestionController {
     @RequestMapping("/following")
     public String getFollowingQuestionsByUserId(HttpServletRequest request, Model model) {
 
-        String loginToken = null;
-
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
-                loginToken = cookie.getValue();
-            }
-        }
-
-        String userId = null;
-        if (!StringUtils.isEmpty(loginToken)) {
-            Jedis jedis = jedisPool.getResource();
-            userId = jedis.get(loginToken);
-            jedis.close();
-            model.addAttribute("user", userDao.selectUserByUserId(userId));
-            model.addAttribute("username", userDao.selectUsernameByUserId(userId));
-        }
+        String userId = userService.getUserIdFromRedis(request);
+        model.addAttribute("user", userDao.selectUserByUserId(userId));
+        model.addAttribute("username", userDao.selectUsernameByUserId(userId));
 
         List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
         model.addAttribute("questionList", questionList);
@@ -75,7 +62,29 @@ public class QuestionController {
         model.addAttribute("hotUsers", hotService.getHotUsers());
         model.addAttribute("hotTopics", hotService.getHotTopic());
         model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
-        return "index";
+        return "index-following";
+    }
+
+    /**
+     * 推荐问题接口
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/recommend")
+    public String getRecommendQuestionsByUserId(HttpServletRequest request, Model model) {
+
+        String userId = userService.getUserIdFromRedis(request);
+        model.addAttribute("user", userDao.selectUserByUserId(userId));
+        model.addAttribute("username", userDao.selectUsernameByUserId(userId));
+
+        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
+        model.addAttribute("recommendQuestionList", questionList);
+        model.addAttribute("hotQuestions", hotService.getHotQuestion());
+        model.addAttribute("hotUsers", hotService.getHotUsers());
+        model.addAttribute("hotTopics", hotService.getHotTopic());
+        model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
+        return "index-recommend";
     }
 
     /**
@@ -141,7 +150,8 @@ public class QuestionController {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
-        questionService.submitAnswer(localUserId, answerContent, questionId);
+
+        questionService.submitAnswer(localUserId, answerContent, new Date().getTime(), questionId);
     }
 
     /**
@@ -172,6 +182,7 @@ public class QuestionController {
         question.setQuestionTitle(questionTitle);
         question.setQuestionContent(questionContent);
         question.setUserId(userId);
+        question.setCreateTime(new Date().getTime());
 
         questionService.addQuestion(question, userId);
         return new Response(1, "", question.getQuestionId());

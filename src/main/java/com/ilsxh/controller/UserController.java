@@ -60,19 +60,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/userHome/answer/{userId}")
-    public String profile(@PathVariable String userId, HttpServletRequest request, Model model) {
-        String localUserId = userService.getUserIdFromRedis(request);
-        // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
 
-        // 获取回答列表
-        List<Answer> answerList = userService.getAnswersByUserId(userId);
-        map.put("answerList", answerList);
-        model.addAllAttributes(map);
-
-        return "user/userHome-answer";
-    }
 
     @RequestMapping("/followUser/{userIdToBeFollowed}")
     public void followUser(@PathVariable String userIdToBeFollowed, HttpServletRequest request) {
@@ -86,4 +74,11 @@ public class UserController {
         userService.logout(request, response);
         return "redirect:/login";
     }
+
+    @RequestMapping("/touristLogin")
+    public String touristLogin(HttpServletRequest request, HttpServletResponse response) {
+        return "redirect:/recommend";
+    }
+
+
 }

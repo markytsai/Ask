@@ -1,10 +1,7 @@
 package com.ilsxh.entity;
 
-import lombok.Data;
-
 import java.util.List;
 
-@Data
 public class User {
     /**
      * 用户ID
@@ -40,6 +37,10 @@ public class User {
      * 用户头像
      */
     private String avatarUrl;
+    /**
+     * 居住地
+     */
+    private String residencePlace;
     /**
      * 用户职业
      */

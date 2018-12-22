@@ -166,7 +166,7 @@ $('#submitAnswer').click(function () {
 
     $.ajax({
         url: "/submitAnswer/" + questionId,
-        type: "get",
+        type: "post",
         data: {'answerContent': answerContent},
         dataType: 'json',
         success: function (response) {
@@ -210,6 +210,55 @@ function followQuestion() {
         }
     });
 }
+
+$('.followHimclass').click(function (event) {
+    var followStatus = $('.followHimclass:first-child').text().trim();
+    if (followStatus == "取消关注") {
+        $('.followHimclass').text('关注他');
+    } else {
+        $('.followHimclass').text('取消关注');
+    }
+
+    var id = event.target.id;
+    var userId = id.split('-')[1];
+
+    $.ajax({
+        url: "/followUser/" + userId,
+        type: "get",
+        dataType: 'json',
+        success: function (response) {
+            if (response.state == 1) {
+            } else {
+            }
+        }
+    });
+});
+
+$('.modifyBtn').click(function (event) {
+
+    var id = event.target.id;
+    var userId = id.split('-')[1];
+
+    window.location.href = "/settings";
+});
+
+$(".show-more a").on("click", function () {
+    var $this = $(this);
+    var $content = $this.parent().prev("div.content").text();
+    var linkText = $this.text().toUpperCase();
+
+    if(linkText === "SHOW MORE"){
+        linkText = "Show less";
+        $content.switchClass("hideContent", "showContent", 400);
+    } else {
+        linkText = "Show more";
+        $content.switchClass("showContent", "hideContent", 400);
+    }
+
+
+    $this.text(linkText);
+});
+
 
 // $('.avatarImg').bind("mouseenter", function (event) {
 //     document.getElementById('personInfoCard').style.display = "block";

@@ -38,26 +38,25 @@
 
                     <ul class="nav nav-tabs">
                         <li role="presentation"><a th:href="@{'/userHome/activity/' + ${homeUser.userId}}">动态</a></li>
-                        <li role="presentation" class="active"><a
+                        <li role="presentation"><a
                                 th:href="@{'/userHome/question/' + ${homeUser.userId}}">问题</a></li>
                         <li role="presentation"><a
                                 th:href="@{'/userHome/answer/' + ${homeUser.userId}}">回答</a></li>
                         <li role="presentation"><a href="#">收藏</a></li>
-                        <li role="presentation"><a
-                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
+                        <li role="presentation" class="active"><a th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
                         <li role="presentation"><a th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a></li>
                         <li role="presentation"><a href="#">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
-                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-question-sign"/>我提出的问题</h4>
-                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-question-sign"/>他提出的问题</h4>
+                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-question-sign"/>我关注的问题</h4>
+                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-question-sign"/>他关注的问题</h4>
                     </div>
 
                     <!--底部提示信息-->
                     <div th:if="${questionList.size() == 0}" style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true'">你还没有发布任何问题鸭(:&nbsp;</span>
-                        <span>开始提问自己的第一个问题吧:)点<span class="glyphicon glyphicon-eye-open"/>提问</span>
-                        <span th:if="${isLoginUser} == 'false'">他还没有发布任何问题(:&nbsp;</span>
+                        <span th:if="${${isLoginUser} == 'true'}">你还没有关注任何问题鸭(:&nbsp;</span><span>到<a
+                            th:href="@{/recommend}">这里</a>去看一看推荐的问题吧</span>
+                        <span th:if="${${isLoginUser} == 'false'}">他还没有关注任何问题(:&nbsp;</span>
                     </div>
                     <div class="card mb-4" th:each="question : ${questionList}">
                         <div class="card-block border-dark">
@@ -66,13 +65,11 @@
                                    th:text="${question.questionTitle}">
                                 </a>
                             </h4>
-                            <div class="card-title text-dark">
-                                <p class="card-text " th:text="${question.questionContent}"/>
-                            </div>
+                            <p class="card-text" th:text="${question.questionContent}">
+                            </p>
 
                             <div class="card-text">
-                                <a href="/userHome/question/${question.userId}"
-                                   th:href="@{'/userHome/question/' + ${question.userId}}"
+                                <a href="/userHome/question/${question.userId}" th:href="@{'/userHome/question/' + ${question.userId}}"
                                    class="card-link"
                                    th:text="${question.user.username}">waylau</a>
                                 发表于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
@@ -92,8 +89,8 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true'">你只有这么多问题了(:</span>
-                        <span th:if="${isLoginUser} == 'false'">他只有这么多问题了(:</span>
+                        <span th:if="${isLoginUser} == 'true'">你只有这么多关注的问题了(:</span>
+                        <span th:if="${isLoginUser} == 'false'">他只有这么多关注的问题了(:</span>
                     </div>
                 </div>
             </div>
