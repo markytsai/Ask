@@ -1,6 +1,6 @@
 <div th:fragment="sideCards" xmlns:th="http://www.w3.org/1999/xhtml">
 
-    <div class="col-md-3">
+    <div class="col-md-3 ">
         <!-- 热门问题 根据关注量排序-->
         <div class="card my-4" style='background-color: #fff;'>
             <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</h5>
@@ -12,7 +12,7 @@
                 </div>
                 <div style="float:right;">
                     <a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注
-                    <a th:href="@{/#}" th:text="1000">10</a>个回答
+                    <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.answerCount}">10</a>个回答
                 </div>
                 <div th:if="${userStat.index} lt ${userStat.size - 1}">
                     <hr color="#f8f8f8"/>
@@ -66,13 +66,12 @@
         <div class="card my-4" style='background-color: #fff;'>
             <h5 class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i>最新发问</h5>
             <div class="list-group">
-                <!--<ul class="list-group" th:each="newblog : ${newest}"-->
-                <!--th:object="${newblog}">-->
                 <ul class="list-group" th:each="question : ${newestQuestions}">
                     <div class="card-block border-black">
                         <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"></a>
                     </div>
-                    <div><p style="float:right;">提问于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>
+                    <div><p style="float:right;">提问于<span
+                            th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>
                     <hr color="#f8f8f8"/>
                 </ul>
             </div>

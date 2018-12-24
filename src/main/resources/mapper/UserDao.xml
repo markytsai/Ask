@@ -12,33 +12,14 @@
         WHERE user_id = #{userId}
     </select>
 
-    <select id="selectUserByUserIdWithFollowingStatus" resultType="User" parameterType="String">
+    <select id="selectUserByUserIdWithFollowingStatus" resultType="Integer" parameterType="String">
        SELECT
-            u.user_id,
-            u.email,
-            u.password,
-            u.join_time,
-            u.username,
-            u.avatar_url,
-            u.gender,
-            u.simple_desc,
-            u.residence_place,
-            u.position,
-            u.industry,
-            u.career,
-            u.education,
-            u.full_desc,
-            u.liked_count,
-            u.collected_count,
-            u.follow_count,
-            u.followed_count,
-            u.scanned_count,
             mufu.follow_status
         FROM
             mid_user_follow_user AS mufu
             inner join user as fu on mufu.user_followed_id = fu.user_id
             INNER JOIN user AS u ON u.user_id = mufu.user_id
-        WHERE u.user_id = #{userId} and u.user_id != fu.user_id
+        WHERE u.user_id = #{localUserId} and fu.user_id = #{userId}
     </select>
 
 

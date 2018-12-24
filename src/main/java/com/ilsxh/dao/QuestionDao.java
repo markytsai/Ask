@@ -20,6 +20,8 @@ public interface QuestionDao {
      */
     List<Question> selectFollowingQuestionByUserId(@Param("userId") String userId);
 
+    List<Question> selectRecommendedQuestionByUserId();
+
     List<Question> getRaisedQuestionByUserId(@Param("userId") String userId);
 
     List<Answer> selectAnswersByQuestionId(@Param("questionId") String questionId);

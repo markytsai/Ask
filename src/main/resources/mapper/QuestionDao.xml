@@ -38,6 +38,22 @@
             qum.user_id = #{userId}
     </select>
 
+    <select id="selectRecommendedQuestionByUserId" parameterType="String" resultMap="QuestionList">
+
+        SELECT
+        question_id,
+        question_title,
+        question_content,
+        followed_count,
+        scanned_count,
+        create_time,
+        user_id,
+        answer_count
+        FROM
+        question
+
+    </select>
+
     <select id="getRaisedQuestionByUserId" resultType="Question">
           SELECT
             q.question_id,

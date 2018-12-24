@@ -23,7 +23,7 @@ public interface UserDao {
      * @param userId
      * @return
      */
-    User selectUserByUserIdWithFollowingStatus(@Param("userId") String userId);
+    Integer selectUserByUserIdWithFollowingStatus(@Param("userId") String userId, @Param("localUserId") String localUserId);
 
     /**
      * @param email

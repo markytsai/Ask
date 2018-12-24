@@ -37,9 +37,9 @@ public class UserController {
     @RequestMapping(value = "/toLogin")
     @ResponseBody
     public Response login(@RequestParam("email") String email, @RequestParam("password") String password,
-                          HttpServletRequest request, HttpServletResponse response) {
+                          @RequestParam("rememberMe") Boolean rememberMe, HttpServletRequest request, HttpServletResponse response) {
 
-        Map<String, Object> userInfoMap = userService.login(email, password, response);
+        Map<String, Object> userInfoMap = userService.login(email, password, rememberMe, response);
 
         if (userInfoMap.get("loginError") == null) {
             return new Response(LOGIN_SUCCESS, "", userInfoMap);

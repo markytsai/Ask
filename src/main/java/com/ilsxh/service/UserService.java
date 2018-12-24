@@ -51,7 +51,7 @@ public class UserService {
      * @param response
      * @return
      */
-    public Map<String, Object> login(String email, String password, HttpServletResponse response) {
+    public Map<String, Object> login(String email, String password, Boolean rememberMe, HttpServletResponse response) {
         Map<String, Object> loginUserMap = new HashMap<>();
 
         String userId = userDao.selectUserIdByEmailAndPassword(email, password);
@@ -60,7 +60,7 @@ public class UserService {
             return loginUserMap;
         }
 
-        this.autoGenCookie(response, userId);
+        autoGenCookie(response, userId, rememberMe);
         User loginUser = userDao.selectUserByUserId(userId);
         loginUserMap.put("loginUserInfo", loginUser);
 
@@ -103,13 +103,15 @@ public class UserService {
     }
 
 
-    private void autoGenCookie(HttpServletResponse response, String userId) {
+    private void autoGenCookie(HttpServletResponse response, String userId, Boolean rememberMe) {
         // generate cookies to backward browsers
         String loginToken = UUIDUtil.uuid();
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, loginToken);
         cookie.setPath("/");
-        // 过期时间设置为一天
-        cookie.setMaxAge(EXPIRE_TIME);
+        if (rememberMe) {
+            // 过期时间设置为一天
+            cookie.setMaxAge(EXPIRE_TIME);
+        }
         response.addCookie(cookie);
 
         Jedis jedis = jedisPool.getResource();
@@ -159,8 +161,11 @@ public class UserService {
             map.put("isLoginUser", "true");
         } else {
             map.put("isLoginUser", "false");
-            if (userDao.selectUserByUserIdWithFollowingStatus(userId) == null) {
+            Integer isExistFollowStatus = userDao.selectUserByUserIdWithFollowingStatus(userId, localUserId);
+            if (isExistFollowStatus == null) {
                 homeUser.setFollowStatus(0);
+            } else {
+                homeUser.setFollowStatus(isExistFollowStatus);
             }
         }
 

@@ -78,7 +78,7 @@ public class QuestionController {
         model.addAttribute("user", userDao.selectUserByUserId(userId));
         model.addAttribute("username", userDao.selectUsernameByUserId(userId));
 
-        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
+        List<Question> questionList = questionService.getRecommendedQuestionByUserId();
         model.addAttribute("recommendQuestionList", questionList);
         model.addAttribute("hotQuestions", hotService.getHotQuestion());
         model.addAttribute("hotUsers", hotService.getHotUsers());
@@ -111,6 +111,7 @@ public class QuestionController {
         model.addAttribute("questionDetail", question);
         model.addAttribute("hotQuestions", hotService.getHotQuestion());
         model.addAttribute("hotUsers", hotService.getHotUsers());
+        model.addAttribute("hotTopics", hotService.getHotTopic());
         model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
         return "questionDetail";
     }

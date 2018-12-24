@@ -19,7 +19,6 @@ import static com.ilsxh.service.UserService.COOKIE_NAME_TOKEN;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     private List<String> excludedUrls = Arrays.asList("/login", "/toLogin", "/register", "/doRegister");
-//    private List<String> excludedUrls;
 
     @Autowired
     private JedisPool jedisPool;

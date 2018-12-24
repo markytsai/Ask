@@ -1,5 +1,5 @@
 a {
-    padding-left: 5px;
+    /*padding-left: 5px;*/
 }
 
 /* some simple transitions to make the upvote and downvote
@@ -18,18 +18,18 @@ buttons fade in as a visual cue for the user */
 }
 
 div.text-container {
-    margin: 0 auto;
-    width: 100%;
+    /*margin: 0 auto;*/
+    /*width: 100%;*/
 }
 
 .hideContent {
     overflow: hidden;
-    line-height: 1em;
-    height: 2em;
+    line-height: 1.428571431;
+    height: 40px;
 }
 
 .showContent {
-    line-height: 1em;
+    line-height: 1.428571431;
     height: auto;
 }
 
@@ -38,6 +38,6 @@ div.text-container {
 }
 
 .show-more {
-    padding: 10px 0;
+    /*padding: 10px 0;*/
     text-align: center;
 }

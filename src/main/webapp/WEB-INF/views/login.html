@@ -27,7 +27,7 @@
             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="true"/>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" value="remember-me"/> Remember me
+                    <input id="rememberMe" type="checkbox" value="remember-me"/>记住我
                 </label>
             </div>
             <span id="login-email-error" class="text-danger"></span>
@@ -50,11 +50,8 @@
 
 <script>
 
-    /* 登录处理 */
-    var loginInputEmail = $("#inputEmail");
-    var loginInputPassword = $("#inputPassword");
 
-    loginInputEmail.blur(function () {
+    $("#inputEmail").blur(function () {
         var email = $(this).val();
 
         if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(email)) {
@@ -63,7 +60,7 @@
             $("#login-email-error").text("");
         }
     });
-    loginInputPassword.blur(function () {
+    $("#inputPassword").blur(function () {
         var value = $(this).val();
 
         if (!/[a-zA-Z0-9]{6,10}/.test(value)) {
@@ -78,7 +75,8 @@
 
         var userData = {
             "email": $("#inputEmail").val(),
-            "password": $("#inputPassword").val()
+            "password": $("#inputPassword").val(),
+            "rememberMe": document.getElementById("rememberMe").checked,
         }
 
         $.ajax({

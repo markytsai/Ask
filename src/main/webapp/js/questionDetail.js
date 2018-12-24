@@ -1,3 +1,24 @@
+
+$(document).ready(function () {
+
+    $('#summernote').summernote();
+
+    var p = 0;
+    var t = 0;
+    $(window).scroll(function () {
+        p = $(window).scrollTop();
+        if (t <= p) {
+            $("#nbar").hide();
+        } else {
+            $("#nbar").show();
+        }
+        setTimeout(function () {
+            t = p;
+        }, 0);
+    });
+});
+
+
 $('#focusQuestion').click(function () {
     var btnFocusQuestion = $("#focusQuestion");
     followQuestion();
@@ -12,14 +33,20 @@ $('#focusQuestion').click(function () {
 });
 
 $('#iWantAnswer').click(function () {
-    $('#editFrame').show();
+    $('.answerArea').summernote({focus: true});
+    $('#submitBtn').show();
+    $('#authorEditting').show();
+
 });
 
-$('#submitAnswer').click(function () {
-    $('#editFrame').hide();
-});
+// $('#submitAnswer').click(function () {
+//     $('#editFrame').hide();
+// });
+
 $('#quitAnswer').click(function () {
-    $('#editFrame').hide();
+    $('.answerArea').summernote('destroy');
+    $('#submitBtn').hide();
+    $('#authorEditting').hide();
 });
 
 $('.glyphicon-thumbs-up').click(function (event) {
@@ -161,8 +188,10 @@ function followQuestion() {
 
 $('#submitAnswer').click(function () {
 
-    var answerContent = $('#answerContent').val();
+    var answerContent = $('.answerArea').summernote('code');
     var questionId = $('#getQuestionId').val();
+    $('.answerArea').summernote('destroy');
+    $('#submitBtn').hide();
 
     $.ajax({
         url: "/submitAnswer/" + questionId,
@@ -242,22 +271,22 @@ $('.modifyBtn').click(function (event) {
     window.location.href = "/settings";
 });
 
-$(".show-more a").on("click", function () {
-    var $this = $(this);
-    var $content = $this.parent().prev("div.content").text();
-    var linkText = $this.text().toUpperCase();
+$(".moreContent").on("click", function (event) {
+    var id = event.target.id;
 
-    if(linkText === "SHOW MORE"){
-        linkText = "Show less";
-        $content.switchClass("hideContent", "showContent", 400);
+    var linkText = $('#' + id).parent().text();
+
+    if (linkText === "展开") {
+        $('#' + id).parent().parent().prev("div.foldContent:first-child").children().switchClass("hideContent", "showContent", 500);
+        $('#' + id).parent().html("收起<span id='" + id + "' class='glyphicon glyphicon-menu-up'/>");
     } else {
-        linkText = "Show more";
-        $content.switchClass("showContent", "hideContent", 400);
+        $('#' + id).parent().parent().prev("div.foldContent:first-child").children().addClass("hideContent").removeClass("showContent", 300);
+        // $('#' + id).parent().text("更多");
+        $('#' + id).parent().html("展开<span id='" + id + "' class='glyphicon glyphicon-menu-down'/>");
+        // $('#' + id).parent().html("收起<span class='glyphicon glyphicon-menu-down'/>");
     }
-
-
-    $this.text(linkText);
 });
+
 
 
 // $('.avatarImg').bind("mouseenter", function (event) {

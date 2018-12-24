@@ -44,6 +44,19 @@ public class QuestionService {
         return questionList;
     }
 
+    public List<Question> getRecommendedQuestionByUserId() {
+        List<Question> questionList = questionDao.selectRecommendedQuestionByUserId();
+
+        for (Question question : questionList) {
+            User user = new User();
+            user.setUserId(question.getUserId());
+            user.setUsername(userDao.selectUsernameByUserId(question.getUserId()));
+            question.setUser(user);
+        }
+        return questionList;
+    }
+
+
     public List<Answer> getAnswersByQuestionId(String questionId, String userId) {
 
         List<Answer> answerList = questionDao.selectAnswersByQuestionId(questionId);
