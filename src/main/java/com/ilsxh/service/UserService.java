@@ -39,7 +39,7 @@ public class UserService {
     /**
      * expire time is one single day
      */
-    public static final int EXPIRE_TIME = 60 * 60 * 24;
+    public static final int EXPIRE_TIME = 60 * 60 * 24 * 3;
 
     public static final String COOKIE_NAME_TOKEN = "currentUser";
 

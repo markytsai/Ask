@@ -1,21 +1,6 @@
-
 $(document).ready(function () {
 
     $('#summernote').summernote();
-
-    var p = 0;
-    var t = 0;
-    $(window).scroll(function () {
-        p = $(window).scrollTop();
-        if (t <= p) {
-            $("#nbar").hide();
-        } else {
-            $("#nbar").show();
-        }
-        setTimeout(function () {
-            t = p;
-        }, 0);
-    });
 });
 
 
@@ -150,11 +135,11 @@ $('.glyphicon-star').click(function (event) {
 });
 
 
-$('.delBtn').click(function (event) {
+$('.delConfirmBtn').click(function (event) {
 
-    var id = event.target.parentNode.id;
-    var answerId = id.split('-')[1];
+    var answerId = $('.delConfirmBtn').val();
 
+    $('#delConfirmModal').modal('toggle');
     $('#answerId-' + answerId)[0].parentNode.parentNode.hidden = true;
 
     $.ajax({
@@ -167,6 +152,16 @@ $('.delBtn').click(function (event) {
             }
         }
     });
+});
+
+$('.delBtn').click(function (event) {
+
+    var id = event.target.parentNode.id;
+    var answerId = id.split('-')[1];
+
+
+    var deletedAnswerId = answerId;
+    $(".modal-footer #delId").val(deletedAnswerId);
 });
 
 function followQuestion() {
@@ -286,7 +281,6 @@ $(".moreContent").on("click", function (event) {
         // $('#' + id).parent().html("收起<span class='glyphicon glyphicon-menu-down'/>");
     }
 });
-
 
 
 // $('.avatarImg').bind("mouseenter", function (event) {
