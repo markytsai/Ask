@@ -14,10 +14,12 @@
     <link href="http://localhost:8088/css/answer.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/jquery.smartbox.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile.css"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/sidePersonCard.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/custom.css"/>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
 
 </head>
 
@@ -42,7 +44,7 @@
                                 th:href="@{'/userHome/activity/' + ${homeUser.userId}}">动态</a></li>
                         <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId}}">问题</a></li>
                         <li role="presentation"><a th:href="@{'/userHome/answer/' + ${homeUser.userId}}">回答</a></li>
-                        <li role="presentation"><a href="#">收藏</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}}">收藏</a></li>
                         <li role="presentation"><a
                                 th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
                         <li role="presentation"><a
@@ -50,8 +52,12 @@
                         <li role="presentation"><a href="#">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
-                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-pencil"/>我的<span th:if="${activityList.size() != 0}" th:text="${activityList.size() + '条'}"/>动态</h4>
-                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-pencil"/>他的<span th:if="${activityList.size() != 0}" th:text="${activityList.size() + '条'}"/>动态</h4>
+                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-pencil"/>我的<span
+                                th:if="${activityList.size() != 0}" th:text="${activityList.size() + '条'}"/>动态
+                        </h4>
+                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-pencil"/>他的<span
+                                th:if="${activityList.size() != 0}" th:text="${activityList.size() + '条'}"/>动态
+                        </h4>
                     </div>
 
                     <!--底部提示信息-->
@@ -68,11 +74,13 @@
                                 <div th:case="1">
                                     <div class="card-block">
                                         <div class="tab-title">
-                                            <h5><p class="glyphicon glyphicon-ok-circle"/> 赞同了回答</h5>
+                                            <h5><p class="glyphicon glyphicon-ok-circle"/> 赞同了回答
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
+                                                   style="display: inline;margin-left: 412px;"/></h5>
                                         </div>
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
                                             <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
-                                               class="card-link text-dark"
+                                               class="text-title"
                                                th:text="${activity.answer.question.questionTitle}">
                                             </a>
                                         </h4>
@@ -135,15 +143,90 @@
                                     </div>
                                 </div>
 
-                                <!--Answering question lists-->
+                                <!--Write answer lists-->
                                 <div th:case="2">
                                     <div class="card-block">
                                         <div class="tab-title">
-                                            <h5><p class="glyphicon glyphicon-transfer"/> 回答了问题</h5>
+                                            <h5><p class="glyphicon glyphicon-transfer"/> 回答了问题
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
+                                                   style="display: inline;margin-left: 412px;"/></h5>
                                         </div>
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
                                             <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
-                                               class="card-link text-dark"
+                                               class="text-title"
+                                               th:text="${activity.answer.question.questionTitle}">
+                                            </a>
+                                        </h4>
+                                        <div class="card-title answer-meta">
+                                            <div class="avatarImg" style="float:left; width:45px; height:45px;">
+                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
+                                                     height="100%"
+                                                     style="border-radius: 100%"/>
+                                            </div>
+                                            <div style="margin-left: 55px">
+                                                <h5>
+                                                    <a href="'/userHome/question/' + ${activity.answer.user.userId}"
+                                                       th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}"
+                                                       class="card-link"
+                                                       th:text="${activity.answer.user.username}">
+                                                    </a>&nbsp;
+                                                    <span th:text="${activity.answer.user.position}"/>&nbsp;
+                                                    <span th:text="${activity.answer.user.simpleDesc}"/>
+                                                </h5>
+                                            </div>
+                                            &nbsp;<a
+                                                th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </a><span th:text="${activity.answer.user.username}"/>于
+                                            <span th:text="${#dates.format(activity.answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>
+                                            回答了该问题
+
+                                            <h6 th:text="${activity.answer.likedCount} + '人赞同了该回答'"></h6>
+                                        </div>
+                                        <p class="card-text" th:utext="${activity.answer.answerContent}"/>
+
+                                        <div th:id="answerId+'-'+${activity.answer.answerId}" class="card-text">
+                                            <input id="isCollect" th:type="hidden"
+                                                   th:value="${activity.answer.collectAnswer}"/>
+                                            <!--<input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>-->
+                                            <input id="userVote" th:type="hidden"
+                                                   th:value="${activity.answer.user.vote}"/>
+                                            <input id="upvoteCount" th:type="hidden"
+                                                   th:value="${activity.answer.likedCount}"/>
+                                            <input id="downvoteCount" th:type="hidden"
+                                                   th:value="${activity.answer.dislikedCount}"/>
+
+                                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                                            <span id="upvoteIcon" class="label label-primary"
+                                                  th:text="${activity.answer.user.vote == 1} ? '已赞同'+ ${activity.answer.likedCount} + '次' : '赞同'+ ${activity.answer.likedCount} + '次' "></span>
+
+                                            <i class="glyphicon glyphicon-thumbs-down" th:href="@{downvote}"></i>
+                                            <span id="downvoteIcon" class="label label-primary"
+                                                  th:text="${activity.answer.user.vote == -1} ? '已反对'+ ${activity.answer.dislikedCount} + '次' : '反对'+ ${activity.answer.dislikedCount} + '次' "></span>
+
+                                            &nbsp;&nbsp;
+                                            <i class="glyphicon glyphicon-star"></i>
+                                            <span id="collectBtnValue"
+                                                  th:text="${activity.answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>&nbsp;&nbsp;
+
+                                            <button class="btn btn-xs delBtn glyphicon glyphicon-trash">
+                                                <!--<span class=""></span>-->
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Collect answer lists-->
+                                <div th:case="3">
+                                    <div class="card-block">
+                                        <div class="tab-title">
+                                            <h5><p class="glyphicon glyphicon-ok-circle"/> 收藏了回答
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
+                                                   style="display: inline;margin-left: 412px;"/></h5>
+                                        </div>
+                                        <h4 class="card-title text-dark" style="font-weight: bolder;">
+                                            <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
+                                               class="text-title"
                                                th:text="${activity.answer.question.questionTitle}">
                                             </a>
                                         </h4>
@@ -207,15 +290,17 @@
                                 </div>
 
                                 <!--Following question lists-->
-                                <div th:case="3">
+                                <div th:case="4">
                                     <div class="card-block border-dark">
                                         <div class="tab-title">
-                                            <h5><p class="glyphicon glyphicon-eye-open"/> 关注了问题</h5>
+                                            <h5><p class="glyphicon glyphicon-eye-open"/> 关注了问题
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
+                                                   style="display: inline;margin-left: 412px;"/></h5>
                                         </div>
 
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
                                             <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
-                                               class="card-link text-dark"
+                                               class="text-title"
                                                th:text="${activity.answer.question.questionTitle}">
                                             </a>
                                         </h4>
@@ -240,15 +325,18 @@
                                     </div>
                                 </div>
 
+
                                 <!--Raised question lists-->
-                                <div th:case="4">
+                                <div th:case="5">
                                     <div class="card-block border-dark">
                                         <div class="tab-title">
-                                            <h5><p class="glyphicon glyphicon-send"/> 发布了问题</h5>
+                                            <h5><p class="glyphicon glyphicon-send"/> 发布了问题
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
+                                                   style="display: inline;margin-left: 412px;"/></h5>
                                         </div>
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
                                             <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
-                                               class="card-link text-dark"
+                                               class="text-title"
                                                th:text="${activity.answer.question.questionTitle}">
                                             </a>
                                         </h4>
@@ -275,6 +363,54 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!--Follow user lists-->
+                                <div th:case="6">
+                                    <div class="card-block">
+                                        <div class="tab-title">
+                                            <h5><p class="glyphicon glyphicon-send"/> 关注了用户
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
+                                                   style="display: inline;margin-left: 412px;"/></h5>
+                                        </div>
+                                        <div class="card-title answer-meta">
+                                            <div class="avatarImg" style="float:left; width:45px; height:45px;">
+                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
+                                                     height="100%"
+                                                     style="border-radius: 100%"/>
+                                            </div>
+                                            <div style="margin-left: 55px">
+                                                <h5>
+                                                    <a href="'/userHome/question/' + ${activity.answer.user.userId}"
+                                                       th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}"
+                                                       class="card-link"
+                                                       th:text="${activity.answer.user.username}">
+                                                    </a>&nbsp;
+                                                    <span th:text="${activity.answer.user.position}"/>&nbsp;
+                                                    <span th:text="${activity.answer.user.simpleDesc}"/>
+                                                    <span th:id="userId + '-' + ${activity.answer.user.userId}"
+                                                          class="glyphicon label label-primary followUser"
+                                                          style="float:right"
+                                                          th:text="${activity.answer.user.followStatus == 1} ? '取消关注' : '关注答主'">关注答主</span>
+                                                </h5>
+                                            </div>
+                                            <div style="margin-left: 55px">&nbsp;
+                                                <span th:text="'回答' + ${activity.answer.user.likedCount} + '条'"></span>
+                                                <span class="vertical-line"
+                                                      style="width: px; height: 15px;border: 2px inset;"/>
+
+                                                <span th:text="'关注' + ${activity.answer.user.followCount} + '人'"></span>
+                                                <span class="vertical-line"
+                                                      style="width: 1px; height: 15px;border: 2px inset;"/>
+
+                                                <span th:text="'被关注量' + ${activity.answer.user.followedCount}"></span>
+                                                <span class="vertical-line"
+                                                      style="width: 1px; height: 15px;border: 2px inset;"/>
+                                            </div>
+                                        </div>
+                                        <hr color="#f8f8f8"/>
+                                    </div>
+                                </div>
+
                             </div>
                             <hr color="#f8f8f8"/>
                         </div>

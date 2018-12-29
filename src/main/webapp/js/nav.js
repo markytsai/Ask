@@ -1,19 +1,19 @@
-$(document).ready(function () {
-
-    var p = 0;
-    var t = 0;
-    $(window).scroll(function () {
-        p = $(window).scrollTop();
-        if (t <= p) {
-            $("#nbar").hide();
-        } else {
-            $("#nbar").show();
-        }
-        setTimeout(function () {
-            t = p;
-        }, 0);
-    });
-});
+// $(document).ready(function () {
+//
+//     var p = 0;
+//     var t = 0;
+//     $(window).scroll(function () {
+//         p = $(window).scrollTop();
+//         if (t <= p) {
+//             $("#nbar").hide();
+//         } else {
+//             $("#nbar").show();
+//         }
+//         setTimeout(function () {
+//             t = p;
+//         }, 0);
+//     });
+// });
 
 /*提问表单处理*/
 /* 提问处理 */

@@ -36,6 +36,12 @@ public interface IndexDao {
     List<Activity> getRaisedQuestion(@Param("userId") String userId);
 
     List<Activity> getAnswer(@Param("userId") String userId);
+
+    List<Activity> getCollectionAnswer(@Param("userId") String userId);
+
+    List<Activity> getFollowingUser(@Param("userId") String userId);
+
+
 }
 
 

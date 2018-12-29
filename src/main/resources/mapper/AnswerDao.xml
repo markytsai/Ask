@@ -6,7 +6,7 @@
 
     <update id="increAnswerUpVote">
         update answer set
-        liked_count = liked_count + 1, disliked_count = disliked_count - 1 where answer_id = #{answerId}
+        liked_count = liked_count + 1, disliked_count = disliked_count - 1, create_time = CURRENT_TIMESTAMP() where answer_id = #{answerId}
     </update>
 
     <update id="increAnswerDownVote">
@@ -33,7 +33,7 @@
 
     <!--判断是否已经投票-->
     <select id="userVoteExisted" resultType="Integer">
-        SELECT count(1) from mid_user_vote_answer where answer_id = #{answerId} and user_id = #{userId}
+        SELECT count(id) from mid_user_vote_answer where answer_id = #{answerId} and user_id = #{userId}
     </select>
 
     <select id="getUserVoteStatus" resultType="Integer">
@@ -45,12 +45,12 @@
     </update>
 
     <update id="insertVoteAnswer">
-        insert into mid_user_vote_answer(user_id, answer_id, vote) values(#{userId}, #{answerId}, #{whichVote})
+        insert into mid_user_vote_answer(user_id, answer_id, vote, create_time) values(#{userId}, #{answerId}, #{whichVote}, CURRENT_TIMESTAMP())
     </update>
 
-    <update id="downvoteAnswer">
-        update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}
-    </update>
+    <!--<update id="downvoteAnswer">-->
+        <!--update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}-->
+    <!--</update>-->
 
     <select id="isCollectAnswer" resultType="Integer">
         select count(1) from mid_user_collect_answer where answer_id = #{answerId} and user_id = #{userId}

@@ -1,0 +1,11 @@
+.text-title {
+    color: #333333;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+a:hover,
+a:focus {
+    color: #23527c;
+    text-decoration: none;
+}

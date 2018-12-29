@@ -38,7 +38,9 @@ public interface UserDao {
 
     Integer regiterNewUser(@Param("userId") String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password);
 
-    List<Answer> getAnswersByUserId(String userId);
+    List<Answer> getAnswersByUserId(@Param("userId") String userId);
+
+
 
     Integer getUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed);
 

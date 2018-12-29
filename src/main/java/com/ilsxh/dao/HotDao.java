@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface HotDao {
 
-    public List<Question> getHotQuestions();
+    List<Question> getHotQuestions();
 
-    public List<User> getHotUsers();
+    List<User> getHotUsers();
 
-    public List<Topic> getHotTopics();
+    List<Topic> getHotTopics();
 
-    public List<Question> getNewestRaisedQuestions();
+    List<Question> getNewestRaisedQuestions();
 }

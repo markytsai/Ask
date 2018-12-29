@@ -32,9 +32,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <span th:each="user : ${hotUsers}">
-                            <a th:href="@{/#}">
-                                <img src="images/avatar-defualt.jpg"
-                                     th:src="@{/images/avatar-defualt.jpg}"
+                            <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+                                <img th:src="${user.avatarUrl}"
                                      class="blog-avatar-50" width="30px" height="30px" style="border-radius: 30px"/>
                             </a>
                         </span>
@@ -52,9 +51,9 @@
             <div class="card-block">
                 <div class="row">
 
-                    <ul class="topic-list">
+                    <ul class="topic-list" style="margin-top:2px;margin-bottom: 7px;margin-left: -30px;">
                         <span th:each="topic : ${hotTopics}" class="topicItem"
-                              style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;"><a
+                              style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;display: inline-block"><a
                                 th:href="@{/#}" data-id="1" th:text="${topic.topicName}"></a></span>
                     </ul>
                 </div>

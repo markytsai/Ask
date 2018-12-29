@@ -1,6 +1,13 @@
 $(document).ready(function () {
 
     $('#summernote').summernote();
+
+    var isColleced = $('#collectBtnValue').val();
+    if (isColleced == '收藏') {
+        $('#collectSymbol').addClass("glyphicon glyphicon-star");
+    } else {
+        $('#collectSymbol').addClass("glyphicon glyphicon-star-empty");
+    }
 });
 
 
@@ -117,9 +124,11 @@ $('.glyphicon-star').click(function (event) {
     if (isCollect == "false") {
         $('#isCollect', '#' + id).val(true);
         $('#collectBtnValue', '#' + id).text("已收藏");
+        $('#collectSymbol').switchClass("glyphicon-star-empty", "glyphicon-star");
     } else {
         $('#isCollect', '#' + id).val(false);
         $('#collectBtnValue', '#' + id).text("收藏");
+        $('#collectSymbol').switchClass("glyphicon-star", "glyphicon-star-empty");
     }
     $.ajax({
         url: "/collectAnswer/" + answerId,

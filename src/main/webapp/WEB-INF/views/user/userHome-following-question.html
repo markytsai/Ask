@@ -14,10 +14,12 @@
     <link href="http://localhost:8088/css/answer.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/jquery.smartbox.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile.css"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/sidePersonCard.css"/>
 
+    <link rel="stylesheet" href="http://localhost:8088/css/custom.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
 </head>
 
 <body style='background-color: #f8f8f8;'>
@@ -42,7 +44,7 @@
                                 th:href="@{'/userHome/question/' + ${homeUser.userId}}">问题</a></li>
                         <li role="presentation"><a
                                 th:href="@{'/userHome/answer/' + ${homeUser.userId}}">回答</a></li>
-                        <li role="presentation"><a href="#">收藏</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}}">收藏</a></li>
                         <li role="presentation" class="active"><a
                                 th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
                         <li role="presentation"><a th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a>
@@ -67,7 +69,7 @@
                     <div class="card mb-4" th:each="question : ${questionList}">
                         <div class="card-block border-dark">
                             <h4 class="card-title text-dark" style="font-weight: bolder;">
-                                <a th:href="@{'/question/' + ${question.questionId}}" class="card-link text-dark"
+                                <a th:href="@{'/question/' + ${question.questionId}}" class="text-title"
                                    th:text="${question.questionTitle}">
                                 </a>
                             </h4>

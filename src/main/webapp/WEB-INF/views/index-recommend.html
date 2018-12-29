@@ -8,11 +8,16 @@
     <meta name="author" content=""/>
     <link rel="icon" href="../../favicon.ico"/>
 
-    <title>沙问</title>
+    <title>BrainExchange</title>
 
     <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/jquery.smartbox.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/custom.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/jquery-ui.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
 </head>
 
 <body style='background-color: #f8f8f8;'>
@@ -28,7 +33,7 @@
                     <div class="card mb-4" th:each="question : ${recommendQuestionList}">
                         <div class="card-block border-dark">
                             <h4 class="card-title text-dark" style="font-weight: bolder;">
-                                <a th:href="@{'/question/' + ${question.questionId}}" class="card-link text-dark"
+                                <a th:href="@{'/question/' + ${question.questionId}}" class="text-title"
                                    th:text="${question.questionTitle}">
                                 </a>
                             </h4>

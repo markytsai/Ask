@@ -6,10 +6,7 @@ import com.ilsxh.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class IndexService {
@@ -51,21 +48,54 @@ public class IndexService {
      * @return
      */
     public List<Activity> getActivityByUserId(String userId) {
-        List<Activity> activityFollowedQuestionList = indexDao.getFollowedQuestion(userId);
-        activityFollowedQuestionList.stream().forEach(a -> a.setActivityStaus(3));
 
-        List<Activity> activityVotedAnswerList = indexDao.getVotedAnswer(userId);
-        activityVotedAnswerList.stream().forEach(a -> a.setActivityStaus(1));
-        activityFollowedQuestionList.addAll(activityVotedAnswerList);
+        // 1.Voting answer
+        List<Activity> resultList = indexDao.getVotedAnswer(userId);
+        resultList.stream().forEach(a -> a.setActivityStaus(1));
 
-        List<Activity> activityRaisedQuestionList = indexDao.getRaisedQuestion(userId);
-        activityRaisedQuestionList.stream().forEach(a -> a.setActivityStaus(4));
-        activityFollowedQuestionList.addAll(activityRaisedQuestionList);
-
+        // 2.rite answer
         List<Activity> activityAnswerList = indexDao.getAnswer(userId);
         activityAnswerList.stream().forEach(a -> a.setActivityStaus(2));
-        activityFollowedQuestionList.addAll(activityAnswerList);
+        if (activityAnswerList.size() != 0) {
+            resultList.addAll(activityAnswerList);
+        }
 
-        return activityFollowedQuestionList;
+        // 3:Collect answer
+        List<Activity> activityCollectionAnswerList = indexDao.getCollectionAnswer(userId);
+        activityCollectionAnswerList.stream().forEach(a -> a.setActivityStaus(3));
+        if (activityCollectionAnswerList.size() != 0) {
+            resultList.addAll(activityCollectionAnswerList);
+        }
+
+        // 4.Following question
+        List<Activity> activityFollowedQuestionList = indexDao.getFollowedQuestion(userId);
+        activityFollowedQuestionList.stream().forEach(a -> a.setActivityStaus(4));
+        if (activityFollowedQuestionList.size() != 0) {
+            resultList.addAll(activityFollowedQuestionList);
+        }
+
+        // 5.Raised question
+        List<Activity> activityRaisedQuestionList = indexDao.getRaisedQuestion(userId);
+        activityRaisedQuestionList.stream().forEach(a -> a.setActivityStaus(5));
+        if (activityRaisedQuestionList.size() != 0) {
+            resultList.addAll(activityRaisedQuestionList);
+        }
+
+        // 6:Follow user
+        List<Activity> activityFollowingUser = indexDao.getFollowingUser(userId);
+        activityFollowingUser.stream().forEach(a -> a.setActivityStaus(6));
+        if (activityFollowingUser.size() != 0) {
+            resultList.addAll(activityFollowingUser);
+        }
+
+        Collections.sort(resultList, new Comparator<Activity>() {
+            @Override
+            public int compare(Activity o1, Activity o2) {
+                return (int) o1.getCreateTime() - (int) o2.getCreateTime();
+            }
+        });
+
+
+        return resultList;
     }
 }
