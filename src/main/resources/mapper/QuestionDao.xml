@@ -122,6 +122,10 @@
         insert into answer(answer_content, question_id, answer_user_id, create_time) values(#{answerContent}, #{questionId}, #{userId}, #{createTime})
     </insert>
 
+    <update id="updateAnswer">
+        update answer set answer_content = #{answerContent}, create_time = #{createTime} where answer_id = #{answerId}
+    </update>
+
     <delete id="deleteAnswer">
         delete from answer where answer_id = #{answerId}
     </delete>

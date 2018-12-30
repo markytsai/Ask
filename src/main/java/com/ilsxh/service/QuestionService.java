@@ -125,6 +125,10 @@ public class QuestionService {
         questionDao.submitAnswer(userId, answerContent, createTime, questionId);
     }
 
+    public void updateAnswer(String userId, Integer answerId, String answerContent, Long createTime, String questionId) {
+        questionDao.updateAnswer(userId, answerId, answerContent, createTime, questionId);
+    }
+
     public void deleteAnswer(String answerId) {
         questionDao.deleteAnswer(answerId);
     }

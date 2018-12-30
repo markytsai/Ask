@@ -22,9 +22,7 @@ public class QuestionDaoTest {
     @Test
     public void getFollowingQuestionList() {
 
-        List<Question> questionList = questionDao.selectFollowingQuestionByUserId("1");
 
-        System.out.println(questionList.size());
     }
 
 }

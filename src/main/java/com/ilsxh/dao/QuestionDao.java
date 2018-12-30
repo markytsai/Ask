@@ -38,6 +38,8 @@ public interface QuestionDao {
 
     void submitAnswer(@Param("userId") String userId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") String questionId);
 
+    void updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") String questionId);
+
     void deleteAnswer(@Param("answerId") String answerId);
 
     void addQuestion(@Param("question") Question question, @Param("userId") String userId);

@@ -67,6 +67,7 @@ public class QuestionController {
 
     /**
      * 推荐问题接口
+     *
      * @param request
      * @param model
      * @return
@@ -153,6 +154,15 @@ public class QuestionController {
 
 
         questionService.submitAnswer(localUserId, answerContent, new Date().getTime(), questionId);
+    }
+
+
+    @RequestMapping("/updateAnswer/{questionId}")
+    public void updateAnswer(@RequestParam("answerContent") String answerContent, @RequestParam("answerId") Integer answerId, @PathVariable("questionId") String questionId, HttpServletRequest request) {
+
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        questionService.updateAnswer(localUserId, answerId, answerContent, new Date().getTime(), questionId);
     }
 
     /**

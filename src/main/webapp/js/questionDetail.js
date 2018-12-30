@@ -15,15 +15,16 @@ $('#focusQuestion').click(function () {
     var btnFocusQuestion = $("#focusQuestion");
     followQuestion();
     // 取消关注问题
-    if (btnFocusQuestion.val() == '关注问题') {
-        btnFocusQuestion.val('取消关注');
+    if (btnFocusQuestion.text() == '关注问题') {
+        btnFocusQuestion.text('取消关注');
 
     } else {
-        btnFocusQuestion.val('关注问题');
+        btnFocusQuestion.text('关注问题');
     }
     btnFocusQuestion.blur();
 });
 
+// 点击我要回答按钮事件，显示内容输入框
 $('#iWantAnswer').click(function () {
     $('.answerArea').summernote({focus: true});
     $('#submitBtn').show();
@@ -116,7 +117,7 @@ $('.glyphicon-thumbs-down').click(function (event) {
     });
 });
 
-$('.glyphicon-star').click(function (event) {
+$('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
     var id = event.target.parentNode.id;
     var answerId = id.split('-')[1];
     var isCollect = $('#isCollect', '#' + id).val(); // 是否已经收藏
@@ -124,11 +125,13 @@ $('.glyphicon-star').click(function (event) {
     if (isCollect == "false") {
         $('#isCollect', '#' + id).val(true);
         $('#collectBtnValue', '#' + id).text("已收藏");
-        $('#collectSymbol').switchClass("glyphicon-star-empty", "glyphicon-star");
+        // event.target.parentNode.childNodes[11].switchClass("glyphicon-star-empty", "glyphicon-star");
+        $('#' + answerId + 'star').switchClass("glyphicon-star-empty", "glyphicon-star");
     } else {
         $('#isCollect', '#' + id).val(false);
         $('#collectBtnValue', '#' + id).text("收藏");
-        $('#collectSymbol').switchClass("glyphicon-star", "glyphicon-star-empty");
+        // event.target.parentNode.childNodes[11].switchClass("glyphicon-star", "glyphicon-star-empty");
+        $('#' + answerId + 'star').switchClass("glyphicon-star", "glyphicon-star-empty");
     }
     $.ajax({
         url: "/collectAnswer/" + answerId,
@@ -189,14 +192,42 @@ function followQuestion() {
     });
 }
 
-
+// 回答内容完毕，准备提交到服务器
 $('#submitAnswer').click(function () {
 
     var answerContent = $('.answerArea').summernote('code');
     var questionId = $('#getQuestionId').val();
     $('.answerArea').summernote('destroy');
     $('#submitBtn').hide();
+    $('#authorEditting').hide();
+    $('.answerArea').hide();
 
+    if ($('#submitAnswer').text() == '更新回答') {
+        updateAnswer(answerContent, questionId, $('.answerArea').attr('data-id'));
+
+    } else {
+        submitFirstAnswer(answerContent, questionId);
+    }
+
+
+});
+
+function updateAnswer(answerContent, questionId, answerId) {
+
+    $.ajax({
+        url: "/updateAnswer/" + questionId,
+        type: "post",
+        data: {'answerContent': answerContent, "questionId": questionId, "answerId": answerId},
+        dataType: 'json',
+        success: function (response) {
+            if (response.state == 1) {
+            } else {
+            }
+        }
+    });
+}
+
+function submitFirstAnswer(answerContent, questionId) {
     $.ajax({
         url: "/submitAnswer/" + questionId,
         type: "post",
@@ -208,6 +239,25 @@ $('#submitAnswer').click(function () {
             }
         }
     });
+}
+
+// 点击修改答案按钮,弹出修改文本框
+$('#modifyAnswerBtn').click(function (event) {
+
+    $('.answerArea').summernote({focus: true});
+    $('#submitBtn').show();
+    $('#authorEditting').show();
+
+    var questionId = $('#getQuestionId').val();
+    var answerId = event.target.parentNode.parentNode.nextElementSibling.id.split('-')[1];
+
+    // event.target.parentNode.parentNode.nextElementSibling.style.display = "none";
+    // $('#answerId-' + answerId).parentNode.hide();
+    $('.answerArea').attr('data-id', answerId);
+    var existedAnswerContent = event.target.parentNode.parentNode.previousElementSibling.textContent;
+    $('.answerArea').summernote('code', existedAnswerContent);
+
+    $('#submitAnswer').text("更新回答");
 });
 
 $('.followUser').click(function (event) {

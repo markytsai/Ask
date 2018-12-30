@@ -159,11 +159,16 @@
             a.answer_user_id "answer.userId",
             a.question_id "answer.question.questionId",
 
+            u.username "answer.user.username",
+            u.avatar_url "answer.user.avatarUrl",
+            u.simple_desc "answer.user.simpleDesc",
+            u.position "answer.user.position",
 
             muca.create_time "createTime"
 
           from answer as a
           inner join mid_user_collect_answer as muca on muca.answer_id = a.answer_id
+          inner join user as u on a.answer_user_id = u.user_id
           where muca.user_id = #{userId}
     </select>
 
