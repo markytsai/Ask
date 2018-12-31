@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2018-12-30 00:30:51
+Date: 2018-12-31 20:07:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,14 +42,13 @@ CREATE TABLE `answer` (
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
-INSERT INTO `answer` VALUES ('4', '\n\n                        2222', '0', '0', '1545827894', '1', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer` VALUES ('5', '<p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">Thank you for listing me as an example of an intelligent person, but you also insult me as an ignorant person who is brainwashed by the Chinese government. Without checking history, you automatically assume I take my stands on Taiwan because I was brainwashed by Chinese government instead of me doing my research and forming my own opinion. I can assure you, I\'m not brainwashed at all. I know a lot about Chinese government propaganda, AND western propaganda. Oh yes, every government broadcasts propaganda. If you think your western government tells you the truth nothing but the truth, you\'re delusional.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">Now, let\'s talk about Taiwan history. Because China\'s claim to Taiwan is based on a historical claim.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">Taiwan, by itself, was (and still is) an insignificant small island with very limited natural resources and primitive indigenous people. Taiwan was first colonized by Dutch and Spanish colonists. Later the Ming admiral Zheng Chenggong attacked Taiwan and took the island as part of Ming Dynasty in 1662. In 1683, the entire Taiwan island became part of Qing empire, first as part of Fujian province, later as its own province. Since then Taiwan had been part of China for over three centuries until in 1895 China lost the first Sino-Japanese war, and as part of postwar repayment to Japan, Taiwan was ceded to Japan as its colony in the&nbsp;<span class=\"qlink_container\"><a href=\"http://en.wikipedia.org/wiki/Treaty_of_Shimonoseki\" rel=\"noopener nofollow\" target=\"_blank\" class=\"external_link\" data-qt-tooltip=\"wikipedia.org\" style=\"background-image: url(&quot;//qsf.fs.quoracdn.net/-3-images.new_grid.external_link.svg-26-7f84ed22dfd7e97b.svg&quot;); background-position: right 0.3em; background-size: 10.5px; background-repeat: no-repeat; background-attachment: initial; background-origin: initial; background-clip: initial; color: rgb(43, 109, 173); padding-right: 15px;\">Treaty of Shimonoseki</a></span>, an unequal treaty forced upon Qing government by Japan.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">If Taiwan was never part of China, how could the Qing government cede it to Japan? You can\'t cede an independent country to an other country. You cede your own territory to another country.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">After losing World War II, Japan lost Taiwan as well. And the island was returned to the Chinese&nbsp;<span class=\"qlink_container\"><a href=\"http://government.by/\" rel=\"noopener nofollow\" target=\"_blank\" class=\"external_link\" data-qt-tooltip=\"government.by\" style=\"background-image: url(&quot;//qsf.fs.quoracdn.net/-3-images.new_grid.external_link.svg-26-7f84ed22dfd7e97b.svg&quot;); background-position: right 0.3em; background-size: 10.5px; background-repeat: no-repeat; background-attachment: initial; background-origin: initial; background-clip: initial; color: rgb(43, 109, 173); padding-right: 15px;\">government</a></span>. By now, however, the people in Taiwan had become quite fond of Japan\'s rule and some of them weren\'t happy with being taken back as part of China. Partly because Taiwan being the first oversea colony of Japan, Japan wanted to set a good example for its other (possible) future colonies. Not only Japan didn\'t commit much mass murder like it did later in mainland China, it actually helped Taiwan with a lot of infrastructure construction, set up schools (teaching Japanese of course) and was generally quite nice to Taiwan. That\'s why a lot of Taiwan people had fond memories of Japan occupation even they\'re second class citizens. While the corruption of the new Chinese government didn\'t help the situation, and there\'re a few rebellions breaking out.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">After three years of civil war, Chiang Kai-shek ran and took Taiwan as its base of operation, that had started the long history of separation of Taiwan and Mainland China.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">As you can see, after Ming dynasty took Taiwan, and with the sole exception of Japan occupation, whatever happened in Taiwan was China\'s internal affairs. Taiwan has been part of China longer than US has been a country.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">I\'m talking about solid, record history. There\'s nothing \"propaganda\" about it. China has the historical claim of Taiwan, Taiwan has always been part of China. And due to political differences between two parties, now Taiwan is an autonomous province. ROC want to be independent because nationalist party wants to hold against communist party. I could say it flamed the Taiwan independence movement. I could say Taiwan independence is a product of political propaganda. US plays a role in this political struggle because it wants to keep an foothold in Southeast Asia sea, to keep China under control. If you think US helps out Taiwan because it believe in democracy and some such idealistic crap, you\'re 图样图森迫 (too young too simple). Every major power involved in Taiwan issue want something of their own, it has very little to do with regular Taiwan people.</p><p class=\"ui_qtext_para\" style=\"margin-bottom: 1em; padding: 0px; display: inline; color: rgb(51, 51, 51); font-family: q_serif, Georgia, Times, &quot;Times New Roman&quot;, &quot;Hiragino Kaku Gothic Pro&quot;, Meiryo, serif; font-size: 16px;\">When I say Taiwan belongs to China, I don\'t mean Taiwan belongs to the Communist Party. If you ask me, the Communist Party shouldn\'t own mainland China, let alone Taiwan. I believe Taiwan belongs to the political, cultural, and geographical entity known as China. If there\'s a political revolution and some new government has replaced the Communist Party to represent China, this new political entity (totalitarian or democratic) would inherit the claim on Taiwan.</p>\n\n                        ', '0', '0', '1546003832', '3', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('7', '<p>是一个意外，但是企业也脱离不了干系。！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！</p><p><br></p><h1>脱离不了关系！！！</h1>', '0', '0', '1546091058664', '4', '6a99cf86555243ba8b23927c0748b562');
+INSERT INTO `answer` VALUES ('23', '\n                                \n                                \n                                \n                                \n                                \n                                    蔡振亚回答的\n生生世世                                \n                                \n                                \n                                \n                                \n                                \n                            ', '1', '0', '1546183629283', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('24', '腾飞回答的', '0', '0', '1546237944004', '1', '6a99cf86555243ba8b23927c0748b562');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -302,11 +301,12 @@ CREATE TABLE `mid_user_collect_answer` (
   `favorite_id` int(11) NOT NULL COMMENT '收藏夹的编号',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_collect_answer
 -- ----------------------------
+INSERT INTO `mid_user_collect_answer` VALUES ('33', '6a99cf86555243ba8b23927c0748b562', '23', '1', '0');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_question
@@ -318,13 +318,12 @@ CREATE TABLE `mid_user_follow_question` (
   `question_id` int(11) NOT NULL COMMENT '问题ID',
   `create_time` bigint(13) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
 -- ----------------------------
 INSERT INTO `mid_user_follow_question` VALUES ('6', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '1545826557');
-INSERT INTO `mid_user_follow_question` VALUES ('7', '6a99cf86555243ba8b23927c0748b562', '1', '1545826559');
 INSERT INTO `mid_user_follow_question` VALUES ('8', '45e6c1985fe640e09cd770d95e6e2c8b', '2', '1546012543');
 INSERT INTO `mid_user_follow_question` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '3', '1546012550');
 INSERT INTO `mid_user_follow_question` VALUES ('10', '45e6c1985fe640e09cd770d95e6e2c8b', '4', '1546012556');
@@ -332,10 +331,9 @@ INSERT INTO `mid_user_follow_question` VALUES ('11', '45e6c1985fe640e09cd770d95e
 INSERT INTO `mid_user_follow_question` VALUES ('12', '45e6c1985fe640e09cd770d95e6e2c8b', '8', '1546013336');
 INSERT INTO `mid_user_follow_question` VALUES ('13', '45e6c1985fe640e09cd770d95e6e2c8b', '7', '1546013347');
 INSERT INTO `mid_user_follow_question` VALUES ('14', '45e6c1985fe640e09cd770d95e6e2c8b', '5', '1546013353');
-INSERT INTO `mid_user_follow_question` VALUES ('15', '6a99cf86555243ba8b23927c0748b562', '2', null);
-INSERT INTO `mid_user_follow_question` VALUES ('16', '6a99cf86555243ba8b23927c0748b562', '4', null);
 INSERT INTO `mid_user_follow_question` VALUES ('17', '6a99cf86555243ba8b23927c0748b562', '5', null);
 INSERT INTO `mid_user_follow_question` VALUES ('18', '6a99cf86555243ba8b23927c0748b562', '6', null);
+INSERT INTO `mid_user_follow_question` VALUES ('22', '6a99cf86555243ba8b23927c0748b562', '1', null);
 
 -- ----------------------------
 -- Table structure for mid_user_follow_user
@@ -348,11 +346,12 @@ CREATE TABLE `mid_user_follow_user` (
   `follow_status` int(1) NOT NULL DEFAULT '0' COMMENT '1:following;0:not follow',
   `create_time` bigint(13) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_follow_user
 -- ----------------------------
+INSERT INTO `mid_user_follow_user` VALUES ('1', '6a99cf86555243ba8b23927c0748b562', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '0');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -365,14 +364,12 @@ CREATE TABLE `mid_user_vote_answer` (
   `vote` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'upvate:1;downvote:-1;not vote:0',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
-INSERT INTO `mid_user_vote_answer` VALUES ('1', '45e6c1985fe640e09cd770d95e6e2c8b', '4', '0', '1545998051');
-INSERT INTO `mid_user_vote_answer` VALUES ('2', '45e6c1985fe640e09cd770d95e6e2c8b', '5', '0', '20181229184051');
-INSERT INTO `mid_user_vote_answer` VALUES ('3', '6a99cf86555243ba8b23927c0748b562', '5', '0', '20181229210341');
+INSERT INTO `mid_user_vote_answer` VALUES ('6', '6a99cf86555243ba8b23927c0748b562', '23', '1', '20181230232312');
 
 -- ----------------------------
 -- Table structure for question
@@ -394,14 +391,14 @@ CREATE TABLE `question` (
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '2', '0', '1545793577', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
-INSERT INTO `question` VALUES ('2', '为什么手机只能围绕三个对称轴其中的两个稳定地旋转？', '', '', '2', '0', '1545912538', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('3', '霸王龙前面两只小手手是干嘛用的？', '霸王龙前面两只小手手是干嘛用的？霸王龙前面两只小手手是干嘛用的？', '', '1', '0', '1546003581', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
-INSERT INTO `question` VALUES ('4', '如何看待大疆员工猝死？', '才刚毕业几个月就去世了,真让人心寒', '', '2', '0', '1546006145', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
-INSERT INTO `question` VALUES ('5', 'PowerPoint 到底有多厉害？', '因为见识了Excel 到底有多厉害？ - 软件，所以想看看PPT的过人之处', '', '2', '0', '1546013251', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('6', '如何优雅地使用 Jupyter？', '如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？', '', '2', '0', '1546013292', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('7', '不爱睡觉怎么办？', '不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？', '', '1', '0', '1546013314', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('8', '有没有 SpringMVC + Angular + bootstrap 学习的例子?', '有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?v', '', '1', '0', '1546013332', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '2');
+INSERT INTO `question` VALUES ('2', '为什么手机只能围绕三个对称轴其中的两个稳定地旋转？', '', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('3', '霸王龙前面两只小手手是干嘛用的？', '霸王龙前面两只小手手是干嘛用的？霸王龙前面两只小手手是干嘛用的？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('4', '如何看待大疆员工猝死？', '才刚毕业几个月就去世了,真让人心寒', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('5', 'PowerPoint 到底有多厉害？', '因为见识了Excel 到底有多厉害？ - 软件，所以想看看PPT的过人之处', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('6', '如何优雅地使用 Jupyter？', '如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('7', '不爱睡觉怎么办？', '不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('8', '有没有 SpringMVC + Angular + bootstrap 学习的例子?', '有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?v', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 
 -- ----------------------------
 -- Table structure for topic
@@ -687,7 +684,7 @@ CREATE TABLE `user` (
   `activation_code` varchar(50) NOT NULL DEFAULT '',
   `join_time` bigint(20) NOT NULL DEFAULT '0',
   `username` varchar(50) NOT NULL DEFAULT '',
-  `avatar_url` varchar(200) NOT NULL DEFAULT 'http://localhost:8088/images/20181211191204.png',
+  `avatar_url` varchar(400) NOT NULL DEFAULT 'http://localhost:8088/images/20181211191204.png',
   `gender` int(11) NOT NULL DEFAULT '1',
   `simple_desc` varchar(50) NOT NULL DEFAULT '',
   `residence_place` varchar(255) NOT NULL DEFAULT '',
@@ -708,9 +705,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7615', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'http://localhost:8088/images/20181211191204.png', '1', '蔡振亚的小号', '', '', '', '', '', '', '0', '0', '0', '0', '0', '');
-INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'tsaizhenya', 'http://localhost:8088/images/author.jpg', '1', '社会主义的接班人', '深圳市', '软件工程师', '互联网行业', '杭州有赞科技有限公司java工程师', '本科', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
-INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', 'http://localhost:8088/images/tengfei.jpg', '1', '世界上最帅的人', '深圳市', '学生', '金融', '', '本科', '', '3', '234', '345', '45', '345', '');
+INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7615', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'https://ask-user-avatar.oss-cn-shenzhen.aliyuncs.com/userId-avatar-6a99cf86555243ba8b23927c0748b562tengfei.jpg', '1', '蔡振亚的小号', '', '', '', '', '', '', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'tsaizhenya', 'https://ask-user-avatar.oss-cn-shenzhen.aliyuncs.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '社会主义的接班人', '深圳市', '软件工程师', '互联网行业', '杭州有赞科技有限公司java工程师', '本科', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
+INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', 'https://ask-user-avatar.oss-cn-shenzhen.aliyuncs.com/userId-avatar-6a99cf86555243ba8b23927c0748b562-tengfei.jpg', '1', '世界上最帅的人', '深圳市', '学生', '金融', '', '本科', '', '3', '234', '345', '45', '345', '');
 DROP TRIGGER IF EXISTS `incre_answerCount_in_question_after_answer_insert`;
 DELIMITER ;;
 CREATE TRIGGER `incre_answerCount_in_question_after_answer_insert` AFTER INSERT ON `answer` FOR EACH ROW BEGIN

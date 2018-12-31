@@ -75,7 +75,7 @@
                 </button>
                 <a class="navbar-brand" th:href="@{/}"
                    style="color: red;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: 400">
-                    BrainExchange</a>
+                    <img th:src="@{/images/logo.gif}" style="display: inline-block; height: 30px; margin-top: -5px"/></a>
             </div>
 
             <form class="navbar-form navbar-right" role="search">
@@ -109,7 +109,8 @@
                                     class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a th:href="@{'/userHome/activity/' + ${user.userId}}"><i class="icon-user"/>我的主页</a></li>
+                                <li><a th:href="@{'/userHome/activity/' + ${user.userId}}"><i
+                                        class="icon-user"/>我的主页</a></li>
                                 <li><a th:href="@{/settings}"><i class="icon-cog"/>个人设置</a></li>
                                 <li><a th:href="@{/logout}"><i class="icon-signout"/>我要退出</a></li>
                             </ul>

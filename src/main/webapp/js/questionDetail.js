@@ -352,4 +352,48 @@ $(".moreContent").on("click", function (event) {
 // });
 
 
+var readURL = function (input) {
+    if (input.files) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('.profile-pic').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
 
+        var formData = new FormData();
+        var name = $(".file-upload").val();
+        formData.append("file", $("#upload")[0].files[0]);
+        formData.append("name", name);
+        $.ajax({
+            url: "/uploadAvatar",
+            type: "post",
+            type: 'POST',
+            data: formData,
+            // 告诉jQuery不要去处理发送的数据
+            processData: false,
+            // 告诉jQuery不要去设置Content-Type请求头
+            contentType: false,
+            success: function (response) {
+                if (response.state == 1) {
+                } else {
+                }
+            }
+        });
+    }
+
+}
+
+
+$(".file-upload").on('change', function () {
+    readURL(this);
+});
+
+$(".upload-button").on('click', function () {
+    $(".file-upload").click();
+});
+
+$('.upload-button').mouseenter(function () {
+    $('#changeAvatar').show();
+}).mouseleave(function () {
+    $('#changeAvatar').hide();
+})

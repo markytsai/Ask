@@ -7,18 +7,19 @@ import com.ilsxh.entity.User;
 import com.ilsxh.service.IndexService;
 import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.UserService;
-import com.ilsxh.util.MyConstant;
-import com.ilsxh.util.MyUtil;
-import com.ilsxh.util.QiniuyunUtil;
+import com.ilsxh.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -28,7 +29,7 @@ import java.util.UUID;
  */
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 public class IndexController {
 
     @Autowired
@@ -49,7 +50,7 @@ public class IndexController {
      */
     @RequestMapping("/settings")
     public String setting(HttpServletRequest request, Model model) {
-            String userId = userService.getUserIdFromRedis(request);
+        String userId = userService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
         model.addAttribute("user", user);
         System.out.println();
@@ -166,7 +167,6 @@ public class IndexController {
     }
 
 
-
     /**
      * user home page with question tab
      *
@@ -210,12 +210,13 @@ public class IndexController {
 
     /**
      * 获取用户主页的关注用户
+     *
      * @param userId
      * @param request
      * @param model
      * @return
      */
-    @RequestMapping("/userHome/followingUser/{userId}")
+    @RequestMapping(value = "/userHome/followingUser/{userId}")
     public String userHomeFollowingUser(@PathVariable String userId, HttpServletRequest request, Model model) {
         String localUserId = userService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
@@ -228,5 +229,17 @@ public class IndexController {
         model.addAllAttributes(map);
 
         return "user/userHome-following-user";
+    }
+
+    @RequestMapping(value = "/uploadAvatar", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
+    @ResponseBody
+    public Response springUpload(HttpServletRequest request, @RequestParam("file") MultipartFile img) throws Exception {
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        String avatar = "userId-avatar-" + localUserId + "-" + img.getOriginalFilename();
+        AliOssUtil.uploadAvatar(img, avatar);
+        indexService.updateAvatarUrl(localUserId, "https://" + AliOssUtil.bucketName + ".oss-cn-shenzhen.aliyuncs.com/" + avatar);
+
+        return new Response(1, "", "");
     }
 }
