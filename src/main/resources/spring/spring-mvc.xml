@@ -54,9 +54,13 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <!-- 拦截所有URL中包含/user/的请求 -->
+            <!-- 拦截所有URL中的请求 -->
             <mvc:mapping path="/*"/>
             <bean class="com.ilsxh.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/*"/>-->
+            <!--<bean class="com.ilsxh.interceptor.QuestionVisitTimesInteceptor"/>-->
+        <!--</mvc:interceptor>-->
     </mvc:interceptors>
 </beans>

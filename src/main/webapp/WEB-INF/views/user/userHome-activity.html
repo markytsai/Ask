@@ -76,79 +76,8 @@
                                     <div class="card-block">
                                         <div class="tab-title">
                                             <h5><p class="glyphicon glyphicon-ok-circle"/> 赞同了回答
-                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
-                                                   style="display: inline;margin-left: 412px;"/></h5>
-                                        </div>
-                                        <h4 class="card-title text-dark" style="font-weight: bolder;">
-                                            <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
-                                               class="text-title"
-                                               th:text="${activity.answer.question.questionTitle}">
-                                            </a>
-                                        </h4>
-                                        <div class="card-title answer-meta">
-                                            <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
-                                                     height="100%"
-                                                     style="border-radius: 100%"/>
-                                            </div>
-                                            <div style="margin-left: 55px">
-                                                <h5>
-                                                    <a href="'/userHome/question/' + ${activity.answer.user.userId}"
-                                                       th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}"
-                                                       class="card-link"
-                                                       th:text="${activity.answer.user.username}">
-                                                    </a>&nbsp;
-                                                    <span th:text="${activity.answer.user.position}"/>&nbsp;
-                                                    <span th:text="${activity.answer.user.simpleDesc}"/>
-                                                </h5>
-                                            </div>
-                                            &nbsp;<a
-                                                th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                        </a><span th:text="${activity.answer.user.username}"/>于
-                                            <span th:text="${#dates.format(activity.answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>
-                                            回答了该问题
-
-                                            <h6 th:text="${activity.answer.likedCount} + '人赞同了该回答'"></h6>
-                                        </div>
-                                        <p class="card-text" th:text="${activity.answer.answerContent}"/>
-
-                                        <div th:id="answerId+'-'+${activity.answer.answerId}" class="card-text">
-                                            <input id="isCollect" th:type="hidden"
-                                                   th:value="${activity.answer.collectAnswer}"/>
-                                            <!--<input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>-->
-                                            <input id="userVote" th:type="hidden"
-                                                   th:value="${activity.answer.user.vote}"/>
-                                            <input id="upvoteCount" th:type="hidden"
-                                                   th:value="${activity.answer.likedCount}"/>
-                                            <input id="downvoteCount" th:type="hidden"
-                                                   th:value="${activity.answer.dislikedCount}"/>
-
-                                            <i class="glyphicon glyphicon-thumbs-up"></i>
-                                            <span id="upvoteIcon" class="label label-primary"
-                                                  th:text="${activity.answer.user.vote == 1} ? '已赞同'+ ${activity.answer.likedCount} + '次' : '赞同'+ ${activity.answer.likedCount} + '次' "></span>
-
-                                            <i class="glyphicon glyphicon-thumbs-down" th:href="@{downvote}"></i>
-                                            <span id="downvoteIcon" class="label label-primary"
-                                                  th:text="${activity.answer.user.vote == -1} ? '已反对'+ ${activity.answer.dislikedCount} + '次' : '反对'+ ${activity.answer.dislikedCount} + '次' "></span>
-
-                                            &nbsp;&nbsp;
-                                            <i class="glyphicon glyphicon-star"></i>
-                                            <span id="collectBtnValue"
-                                                  th:text="${activity.answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>&nbsp;&nbsp;
-
-                                            <!--<button class="btn btn-xs delBtn glyphicon glyphicon-trash"/>-->
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--Write answer lists-->
-                                <div th:case="2">
-                                    <div class="card-block">
-                                        <div class="tab-title">
-                                            <h5><p class="glyphicon glyphicon-transfer"/> 回答了问题
-                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
-                                                   style="display: inline;margin-left: 412px;"/></h5>
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm:ss')}"
+                                                   style="display: inline;margin-left: 401px;"/></h5>
                                         </div>
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
                                             <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
@@ -213,13 +142,13 @@
                                     </div>
                                 </div>
 
-                                <!--Collect answer lists-->
-                                <div th:case="3">
+                                <!--Write answer lists-->
+                                <div th:case="2">
                                     <div class="card-block">
                                         <div class="tab-title">
-                                            <h5><p class="glyphicon glyphicon-ok-circle"/> 收藏了回答
-                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
-                                                   style="display: inline;margin-left: 412px;"/></h5>
+                                            <h5><p class="glyphicon glyphicon-transfer"/> 回答了问题
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm:ss')}"
+                                                   style="display: inline;margin-left: 401px;"/></h5>
                                         </div>
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
                                             <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
@@ -248,12 +177,83 @@
                                                 th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}">
                                             <span class="glyphicon glyphicon-user"></span>
                                         </a><span th:text="${activity.answer.user.username}"/>于
-                                            <span th:text="${#dates.format(activity.answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>
+                                            <span th:text="${#dates.format(activity.answer.createTime, 'yyyy年MM月dd日HH:mm:ss')}"/>
                                             回答了该问题
 
                                             <h6 th:text="${activity.answer.likedCount} + '人赞同了该回答'"></h6>
                                         </div>
-                                        <p class="card-text" th:text="${activity.answer.answerContent}"/>
+                                        <p class="card-text" th:utext="${activity.answer.answerContent}"/>
+
+                                        <div th:id="answerId+'-'+${activity.answer.answerId}" class="card-text">
+                                            <input id="isCollect" th:type="hidden"
+                                                   th:value="${activity.answer.collectAnswer}"/>
+                                            <!--<input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>-->
+                                            <input id="userVote" th:type="hidden"
+                                                   th:value="${activity.answer.user.vote}"/>
+                                            <input id="upvoteCount" th:type="hidden"
+                                                   th:value="${activity.answer.likedCount}"/>
+                                            <input id="downvoteCount" th:type="hidden"
+                                                   th:value="${activity.answer.dislikedCount}"/>
+
+                                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                                            <span id="upvoteIcon" class="label label-primary"
+                                                  th:text="${activity.answer.user.vote == 1} ? '已赞同'+ ${activity.answer.likedCount} + '次' : '赞同'+ ${activity.answer.likedCount} + '次' "></span>
+
+                                            <i class="glyphicon glyphicon-thumbs-down" th:href="@{downvote}"></i>
+                                            <span id="downvoteIcon" class="label label-primary"
+                                                  th:text="${activity.answer.user.vote == -1} ? '已反对'+ ${activity.answer.dislikedCount} + '次' : '反对'+ ${activity.answer.dislikedCount} + '次' "></span>
+
+                                            &nbsp;&nbsp;
+                                            <i class="glyphicon glyphicon-star"></i>
+                                            <span id="collectBtnValue"
+                                                  th:text="${activity.answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>&nbsp;&nbsp;
+
+                                            <!--<button class="btn btn-xs delBtn glyphicon glyphicon-trash"/>-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Collect answer lists-->
+                                <div th:case="3">
+                                    <div class="card-block">
+                                        <div class="tab-title">
+                                            <h5><p class="glyphicon glyphicon-ok-circle"/> 收藏了回答
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm:ss')}"
+                                                   style="display: inline;margin-left: 401px;"/></h5>
+                                        </div>
+                                        <h4 class="card-title text-dark" style="font-weight: bolder;">
+                                            <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
+                                               class="text-title"
+                                               th:text="${activity.answer.question.questionTitle}">
+                                            </a>
+                                        </h4>
+                                        <div class="card-title answer-meta">
+                                            <div class="avatarImg" style="float:left; width:45px; height:45px;">
+                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
+                                                     height="100%"
+                                                     style="border-radius: 100%"/>
+                                            </div>
+                                            <div style="margin-left: 55px">
+                                                <h5>
+                                                    <a href="'/userHome/question/' + ${activity.answer.user.userId}"
+                                                       th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}"
+                                                       class="card-link"
+                                                       th:text="${activity.answer.user.username}">
+                                                    </a>&nbsp;
+                                                    <span th:text="${activity.answer.user.position}"/>&nbsp;
+                                                    <span th:text="${activity.answer.user.simpleDesc}"/>
+                                                </h5>
+                                            </div>
+                                            &nbsp;<a
+                                                th:href="@{'/userHome/question/' + ${activity.answer.user.userId}}">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </a><span th:text="${activity.answer.user.username}"/>于
+                                            <span th:text="${#dates.format(activity.answer.createTime, 'yyyy年MM月dd日HH:mm:ss')}"/>
+                                            回答了该问题
+
+                                            <h6 th:text="${activity.answer.likedCount} + '人赞同了该回答'"></h6>
+                                        </div>
+                                        <p class="card-text" th:utext="${activity.answer.answerContent}"/>
 
                                         <div th:id="answerId+'-'+${activity.answer.answerId}" class="card-text">
                                             <input id="isCollect" th:type="hidden"
@@ -289,8 +289,8 @@
                                     <div class="card-block border-dark">
                                         <div class="tab-title">
                                             <h5><p class="glyphicon glyphicon-eye-open"/> 关注了问题
-                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
-                                                   style="display: inline;margin-left: 412px;"/></h5>
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm:ss')}"
+                                                   style="display: inline;margin-left: 401px;"/></h5>
                                         </div>
 
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
@@ -306,7 +306,7 @@
                                                th:href="@{'/userHome/activity/' + ${activity.answer.question.userId}}"
                                                class="card-link" th:text="${activity.answer.user.username}"/>
                                             发表于<span
-                                                th:text="${#dates.format(activity.answer.question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
+                                                th:text="${#dates.format(activity.answer.question.createTime, 'yyyy年MM月dd日HH:mm:ss')}"></span>&nbsp;&nbsp;
 
                                             <span class="glyphicon glyphicon-eye-open"></span>围观<span
                                                 th:text="${activity.answer.question.scanedCount} == null ? 1000 : ${activity.answer.question.scanedCount}"></span>次&nbsp;&nbsp;
@@ -326,8 +326,8 @@
                                     <div class="card-block border-dark">
                                         <div class="tab-title">
                                             <h5><p class="glyphicon glyphicon-send"/> 发布了问题
-                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
-                                                   style="display: inline;margin-left: 412px;"/></h5>
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm:ss')}"
+                                                   style="display: inline;margin-left: 401px;"/></h5>
                                         </div>
                                         <h4 class="card-title text-dark" style="font-weight: bolder;">
                                             <a th:href="@{'/question/' + ${activity.answer.question.questionId}}"
@@ -345,7 +345,7 @@
                                                th:text="${activity.answer.user.username}"></a>
 
                                             发表于<span
-                                                th:text="${#dates.format(activity.answer.question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
+                                                th:text="${#dates.format(activity.answer.question.createTime, 'yyyy年MM月dd日HH:mm:ss')}"></span>&nbsp;&nbsp;
 
                                             <span class="glyphicon glyphicon-eye-open"></span>围观<span
                                                 th:text="${activity.answer.question.scanedCount} == null ? 1000 : ${activity.answer.question.scanedCount}"></span>次&nbsp;&nbsp;
@@ -364,8 +364,8 @@
                                     <div class="card-block">
                                         <div class="tab-title">
                                             <h5><p class="glyphicon glyphicon-send"/> 关注了用户
-                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm')}"
-                                                   style="display: inline;margin-left: 412px;"/></h5>
+                                                <p th:text="${#dates.format(activity.createTime, 'yyyy年MM月dd日HH:mm:ss')}"
+                                                   style="display: inline;margin-left: 401px;"/></h5>
                                         </div>
                                         <div class="card-title answer-meta">
                                             <div class="avatarImg" style="float:left; width:45px; height:45px;">

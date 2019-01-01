@@ -97,7 +97,7 @@ public class QuestionController {
      * @return
      */
     @RequestMapping("/question/{questionId}")
-    public String QuestionDetail(@PathVariable("questionId") String questionId, HttpServletRequest request, Model model) {
+    public String QuestionDetail(@PathVariable("questionId") Integer questionId, HttpServletRequest request, Model model) {
 
         String userId = userService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
@@ -124,7 +124,7 @@ public class QuestionController {
      * @param request
      */
     @RequestMapping("/followQuestion/{questionId}")
-    public void followQuestion(@PathVariable("questionId") String questionId, HttpServletRequest request) {
+    public void followQuestion(@PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
@@ -148,7 +148,7 @@ public class QuestionController {
      * @param request
      */
     @RequestMapping("/submitAnswer/{questionId}")
-    public void submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") String questionId, HttpServletRequest request) {
+    public void submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
@@ -158,11 +158,11 @@ public class QuestionController {
 
 
     @RequestMapping("/updateAnswer/{questionId}")
-    public void updateAnswer(@RequestParam("answerContent") String answerContent, @RequestParam("answerId") Integer answerId, @PathVariable("questionId") String questionId, HttpServletRequest request) {
+    public void updateAnswer(@RequestParam("answerContent") String answerContent, @RequestParam("answerId") Integer answerId, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
-        questionService.updateAnswer(localUserId, answerId, answerContent, new Date().getTime(), questionId);
+        questionService.updateAnswer(localUserId, answerId, answerContent, questionId);
     }
 
     /**
@@ -196,6 +196,7 @@ public class QuestionController {
         question.setCreateTime(new Date().getTime());
 
         questionService.addQuestion(question, userId);
+        questionService.followQuestion(userId, question.getQuestionId());
         return new Response(1, "", question.getQuestionId());
     }
 

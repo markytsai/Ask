@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2018-12-31 20:07:55
+Date: 2019-01-01 20:22:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,13 +42,14 @@ CREATE TABLE `answer` (
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
 INSERT INTO `answer` VALUES ('23', '\n                                \n                                \n                                \n                                \n                                \n                                    蔡振亚回答的\n生生世世                                \n                                \n                                \n                                \n                                \n                                \n                            ', '1', '0', '1546183629283', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
 INSERT INTO `answer` VALUES ('24', '腾飞回答的', '0', '0', '1546237944004', '1', '6a99cf86555243ba8b23927c0748b562');
+INSERT INTO `answer` VALUES ('25', '\n                                \n                                \n                                \n                                \n                                \n                                    小号的第一个问题的第一个回答，更新', '0', '0', '1546321917560', '9', '3bad1b8a3c284cab8d19d441651c7615');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -301,12 +302,13 @@ CREATE TABLE `mid_user_collect_answer` (
   `favorite_id` int(11) NOT NULL COMMENT '收藏夹的编号',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_collect_answer
 -- ----------------------------
-INSERT INTO `mid_user_collect_answer` VALUES ('33', '6a99cf86555243ba8b23927c0748b562', '23', '1', '0');
+INSERT INTO `mid_user_collect_answer` VALUES ('33', '6a99cf86555243ba8b23927c0748b562', '23', '1', '1546183629283');
+INSERT INTO `mid_user_collect_answer` VALUES ('35', '3bad1b8a3c284cab8d19d441651c7615', '25', '1', '1546321502912');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_question
@@ -318,22 +320,24 @@ CREATE TABLE `mid_user_follow_question` (
   `question_id` int(11) NOT NULL COMMENT '问题ID',
   `create_time` bigint(13) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
 -- ----------------------------
-INSERT INTO `mid_user_follow_question` VALUES ('6', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '1545826557');
-INSERT INTO `mid_user_follow_question` VALUES ('8', '45e6c1985fe640e09cd770d95e6e2c8b', '2', '1546012543');
-INSERT INTO `mid_user_follow_question` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '3', '1546012550');
-INSERT INTO `mid_user_follow_question` VALUES ('10', '45e6c1985fe640e09cd770d95e6e2c8b', '4', '1546012556');
-INSERT INTO `mid_user_follow_question` VALUES ('11', '45e6c1985fe640e09cd770d95e6e2c8b', '6', '1546013308');
-INSERT INTO `mid_user_follow_question` VALUES ('12', '45e6c1985fe640e09cd770d95e6e2c8b', '8', '1546013336');
-INSERT INTO `mid_user_follow_question` VALUES ('13', '45e6c1985fe640e09cd770d95e6e2c8b', '7', '1546013347');
-INSERT INTO `mid_user_follow_question` VALUES ('14', '45e6c1985fe640e09cd770d95e6e2c8b', '5', '1546013353');
-INSERT INTO `mid_user_follow_question` VALUES ('17', '6a99cf86555243ba8b23927c0748b562', '5', null);
-INSERT INTO `mid_user_follow_question` VALUES ('18', '6a99cf86555243ba8b23927c0748b562', '6', null);
-INSERT INTO `mid_user_follow_question` VALUES ('22', '6a99cf86555243ba8b23927c0748b562', '1', null);
+INSERT INTO `mid_user_follow_question` VALUES ('6', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('8', '45e6c1985fe640e09cd770d95e6e2c8b', '2', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '3', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('10', '45e6c1985fe640e09cd770d95e6e2c8b', '4', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('11', '45e6c1985fe640e09cd770d95e6e2c8b', '6', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('12', '45e6c1985fe640e09cd770d95e6e2c8b', '8', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('13', '45e6c1985fe640e09cd770d95e6e2c8b', '7', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('14', '45e6c1985fe640e09cd770d95e6e2c8b', '5', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('17', '6a99cf86555243ba8b23927c0748b562', '5', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('18', '6a99cf86555243ba8b23927c0748b562', '6', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('22', '6a99cf86555243ba8b23927c0748b562', '1', '1546183629283');
+INSERT INTO `mid_user_follow_question` VALUES ('23', '3bad1b8a3c284cab8d19d441651c7615', '9', '1546320466979');
+INSERT INTO `mid_user_follow_question` VALUES ('24', '3bad1b8a3c284cab8d19d441651c7615', '10', '1546323708663');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_user
@@ -346,12 +350,13 @@ CREATE TABLE `mid_user_follow_user` (
   `follow_status` int(1) NOT NULL DEFAULT '0' COMMENT '1:following;0:not follow',
   `create_time` bigint(13) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_follow_user
 -- ----------------------------
-INSERT INTO `mid_user_follow_user` VALUES ('1', '6a99cf86555243ba8b23927c0748b562', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '0');
+INSERT INTO `mid_user_follow_user` VALUES ('1', '6a99cf86555243ba8b23927c0748b562', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546183629283');
+INSERT INTO `mid_user_follow_user` VALUES ('2', '3bad1b8a3c284cab8d19d441651c7615', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546322274739');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -364,12 +369,13 @@ CREATE TABLE `mid_user_vote_answer` (
   `vote` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'upvate:1;downvote:-1;not vote:0',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
-INSERT INTO `mid_user_vote_answer` VALUES ('6', '6a99cf86555243ba8b23927c0748b562', '23', '1', '20181230232312');
+INSERT INTO `mid_user_vote_answer` VALUES ('6', '6a99cf86555243ba8b23927c0748b562', '23', '1', '1546183629283');
+INSERT INTO `mid_user_vote_answer` VALUES ('7', '3bad1b8a3c284cab8d19d441651c7615', '25', '0', '1546321900241');
 
 -- ----------------------------
 -- Table structure for question
@@ -386,7 +392,7 @@ CREATE TABLE `question` (
   `user_id` varchar(128) NOT NULL,
   `answer_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of question
@@ -399,6 +405,8 @@ INSERT INTO `question` VALUES ('5', 'PowerPoint 到底有多厉害？', '因为�
 INSERT INTO `question` VALUES ('6', '如何优雅地使用 Jupyter？', '如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('7', '不爱睡觉怎么办？', '不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('8', '有没有 SpringMVC + Angular + bootstrap 学习的例子?', '有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?v', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('9', '小号的第一个问题', '', '', '1', '0', '1546320447149', '3bad1b8a3c284cab8d19d441651c7615', '1');
+INSERT INTO `question` VALUES ('10', '小号的第二个问题', '', '', '1', '0', '1546323690120', '3bad1b8a3c284cab8d19d441651c7615', '0');
 
 -- ----------------------------
 -- Table structure for topic
@@ -705,9 +713,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7615', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'https://ask-user-avatar.oss-cn-shenzhen.aliyuncs.com/userId-avatar-6a99cf86555243ba8b23927c0748b562tengfei.jpg', '1', '蔡振亚的小号', '', '', '', '', '', '', '0', '0', '0', '0', '0', '');
-INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'tsaizhenya', 'https://ask-user-avatar.oss-cn-shenzhen.aliyuncs.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '社会主义的接班人', '深圳市', '软件工程师', '互联网行业', '杭州有赞科技有限公司java工程师', '本科', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
-INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', 'https://ask-user-avatar.oss-cn-shenzhen.aliyuncs.com/userId-avatar-6a99cf86555243ba8b23927c0748b562-tengfei.jpg', '1', '世界上最帅的人', '深圳市', '学生', '金融', '', '本科', '', '3', '234', '345', '45', '345', '');
+INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7615', 'tsai@gmail.com', '123456', '0', '', '0', '小号', '/images/avatar-defualt.jpg', '1', '蔡振亚的小号', '', '', '', '', '', '', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'tsaizhenya', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '社会主义的接班人', '深圳市', '软件工程师', '互联网行业', '杭州有赞科技有限公司java工程师', '本科', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
+INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-6a99cf86555243ba8b23927c0748b562-tengfei.jpg', '1', '世界上最帅最帅最帅的人', '深圳市', '学生', '金融', '', '本科', '', '3', '234', '345', '45', '345', '');
 DROP TRIGGER IF EXISTS `incre_answerCount_in_question_after_answer_insert`;
 DELIMITER ;;
 CREATE TRIGGER `incre_answerCount_in_question_after_answer_insert` AFTER INSERT ON `answer` FOR EACH ROW BEGIN

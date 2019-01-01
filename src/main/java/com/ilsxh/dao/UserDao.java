@@ -44,9 +44,9 @@ public interface UserDao {
 
     Integer getUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed);
 
-    Integer insertUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus);
+    Integer insertUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Long createTime);
 
-    Integer updateUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus);
+    Integer updateUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Long createTime);
 
     List<User> getollowingUserByUserId(@Param("userId") String userId);
 

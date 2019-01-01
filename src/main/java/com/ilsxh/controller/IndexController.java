@@ -237,8 +237,8 @@ public class IndexController {
         String localUserId = userService.getUserIdFromRedis(request);
 
         String avatar = "userId-avatar-" + localUserId + "-" + img.getOriginalFilename();
-        AliOssUtil.uploadAvatar(img, avatar);
-        indexService.updateAvatarUrl(localUserId, "https://" + AliOssUtil.bucketName + ".oss-cn-shenzhen.aliyuncs.com/" + avatar);
+        QiniuyunUtil.uploadAvatar(img, avatar);
+        indexService.updateAvatarUrl(localUserId, "http://pknhrkp8l.bkt.clouddn.com/" + avatar);
 
         return new Response(1, "", "");
     }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @Controller
 @RequestMapping
@@ -24,7 +25,7 @@ public class AnswerController {
     public void voteAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("userVote") Integer currVoteStatus,
                            @RequestParam("upOrDownClick") Integer upOrDownClick, HttpServletRequest request) {
         String localUserId = userService.getUserIdFromRedis(request);
-        answerService.vote(localUserId, answerId, currVoteStatus, upOrDownClick);
+        answerService.vote(localUserId, answerId, currVoteStatus, upOrDownClick, new Date().getTime());
     }
 
     @RequestMapping("/collectAnswer/{answerId}")

@@ -6,7 +6,7 @@
 
     <update id="increAnswerUpVote">
         update answer set
-        liked_count = liked_count + 1, disliked_count = disliked_count - 1, create_time = CURRENT_TIMESTAMP() where answer_id = #{answerId}
+        liked_count = liked_count + 1, disliked_count = disliked_count - 1 where answer_id = #{answerId}
     </update>
 
     <update id="increAnswerDownVote">
@@ -41,12 +41,12 @@
     </select>
 
     <update id="voteAnswer">
-        update mid_user_vote_answer set vote = #{whichVote} where user_id = #{userId} and answer_id = #{answerId}
+        update mid_user_vote_answer set vote = #{whichVote}, create_time = #{createTime} where user_id = #{userId} and answer_id = #{answerId}
     </update>
 
-    <update id="insertVoteAnswer">
-        insert into mid_user_vote_answer(user_id, answer_id, vote, create_time) values(#{userId}, #{answerId}, #{whichVote}, CURRENT_TIMESTAMP())
-    </update>
+    <insert id="insertVoteAnswer">
+        insert into mid_user_vote_answer(user_id, answer_id, vote, create_time) values(#{userId}, #{answerId}, #{whichVote}, #{createTime})
+    </insert>
 
     <!--<update id="downvoteAnswer">-->
         <!--update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}-->
@@ -56,12 +56,12 @@
         select count(1) from mid_user_collect_answer where answer_id = #{answerId} and user_id = #{userId}
     </select>
 
-    <update id="cancelCollectAnswer">
+    <delete id="cancelCollectAnswer">
         delete from mid_user_collect_answer where user_id = #{userId} and answer_id = #{answerId}
-    </update>
+    </delete>
 
-    <update id="collectAnswer">
-        insert into mid_user_collect_answer(user_id, answer_id, favorite_id) values(#{userId}, #{answerId}, 1)
-    </update>
+    <insert id="collectAnswer">
+        insert into mid_user_collect_answer(user_id, answer_id, favorite_id, create_time) values(#{userId}, #{answerId}, 1, #{createTime})
+    </insert>
 </mapper>
 

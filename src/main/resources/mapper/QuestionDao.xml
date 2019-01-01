@@ -109,13 +109,13 @@
         and  question_id = #{questionId}
     </select>
 
-    <select id="followQuestion" resultType="Integer">
-        insert into mid_user_follow_question(user_id, question_id) values(#{userId}, #{questionId})
-    </select>
+    <insert id="followQuestion">
+        insert into mid_user_follow_question(user_id, question_id, create_time) values(#{userId}, #{questionId}, #{createTime})
+    </insert>
 
-    <select id="unfollowQuestion" resultType="Integer">
+    <delete id="unfollowQuestion">
         delete from mid_user_follow_question where user_id = #{userId} and question_id = #{questionId}
-    </select>
+    </delete>
 
 
     <insert id="submitAnswer">

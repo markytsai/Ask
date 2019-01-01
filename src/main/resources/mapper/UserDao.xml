@@ -59,11 +59,11 @@
     </select>
 
     <insert id="insertUserFollowStatus">
-        insert into mid_user_follow_user(user_id, user_followed_id, follow_status) values(#{userId}, #{userIdToBeFollowed}, #{followStatus});
+        insert into mid_user_follow_user(user_id, user_followed_id, follow_status, create_time) values(#{userId}, #{userIdToBeFollowed}, #{followStatus}, #{createTime});
 
     </insert>
     <update id="updateUserFollowStatus">
-        update mid_user_follow_user set follow_status = #{followStatus} where user_id = #{userId} and user_followed_id = #{userIdToBeFollowed}
+        update mid_user_follow_user set follow_status = #{followStatus}, create_time = #{createTime} where user_id = #{userId} and user_followed_id = #{userIdToBeFollowed}
     </update>
 
     <select id="getollowingUserByUserId" resultType="User">

@@ -24,25 +24,25 @@ public interface QuestionDao {
 
     List<Question> getRaisedQuestionByUserId(@Param("userId") String userId);
 
-    List<Answer> selectAnswersByQuestionId(@Param("questionId") String questionId);
+    List<Answer> selectAnswersByQuestionId(@Param("questionId") Integer questionId);
 
-    Question selectQuestionByQuestionId(@Param("questionId") String questionId);
+    Question selectQuestionByQuestionId(@Param("questionId") Integer questionId);
 
     List<Question> selectRaisedQuestionByUserId(@Param("userId") String userId);
 
-    Integer hasUserFollowQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
+    Integer hasUserFollowQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId);
 
-    Integer followQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
+    Integer followQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId, @Param("createTime") Long createTime);
 
-    Integer unfollowQuestion(@Param("userId") String userId, @Param("questionId") String questionId);
+    Integer unfollowQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId);
 
-    void submitAnswer(@Param("userId") String userId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") String questionId);
+    void submitAnswer(@Param("userId") String userId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") Integer questionId);
 
-    void updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") String questionId);
+    void updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") Integer questionId);
 
     void deleteAnswer(@Param("answerId") String answerId);
 
-    void addQuestion(@Param("question") Question question, @Param("userId") String userId);
+    void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("createTime") Long createTime);
 
 
 }

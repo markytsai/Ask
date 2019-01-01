@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -61,11 +62,10 @@ public class UserController {
     }
 
 
-
     @RequestMapping("/followUser/{userIdToBeFollowed}")
     public void followUser(@PathVariable String userIdToBeFollowed, HttpServletRequest request) {
         String localUserId = userService.getUserIdFromRedis(request);
-        userService.followUser(localUserId, userIdToBeFollowed);
+        userService.followUser(localUserId, userIdToBeFollowed, new Date().getTime());
 
     }
 

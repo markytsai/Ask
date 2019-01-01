@@ -25,7 +25,7 @@ public class Answer {
 	/**
 	 * 回答对应的问题ID
 	 */
-	private String questionId;
+	private Integer questionId;
 	/**
 	 * 回答用户
 	 */
@@ -91,11 +91,11 @@ public class Answer {
 		this.createTime = createTime;
 	}
 
-	public String getQuestionId() {
+	public Integer getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(String questionId) {
+	public void setQuestionId(Integer questionId) {
 		this.questionId = questionId;
 	}
 

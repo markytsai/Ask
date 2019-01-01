@@ -4,10 +4,15 @@ import com.qiniu.common.Zone;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import com.qiniu.http.Response;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Service
 public class QiniuyunUtil {
@@ -34,4 +39,7 @@ public class QiniuyunUtil {
         System.out.println(res.bodyString());
     }
 
+    public static void uploadAvatar(MultipartFile avatar, String key) throws Exception {
+        upload(avatar.getBytes(), key);
+    }
 }

@@ -17,9 +17,9 @@ public interface AnswerDao {
     void decreAnswerDownVoteOnly(@Param("answerId") Integer answerId);
 
 
-    void voteAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("whichVote") Integer whichVote);
+    void voteAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("whichVote") Integer whichVote, @Param("createTime") Long createTime);
 
-    void insertVoteAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("whichVote") Integer whichVote);
+    void insertVoteAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("whichVote") Integer whichVote, @Param("createTime") Long createTime);
 
     Integer userVoteExisted(@Param("answerId") Integer answerId, @Param("userId") String userId);
 
@@ -29,5 +29,5 @@ public interface AnswerDao {
 
     void cancelCollectAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId);
 
-    void collectAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId);
+    void collectAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("createTime") Long createTime);
 }
