@@ -21,6 +21,15 @@ public class IndexService {
         return user;
     }
 
+    public Integer isQuestionAnswered(String userId, Integer questionId) {
+        Integer ret = indexDao.isQuestionAnswered(userId, questionId);
+        if (ret == null || ret == 0) {
+            return 0;
+        } else {
+            return ret;
+        }
+    }
+
     public void updateProfile(User user) {
         indexDao.updateProfile(user);
     }
@@ -91,7 +100,7 @@ public class IndexService {
         Collections.sort(resultList, new Comparator<Activity>() {
             @Override
             public int compare(Activity o1, Activity o2) {
-                return (int) o1.getCreateTime() - (int) o2.getCreateTime();
+                return (int) o2.getCreateTime() - (int) o1.getCreateTime();
             }
         });
 

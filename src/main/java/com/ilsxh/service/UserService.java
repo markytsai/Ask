@@ -215,15 +215,15 @@ public class UserService {
 
 
 
-    public void followUser(String userId, String userIdToBeFollowed) {
+    public void followUser(String userId, String userIdToBeFollowed, Long createTime) {
 
         Integer followExisted = userDao.getUserFollowStatus(userId, userIdToBeFollowed);
         if (followExisted == null) { // 第一次关注答主
-            userDao.insertUserFollowStatus(userId, userIdToBeFollowed, 1);
+            userDao.insertUserFollowStatus(userId, userIdToBeFollowed, 1, createTime);
         } else if (followExisted == 0) { // 曾经关注过，再次关注操作
-            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 1);
+            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 1, createTime);
         } else { // 取关操作
-            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0);
+            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0,createTime);
         }
 
     }

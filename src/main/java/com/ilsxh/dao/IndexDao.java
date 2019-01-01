@@ -10,6 +10,8 @@ public interface IndexDao {
 
     void updateProfile(User user);
 
+    Integer isQuestionAnswered(@Param("userId") String userId, @Param("questionId") Integer questionId);
+
     User selectProfileInfoByUserId(@Param("userId") String userId);
 
     void updatePassword(@Param("userId") String userId, @Param("newpassword") String newpassword);

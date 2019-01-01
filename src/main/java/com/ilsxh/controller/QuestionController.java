@@ -107,6 +107,7 @@ public class QuestionController {
         Question question = questionService.getQuestionByQuestionid(questionId);
 
         model.addAttribute("user", user);
+        model.addAttribute("isQuestionAnswered", indexService.isQuestionAnswered(userId, questionId));
         model.addAttribute("hasFollowQuestion", hasFollowQuestion);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionDetail", question);
@@ -148,12 +149,14 @@ public class QuestionController {
      * @param request
      */
     @RequestMapping("/submitAnswer/{questionId}")
+//    @ResponseBody
     public void submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
 
         questionService.submitAnswer(localUserId, answerContent, new Date().getTime(), questionId);
+//        return new Response(1, "", "");
     }
 
 

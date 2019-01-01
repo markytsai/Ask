@@ -22,7 +22,8 @@
     <link rel="stylesheet" href="http://localhost:8088/css/custom.css"/>
 
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>-->
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="http://localhost:8088/css/summernote.css" rel="stylesheet"/>
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
@@ -95,7 +96,8 @@
                                 <span class="icon-rss" style="cursor: pointer" id="focusQuestion"
                                       th:text="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"><i
                                         class="icon-rss"/></span>&nbsp;
-                                <span class="icon-edit" id="iWantAnswer" style="cursor: pointer">我要回答</span>&nbsp;
+                                <span class="icon-edit" id="iWantAnswer" th:value="${isQuestionAnswered}"
+                                      style="cursor: pointer" th:text="${isQuestionAnswered == 0} ? '我要回答' : '修改回答'">我要回答</span>&nbsp;
                                 <span class="icon-pencil" id="inviteOtherAnswer" style="cursor: pointer">邀请回答</span>
                                 <span id="readLater" style="cursor: pointer;float: right">稍后阅读<i
                                         class="icon-circle-arrow-right"/></span>
@@ -134,18 +136,75 @@
                         </div>
                         <div id="submitBtn" style="display: none;font-size: larger;">
                             <span class="icon-remove" id="quitAnswer" style="cursor: pointer">取消回答</span>&nbsp;
-
                             <span class="icon-upload-alt" id="submitAnswer" style="cursor: pointer">提交回答</span>&nbsp;
-
-                            <!--<input id="quitAnswer" class="btn btn-default" th:type="button" th:value="取消回答"/><i-->
-                            <!--class="icon-pencil"/>-->
-                            <!--<input id="submitAnswer" class="btn btn-default" th:type="button" th:value="提交回答"-->
-                            <!--th:href="@{'/submitAnswer/' + ${questionDetail.questionId}}"/>-->
                         </div>
                         <hr/>
                     </div>
                     <!--<br/>-->
 
+                    <!--提交回答后，直接显示回答内容，没有请求后台-->
+                    <div id="afterAnswerCard" class="card mb-4" style="display: none;margin-bottom: 30px;">
+                        <div class="card-block">
+                            <div class="card-title answer-meta">
+                                <div class="avatarImg" style="float:left; width:45px; height:45px;">
+                                    <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+                                        <img th:src="${user.avatarUrl}" width="100%" height="100%"
+                                             style="border-radius: 100%"/>
+                                    </a>
+                                </div>
+                                <div style="margin-left: 55px">
+                                    <h5>
+                                        <a th:href="@{'/userHome/activity/' + ${user.userId}}" class="card-link"
+                                           th:text="${user.username}">
+                                        </a>&nbsp;
+                                        <span th:text="${user.position}"/>&nbsp;
+                                        <span th:text="${user.simpleDesc}"/>
+                                    </h5>
+                                </div>
+                                &nbsp;<a th:href="@{'/userHome/activity/' + ${user.userId}}">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </a>
+                                <span th:text="你"/>
+                                <span th:text="刚刚"/>回答了该问题
+                                <h6 th:text="0人赞同了该回答"></h6>
+                            </div>
+                            <!--回答正文展开折叠功能-->
+                            <div class="card-text">
+                                <div class="foldContent">
+                                    <p id="answerContent" class="card-text hideContent"/>
+                                </div>
+                            </div>
+                            <!--回答修改按钮-->
+                            <div id="modifyAfterAnswerBtn" data-id="-1">
+                                <a style="cursor: pointer;">
+                                    <i class="icon-pencil"/>
+                                    <span class="AnswerItem-editButtonText">修改</span>
+                                </a>
+                            </div>
+                            <div th:id="answerId" class="card-text" style="margin-top: 4px;">
+
+                                <i class="glyphicon glyphicon-thumbs-up"></i>
+                                <span id="upvoteIcon" class="label label-primary" th:text="0次赞同"/>
+
+                                <i class="glyphicon glyphicon-thumbs-down"></i>
+                                <span id="downvoteIcon" class="label label-primary" th:text="0次反对"/>
+
+                                &nbsp;&nbsp;
+                                <i th:id="${user.userId} + 'star'" class="glyphicon glyphicon-star-empty"
+                                   style="margin-right: -4px;"></i>
+                                <span id="collectBtnValue" th:text="收藏"></span>&nbsp;&nbsp;
+
+                                <button class="btn btn-xs delBtn glyphicon glyphicon-trash"
+                                        data-toggle="modal" data-target="#delConfirmModal">
+                                </button>
+                            </div>
+                        </div>
+                        <div style="text-align: center;margin-top: 10px;">
+                            <a th:href="@{'/question/' + ${questionDetail.questionId}}">
+                                <span>-----查看所有回答-----</span>
+                            </a>
+                        </div>
+                    </div>
                     <!--Answers list below-->
                     <div class="card mb-4" th:each="answer : ${answerList}">
                         <div class="card-block">
@@ -218,8 +277,10 @@
                                       th:text="${answer.user.vote == -1} ? '已反对'+ ${answer.dislikedCount} + '次' : '反对'+ ${answer.dislikedCount} + '次' "></span>
 
                                 &nbsp;&nbsp;
-                                <i th:if="${answer.collectAnswer == true}" th:id="${answer.answerId} + 'star'" class="glyphicon glyphicon-star" style="margin-right: -4px;"></i>
-                                <i th:if="${answer.collectAnswer == false}" th:id="${answer.answerId} + 'star'" class="glyphicon glyphicon-star-empty" style="margin-right: -4px;"></i>
+                                <i th:if="${answer.collectAnswer == true}" th:id="${answer.answerId} + 'star'"
+                                   class="glyphicon glyphicon-star" style="margin-right: -4px;"></i>
+                                <i th:if="${answer.collectAnswer == false}" th:id="${answer.answerId} + 'star'"
+                                   class="glyphicon glyphicon-star-empty" style="margin-right: -4px;"></i>
                                 <span id="collectBtnValue"
                                       th:text="${answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>&nbsp;&nbsp;
 

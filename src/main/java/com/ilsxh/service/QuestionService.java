@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,7 +58,7 @@ public class QuestionService {
     }
 
 
-    public List<Answer> getAnswersByQuestionId(String questionId, String userId) {
+    public List<Answer> getAnswersByQuestionId(Integer questionId, String userId) {
 
         List<Answer> answerList = questionDao.selectAnswersByQuestionId(questionId);
         for (Answer answer : answerList) {
@@ -98,11 +99,11 @@ public class QuestionService {
         return questionList;
     }
 
-    public Question getQuestionByQuestionid(String questionID) {
+    public Question getQuestionByQuestionid(Integer questionID) {
         return questionDao.selectQuestionByQuestionId(questionID);
     }
 
-    public String hasUserFollowQuestion(String userId, String questionId) {
+    public String hasUserFollowQuestion(String userId, Integer questionId) {
 
         Integer ret = questionDao.hasUserFollowQuestion(userId, questionId);
         if (ret != null && ret.equals(1)) {
@@ -113,29 +114,29 @@ public class QuestionService {
 
     }
 
-    public Integer followQuestion(String localUserId, String questionId) {
-        return questionDao.followQuestion(localUserId, questionId);
+    public Integer followQuestion(String localUserId, Integer questionId) {
+        return questionDao.followQuestion(localUserId, questionId, new Date().getTime());
     }
 
-    public Integer unfollowQuestion(String localUserId, String questionId) {
+    public Integer unfollowQuestion(String localUserId, Integer questionId) {
         return questionDao.unfollowQuestion(localUserId, questionId);
     }
 
-    public void submitAnswer(String userId, String answerContent, Long createTime, String questionId) {
+    public void submitAnswer(String userId, String answerContent, Long createTime, Integer questionId) {
         questionDao.submitAnswer(userId, answerContent, createTime, questionId);
     }
 
-    public void updateAnswer(String userId, Integer answerId, String answerContent, Long createTime, String questionId) {
-        questionDao.updateAnswer(userId, answerId, answerContent, createTime, questionId);
+    public void updateAnswer(String userId, Integer answerId, String answerContent, Integer questionId) {
+        questionDao.updateAnswer(userId, answerId, answerContent, new Date().getTime(), questionId);
     }
 
     public void deleteAnswer(String answerId) {
         questionDao.deleteAnswer(answerId);
     }
 
-    public void addQuestion(Question question, String userId){
+    public void addQuestion(Question question, String userId) {
 
-        questionDao.addQuestion(question, userId);
+        questionDao.addQuestion(question, userId, new Date().getTime());
 
     }
 }

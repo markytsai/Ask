@@ -8,6 +8,8 @@ $(document).ready(function () {
     } else {
         $('#collectSymbol').addClass("glyphicon glyphicon-star-empty");
     }
+
+    // $('#afterAnswerCard').style.display = "none";
 });
 
 
@@ -25,10 +27,23 @@ $('#focusQuestion').click(function () {
 });
 
 // 点击我要回答按钮事件，显示内容输入框
-$('#iWantAnswer').click(function () {
+$('#iWantAnswer').click(function (event) {
     $('.answerArea').summernote({focus: true});
     $('#submitBtn').show();
     $('#authorEditting').show();
+
+    if ($('#iWantAnswer').text() == '修改回答') {
+        var questionId = $('#getQuestionId').val();
+        var answerId = $('#iWantAnswer').val();
+
+        // event.target.parentNode.parentNode.nextElementSibling.style.display = "none";
+        // $('#answerId-' + answerId).parentNode.hide();
+        $('.answerArea').attr('data-id', answerId);
+        var existedAnswerContent = event.target.parentNode.parentNode.previousElementSibling.textContent;
+        $('.answerArea').summernote('code', existedAnswerContent);
+
+        $('#submitAnswer').text("更新回答");
+    }
 
 });
 
@@ -234,11 +249,16 @@ function submitFirstAnswer(answerContent, questionId) {
         data: {'answerContent': answerContent},
         dataType: 'json',
         success: function (response) {
+            alert("成功提交答案--在外面")
             if (response.state == 1) {
+                alert("成功提交答案-在里面")
             } else {
             }
         }
     });
+    $('#answerContent').text(answerContent);
+    $('#afterAnswerCard').show();
+
 }
 
 // 点击修改答案按钮,弹出修改文本框
@@ -259,6 +279,27 @@ $('#modifyAnswerBtn').click(function (event) {
 
     $('#submitAnswer').text("更新回答");
 });
+
+
+// 点击修改答案按钮，显示的内容是前端直接获取，没有请求后台数据，弹出修改文本框
+$('#modifyAfterAnswerBtn').click(function (event) {
+
+    $('.answerArea').summernote({focus: true});
+    $('#submitBtn').show();
+    $('#authorEditting').show();
+
+    var questionId = $('#getQuestionId').val();
+    var answerId = event.target.parentNode.parentNode.nextElementSibling.id.split('-')[1];
+
+    // event.target.parentNode.parentNode.nextElementSibling.style.display = "none";
+    // $('#answerId-' + answerId).parentNode.hide();
+    $('.answerArea').attr('data-id', answerId);
+    var existedAnswerContent = event.target.parentNode.parentNode.previousElementSibling.textContent;
+    $('.answerArea').summernote('code', existedAnswerContent);
+
+    $('#submitAnswer').text("更新回答");
+});
+
 
 $('.followUser').click(function (event) {
 
