@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-01-01 20:22:48
+Date: 2019-01-03 13:20:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,14 +42,13 @@ CREATE TABLE `answer` (
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
-INSERT INTO `answer` VALUES ('23', '\n                                \n                                \n                                \n                                \n                                \n                                    蔡振亚回答的\n生生世世                                \n                                \n                                \n                                \n                                \n                                \n                            ', '1', '0', '1546183629283', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('24', '腾飞回答的', '0', '0', '1546237944004', '1', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer` VALUES ('25', '\n                                \n                                \n                                \n                                \n                                \n                                    小号的第一个问题的第一个回答，更新', '0', '0', '1546321917560', '9', '3bad1b8a3c284cab8d19d441651c7615');
+INSERT INTO `answer` VALUES ('52', '\n\n                        aaaaa', '0', '0', '1546425832762', '9', '3bad1b8a3c284cab8d19d441651c7615');
+INSERT INTO `answer` VALUES ('53', '<span>蔡振亚的小号</span> <span>蔡振亚的小号</span> ', '0', '0', '1546425866694', '1', '3bad1b8a3c284cab8d19d441651c7615');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -302,13 +301,11 @@ CREATE TABLE `mid_user_collect_answer` (
   `favorite_id` int(11) NOT NULL COMMENT '收藏夹的编号',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_collect_answer
 -- ----------------------------
-INSERT INTO `mid_user_collect_answer` VALUES ('33', '6a99cf86555243ba8b23927c0748b562', '23', '1', '1546183629283');
-INSERT INTO `mid_user_collect_answer` VALUES ('35', '3bad1b8a3c284cab8d19d441651c7615', '25', '1', '1546321502912');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_question
@@ -320,7 +317,7 @@ CREATE TABLE `mid_user_follow_question` (
   `question_id` int(11) NOT NULL COMMENT '问题ID',
   `create_time` bigint(13) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
@@ -338,6 +335,7 @@ INSERT INTO `mid_user_follow_question` VALUES ('18', '6a99cf86555243ba8b23927c07
 INSERT INTO `mid_user_follow_question` VALUES ('22', '6a99cf86555243ba8b23927c0748b562', '1', '1546183629283');
 INSERT INTO `mid_user_follow_question` VALUES ('23', '3bad1b8a3c284cab8d19d441651c7615', '9', '1546320466979');
 INSERT INTO `mid_user_follow_question` VALUES ('24', '3bad1b8a3c284cab8d19d441651c7615', '10', '1546323708663');
+INSERT INTO `mid_user_follow_question` VALUES ('25', '3bad1b8a3c284cab8d19d441651c7615', '1', '1546433107606');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_user
@@ -369,13 +367,12 @@ CREATE TABLE `mid_user_vote_answer` (
   `vote` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'upvate:1;downvote:-1;not vote:0',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
-INSERT INTO `mid_user_vote_answer` VALUES ('6', '6a99cf86555243ba8b23927c0748b562', '23', '1', '1546183629283');
-INSERT INTO `mid_user_vote_answer` VALUES ('7', '3bad1b8a3c284cab8d19d441651c7615', '25', '0', '1546321900241');
+INSERT INTO `mid_user_vote_answer` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '53', '0', '1546486863602');
 
 -- ----------------------------
 -- Table structure for question
@@ -397,7 +394,7 @@ CREATE TABLE `question` (
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '2');
+INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '3', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
 INSERT INTO `question` VALUES ('2', '为什么手机只能围绕三个对称轴其中的两个稳定地旋转？', '', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('3', '霸王龙前面两只小手手是干嘛用的？', '霸王龙前面两只小手手是干嘛用的？霸王龙前面两只小手手是干嘛用的？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('4', '如何看待大疆员工猝死？', '才刚毕业几个月就去世了,真让人心寒', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');

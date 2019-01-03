@@ -36,7 +36,7 @@ public interface QuestionDao {
 
     Integer unfollowQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId);
 
-    void submitAnswer(@Param("userId") String userId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") Integer questionId);
+    void submitAnswer(@Param("answer") Answer answer);
 
     void updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") Integer questionId);
 

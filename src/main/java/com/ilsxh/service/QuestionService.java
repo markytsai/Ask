@@ -122,8 +122,8 @@ public class QuestionService {
         return questionDao.unfollowQuestion(localUserId, questionId);
     }
 
-    public void submitAnswer(String userId, String answerContent, Long createTime, Integer questionId) {
-        questionDao.submitAnswer(userId, answerContent, createTime, questionId);
+    public void submitAnswer(Answer answer) {
+        questionDao.submitAnswer(answer);
     }
 
     public void updateAnswer(String userId, Integer answerId, String answerContent, Integer questionId) {

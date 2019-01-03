@@ -5,6 +5,8 @@ import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.redis.AnswerKey;
+import com.ilsxh.service.RedisService;
 import com.ilsxh.service.HotService;
 import com.ilsxh.service.IndexService;
 import com.ilsxh.service.QuestionService;
@@ -14,16 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.StringUtils;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-
-import static com.ilsxh.service.UserService.COOKIE_NAME_TOKEN;
 
 @Controller
 public class QuestionController {
@@ -41,13 +36,13 @@ public class QuestionController {
     private IndexService indexService;
 
     @Autowired
-    private JedisPool jedisPool;
-
-    @Autowired
     private UserDao userDao;
 
     @Autowired
     private HotService hotService;
+
+    @Autowired
+    private RedisService redisService;
 
     @RequestMapping("/following")
     public String getFollowingQuestionsByUserId(HttpServletRequest request, Model model) {
@@ -106,8 +101,12 @@ public class QuestionController {
         List<Answer> answerList = questionService.getAnswersByQuestionId(questionId, userId);
         Question question = questionService.getQuestionByQuestionid(questionId);
 
+        Integer localUserAnswerId = indexService.isQuestionAnswered(userId, questionId);
         model.addAttribute("user", user);
-        model.addAttribute("isQuestionAnswered", indexService.isQuestionAnswered(userId, questionId));
+        model.addAttribute("localUserAnswer", localUserAnswerId);
+
+//        redisService.set(AnswerKey.answerKey, "-" + questionId, localUserAnswerId);
+
         model.addAttribute("hasFollowQuestion", hasFollowQuestion);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionDetail", question);
@@ -149,23 +148,32 @@ public class QuestionController {
      * @param request
      */
     @RequestMapping("/submitAnswer/{questionId}")
-//    @ResponseBody
-    public void submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
+    @ResponseBody
+    public Response submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
+        Answer answer = new Answer();
+        answer.setAnswerUserId(localUserId);
+        answer.setAnswerContent(answerContent);
+        answer.setQuestionId(questionId);
+        answer.setCreateTime(new Date().getTime());
 
-        questionService.submitAnswer(localUserId, answerContent, new Date().getTime(), questionId);
-//        return new Response(1, "", "");
+        questionService.submitAnswer(answer);
+
+        redisService.set(AnswerKey.answerKey, "-" + localUserId + "-" + questionId, answer.getAnswerId());
+        return new Response(1, "已成功提交你的回答", answer.getAnswerId());
     }
 
 
     @RequestMapping("/updateAnswer/{questionId}")
-    public void updateAnswer(@RequestParam("answerContent") String answerContent, @RequestParam("answerId") Integer answerId, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
+    @ResponseBody
+    public Response updateAnswer(@RequestParam("answerContent") String answerContent, @RequestParam("answerId") Integer answerId, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
         questionService.updateAnswer(localUserId, answerId, answerContent, questionId);
+        return new Response(1, "", "");
     }
 
     /**
@@ -175,11 +183,13 @@ public class QuestionController {
      * @param request
      */
     @RequestMapping("/deleteAnswer/{answerId}")
-    public void deleteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
-
-        String localUserId = userService.getUserIdFromRedis(request);
+    @ResponseBody
+    public Response deleteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
+//        String localUserId = userService.getUserIdFromRedis(request);
 
         questionService.deleteAnswer(answerId);
+//        redisService.decr(AnswerKey.answerKey)
+        return new Response(1, "", "");
     }
 
     /**

@@ -44,6 +44,17 @@
         <property name="defaultEncoding" value="utf-8"></property>
     </bean>
 
+    <bean id="jsonConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jsonConverter"/>
+            </list>
+        </property>
+    </bean>
+
 
     <mvc:resources location="/css/" mapping="/css/**"/>
     <mvc:resources location="/fonts/" mapping="/fonts/**"/>
@@ -59,8 +70,8 @@
             <bean class="com.ilsxh.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
         <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/*"/>-->
-            <!--<bean class="com.ilsxh.interceptor.QuestionVisitTimesInteceptor"/>-->
+        <!--<mvc:mapping path="/*"/>-->
+        <!--<bean class="com.ilsxh.interceptor.QuestionVisitTimesInteceptor"/>-->
         <!--</mvc:interceptor>-->
     </mvc:interceptors>
 </beans>

@@ -118,8 +118,8 @@
     </delete>
 
 
-    <insert id="submitAnswer">
-        insert into answer(answer_content, question_id, answer_user_id, create_time) values(#{answerContent}, #{questionId}, #{userId}, #{createTime})
+    <insert id="submitAnswer" useGeneratedKeys="true" keyProperty="answer.answerId">
+        insert into answer(answer_content, question_id, answer_user_id, create_time) values(#{answer.answerContent}, #{answer.questionId}, #{answer.answerUserId}, #{answer.createTime})
     </insert>
 
     <update id="updateAnswer">

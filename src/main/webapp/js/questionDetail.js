@@ -9,8 +9,31 @@ $(document).ready(function () {
         $('#collectSymbol').addClass("glyphicon glyphicon-star-empty");
     }
 
+    getAnswerId();
+
     // $('#afterAnswerCard').style.display = "none";
 });
+
+function getAnswerId() {
+    $.ajax({
+        url: "/getAnswerId/" + $('#getQuestionId').val(),
+        type: "get",
+        dataType: 'json',
+        success: function (response) {
+            if (response.state == 1) {
+                var answerId = response.data;
+                // 该问题还没有回答
+                if (answerId == 0) {
+                } else {
+                    $("#modifyAfterAnswerBtn").attr("data-id", answerId);// 回答下面的修改链接
+                    $("#iWantAnswer").attr("data-id", answerId);// 我要回答按钮
+                    $('#answerContent').text($('#answerId-' + answerId).prev().prev().children().text());
+                }
+            }
+        }
+    });
+
+}
 
 
 $('#focusQuestion').click(function () {
@@ -28,24 +51,45 @@ $('#focusQuestion').click(function () {
 
 // 点击我要回答按钮事件，显示内容输入框
 $('#iWantAnswer').click(function (event) {
-    $('.answerArea').summernote({focus: true});
-    $('#submitBtn').show();
-    $('#authorEditting').show();
 
+
+    // 这里需要拿到answerId
     if ($('#iWantAnswer').text() == '修改回答') {
+
+        if ($('#authorEditting').css('display') == "block") {
+            return;
+        }
+
         var questionId = $('#getQuestionId').val();
-        var answerId = $('#iWantAnswer').val();
+        var answerId = $("#iWantAnswer").attr("data-id");
 
         // event.target.parentNode.parentNode.nextElementSibling.style.display = "none";
         // $('#answerId-' + answerId).parentNode.hide();
-        $('.answerArea').attr('data-id', answerId);
+        // $('.answerArea').attr('data-id', answerId);
+        $('#answerId-' + answerId).closest('.card-block').hide();
+
         var existedAnswerContent = event.target.parentNode.parentNode.previousElementSibling.textContent;
-        $('.answerArea').summernote('code', existedAnswerContent);
+
+        if ($('#afterAnswerCard').css('display') == "block") { // 在上方暂时显示框的情况下点击修改回答按钮
+            $('#afterAnswerCard').hide();
+            $('.answerArea').summernote('code', $('#answerContent').text());
+        } else {// 点击的是回答详情中的修改链接
+            $('.answerArea').summernote('code', $('#answerId-' + answerId).prev().prev().children().text());
+
+
+            $('#upvoteCountAfter').val($('#answerId-' + answerId));
+        }
 
         $('#submitAnswer').text("更新回答");
     }
 
-});
+
+    $('.answerArea').summernote({focus: true});
+    $('#submitBtn').show();
+    $('#authorEditting').show();
+
+})
+;
 
 // $('#submitAnswer').click(function () {
 //     $('#editFrame').hide();
@@ -55,29 +99,80 @@ $('#quitAnswer').click(function () {
     $('.answerArea').summernote('destroy');
     $('#submitBtn').hide();
     $('#authorEditting').hide();
+
+    var answerId = $("#iWantAnswer").attr("data-id");
+
+    if ($('#answerId-' + answerId).length == 1) {  // 取消回答后，要把更新的回答内容设置到即将显示出来的回答详情card中
+        $('#answerId-' + answerId).closest('.card-block').show();
+        var answerContent = $('#answerContent').text();
+        if ($('#answerId-' + answerId).prev().prev().children().text() != answerContent) {
+            $('#answerId-' + answerId).prev().prev().children().text(answerContent);
+        }
+        $('.answerArea').hide();
+    } else {
+        if ($('#answerId-' + answerId).css(display) == "none") {
+            $('#afterAnswerCard').show();
+            var answerContent = $('#answerContent').text();
+            $('#answerId-' + answerId).closest('.hideContent').text(answerContent);
+        }
+    }
+
+
 });
 
 $('.glyphicon-thumbs-up').click(function (event) {
     var id = event.target.parentNode.id;
-    var answerId = id.split('-')[1];
-    var userVote = $('#userVote', '#' + id).val(); // 是否已经投票：-1：反对；0：未投票；1：赞成
-    var upvoteCount = +$('#upvoteCount', '#' + id).val(); // 赞成数量
-    var downvoteCount = +$('#downvoteCount', '#' + id).val(); // 反对数量
-    if (userVote == 1) { // 已经赞成了答案
-        $('#userVote', '#' + id).val(0);
-        $('#upvoteCount', '#' + id).val(upvoteCount - 1);
-        $('#upvoteIcon', '#' + id).text('赞同' + (upvoteCount - 1) + '次');
-    } else if (userVote == 0) { // 还未投票
-        $('#userVote', '#' + id).val(1);
-        $('#upvoteCount', '#' + id).val(upvoteCount + 1);
-        $('#upvoteIcon', '#' + id).text('已赞同' + (upvoteCount + 1) + '次');
-    } else { // 反对答案
-        $('#userVote', '#' + id).val(1);
-        $('#upvoteCount', '#' + id).val(upvoteCount + 1);
-        $('#downvoteCount', '#' + id).val(downvoteCount - 1);
-        $('#upvoteIcon', '#' + id).text('已赞同' + (upvoteCount + 1) + '次');
-        $('#downvoteIcon', '#' + id).text('反对' + (downvoteCount - 1) + '次');
+
+    var answerId;
+    var userVote; // 是否已经投票：-1：反对；0：未投票；1：赞成
+    var upvoteCount; // 赞成数量
+    var downvoteCount; // 反对数量
+
+    if ($('#afterAnswerCard').css('display') == "block") {
+        answerId = $("#iWantAnswer").attr("data-id");
+        userVote = $('#userVoteAfter').val(); // 是否已经投票：-1：反对；0：未投票；1：赞成
+        upvoteCount = +$('#upvoteCountAfter').val(); // 赞成数量
+        downvoteCount = +$('#downvoteCountAfter').val(); // 反对数量
+
+        if (userVote == 1) { // 已经赞成了答案
+            $('#userVoteAfter').val(0);
+            $('#upvoteCountAfter').val(upvoteCount - 1);
+            $('#upvoteIconAfter').text('赞同' + (upvoteCount - 1) + '次');
+        } else if (userVote == 0) { // 还未投票
+            $('#userVoteAfter').val(1);
+            $('#upvoteCountAfter').val(upvoteCount + 1);
+            $('#upvoteIconAfter').text('已赞同' + (upvoteCount + 1) + '次');
+        } else { // 反对答案
+            $('#userVoteAfter').val(1);
+            $('#upvoteCountAfter').val(upvoteCount + 1);
+            $('#downvoteCount').val(downvoteCount - 1);
+            $('#upvoteIconAfter').text('已赞同' + (upvoteCount + 1) + '次');
+            $('#downvoteIconAfter').text('反对' + (downvoteCount - 1) + '次');
+        }
+
+    } else {
+        answerId = id.split('-')[1];
+        userVote = $('#userVote', '#' + id).val(); // 是否已经投票：-1：反对；0：未投票；1：赞成
+        upvoteCount = +$('#upvoteCount', '#' + id).val(); // 赞成数量
+        downvoteCount = +$('#downvoteCount', '#' + id).val(); // 反对数量
+
+        if (userVote == 1) { // 已经赞成了答案
+            $('#userVote', '#' + id).val(0);
+            $('#upvoteCount', '#' + id).val(upvoteCount - 1);
+            $('#upvoteIcon', '#' + id).text('赞同' + (upvoteCount - 1) + '次');
+        } else if (userVote == 0) { // 还未投票
+            $('#userVote', '#' + id).val(1);
+            $('#upvoteCount', '#' + id).val(upvoteCount + 1);
+            $('#upvoteIcon', '#' + id).text('已赞同' + (upvoteCount + 1) + '次');
+        } else { // 反对答案
+            $('#userVote', '#' + id).val(1);
+            $('#upvoteCount', '#' + id).val(upvoteCount + 1);
+            $('#downvoteCount', '#' + id).val(downvoteCount - 1);
+            $('#upvoteIcon', '#' + id).text('已赞同' + (upvoteCount + 1) + '次');
+            $('#downvoteIcon', '#' + id).text('反对' + (downvoteCount - 1) + '次');
+        }
     }
+
 
     $.ajax({
         url: "/voteAnswer/" + answerId,
@@ -166,8 +261,16 @@ $('.delConfirmBtn').click(function (event) {
 
     var answerId = $('.delConfirmBtn').val();
 
+    answerId = $('#iWantAnswer').data('id');
+    if ($('#afterAnswerCard').css('display') == "block") {
+        $('#afterAnswerCard').hide();
+    }
+
     $('#delConfirmModal').modal('toggle');
-    $('#answerId-' + answerId)[0].parentNode.parentNode.hidden = true;
+    if ($('#answerId-' + answerId).length == 1) {
+        $('#answerId-' + answerId)[0].parentNode.parentNode.hidden = true;
+    }
+
 
     $.ajax({
         url: "/deleteAnswer/" + answerId,
@@ -175,6 +278,7 @@ $('.delConfirmBtn').click(function (event) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
+                $('#iWantAnswer').text('我要回答');
             } else {
             }
         }
@@ -185,7 +289,6 @@ $('.delBtn').click(function (event) {
 
     var id = event.target.parentNode.id;
     var answerId = id.split('-')[1];
-
 
     var deletedAnswerId = answerId;
     $(".modal-footer #delId").val(deletedAnswerId);
@@ -218,7 +321,7 @@ $('#submitAnswer').click(function () {
     $('.answerArea').hide();
 
     if ($('#submitAnswer').text() == '更新回答') {
-        updateAnswer(answerContent, questionId, $('.answerArea').attr('data-id'));
+        updateAnswer(answerContent, questionId, $('#iWantAnswer').attr('data-id'));
 
     } else {
         submitFirstAnswer(answerContent, questionId);
@@ -227,6 +330,7 @@ $('#submitAnswer').click(function () {
 
 });
 
+// 点击更新回答，提交新的内容
 function updateAnswer(answerContent, questionId, answerId) {
 
     $.ajax({
@@ -236,12 +340,48 @@ function updateAnswer(answerContent, questionId, answerId) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
+                $('#answerContent').text(answerContent);
+                $('#afterAnswerCard').show();
+
+
+                // 暂时展示，要保证投票数，收藏和更新答案之前的数据一致
+
+
+                var isCollectedAfter = $('#answerId-' + answerId).children()[0].value;
+                var isUserVoteAfter = $('#answerId-' + answerId).children()[1].value;// 是否已经投票：-1：反对；0：未投票；1：赞成
+                var upVoteCountAfter = $('#answerId-' + answerId).children()[2].value;
+                var downVoteCountAfter = $('#answerId-' + answerId).children()[3].value;
+                $('#userVoteAfter').val(isUserVoteAfter);
+                $('#upvoteCountAfter').val(upVoteCountAfter);
+                $('#downvoteCount').val(downVoteCountAfter);
+
+                if (isUserVoteAfter == 1) { // 已经赞成了答案
+                    $('#upvoteIconAfter').text('已赞同' + (upVoteCountAfter) + '次');
+                    $('#downvoteIconAfter').text('反对' + (downVoteCountAfter) + '次');
+                } else if (isUserVoteAfter == 0) { // 还未投票
+                    $('#upvoteIconAfter').text('赞同' + (upVoteCountAfter) + '次');
+                    $('#downvoteIconAfter').text('反对' + (downVoteCountAfter) + '次');
+                } else { // 反对答案
+                    $('#upvoteIconAfter').text('赞同' + (upVoteCountAfter) + '次');
+                    $('#downvoteIconAfter').text('已反对' + (downVoteCountAfter) + '次');
+                }
+
+                if (isCollectedAfter) { //如果已经收藏
+                    $('#collectSymbol').switchClass("glyphicon-star-empty", "glyphicon-star");
+                    $('#collectBtnValueAfter').text("已收藏");
+                } else {
+                    $('#collectSymbol').switchClass("glyphicon-star", "glyphicon-star-empty");
+                    $('#collectBtnValueAfter').text("收藏");
+                }
+
+
             } else {
             }
         }
     });
 }
 
+// 第一次提交回答
 function submitFirstAnswer(answerContent, questionId) {
     $.ajax({
         url: "/submitAnswer/" + questionId,
@@ -249,24 +389,30 @@ function submitFirstAnswer(answerContent, questionId) {
         data: {'answerContent': answerContent},
         dataType: 'json',
         success: function (response) {
-            alert("成功提交答案--在外面")
             if (response.state == 1) {
-                alert("成功提交答案-在里面")
+                // 回答成功提交
+                $('#answerContent').text(answerContent);
+                $('#afterAnswerCard').show();
+                $('#iWantAnswer').text('修改回答');
+                $('#iWantAnswer').data('id', response.data);
+                $('#modifyAfterAnswerBtn').data('id', response.data);
             } else {
             }
         }
     });
-    $('#answerContent').text(answerContent);
-    $('#afterAnswerCard').show();
+
 
 }
 
-// 点击修改答案按钮,弹出修改文本框
+// 点击暂时显示框的修改，修改答案按钮,弹出修改文本框
 $('#modifyAnswerBtn').click(function (event) {
 
     $('.answerArea').summernote({focus: true});
     $('#submitBtn').show();
     $('#authorEditting').show();
+
+    // 隐藏已提交的回答
+    event.target.parentNode.parentNode.parentNode.hidden = true;
 
     var questionId = $('#getQuestionId').val();
     var answerId = event.target.parentNode.parentNode.nextElementSibling.id.split('-')[1];
@@ -289,7 +435,8 @@ $('#modifyAfterAnswerBtn').click(function (event) {
     $('#authorEditting').show();
 
     var questionId = $('#getQuestionId').val();
-    var answerId = event.target.parentNode.parentNode.nextElementSibling.id.split('-')[1];
+    var answerId = $("#iWantAnswer").attr("data-id");
+    // var answerId = event.target.parentNode.parentNode.nextElementSibling.id.split('-')[1];
 
     // event.target.parentNode.parentNode.nextElementSibling.style.display = "none";
     // $('#answerId-' + answerId).parentNode.hide();
@@ -298,6 +445,9 @@ $('#modifyAfterAnswerBtn').click(function (event) {
     $('.answerArea').summernote('code', existedAnswerContent);
 
     $('#submitAnswer').text("更新回答");
+
+    $('#afterAnswerCard').hide();
+
 });
 
 
