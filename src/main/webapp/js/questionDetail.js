@@ -181,7 +181,8 @@ $('.glyphicon-thumbs-up').click(function (event) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
-                alert(response.data);
+                // alert("赞同回答");
+                $.notify(response.message);
             }
         }
     });
@@ -221,6 +222,7 @@ $('.glyphicon-thumbs-down').click(function (event) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
+                $.notify(response.message);
             } else {
             }
         }
@@ -250,6 +252,11 @@ $('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
+                $.notify(response.message);
+
+                // $.notify('hello !!', {
+                //     style: 'happyblue'
+                // });
             } else {
             }
         }

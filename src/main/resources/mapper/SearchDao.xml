@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为AnswerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.SearchDao">
+
+    <select id="globalSearchQuestion" resultType="Question">
+       select * from question
+       where question_content like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+       or
+       question_title like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+   </select>
+
+    <select id="globalSearchUser" resultType="User">
+
+        select * from user
+        where username like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+        or
+        simple_desc like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+    </select>
+
+    <select id="globalSearchAnswer" resultType="Answer">
+        select * from answer
+        where answer_content like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+    </select>
+
+</mapper>
+

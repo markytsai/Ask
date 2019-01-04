@@ -15,6 +15,18 @@
 //     });
 // });
 
+$(document).keyup(function (e) {
+    if ($("#keyword").is(":focus") && (e.keyCode == 13)) {
+        var keyWord = $('#keyword').val();
+        if (keyWord != null && keyWord.length > 0) {
+            window.location.href = '/search/question/' + keyWord;
+        } else {
+            $.notify("请输入搜索词")
+        }
+    }
+});
+
+
 /*提问表单处理*/
 /* 提问处理 */
 $("#askBtn").on("click", function () {
@@ -29,7 +41,6 @@ $("#askBtn").on("click", function () {
         data: formData,
         dataType: 'json',
         success: function (response) {
-            debugger
             if (response.state == 1) {
                 window.location.href = "/question/" + response.data;
             } else {
@@ -37,4 +48,15 @@ $("#askBtn").on("click", function () {
             }
         }
     });
+});
+
+/* 关键字搜索处理 */
+$("#searchBtn").on("click", function () {
+
+    var keyWord = $('#keyword').val();
+    if (keyWord != null && keyWord.length > 0) {
+        window.location.href = '/search/question/' + keyWord;
+    } else {
+        $.notify("请输入搜索词")
+    }
 });

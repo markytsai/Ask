@@ -19,6 +19,8 @@ Here are several rederings.
 4. User home page (with only five tabs finished out of seven)
 ![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/samples/user-homepage.jpg)
 
+5. Search result pages (with four tabs)
+![](https://raw.githubusercontent.com/markytsai/Ask/master/src/main/webapp/samples/search-pages.png)
 
 #### To-do list
 

@@ -5,11 +5,11 @@
 <mapper namespace="com.ilsxh.dao.HotDao">
 
     <select id="getHotQuestions" resultType="Question">
-        select * from question limit 3;
+        select * from question limit 4;
     </select>
 
     <select id="getHotUsers" resultType="User">
-        select * from user limit 3;
+        select * from user;
     </select>
 
     <select id="getHotTopics" resultType="Topic">
@@ -17,7 +17,7 @@
     </select>
 
     <select id="getNewestRaisedQuestions" resultType="Question">
-        select * from question limit 3;
+        select * from question order by create_time desc limit 5;
     </select>
 
 </mapper>

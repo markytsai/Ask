@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+import static com.ilsxh.service.AnswerService.DOWNVOTE_FOR_ANSWER;
+import static com.ilsxh.service.AnswerService.NOT_VOTE_FOR_ANSWER;
+import static com.ilsxh.service.AnswerService.UPVOTE_FOR_ANSWER;
+
 @Controller
 @RequestMapping
 public class AnswerController {
@@ -29,19 +33,29 @@ public class AnswerController {
     private RedisService redisService;
 
     @RequestMapping("/voteAnswer/{answerId}")
-    public void voteAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("userVote") Integer currVoteStatus,
-                           @RequestParam("upOrDownClick") Integer upOrDownClick, HttpServletRequest request) {
+    @ResponseBody
+    public Response voteAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("userVote") Integer currVoteStatus,
+                               @RequestParam("upOrDownClick") Integer upOrDownClick, HttpServletRequest request) {
         String localUserId = userService.getUserIdFromRedis(request);
         answerService.vote(localUserId, answerId, currVoteStatus, upOrDownClick, new Date().getTime());
+        if (currVoteStatus == NOT_VOTE_FOR_ANSWER && upOrDownClick == 1) {
+            return new Response(1, "你赞同了此回答", "");
+        } else if (currVoteStatus == NOT_VOTE_FOR_ANSWER && upOrDownClick == -1) {
+            return new Response(1, "你反对了此回答", "");
+        }
+        return new Response(1, "", "");
     }
 
     @RequestMapping("/collectAnswer/{answerId}")
-    public void collectAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("isCollect") Boolean isCollect, HttpServletRequest request) {
+    @ResponseBody
+    public Response collectAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("isCollect") Boolean isCollect, HttpServletRequest request) {
         String localUserId = userService.getUserIdFromRedis(request);
         if (isCollect == Boolean.TRUE) {
             answerService.cancelCollectAnswer(localUserId, answerId);
+            return new Response(1, "你取消了收藏此回答", "");
         } else {
             answerService.collectAnswer(localUserId, answerId);
+            return new Response(1, "你收藏了此回答", "");
         }
     }
 

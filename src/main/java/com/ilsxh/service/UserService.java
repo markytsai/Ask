@@ -178,6 +178,10 @@ public class UserService {
         return userDao.selectUserByUserId(userId);
     }
 
+    public Question getQuestionById(Integer questionId) {
+        return userDao.selectQuestionByQuestionId(questionId);
+    }
+
     public List<Answer> getAnswersByUserId(String userId) {
 
         List<Answer> answerList = userDao.getAnswersByUserId(userId);

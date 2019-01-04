@@ -75,19 +75,19 @@
                 </button>
                 <a class="navbar-brand" th:href="@{/}"
                    style="color: red;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: 400">
-                    <img th:src="@{/images/logo.gif}" style="display: inline-block; height: 30px; margin-top: -5px"/></a>
+                    <img th:src="@{/images/logo.png}" style="display: inline-block; height: 30px; margin-top: -5px"/></a>
             </div>
 
-            <form class="navbar-form navbar-right" role="search">
+            <div class="navbar-form navbar-right">
                 <div class="form-group">
                     <label for="keyword" class="sr-only">关键字</label>
                     <input type="text" id="keyword" class="form-control" placeholder="输入关键字"/>
                 </div>
-                <button id="searchBtn" type="submit" class="btn btn-default">搜索</button>&nbsp;&nbsp;&nbsp;
+                <input id="searchBtn" type="button" class="btn btn-default" value="搜索"/>&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"
                         data-whatever="@mdo" style="float: right">我要提问
                 </button>
-            </form>
+            </div>
 
 
             <div id="navbar" class="navbar-collapse collapse">
@@ -95,7 +95,7 @@
                     <li><a th:href="@{/}" style="font-size: large"><i class="icon-home"/>首页</a></li>
                     <li><a th:href="@{/following}" style="font-size: large"><i class="icon-book"/>关注</a></li>
                     <li><a th:href="@{/recommend}" style="font-size: large"><i class="icon-lightbulb"/>推荐</a></li>
-                    <li><a th:href="@{#}" style="font-size: large"><i class="icon-bell-alt"/>消息</a></li>
+                    <li><a th:href="@{#}" style="font-size: large"><i class="icon-bell-alt"/>消息<span class="badge badge-warning">4</span></a></li>
 
                 </ul>
 

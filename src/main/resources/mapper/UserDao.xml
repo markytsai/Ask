@@ -12,6 +12,13 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="selectQuestionByQuestionId" resultType="Question">
+        select `question_id`, `question_title`, `question_content`, `topic_kv_list`, `followed_count`, `scanned_count`, `create_time`, `user_id`, `answer_count`
+        from question
+        where
+        question_id = #{questionId}
+    </select>
+
     <select id="selectUserByUserIdWithFollowingStatus" resultType="Integer" parameterType="String">
        SELECT
             mufu.follow_status
@@ -21,7 +28,6 @@
             INNER JOIN user AS u ON u.user_id = mufu.user_id
         WHERE u.user_id = #{localUserId} and fu.user_id = #{userId}
     </select>
-
 
 
     <select id="selectUserIdByEmailAndPassword" resultType="String">
