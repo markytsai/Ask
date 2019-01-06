@@ -19,7 +19,8 @@ $(document).keyup(function (e) {
     if ($("#keyword").is(":focus") && (e.keyCode == 13)) {
         var keyWord = $('#keyword').val();
         if (keyWord != null && keyWord.length > 0) {
-            window.location.href = '/search/question/' + keyWord;
+            // window.location.href = '/search/question/' + keyWord;
+            window.location.href = '/search?keyword=' + keyWord + '&type=question';
         } else {
             $.notify("请输入搜索词")
         }
@@ -55,7 +56,7 @@ $("#searchBtn").on("click", function () {
 
     var keyWord = $('#keyword').val();
     if (keyWord != null && keyWord.length > 0) {
-        window.location.href = '/search/question/' + keyWord;
+        window.location.href = '/search?keyword=' + keyWord + '&type=question';
     } else {
         $.notify("请输入搜索词")
     }

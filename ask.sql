@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-01-04 21:52:34
+Date: 2019-01-06 22:40:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,16 +42,18 @@ CREATE TABLE `answer` (
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
 INSERT INTO `answer` VALUES ('52', '\n\n                        aaaaa', '0', '0', '1546425832762', '9', '3bad1b8a3c284cab8d19d441651c7615');
-INSERT INTO `answer` VALUES ('53', '<span>蔡振亚的小号</span> <span>蔡振亚的小号</span> 问题', '0', '1', '1546425866694', '1', '3bad1b8a3c284cab8d19d441651c7615');
-INSERT INTO `answer` VALUES ('80', '\n                                    \n                                \n                                    \n                                    \n                                \n                                \n                                \n                                \n                                \n                                    \n                                \n                                    \n                                    \n                                    \n                                    111', '0', '0', '1546609740793', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('53', '<span>蔡振亚的小号</span> <span>蔡振亚的小号</span> 问题', '0', '0', '1546425866694', '1', '3bad1b8a3c284cab8d19d441651c7615');
 INSERT INTO `answer` VALUES ('81', '11111问题java', '0', '0', '1546506595626', '3', '45e6c1985fe640e09cd770d95e6e2c8b');
 INSERT INTO `answer` VALUES ('82', '\n                                \n                                \n                                \n                                \n                                \n                                    \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                    \n                                    3333\n                                \n                                \n                                \n                                \n                                \n                                \n                            ', '0', '0', '1546609620039', '11', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('83', '111', '0', '0', '1546667108819', '2', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('84', '滕飞', '0', '0', '1546781861810', '1', '6a99cf86555243ba8b23927c0748b562');
+INSERT INTO `answer` VALUES ('85', '蔡振亚', '0', '0', '1546782051296', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -353,14 +355,15 @@ CREATE TABLE `mid_user_follow_user` (
   `follow_status` int(1) NOT NULL DEFAULT '0' COMMENT '1:following;0:not follow',
   `create_time` bigint(13) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_follow_user
 -- ----------------------------
 INSERT INTO `mid_user_follow_user` VALUES ('1', '6a99cf86555243ba8b23927c0748b562', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546183629283');
 INSERT INTO `mid_user_follow_user` VALUES ('2', '3bad1b8a3c284cab8d19d441651c7615', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546322274739');
-INSERT INTO `mid_user_follow_user` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '3bad1b8a3c284cab8d19d441651c7615', '0', '1546608885999');
+INSERT INTO `mid_user_follow_user` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '3bad1b8a3c284cab8d19d441651c7615', '0', '1546781999977');
+INSERT INTO `mid_user_follow_user` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546763038804');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -378,9 +381,8 @@ CREATE TABLE `mid_user_vote_answer` (
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
-INSERT INTO `mid_user_vote_answer` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '53', '-1', '1546501640575');
+INSERT INTO `mid_user_vote_answer` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '53', '0', '1546757447216');
 INSERT INTO `mid_user_vote_answer` VALUES ('11', '45e6c1985fe640e09cd770d95e6e2c8b', '79', '1', '1546492981705');
-INSERT INTO `mid_user_vote_answer` VALUES ('12', '45e6c1985fe640e09cd770d95e6e2c8b', '80', '0', '1546500716548');
 INSERT INTO `mid_user_vote_answer` VALUES ('13', '45e6c1985fe640e09cd770d95e6e2c8b', '81', '0', '1546506615115');
 
 -- ----------------------------
@@ -403,8 +405,8 @@ CREATE TABLE `question` (
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '3', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '2');
-INSERT INTO `question` VALUES ('2', '为什么手机只能围绕三个对称轴其中的两个稳定地旋转？', '', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '3', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '3');
+INSERT INTO `question` VALUES ('2', '为什么手机只能围绕三个对称轴其中的两个稳定地旋转？', '', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
 INSERT INTO `question` VALUES ('3', '霸王龙前面两只小手手是干嘛用的？', '霸王龙前面两只小手手是干嘛用的？霸王龙前面两只小手手是干嘛用的？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
 INSERT INTO `question` VALUES ('4', '如何看待大疆员工猝死？', '才刚毕业几个月就去世了,真让人心寒', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('5', 'PowerPoint 到底有多厉害？', '因为见识了Excel 到底有多厉害？ - 软件，所以想看看PPT的过人之处', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
@@ -721,9 +723,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7615', 'tsai@gmail.com', '123456', '0', '', '0', '小号', '/images/avatar-defualt.jpg', '1', '蔡振亚的小号问题', '', '', '', '', '', '', '0', '0', '0', '0', '0', '');
-INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'tsaizhenya', '/images/avatar-defualt.jpg', '1', '社会主义的接班人', '深圳市', '软件工程师', '互联网行业', '杭州有赞科技有限公司java工程师', '本科', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
-INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', '/images/avatar-defualt.jpg', '1', '世界上最帅最帅最帅的人问题', '深圳市', '学生', '金融', '', '本科', '', '3', '234', '345', '45', '345', '');
+INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7615', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-3bad1b8a3c284cab8d19d441651c7615-20181211191204.png', '1', '蔡振亚的小号问题蔡振亚的小号问题蔡振亚的小号问题', '广东省深圳市', 'java工程师', '互联网行业', '深圳市弘长科技有限公司', '深圳大学', '啦啦啦啦啦啦啦啦啦', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123', '0', '1212313', '0', 'tsaizhenya', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '社会主义的接班人，社会主义的接班人，社会主义的接班人', '深圳市', 'java工程师', '互联网行业', '杭州有赞科技有限公司', '本科', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
+INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-6a99cf86555243ba8b23927c0748b562-tengfei.jpg', '1', '世界上最帅最帅最帅的人问题', '深圳市', '学生', '金融', '', '本科', '', '3', '234', '345', '45', '345', '');
 DROP TRIGGER IF EXISTS `incre_answerCount_in_question_after_answer_insert`;
 DELIMITER ;;
 CREATE TRIGGER `incre_answerCount_in_question_after_answer_insert` AFTER INSERT ON `answer` FOR EACH ROW BEGIN

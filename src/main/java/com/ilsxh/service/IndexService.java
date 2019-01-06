@@ -62,7 +62,7 @@ public class IndexService {
         List<Activity> resultList = indexDao.getVotedAnswer(userId);
         resultList.stream().forEach(a -> a.setActivityStaus(1));
 
-        // 2.rite answer
+        // 2.write answer
         List<Activity> activityAnswerList = indexDao.getAnswer(userId);
         activityAnswerList.stream().forEach(a -> a.setActivityStaus(2));
         if (activityAnswerList.size() != 0) {

@@ -25,6 +25,15 @@
     font-size: 18px;
 }
 
+ .floatInfo {
+     background-color: Transparent;
+     background-repeat:no-repeat;
+     border: none;
+     cursor:pointer;
+     overflow: hidden;
+     outline:none;
+ }
+
 .persona {
     text-decoration: none;
     font-size: 22px;

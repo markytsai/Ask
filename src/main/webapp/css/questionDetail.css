@@ -1,0 +1,40 @@
+/*.div-to-display {*/
+/*display: none;*/
+/*position: absolute;*/
+/*top: 50%;*/
+/*left: 50%;*/
+/*border: 1px solid red;*/
+/*background-color: #eee;*/
+/*z-index: 10;*/
+/*}*/
+
+/*img:hover > .div-to-display {*/
+/*display: block*/
+/*}*/
+
+.floatingCard {
+    background-color: white;
+    border-style: ridge;
+    position: absolute;
+    width: 362px;
+    height: 305px;
+    margin: 53px 100px 100px -1px;
+    display: block;
+    z-index: 1;
+}
+
+.spining {
+    position:absolute; /*it can be fixed too*/
+    margin: 56px 50px 52px 106px;
+}
+
+.info-piece {
+    margin-top: 10px;
+}
+.info-piece-fontsize {
+    font-size: 4;
+}
+
+.usernameLink:hover{
+    text-decoration: underline;
+}

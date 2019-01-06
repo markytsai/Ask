@@ -11,6 +11,10 @@ $(document).ready(function () {
 
     getAnswerId();
 
+    $('.example-popover').popover({
+        container: 'body'
+    })
+
     // $('#afterAnswerCard').style.display = "none";
 });
 
@@ -595,3 +599,89 @@ $('.upload-button').mouseenter(function () {
 }).mouseleave(function () {
     $('#changeAvatar').hide();
 })
+
+
+$(".avatarInfo").hover(function () {
+        $(this).find('.avatarInfor').fadeIn(100);
+        $(".p-image").show(200);
+        $('.profile-pic').css('opacity', '0.5', 200);
+    },
+
+    function () {
+        $(this).find('.avatarInfo').fadeOut(100);
+        $(".p-image").hide(200);
+        $('.profile-pic').css('opacity', '1');
+    });
+
+
+$(".avatarImg").hover(function () {
+        $(".floatingCard").fadeIn(500);
+
+        $(".floatingCard").css({
+            'top': $(this).offset().top + "px",
+            'left': $(this).offset().left + "px"
+        });
+
+        // $('.spining').show();
+        // sleep(2000);
+        // // $('.spining').hide();
+
+        var userUrl = $(this).children().attr("href");
+        var userId = userUrl.split('/')[3];
+
+        $.ajax({
+            url: "/getUser/" + userId,
+            type: "get",
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+
+                    var user = response.data.user;
+                    if (user.userId != response.data.localUserId) {
+                        $('.introduce').show();
+                        $('.avatarImgFloated').children().attr('href', '/userHome/activity/' + user.userId);
+                        $('.avatarImgFloated').children().children().attr('src', user.avatarUrl);
+                        $('.usernameFloat').children().children().children().attr('href', '/userHome/activity/' + user.userId);
+                        $('.usernameFloat').children().children().children().text(user.username);
+                        $('.desc').children().text(user.simpleDesc);
+                        $('.career').text('现从事于 ' + user.career);
+                        $('.position').text(user.position);
+                        $('.residencePlace').text('现居住在 ' + user.residencePlace);
+                        $('.education').text('教育程度 ' + user.education);
+
+                        if (user.followStatus == 1) { // 如果已经关注了，显示取消关注
+                            $('.follow').children().text('取消关注');
+                            $('.follow').switchClass('fa-plus', 'fa-check-square');
+                        } else {
+                            $('.follow').children().text('关注他');
+                            $('.follow').switchClass('fa-check-square', 'fa-plus');
+                        }
+                    } else {
+                        $('.floatingCard').hide();
+                    }
+                } else {
+                }
+            }
+        });
+
+    },
+
+    function () {
+        $(".floatingCard").fadeOut();
+
+        // if ($('.floatingCard').css('display') == "block") {
+        //     var var1 = $('#floating:hover') == true;
+        //     var var2 = $('#floating').is(":hovering");
+        //
+        //     if ($('#floating:hover') == true) {
+        //     } else {
+        //         $(".floatingCard").fadeOut();
+        //     }
+        // }
+
+    });
+
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay) ;
+}

@@ -2,6 +2,7 @@ package com.ilsxh.controller;
 
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.entity.User;
 import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.UserService;
 import com.ilsxh.util.Response;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +80,25 @@ public class UserController {
     @RequestMapping("/touristLogin")
     public String touristLogin(HttpServletRequest request, HttpServletResponse response) {
         return "redirect:/recommend";
+    }
+
+    @RequestMapping("/getUser/{userId}")
+    @ResponseBody
+    public Response getUser(@PathVariable String userId, HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        User user = userService.getUserByUserId(userId);
+        String localUserId = userService.getUserIdFromRedis(request);
+
+        Integer isExistFollowStatus = userService.selectUserByUserIdWithFollowingStatus(userId, localUserId);
+        user.setFollowStatus(isExistFollowStatus == null ? 0 : isExistFollowStatus);
+
+        map.put("user", user);
+        map.put("localUserId", localUserId);
+
+        if (user != null) {
+            return new Response(1, "成功获取用户信息", map);
+        }
+        return new Response(1, "获取用户信息失败", map);
     }
 
 

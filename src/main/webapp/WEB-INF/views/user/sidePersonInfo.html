@@ -7,7 +7,7 @@
                     <!--<img src="/images/avatar-defualt.jpg" th:src="${homeUser.avatarUrl}"-->
                     <!--style="width: 200px;height: 200px;border-radius: 100%;"/>-->
 
-                    <div class="small-12 medium-2 large-2 columns">
+                    <div class="small-12 medium-2 large-2 columns avatarInfo">
                         <div class="circle">
                             <!-- User Profile Image -->
                             <img class="profile-pic" style="width: 200px;height: 200px;border-radius: 100%;"
@@ -16,9 +16,10 @@
                             <!-- Default Image -->
                             <!-- <i class="fa fa-user fa-5x"></i> -->
                         </div>
-                        <div th:if="${user.userId} == ${homeUser.userId}" class="p-image">
-                            <i class="fa fa-camera upload-button"></i>
-                            <div id="changeAvatar" style="margin-right: -75px;display: none"><span>更改头像</span></div>
+                        <div th:if="${user.userId} == ${homeUser.userId}" class="p-image"
+                             style="display: none;margin-top: -94px;margin-right: 40px;">
+                            <i class="fa fa-camera icon-3x upload-button"></i>
+                            <div id="changeAvatar" style="margin-right: -5px;display: none"><span>更改头像</span></div>
                             <input id="upload" style="display: none" class="file-upload" type="file" accept="image/*"/>
                         </div>
                     </div>

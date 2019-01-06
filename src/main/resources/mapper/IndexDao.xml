@@ -6,7 +6,7 @@
 
     <select id="selectProfileInfoByUserId" resultType="com.ilsxh.entity.User" parameterType="String">
 
-        select user_id as userId,username,avatar_url as avatarUrl,gender,simple_desc as simpleDesc,position,industry,career,education,full_desc,
+        select user_id as userId,username,avatar_url as avatarUrl,gender,simple_desc as simpleDesc,residence_place,position,industry,career,education,full_desc,
         liked_count,collected_count,follow_count,followed_count,scanned_count
     	from user where user_id = #{userId}
     </select>
@@ -142,6 +142,7 @@
             a.create_time "answer.createTime",
             a.answer_user_id "answer.answerUserId",
 
+            u.user_id "answer.user.userId",
             u.username "answer.user.username",
             u.avatar_url "answer.user.avatarUrl",
             u.simple_desc "answer.user.simpleDesc",
@@ -164,6 +165,7 @@
             a.answer_user_id "answer.userId",
             a.question_id "answer.question.questionId",
 
+            u.user_id "answer.user.userId",
             u.username "answer.user.username",
             u.avatar_url "answer.user.avatarUrl",
             u.simple_desc "answer.user.simpleDesc",

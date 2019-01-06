@@ -26,6 +26,8 @@
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="http://localhost:8088/css/summernote.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/questionDetail.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/sidePersonCard.css" rel="stylesheet"/>
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
 
 
@@ -37,25 +39,71 @@
 <div th:include="navigator :: ask"></div>
 <div th:include="navigator :: delConfirm"></div>
 
-<div class="personinfo" th:id="personInfoCard" style="display: none">
-    <div class="personcard">
-        <img src="/images/avatar-defualt.jpg" style="width:100%"/>
-        <h3>蔡振亚</h3>
-        <p class="persontitle">学生</p>
-        <p>The smartest man in the world</p>
-        <p>shenzhen University</p>
-        <!--<div style="margin: 24px 0;">-->
-        <!--<a href="#" class="persona"><i class="fa fa-dribbble"></i></a>-->
-        <!--<a href="#" class="persona"><i class="fa fa-twitter"></i></a>-->
-        <!--<a href="#" class="persona"><i class="fa fa-linkedin"></i></a>-->
-        <!--<a href="#" class="persona"><i class="fa fa-facebook"></i></a>-->
-        <!--</div>-->
-        <p>
-            <button class="personbutton">关注</button>
-        </p>
+<!--头像悬浮信息展示框-->
+<div id="floating" class="floatingCard border" style="display: none;">
+    <div class="spining" style="display: none;">
+        <i class="icon-spinner icon-spin icon-3x"/>
+    </div>
+    <div class="introduce" style="margin-left: 55px; display: none;">
+        <div class="avatarImgFloated" style="float:left; width:45px; height:45px;margin-left: -40px;">
+            <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+                <img th:src="${user.avatarUrl}" width="100%" height="100%"
+                     style="border-radius: 100%"/>
+            </a>
+        </div>
+        <div class="usernameFloat" style="margin-left: 15px">
+            <div>
+                <h3>
+                    <a href="'/userHome/activity/' + ${user.userId}" style="color: black;"
+                       th:href="@{'/userHome/activity/' + ${user.userId}}"
+                       class="card-link usernameLink"
+                       th:text="${user.username}">
+                    </a>&nbsp;
+                </h3>
+            </div>
+            <div class="desc" style="margin-top: -7px;">
+                <span class="info-piece-fontsize" th:text="${user.simpleDesc}"/>
+            </div>
+        </div>
+        <hr/>
+        <!--下面是基本信息-->
+        <div class="userDetail" style="margin-left: -28px; margin-top: -15px;">
+            <div class="info-piece" th:if="${user.career != null}">
+                <i class="fa fa-id-card" aria-hidden="true"/>
+                <span class="info-piece-fontsize margin-left career" style="margin-left: 4;"
+                      th:text="'现从事于' + ${user.career}"/>
+                <span class="info-piece-fontsize position" style="margin-left: 4;" th:text="${user.position}"/>
+            </div>
+            <div class="info-piece" th:if="${user.education != null}">
+                <i class="fa fa-home" aria-hidden="true"/>
+                <span class="info-piece-fontsize residencePlace" style="margin-left: 7px;"
+                      th:text="'现居住在 ' + ${user.residencePlace}"/>
+            </div>
+            <div class="info-piece" th:if="${user.education != null}">
+                <i class="fa fa-graduation-cap" aria-hidden="true"/>
+                <span class="info-piece-fontsize education" style="margin-left: 3px;"
+                      th:text="'教育程度 ' + ${user.education}"/>
+            </div>
+        </div>
+        <!--底部关注通知栏-->
+        <hr/>
+        <div style="margin-top: auto;">
+            <p style="margin-left: -56px;margin-right: -2px;">
+                <button class="floatInfo" th:id="followHim + '-' + ${user.userId}"
+                        style="width: 50%; float: left;">
+                    <i class="fa fa-plus fa-2x follow" aria-hidden="true" style="font-size: 15px;">
+                        <span>关注他</span>
+                    </i>
+                </button>
+                <button class="floatInfo" style="width: 50%; float: right;">
+                    <i class="fa fa-bell fa-2x" aria-hidden="true" style="font-size: 15px;">
+                        <span th:text="通知我"/>
+                    </i>
+                </button>
+            </p>
+        </div>
     </div>
 </div>
-
 <div class="container">
     <div class="row">
         <div class="col-md-7 col-md-offset-1" style='background-color: #fff;'>
@@ -65,9 +113,10 @@
 
                         <div class="question-topic card-block">
                             <ul class="topic-list" style="margin-top:10px;margin-bottom: -10px;margin-left: -39px;">
-                                    <span class="topicItem"
-                                          style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;"><a
-                                            th:href="@{/#}" data-id="1" th:text="测试"/></span>
+                                <i class="fa fa-tags" aria-hidden="true"/>
+                                <span class="topicItem"
+                                      style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;"><a
+                                        th:href="@{/#}" data-id="1" th:text="测试"/></span>
                                 <span class="topicItem"
                                       style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;"><a
                                         th:href="@{/#}" data-id="1" th:text="测试"/></span>
@@ -97,7 +146,8 @@
                                       th:text="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"><i
                                         class="icon-rss"/></span>&nbsp;
                                 <span class="icon-edit" id="iWantAnswer" data-id="0"
-                                      style="cursor: pointer" th:text="${localUserAnswer == 0} ? '我要回答' : '修改回答'">我要回答</span>&nbsp;
+                                      style="cursor: pointer"
+                                      th:text="${localUserAnswer == 0} ? '我要回答' : '修改回答'">我要回答</span>&nbsp;
                                 <span class="icon-pencil" id="inviteOtherAnswer" style="cursor: pointer">邀请回答</span>
                                 <span id="readLater" style="cursor: pointer;float: right">稍后阅读<i
                                         class="icon-circle-arrow-right"/></span>
@@ -131,6 +181,7 @@
                             <!--<span th:text="${#dates.format(answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>回答了该问题-->
                         </div>
 
+                        <!--回答具体内容输入框-->
                         <div class="answerArea" data-id="-1">
 
                         </div>
@@ -141,7 +192,6 @@
                         <hr/>
                     </div>
                     <!--<br/>-->
-
                     <!--提交回答后，直接显示回答内容，没有请求后台-->
                     <div id="afterAnswerCard" class="card mb-4" style="display: none;margin-bottom: 30px;">
                         <div class="card-block">
@@ -231,8 +281,8 @@
                                         <span th:text="${answer.user.position}"/>&nbsp;
                                         <span th:text="${answer.user.simpleDesc}"/>
                                         <!--<span th:id="userId + '-' + ${answer.user.userId}"-->
-                                              <!--class="glyphicon label label-primary followUser" style="float:right"-->
-                                              <!--th:text="${answer.user.followStatus == 1} ? '已关注答主' : '关注答主'">关注答主</span>-->
+                                        <!--class="glyphicon label label-primary followUser" style="float:right"-->
+                                        <!--th:text="${answer.user.followStatus == 1} ? '已关注答主' : '关注答主'">关注答主</span>-->
                                     </h5>
                                 </div>
                                 &nbsp;<a th:href="@{'/userHome/activity/' + ${answer.user.userId}}">
@@ -321,6 +371,7 @@
 <script type="text/javascript" src="http://localhost:8088/js/questionDetail.js"></script>
 <script type="text/javascript" src="http://localhost:8088/js/jquery-ui.js"></script>
 <script type="text/javascript" src="http://localhost:8088/js/notify.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/popper.min.js"></script>
 
 <!--<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>-->
 

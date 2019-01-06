@@ -161,7 +161,7 @@ public class UserService {
             map.put("isLoginUser", "true");
         } else {
             map.put("isLoginUser", "false");
-            Integer isExistFollowStatus = userDao.selectUserByUserIdWithFollowingStatus(userId, localUserId);
+            Integer isExistFollowStatus = selectUserByUserIdWithFollowingStatus(userId, localUserId);
             if (isExistFollowStatus == null) {
                 homeUser.setFollowStatus(0);
             } else {
@@ -172,6 +172,10 @@ public class UserService {
         map.put("user", loginUser);
         map.put("homeUser", homeUser);
         return map;
+    }
+
+    public Integer selectUserByUserIdWithFollowingStatus(String userId,String localUserId) {
+        return userDao.selectUserByUserIdWithFollowingStatus(userId, localUserId);
     }
 
     public User getUserByUserId(String userId) {

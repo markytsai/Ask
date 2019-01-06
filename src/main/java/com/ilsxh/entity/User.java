@@ -310,4 +310,12 @@ public class User {
     public void setFollowStatus(Integer followStatus) {
         this.followStatus = followStatus;
     }
+
+    public String getResidencePlace() {
+        return residencePlace;
+    }
+
+    public void setResidencePlace(String residencePlace) {
+        this.residencePlace = residencePlace;
+    }
 }
