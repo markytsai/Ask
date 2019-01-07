@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为AnswerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.TopicDao">
+
+    <select id="getTopicByTopicId" resultType="Topic">
+
+        SELECT topic_id, topic_name, topic_simple_desc, topic_full_desc, topic_full_desc_en, topic_image, followed_count
+        from topic
+        where topic_id = #{topicId}
+    </select>
+
+    <select id="getQuestionWithThisTopic" resultType="Question">
+        SELECT
+            q.question_id,
+            q.question_title,
+            q.question_content,
+            q.followed_count,
+            q.scanned_count,
+            q.create_time,
+            q.user_id,
+            q.answer_count,
+            u.username "user.username"
+        from question as q
+        inner join mid_question_topic as mqt on q.question_id = mqt.question_id
+        inner join user as u on q.user_id = u.user_id
+        where mqt.topic_id = #{topicId}
+    </select>
+
+    <select id="getAnswersByTopicId" resultType="Answer">
+
+        select
+            a.answer_id,
+            a.answer_content,
+            a.liked_count,
+            a.disliked_count,
+            a.create_time,
+            a.answer_user_id,
+            a.question_id,
+
+            q.question_id "question.questionId",
+            q.question_title "question.questionTitle",
+            q.question_content "question.questionContent",
+            q.followed_count "question.questionCount",
+            q.scanned_count "question.scannedCount",
+            q.create_time "question.createTime",
+            q.user_id "question.userId",
+            q.answer_count "question.answerCount"
+
+            from answer as a
+            inner join question as q on a.question_id = q.question_id
+            inner join mid_question_topic as mqt on q.question_id = mqt.question_id
+            inner join topic as t on mqt.topic_id = t.topic_id
+            where t.topic_id = #{topicId}
+    </select>
+
+    <select id="getollowingUserByUserId" resultType="User">
+        select
+            u.user_id,
+            u.email,
+            u.password,
+            u.join_time,
+            u.username,
+            u.avatar_url,
+            u.gender,
+            u.simple_desc,
+            u.residence_place,
+            u.position,
+            u.industry,
+            u.career,
+            u.education,
+            u.full_desc,
+            u.liked_count,
+            u.collected_count,
+            u.follow_count,
+            u.followed_count,
+            u.scanned_count
+
+            from user as u
+            inner join answer as a on u.user_id = a.answer_user_id
+            inner join question as q on a.question_id = q.question_id
+            inner join mid_question_topic as mqt on q.question_id = mqt.question_id
+            inner join topic as t on mqt.topic_id = t.topic_id
+            where t.topic_id = #{topicId}
+        </select>
+</mapper>
+

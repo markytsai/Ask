@@ -5,6 +5,7 @@ import com.ilsxh.dao.QuestionDao;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -138,5 +139,9 @@ public class QuestionService {
 
         questionDao.addQuestion(question, userId, new Date().getTime());
 
+    }
+
+    public List<Topic> getRelatedTopics(Integer qustionId) {
+        return questionDao.getRelatedTopics(qustionId);
     }
 }

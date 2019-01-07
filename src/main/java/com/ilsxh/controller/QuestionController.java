@@ -4,6 +4,7 @@ import com.ilsxh.dao.QuestionDao;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import com.ilsxh.redis.AnswerKey;
 import com.ilsxh.service.RedisService;
@@ -104,6 +105,9 @@ public class QuestionController {
         Integer localUserAnswerId = indexService.isQuestionAnswered(userId, questionId);
         model.addAttribute("user", user);
         model.addAttribute("localUserAnswer", localUserAnswerId);
+
+        List<Topic> relatedTopicList = questionService.getRelatedTopics(questionId);
+        model.addAttribute("relatedTopicList", relatedTopicList);
 
 //        redisService.set(AnswerKey.answerKey, "-" + questionId, localUserAnswerId);
 

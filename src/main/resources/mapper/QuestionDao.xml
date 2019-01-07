@@ -134,6 +134,14 @@
         insert into question(question_title, question_content, user_id, create_time) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId}, #{question.createTime})
     </insert>
 
+    <select id="getRelatedTopics" resultType="Topic">
+        select
+        t.topic_id,
+        t.topic_name
+        from topic as t
+        inner join mid_question_topic as mqt on t.topic_id = mqt.topic_id
+        where mqt.question_id = #{questionId}
+    </select>
 </mapper>
 
 

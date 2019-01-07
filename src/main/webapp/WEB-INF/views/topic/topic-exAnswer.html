@@ -61,7 +61,7 @@
                     </a>&nbsp;
                 </h3>
             </div>
-            <div class="desc" style="margin-top: -7px;margin-right: 15px;">
+            <div class="desc" style="margin-top: -7px;">
                 <span class="info-piece-fontsize" th:text="${user.simpleDesc}"/>
             </div>
         </div>
@@ -104,156 +104,64 @@
         </div>
     </div>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-7 col-md-offset-1" style='background-color: #fff;'>
             <div id="mainContainer">
                 <div id="mainContainerRepleace">
-                    <div class="card mb-4">
 
-                        <div class="question-topic card-block">
-                            <ul class="topic-list" style="margin-top:10px;margin-bottom: -10px;margin-left: -39px;">
-                                <i class="fa fa-tags" aria-hidden="true"/>
-                                <span class="topicItem" th:each="topic : ${relatedTopicList}"
-                                      style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;"><a
-                                        th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}" data-id="1"
-                                        th:text="${topic.topicName}"/></span>
-                            </ul>
-                        </div>
-                        <div class="card-block">
-                            <h3 class="text-title">
-                                <p class="card-text text-dark" th:text="${questionDetail.questionTitle}"/>
-                            </h3>
-                            <p class="card-text" th:text="${questionDetail.questionContent}"/>
-
-                            <span class="glyphicon glyphicon-time"/>提问于
-                            <span th:text="${#dates.format(questionDetail.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
-                            <span class="glyphicon glyphicon-eye-open"></span>浏览<span
-                                th:text="${questionDetail.scanedCount}"></span>次&nbsp;&nbsp;
-                            <span class="glyphicon glyphicon-user"></span>关注<span th:text="123"></span>人<br/>
-                            <br/>
-                            <div style="font-size: larger;">
-
-                                <span class="icon-rss" style="cursor: pointer" id="focusQuestion"
-                                      th:text="${hasFollowQuestion == 'true'} ? '取消关注' : '关注问题'"><i
-                                        class="icon-rss"/></span>&nbsp;
-                                <span class="icon-edit" id="iWantAnswer" data-id="0"
-                                      style="cursor: pointer"
-                                      th:text="${localUserAnswer == 0} ? '我要回答' : '修改回答'">我要回答</span>&nbsp;
-                                <span class="icon-pencil" id="inviteOtherAnswer" style="cursor: pointer">邀请回答</span>
-                                <span id="readLater" style="cursor: pointer;float: right">稍后阅读<i
-                                        class="icon-circle-arrow-right"/></span>
-
-                                <input id="getQuestionId" th:type="hidden" th:value="${questionDetail.questionId}"/>
-                            </div>
-                        </div>
-                        <!--<br/>-->
-                        <!--富文本编辑器的作者显示-->
-                        <div id="authorEditting" class="card-title answer-meta" style="display: none">
-                            <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                <img th:src="${user.avatarUrl}" width="100%" height="100%"
-                                     style="border-radius: 100%"/>
-                            </div>
-                            <div style="margin-left: 55px">
-                                <h5>
-                                    <a href="'/userHome/question/' + ${user.userId}"
-                                       th:href="@{'/userHome/question/' + ${user.userId}}"
-                                       class="card-link"
-                                       th:text="${user.username}">
-                                    </a>&nbsp;
-                                    <span th:text="${user.position}"/>
-                                </h5>
-                            </div>
-                            <div style="margin-left: 55px">
-                                <span th:text="${user.simpleDesc}"/>
-                            </div>
-                            <!--&nbsp;<a th:href="@{'/userHome/question/' + ${user.userId}}">-->
-                            <!--<span class="glyphicon glyphicon-user"></span></a>-->
-                            <!--<span th:text="${user.username}"/>于-->
-                            <!--<span th:text="${#dates.format(answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>回答了该问题-->
-                        </div>
-
-                        <!--回答具体内容输入框-->
-                        <div class="answerArea" data-id="-1">
-
-                        </div>
-                        <div id="submitBtn" style="display: none;font-size: larger;">
-                            <span class="icon-remove" id="quitAnswer" style="cursor: pointer">取消回答</span>&nbsp;
-                            <span class="icon-upload-alt" id="submitAnswer" style="cursor: pointer">提交回答</span>&nbsp;
-                        </div>
-                        <hr/>
-                    </div>
-                    <!--<br/>-->
-                    <!--提交回答后，直接显示回答内容，没有请求后台-->
-                    <div id="afterAnswerCard" class="card mb-4" style="display: none;margin-bottom: 30px;">
-                        <div class="card-block">
+                    <!--话题简介区域-->
+                    <div class="card mb-4" style="height: 150px;">
+                        <div class="card-block" style="height: 150px;">
                             <div class="card-title answer-meta">
-                                <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                    <a th:href="@{'/userHome/activity/' + ${user.userId}}">
-                                        <img th:src="${user.avatarUrl}" width="100%" height="100%"
-                                             style="border-radius: 100%"/>
-                                    </a>
+                                <div class="topicImg" style="float:left; width:140px; height:140px;">
+                                    <span th:href="@{'/userHome/activity/' + ${user.userId}}">
+                                        <img th:src="${topic.topicImage}" width="100%" height="100%"
+                                             style="max-width: 100%;max-height: 100%;"/>
+                                    </span>
                                 </div>
-                                <div style="margin-left: 55px">
-                                    <h5>
-                                        <a th:href="@{'/userHome/activity/' + ${user.userId}}" class="card-link"
-                                           th:text="${user.username}">
-                                        </a>&nbsp;
-                                        <span th:text="${user.position}"/>&nbsp;
-                                        <span th:text="${user.simpleDesc}"/>
-                                    </h5>
+                                <div style="margin-left: 155px;position: relative;height: 138px;">
+                                    <span>
+                                        <h3 class="card-link" th:text="${topic.topicName}"/>
+                                    </span>
+                                    <span th:utext="${topic.topicSimpleDesc}"/>
+
+                                    <div style="font-size: larger;margin-top: 37px;position: absolute;bottom: 0;">
+
+                                        <span class="icon-rss" style="cursor: pointer" id="focusQuestion"
+                                              th:text="关注话题"/>
+
+                                        <!--<i class="icon-rss"/></span>&nbsp;-->
+                                        <span class="icon-bell" id="iWantAnswer" data-id="0"
+                                              style="cursor: pointer"
+                                              th:text="通知我"/>&nbsp;
+
+                                        <!--<span class="icon-pencil" id="inviteOtherAnswer"-->
+                                        <!--style="cursor: pointer" th:text="XXXX"></span>-->
+
+                                        <span id="readLater" style="cursor: pointer;margin-left: 315px;" title="分享话题">
+                                            <i class="fa fa-share-alt" aria-hidden="true"/></span>
+                                    </div>
+
                                 </div>
-                                &nbsp;<a th:href="@{'/userHome/activity/' + ${user.userId}}">
-                                <span class="glyphicon glyphicon-user"></span>
-                            </a>
-                                <span th:text="你"/>
-                                <span th:text="刚刚"/>回答了该问题
-                                <h6 th:text="0人赞同了该回答"></h6>
                             </div>
-                            <!--回答正文展开折叠功能-->
-                            <div class="card-text">
-                                <div class="foldContent">
-                                    <p id="answerContent" class="card-text hideContent"/>
-                                </div>
-                            </div>
-                            <!--回答修改按钮-->
-                            <div id="modifyAfterAnswerBtn" data-id="0">
-                                <a style="cursor: pointer;">
-                                    <i class="icon-pencil"/>
-                                    <span class="AnswerItem-editButtonText">修改</span>
-                                </a>
-                            </div>
-                            <div th:id="answerId" class="card-text" style="margin-top: 4px;">
-
-                                <input id="isCollectAfter" th:type="hidden" th:value="0"/>
-                                <!--<input id="getAnswerId" th:type="hidden" th:value="${answer.answerId}"/>-->
-                                <input id="userVoteAfter" th:type="hidden" th:value="0"/>
-                                <input id="upvoteCountAfter" th:type="hidden" th:value="0"/>
-                                <input id="downvoteCountAfter" th:type="hidden" th:value="0"/>
-
-                                <i class="glyphicon glyphicon-thumbs-up"></i>
-                                <span id="upvoteIconAfter" class="label label-primary" th:text="0次赞同"/>
-
-                                <i class="glyphicon glyphicon-thumbs-down"></i>
-                                <span id="downvoteIconAfter" class="label label-primary" th:text="0次反对"/>
-
-                                &nbsp;&nbsp;
-                                <i th:id="collectSymbol" class="glyphicon glyphicon-star-empty"
-                                   style="margin-right: -4px;"></i>
-                                <span id="collectBtnValueAfter" th:text="收藏"></span>&nbsp;&nbsp;
-
-                                <button class="btn btn-xs delBtn glyphicon glyphicon-trash"
-                                        data-toggle="modal" data-target="#delConfirmModal">
-                                </button>
-                            </div>
-                        </div>
-                        <div style="text-align: center;margin-top: 10px;">
-                            <a th:href="@{'/question/' + ${questionDetail.questionId}}">
-                                <span>-----查看所有回答-----</span>
-                            </a>
                         </div>
                     </div>
-                    <!--Answers list below-->
+                    <!--tab栏-->
+                    <div>
+                        <ul class="nav nav-tabs">
+                            <li role="presentation"><a
+                                    th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}">介绍</a></li>
+                            <li role="presentation"><a
+                                    th:href="@{'/topic/' + ${topic.topicId} + '/question'}">相关问题</a></li>
+                            <li role="presentation" class="active"><a
+                                    th:href="@{'/topic/' + ${topic.topicId} + '/answer'}">优秀回答</a></li>
+                            <li role="presentation"><a th:href="@{'/topic/' + ${topic.topicId} + '/users'}">热门用户</a>
+                            </li>
+                        </ul>
+                    </div>
+
                     <div class="card mb-4" th:each="answer : ${answerList}">
                         <div class="card-block">
                             <div class="card-title answer-meta">
@@ -272,9 +180,6 @@
                                         </a>&nbsp;
                                         <span th:text="${answer.user.position}"/>&nbsp;
                                         <span th:text="${answer.user.simpleDesc}"/>
-                                        <!--<span th:id="userId + '-' + ${answer.user.userId}"-->
-                                        <!--class="glyphicon label label-primary followUser" style="float:right"-->
-                                        <!--th:text="${answer.user.followStatus == 1} ? '已关注答主' : '关注答主'">关注答主</span>-->
                                     </h5>
                                 </div>
                                 &nbsp;<a th:href="@{'/userHome/activity/' + ${answer.user.userId}}">
@@ -287,27 +192,18 @@
                             </div>
                             <!--回答正文展开折叠功能-->
                             <div class="card-text">
-                                <!--<div class="foldContent" th:if="${answer.answerContent.length() lt 20}">-->
-                                <!--<p class="card-text hideContent" th:text="${answer.answerContent}"-->
-                                <!--style="height: 20px"/>-->
-                                <!--</div>-->
                                 <div class="foldContent">
                                     <p class="card-text hideContent" th:utext="${answer.answerContent}"/>
                                 </div>
-                                <!--<div class="show-more">-->
-                                <!--<p style="float:right;" class="moreContent">展开<span-->
-                                <!--th:id="answerContentId+'-'+${answer.answerId}"-->
-                                <!--class="glyphicon glyphicon-menu-down"></span></p>-->
-                                <!--</div>-->
                             </div>
                             <!--回答修改按钮-->
-                            <div id="modifyAnswerBtn" data-id="${answer.answerId}"
-                                 th:if="${answer.user.userId} eq ${user.userId}">
-                                <a style="cursor: pointer;">
-                                    <i class="icon-pencil"/>
-                                    <span class="AnswerItem-editButtonText">修改</span>
-                                </a>
-                            </div>
+                            <!--<div id="modifyAnswerBtn" data-id="${answer.answerId}"-->
+                                 <!--th:if="${answer.user.userId} eq ${user.userId}">-->
+                                <!--<a style="cursor: pointer;">-->
+                                    <!--<i class="icon-pencil"/>-->
+                                    <!--<span class="AnswerItem-editButtonText">修改</span>-->
+                                <!--</a>-->
+                            <!--</div>-->
 
                             <div th:id="answerId+'-'+${answer.answerId}" class="card-text" style="margin-top: 4px;">
                                 <input id="isCollect" th:type="hidden" th:value="${answer.collectAnswer}"/>
@@ -335,18 +231,18 @@
                                 <button th:if="${user.userId == answer.answerUserId}"
                                         class="btn btn-xs delBtn glyphicon glyphicon-trash"
                                         data-toggle="modal" data-target="#delConfirmModal">
-                                    <!--<span class=""></span>-->
                                 </button>
                             </div>
                         </div>
                         <br/>
                     </div>
+
                 </div>
             </div>
         </div>
 
         <!-- 右侧栏目 -->
-        <div th:include="sideHotCards :: sideCards"></div>
+        <div th:include="topic/sideTopicCards :: sideCards"></div>
 
     </div>
 </div>

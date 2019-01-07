@@ -4,7 +4,9 @@ public class Topic {
 
     private Integer topicId;
     private String topicName;
-    private String topicDesc;
+    private String topicSimpleDesc;
+    private String topicFullDesc;
+    private String topicFullDescEn;
     private String topicImage;
     private Integer followedCount;
 
@@ -24,12 +26,28 @@ public class Topic {
         this.topicName = topicName;
     }
 
-    public String getTopicDesc() {
-        return topicDesc;
+    public String getTopicSimpleDesc() {
+        return topicSimpleDesc;
     }
 
-    public void setTopicDesc(String topicDesc) {
-        this.topicDesc = topicDesc;
+    public void setTopicSimpleDesc(String topicSimpleDesc) {
+        this.topicSimpleDesc = topicSimpleDesc;
+    }
+
+    public String getTopicFullDesc() {
+        return topicFullDesc;
+    }
+
+    public void setTopicFullDesc(String topicFullDesc) {
+        this.topicFullDesc = topicFullDesc;
+    }
+
+    public String getTopicFullDescEn() {
+        return topicFullDescEn;
+    }
+
+    public void setTopicFullDescEn(String topicFullDescEn) {
+        this.topicFullDescEn = topicFullDescEn;
     }
 
     public String getTopicImage() {

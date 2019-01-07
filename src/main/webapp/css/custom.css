@@ -9,3 +9,14 @@ a:focus {
     color: #23527c;
     text-decoration: none;
 }
+
+.exchange-en-zh-edition {
+    font-weight: 500;
+    font-size: small;
+    cursor: pointer;
+}
+
+.exchange-en-zh-edition:hover {
+    text-decoration: underline;
+}
+

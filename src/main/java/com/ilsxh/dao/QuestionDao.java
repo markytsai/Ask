@@ -2,6 +2,7 @@ package com.ilsxh.dao;
 
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,5 +45,5 @@ public interface QuestionDao {
 
     void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("createTime") Long createTime);
 
-
+    List<Topic> getRelatedTopics(@Param("questionId") Integer questionId);
 }
