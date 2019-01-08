@@ -64,10 +64,4 @@ public class SearchController {
             return "search/search-answer";
         }
     }
-
-
-    @RequestMapping("/test")
-    public void test() {
-        new Indexer().startIndex("d:/lucene");
-    }
 }

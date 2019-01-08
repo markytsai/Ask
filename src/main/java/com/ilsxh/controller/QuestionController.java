@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -128,7 +129,8 @@ public class QuestionController {
      * @param request
      */
     @RequestMapping("/followQuestion/{questionId}")
-    public void followQuestion(@PathVariable("questionId") Integer questionId, HttpServletRequest request) {
+    @ResponseBody
+    public Response followQuestion(@PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
@@ -141,7 +143,7 @@ public class QuestionController {
             questionService.followQuestion(localUserId, questionId);
         }
 
-        return;
+        return new Response(1, "关注问题成功", "");
     }
 
     /**
@@ -204,7 +206,7 @@ public class QuestionController {
      */
     @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public Response askQuestion(@RequestParam String questionTitle, @RequestParam String questionContent, HttpServletRequest request) {
+    public Response askQuestion(@RequestParam String questionTitle, @RequestParam String questionContent, @RequestParam String topicString, HttpServletRequest request) {
         String userId = userService.getUserIdFromRedis(request);
         Question question = new Question();
         question.setQuestionTitle(questionTitle);
@@ -214,7 +216,8 @@ public class QuestionController {
 
         questionService.addQuestion(question, userId);
         questionService.followQuestion(userId, question.getQuestionId());
-        return new Response(1, "", question.getQuestionId());
+        questionService.addQuestionTopics(question, topicString);
+        return new Response(1, "问题发布成功", question.getQuestionId());
     }
 
 }

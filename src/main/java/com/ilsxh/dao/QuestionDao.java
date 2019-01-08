@@ -45,5 +45,7 @@ public interface QuestionDao {
 
     void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("createTime") Long createTime);
 
+    void addQuestionTopic(@Param("questionId") Integer questionId, @Param("topicId") Integer topicId);
+
     List<Topic> getRelatedTopics(@Param("questionId") Integer questionId);
 }

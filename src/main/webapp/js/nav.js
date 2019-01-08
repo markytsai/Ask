@@ -33,7 +33,8 @@ $(document).keyup(function (e) {
 $("#askBtn").on("click", function () {
     var formData = {
         "questionTitle": $("#questionTitle").val(),
-        "questionContent": $("#questionContent").val()
+        "questionContent": $("#questionContent").val(),
+        "topicString": $("#topic").val()
     };
 
     $.ajax({

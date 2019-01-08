@@ -18,6 +18,6 @@ public interface TopicDao {
 
     List<User> getollowingUserByUserId(@Param("topicId") Integer topicId);
 
-
+    Integer getTopicIdByTopicName(String topicName);
 
 }

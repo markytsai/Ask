@@ -65,10 +65,11 @@ public class UserController {
 
 
     @RequestMapping("/followUser/{userIdToBeFollowed}")
-    public void followUser(@PathVariable String userIdToBeFollowed, HttpServletRequest request) {
+    @ResponseBody
+    public Response followUser(@PathVariable String userIdToBeFollowed, HttpServletRequest request) {
         String localUserId = userService.getUserIdFromRedis(request);
         userService.followUser(localUserId, userIdToBeFollowed, new Date().getTime());
-
+        return new Response(1, "你已成功关注此用户", "");
     }
 
     @RequestMapping("/logout")

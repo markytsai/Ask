@@ -134,6 +134,13 @@
         insert into question(question_title, question_content, user_id, create_time) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId}, #{question.createTime})
     </insert>
 
+    <insert id="addQuestionTopic" parameterType="Integer">
+        INSERT INTO
+        mid_question_topic(question_id, topic_id)
+        VALUES
+        ( #{questionId}, #{topicId} )
+    </insert>
+
     <select id="getRelatedTopics" resultType="Topic">
         select
         t.topic_id,

@@ -2,6 +2,7 @@ package com.ilsxh.service;
 
 import com.ilsxh.dao.AnswerDao;
 import com.ilsxh.dao.QuestionDao;
+import com.ilsxh.dao.TopicDao;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +35,9 @@ public class QuestionService {
 
     @Autowired
     private AnswerDao answerDao;
+
+    @Autowired
+    private TopicDao topicDao;
 
 
     public List<Question> getFollowingQuestionByUserId(String userId) {
@@ -139,6 +145,16 @@ public class QuestionService {
 
         questionDao.addQuestion(question, userId, new Date().getTime());
 
+    }
+
+    public void addQuestionTopics(Question question, String topicString) {
+        String[] topicStrings = topicString.split("，"); // 用中文逗号
+        // 这里可以放到reids当中去查询，更快一点
+//        Integer[] topicIds = new Integer[topicStrings.length];
+        for (int i = 0; i < topicStrings.length; i++) {
+            Integer topicId = topicDao.getTopicIdByTopicName(topicStrings[i]);
+            questionDao.addQuestionTopic(question.getQuestionId(), topicId);
+        }
     }
 
     public List<Topic> getRelatedTopics(Integer qustionId) {

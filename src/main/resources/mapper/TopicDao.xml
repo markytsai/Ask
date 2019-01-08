@@ -84,5 +84,11 @@
             inner join topic as t on mqt.topic_id = t.topic_id
             where t.topic_id = #{topicId}
         </select>
+
+    <select id="getTopicIdByTopicName" resultType="Integer">
+        select topic_id
+        from topic
+        where topic_name = #{topicName}
+    </select>
 </mapper>
 
