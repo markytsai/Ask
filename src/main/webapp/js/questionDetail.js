@@ -613,19 +613,37 @@ $(".avatarInfo").hover(function () {
         $('.profile-pic').css('opacity', '1');
     });
 
+function setFloatingDivData(user) {
+    $('.introduce').show();
+    $('.avatarImgFloated').children().attr('href', '/userHome/activity/' + user.userId);
+    $('.avatarImgFloated').children().children().attr('src', user.avatarUrl);
+    $('.usernameFloat').children().children().children().attr('href', '/userHome/activity/' + user.userId);
+    $('.usernameFloat').children().children().children().text(user.username);
+    $('.desc').children().text(user.simpleDesc);
+    $('.career').text('现从事于 ' + user.career);
+    $('.position').text(user.position);
+    $('.residencePlace').text('现居住在 ' + user.residencePlace);
+    $('.education').text('教育程度 ' + user.education);
+
+    if (user.followStatus == 1) { // 如果已经关注了，显示取消关注
+        $('.follow').children().text('取消关注');
+        $('.follow').switchClass('fa-plus', 'fa-check-square');
+    } else {
+        $('.follow').children().text('关注他');
+        $('.follow').switchClass('fa-check-square', 'fa-plus');
+    }
+
+}
 
 $(".avatarImg").hover(function () {
         $(".floatingCard").fadeIn(500);
 
+        var topOffset = $(this).offset().top;
+        var leftOffset = $(this).offset().left;
         $(".floatingCard").css({
-            'top': $(this).offset().top + "px",
-            'left': $(this).offset().left + "px"
+            'top': topOffset + "px",
+            'left': leftOffset + "px"
         });
-
-        // $('.spining').show();
-        // sleep(2000);
-        // // $('.spining').hide();
-
         var userUrl = $(this).children().attr("href");
         var userId = userUrl.split('/')[3];
 
@@ -638,24 +656,7 @@ $(".avatarImg").hover(function () {
 
                     var user = response.data.user;
                     if (user.userId != response.data.localUserId) {
-                        $('.introduce').show();
-                        $('.avatarImgFloated').children().attr('href', '/userHome/activity/' + user.userId);
-                        $('.avatarImgFloated').children().children().attr('src', user.avatarUrl);
-                        $('.usernameFloat').children().children().children().attr('href', '/userHome/activity/' + user.userId);
-                        $('.usernameFloat').children().children().children().text(user.username);
-                        $('.desc').children().text(user.simpleDesc);
-                        $('.career').text('现从事于 ' + user.career);
-                        $('.position').text(user.position);
-                        $('.residencePlace').text('现居住在 ' + user.residencePlace);
-                        $('.education').text('教育程度 ' + user.education);
-
-                        if (user.followStatus == 1) { // 如果已经关注了，显示取消关注
-                            $('.follow').children().text('取消关注');
-                            $('.follow').switchClass('fa-plus', 'fa-check-square');
-                        } else {
-                            $('.follow').children().text('关注他');
-                            $('.follow').switchClass('fa-check-square', 'fa-plus');
-                        }
+                        setFloatingDivData(user);
                     } else {
                         $('.floatingCard').hide();
                     }
@@ -663,22 +664,43 @@ $(".avatarImg").hover(function () {
                 }
             }
         });
-
     },
-
     function () {
         $(".floatingCard").fadeOut();
+    });
 
-        // if ($('.floatingCard').css('display') == "block") {
-        //     var var1 = $('#floating:hover') == true;
-        //     var var2 = $('#floating').is(":hovering");
-        //
-        //     if ($('#floating:hover') == true) {
-        //     } else {
-        //         $(".floatingCard").fadeOut();
-        //     }
-        // }
+$(".avatarImgSided").hover(function () {
+        $(".floatingCard").fadeIn(500);
 
+        var topOffset = $(this).offset().top - 10;
+        var leftOffset = $(this).offset().left;
+        $(".floatingCard").css({
+            'top': topOffset + "px",
+            'left': leftOffset + "px"
+        });
+        var userUrl = $(this).children().attr("href");
+        var userId = userUrl.split('/')[3];
+
+        $.ajax({
+            url: "/getUser/" + userId,
+            type: "get",
+            dataType: 'json',
+            success: function (response) {
+                if (response.state == 1) {
+
+                    var user = response.data.user;
+                    if (user.userId != response.data.localUserId) {
+                        setFloatingDivData(user);
+                    } else {
+                        $('.floatingCard').hide();
+                    }
+                } else {
+                }
+            }
+        });
+    },
+    function () {
+        $(".floatingCard").fadeOut();
     });
 
 function sleep(delay) {

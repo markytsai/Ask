@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
     <link rel="stylesheet" href="http://localhost:8088/css/jquery-ui.css"/>
+    <link href="http://localhost:8088/css/questionDetail.css" rel="stylesheet"/>
 
 </head>
 
@@ -28,7 +29,7 @@
 
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
 <div th:include="navigator :: ask"></div>
-
+<div th:include="floatingDiv :: floatingDiv"></div>
 
 <div class="container">
     <div class="row">
@@ -87,9 +88,11 @@
                                         </h4>
                                         <div class="card-title answer-meta">
                                             <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
-                                                     height="100%"
-                                                     style="border-radius: 100%"/>
+                                                <a th:href="@{'/userHome/activity/' + ${activity.answer.user.userId}}">
+                                                    <img th:src="${activity.answer.user.avatarUrl}" width="100%"
+                                                         height="100%"
+                                                         style="border-radius: 100%"/>
+                                                </a>
                                             </div>
                                             <div style="margin-left: 55px">
                                                 <h5>
@@ -158,9 +161,11 @@
                                         </h4>
                                         <div class="card-title answer-meta">
                                             <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
-                                                     height="100%"
-                                                     style="border-radius: 100%"/>
+                                                <a th:href="@{'/userHome/activity/' + ${activity.answer.user.userId}}">
+                                                    <img th:src="${activity.answer.user.avatarUrl}" width="100%"
+                                                         height="100%"
+                                                         style="border-radius: 100%"/>
+                                                </a>
                                             </div>
                                             <div style="margin-left: 55px">
                                                 <h5>
@@ -229,9 +234,11 @@
                                         </h4>
                                         <div class="card-title answer-meta">
                                             <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
-                                                     height="100%"
-                                                     style="border-radius: 100%"/>
+                                                <a th:href="@{'/userHome/activity/' + ${activity.answer.user.userId}}">
+                                                    <img th:src="${activity.answer.user.avatarUrl}" width="100%"
+                                                         height="100%"
+                                                         style="border-radius: 100%"/>
+                                                </a>
                                             </div>
                                             <div style="margin-left: 55px">
                                                 <h5>
@@ -369,9 +376,11 @@
                                         </div>
                                         <div class="card-title answer-meta">
                                             <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                                <img th:src="${activity.answer.user.avatarUrl}" width="100%"
-                                                     height="100%"
-                                                     style="border-radius: 100%"/>
+                                                <a th:href="@{'/userHome/activity/' + ${activity.answer.user.userId}}">
+                                                    <img th:src="${activity.answer.user.avatarUrl}" width="100%"
+                                                         height="100%"
+                                                         style="border-radius: 100%"/>
+                                                </a>
                                             </div>
                                             <div style="margin-left: 55px">
                                                 <h5>

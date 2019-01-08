@@ -1,17 +1,4 @@
-/*.div-to-display {*/
-/*display: none;*/
-/*position: absolute;*/
-/*top: 50%;*/
-/*left: 50%;*/
-/*border: 1px solid red;*/
-/*background-color: #eee;*/
-/*z-index: 10;*/
-/*}*/
-
-/*img:hover > .div-to-display {*/
-/*display: block*/
-/*}*/
-
+/*悬浮框悬浮在光标附近*/
 .floatingCard {
     background-color: white;
     border-style: ridge;
@@ -24,6 +11,7 @@
     z-index: 1;
 }
 
+/*悬浮框加载提示*/
 .spining {
     position:absolute; /*it can be fixed too*/
     margin: 56px 50px 52px 106px;
