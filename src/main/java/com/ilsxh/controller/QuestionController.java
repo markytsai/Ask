@@ -220,6 +220,13 @@ public class QuestionController {
         return new Response(1, "问题发布成功", question.getQuestionId());
     }
 
+    @RequestMapping("/getProbablyRelativeQestions/{partialWord}")
+    @ResponseBody
+    public Response getProbablyRelativeQestions(@PathVariable String partialWord) {
+        List<Question> questionList = questionService.getProbablyRelativeQestions(partialWord);
+        return new Response(1, "已经存在相关问题", questionList);
+    }
+
 }
 
 

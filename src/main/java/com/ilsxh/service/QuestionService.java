@@ -8,9 +8,11 @@ import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
+import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -159,5 +161,9 @@ public class QuestionService {
 
     public List<Topic> getRelatedTopics(Integer qustionId) {
         return questionDao.getRelatedTopics(qustionId);
+    }
+
+    public List<Question> getProbablyRelativeQestions(@PathVariable String partialWord) {
+        return questionDao.getProbablyRelativeQestions(partialWord);
     }
 }

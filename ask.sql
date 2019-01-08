@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-01-07 23:49:19
+Date: 2019-01-08 19:22:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -300,16 +300,18 @@ INSERT INTO `mid_question_contain_topic` VALUES ('207', '81', '257');
 -- ----------------------------
 DROP TABLE IF EXISTS `mid_question_topic`;
 CREATE TABLE `mid_question_topic` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `question_id` int(11) NOT NULL,
   `topic_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_question_topic
 -- ----------------------------
 INSERT INTO `mid_question_topic` VALUES ('1', '1', '2');
+INSERT INTO `mid_question_topic` VALUES ('2', '18', '2');
+INSERT INTO `mid_question_topic` VALUES ('4', '19', '2');
 
 -- ----------------------------
 -- Table structure for mid_user_collect_answer
@@ -339,7 +341,7 @@ CREATE TABLE `mid_user_follow_question` (
   `question_id` int(11) NOT NULL COMMENT '问题ID',
   `create_time` bigint(13) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
@@ -359,6 +361,14 @@ INSERT INTO `mid_user_follow_question` VALUES ('23', '3bad1b8a3c284cab8d19d44165
 INSERT INTO `mid_user_follow_question` VALUES ('24', '3bad1b8a3c284cab8d19d441651c7615', '10', '1546323708663');
 INSERT INTO `mid_user_follow_question` VALUES ('25', '3bad1b8a3c284cab8d19d441651c7615', '1', '1546433107606');
 INSERT INTO `mid_user_follow_question` VALUES ('26', '45e6c1985fe640e09cd770d95e6e2c8b', '11', '1546609308796');
+INSERT INTO `mid_user_follow_question` VALUES ('27', '45e6c1985fe640e09cd770d95e6e2c8b', '12', '1546927214061');
+INSERT INTO `mid_user_follow_question` VALUES ('28', '45e6c1985fe640e09cd770d95e6e2c8b', '13', '1546927279889');
+INSERT INTO `mid_user_follow_question` VALUES ('29', '45e6c1985fe640e09cd770d95e6e2c8b', '14', '1546927362094');
+INSERT INTO `mid_user_follow_question` VALUES ('30', '45e6c1985fe640e09cd770d95e6e2c8b', '15', '1546927591125');
+INSERT INTO `mid_user_follow_question` VALUES ('31', '45e6c1985fe640e09cd770d95e6e2c8b', '16', '1546927636830');
+INSERT INTO `mid_user_follow_question` VALUES ('32', '45e6c1985fe640e09cd770d95e6e2c8b', '17', '1546927774870');
+INSERT INTO `mid_user_follow_question` VALUES ('33', '45e6c1985fe640e09cd770d95e6e2c8b', '18', '1546929688990');
+INSERT INTO `mid_user_follow_question` VALUES ('34', '45e6c1985fe640e09cd770d95e6e2c8b', '19', '1546934343055');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_user
@@ -417,22 +427,24 @@ CREATE TABLE `question` (
   `user_id` varchar(128) NOT NULL,
   `answer_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of question
 -- ----------------------------
 INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '3', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '3');
-INSERT INTO `question` VALUES ('2', '为什么手机只能围绕三个对称轴其中的两个稳定地旋转？', '', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `question` VALUES ('2', '为什么手机只能围绕其中两个很大的特别重对称轴稳定的旋转？这个不太明白啊啊啊啊啊啊', '', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
 INSERT INTO `question` VALUES ('3', '霸王龙前面两只小手手是干嘛用的？', '霸王龙前面两只小手手是干嘛用的？霸王龙前面两只小手手是干嘛用的？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
 INSERT INTO `question` VALUES ('4', '如何看待大疆员工猝死？', '才刚毕业几个月就去世了,真让人心寒', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('5', 'PowerPoint 到底有多厉害？', '因为见识了Excel 到底有多厉害？ - 软件，所以想看看PPT的过人之处', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('6', '如何优雅地使用 Jupyter？', '如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('7', '不爱睡觉怎么办？', '不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('8', '有没有 SpringMVC + Angular + bootstrap 学习的例子?', '有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?v', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('8', '有没有bootstrap 学习的例子?', '有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?v', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('9', '小号的第一个问题', '', '', '1', '0', '1546320447149', '3bad1b8a3c284cab8d19d441651c7615', '1');
 INSERT INTO `question` VALUES ('10', '小号的第二个问题', '', '', '1', '0', '1546323690120', '3bad1b8a3c284cab8d19d441651c7615', '0');
-INSERT INTO `question` VALUES ('11', '今天星期几？', '今天星期几？今天星期几？今天星期几？今天星期几？今天星期几？', '', '1', '0', '1546609308736', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `question` VALUES ('17', '今天星期几？', '今天星期几？', '', '1', '0', '1546927774849', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('18', '今天星期几？', '今天星期几？', '', '1', '0', '1546929688874', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('19', 'Cape Verde', 'aaa', '', '1', '0', '1546934343030', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 
 -- ----------------------------
 -- Table structure for topic
@@ -650,7 +662,7 @@ INSERT INTO `topic` VALUES ('195', '独立开发者', '', '暂无描述', '', 'h
 INSERT INTO `topic` VALUES ('196', 'C（编程语言）', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
 INSERT INTO `topic` VALUES ('197', 'Java 编程', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
 INSERT INTO `topic` VALUES ('198', '自学编程', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
-INSERT INTO `topic` VALUES ('199', '互联网', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
+INSERT INTO `topic` VALUES ('199', '互联网+', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
 INSERT INTO `topic` VALUES ('200', 'BAT（公司集合）', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
 INSERT INTO `topic` VALUES ('201', '计算机', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
 INSERT INTO `topic` VALUES ('202', '长沙', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');

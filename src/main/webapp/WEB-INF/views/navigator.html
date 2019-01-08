@@ -33,7 +33,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">我的问题</h5>
+                    <h4 class="modal-title" id="exampleModalLabel" style="display: inline;">我的问题</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -41,8 +41,10 @@
                 <div class="modal-body">
                     <form id="askForm">
                         <div class="form-group">
-                            <label for="questionTitle" class="col-form-label">问题名称</label>
-                            <input id="questionTitle" type="text" class="form-control"/>
+                            <label class="col-form-label">问题名称</label><br/>
+                            <div class="autocomplete" style="width: 100%;">
+                                <input id="questionTitle" type="text" class="form-control"/>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="questionContent" class="col-form-label">问题详情（如果有的话）</label>
@@ -50,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <label for="topic" class="col-form-label">所属话题（以逗号隔开）</label>
-                            <input id="topic" class="form-control"></input>
+                            <input id="topic" class="form-control"/>
                         </div>
                     </form>
                 </div>
@@ -79,7 +81,8 @@
                 </button>
                 <a class="navbar-brand" th:href="@{/}"
                    style="color: red;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: 400">
-                    <img th:src="@{/images/logo.png}" style="display: inline-block; height: 30px; margin-top: -5px"/></a>
+                    <img th:src="@{/images/logo.png}"
+                         style="display: inline-block; height: 30px; margin-top: -5px"/></a>
             </div>
 
             <div class="navbar-form navbar-right">
@@ -99,7 +102,8 @@
                     <li><a th:href="@{/}" style="font-size: large"><i class="icon-home"/>首页</a></li>
                     <li><a th:href="@{/following}" style="font-size: large"><i class="icon-book"/>关注</a></li>
                     <li><a th:href="@{/recommend}" style="font-size: large"><i class="icon-lightbulb"/>推荐</a></li>
-                    <li><a th:href="@{#}" style="font-size: large"><i class="icon-bell-alt"/>消息<span class="badge badge-warning">4</span></a></li>
+                    <li><a th:href="@{#}" style="font-size: large"><i class="icon-bell-alt"/>消息<span
+                            class="badge badge-warning">4</span></a></li>
 
                 </ul>
 

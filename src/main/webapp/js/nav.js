@@ -14,6 +14,11 @@
 //         }, 0);
 //     });
 // });
+$(document).ready(function() {
+    $('#exampleModal').on('shown.bs.modal', function() {
+        $("#questionTitle").focus();
+    })
+});
 
 $(document).keyup(function (e) {
     if ($("#keyword").is(":focus") && (e.keyCode == 13)) {

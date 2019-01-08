@@ -149,6 +149,13 @@
         inner join mid_question_topic as mqt on t.topic_id = mqt.topic_id
         where mqt.question_id = #{questionId}
     </select>
+
+    <select id="getProbablyRelativeQestions" resultType="Question">
+        select question_id, question_title, answer_count
+        from question
+        where question_title like CONCAT(CONCAT('%',#{partialWord}),'%')
+        limit 3
+    </select>
 </mapper>
 
 

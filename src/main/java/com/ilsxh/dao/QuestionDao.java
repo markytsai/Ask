@@ -48,4 +48,6 @@ public interface QuestionDao {
     void addQuestionTopic(@Param("questionId") Integer questionId, @Param("topicId") Integer topicId);
 
     List<Topic> getRelatedTopics(@Param("questionId") Integer questionId);
+
+    List<Question> getProbablyRelativeQestions(@Param("partialWord") String partialWord);
 }
