@@ -90,5 +90,11 @@
         from topic
         where topic_name = #{topicName}
     </select>
+
+    <select id="getProbablyRelativeTopics" resultType="Topic">
+        select topic_id, topic_name
+        from topic
+        where topic_name like CONCAT(CONCAT('%',#{partialWord}),'%')
+    </select>
 </mapper>
 

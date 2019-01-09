@@ -20,4 +20,6 @@ public interface TopicDao {
 
     Integer getTopicIdByTopicName(String topicName);
 
+    List<Topic> getProbablyRelativeTopics(@Param("partialWord") String partialWord);
+
 }

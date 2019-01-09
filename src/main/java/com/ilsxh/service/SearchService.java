@@ -48,6 +48,8 @@ public class SearchService {
         model.addAttribute("hotTopics", hotService.getHotTopic());
         model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
 
-        model.addAttribute("keyword", keyword);
+        if (keyword != null) {
+            model.addAttribute("keyword", keyword);
+        }
     }
 }

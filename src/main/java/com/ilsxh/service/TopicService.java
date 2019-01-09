@@ -98,4 +98,8 @@ public class TopicService {
     public List<User> getExcellentUsersByTopicId(Integer topicId) {
         return topicDao.getollowingUserByUserId(topicId);
     }
+
+    public List<Topic> getProbablyRelativeTopics(String partialWord) {
+        return topicDao.getProbablyRelativeTopics(partialWord);
+    }
 }

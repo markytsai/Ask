@@ -150,7 +150,7 @@ public class QuestionService {
     }
 
     public void addQuestionTopics(Question question, String topicString) {
-        String[] topicStrings = topicString.split("，"); // 用中文逗号
+        String[] topicStrings = topicString.split(","); // 用英文逗号
         // 这里可以放到reids当中去查询，更快一点
 //        Integer[] topicIds = new Integer[topicStrings.length];
         for (int i = 0; i < topicStrings.length; i++) {

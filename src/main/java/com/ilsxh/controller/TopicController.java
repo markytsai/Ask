@@ -8,11 +8,13 @@ import com.ilsxh.service.HotService;
 import com.ilsxh.service.QuestionService;
 import com.ilsxh.service.TopicService;
 import com.ilsxh.service.UserService;
+import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -101,5 +103,12 @@ public class TopicController {
         model.addAttribute("ExcellentUserList", excellentUserList);
 
         return "topic/topic-user";
+    }
+
+    @RequestMapping("/getProbablyRelativeTopics/{partialWord}")
+    @ResponseBody
+    public Response getProbablyRelativeTopics(@PathVariable String partialWord) {
+        List<Topic> topicList = topicService.getProbablyRelativeTopics(partialWord);
+        return new Response(1, "相关话题", topicList);
     }
 }
