@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <label class="col-form-label">问题名称</label><br/>
                             <div class="autocomplete" style="width: 100%;">
-                                <input id="questionTitle" type="text" class="form-control"/>
+                                <input id="questionTitle" type="text" class="form-control" required="true" data-original-title="hint" title="hint"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -51,8 +51,9 @@
                             <textarea id="questionContent" class="form-control" style="height: 30%;"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="topic" class="col-form-label">所属话题（以逗号隔开）</label>
+                            <label for="topic" class="col-form-label">所属话题（以逗号隔开）<span style="color: red;">至少添加一个话题</span></label>
                             <input id="topic" class="form-control"/>
+
                         </div>
                     </form>
                 </div>

@@ -67,7 +67,7 @@ public class AnswerController {
         String localUserId = userService.getUserIdFromRedis(request);
         if (isCollect == Boolean.TRUE) {
             answerService.cancelCollectAnswer(localUserId, answerId);
-            return new Response(1, "你取消了收藏此回答", "");
+            return new Response(0, "你取消了收藏此回答", "");
         } else {
             answerService.collectAnswer(localUserId, answerId);
             return new Response(1, "你收藏了此回答", "");

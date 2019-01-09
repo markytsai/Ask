@@ -185,8 +185,28 @@ $('.glyphicon-thumbs-up').click(function (event) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
-                // alert("赞同回答");
-                $.notify(response.message);
+                $.notify({
+                    // options
+                    message: response.message
+                },{
+                    type: 'info',
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+                    offset: 10,
+                    spacing: 10,
+                    z_index: 1031,
+                    delay: 3000,
+                    timer: 1000,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    },
+                    onShow: function() {
+                        this.css({'width':'200px','height':'auto'});
+                    },
+                });
             }
         }
     });
@@ -226,7 +246,28 @@ $('.glyphicon-thumbs-down').click(function (event) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
-                $.notify(response.message);
+                $.notify({
+                    // options
+                    message: response.message
+                },{
+                    type: 'info',
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+                    offset: 10,
+                    spacing: 10,
+                    z_index: 1031,
+                    delay: 3000,
+                    timer: 1000,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    },
+                    onShow: function() {
+                        this.css({'width':'200px','height':'auto'});
+                    },
+                });
             } else {
             }
         }
@@ -256,12 +297,50 @@ $('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
         dataType: 'json',
         success: function (response) {
             if (response.state == 1) {
-                $.notify(response.message);
-
-                // $.notify('hello !!', {
-                //     style: 'happyblue'
-                // });
+                $.notify({
+                    message: response.message
+                },{
+                    type: 'info',
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+                    offset: 10,
+                    spacing: 10,
+                    z_index: 1031,
+                    delay: 3000,
+                    timer: 1000,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    },
+                    onShow: function() {
+                        this.css({'width':'200px','height':'auto'});
+                    },
+                });
             } else {
+                $.notify({
+                    // options
+                    message: response.message
+                },{
+                    type: 'info',
+                    placement: {
+                        from: "top",
+                        align: "center"
+                    },
+                    offset: 10,
+                    spacing: 10,
+                    z_index: 1031,
+                    delay: 3000,
+                    timer: 1000,
+                    animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutUp'
+                    },
+                    onShow: function() {
+                        this.css({'width':'200px','height':'auto'});
+                    },
+                });
             }
         }
     });

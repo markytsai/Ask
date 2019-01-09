@@ -14,11 +14,88 @@
 //         }, 0);
 //     });
 // });
-$(document).ready(function () {
-    $('#exampleModal').on('shown.bs.modal', function () {
-        $("#questionTitle").focus();
-    })
+
+
+// ------------------提问框校验-----------------------------
+/* Latest compiled and minified JavaScript included as External Resource */
+// 题目名称提醒
+$('#questionTitle').tooltip({
+    title: "输入问题名称",
+    trigger: "manual"
 });
+
+// 题目详情提醒
+// $('#questionContent').tooltip({
+//     title: "输入问题详情",
+//     trigger: "manual"
+// });
+//
+// // 题目相关话题提醒
+// $('#topic').tooltip({
+//     title: "输入问题相关的话题",
+//     trigger: "manual"
+// });
+
+// Manually hide tooltip when re-clicking the input
+// This can be modified to hide the tooltip whenever you see fit
+$("#questionTitle").click(function (e) {
+    $(this).tooltip("hide");
+});
+// $("#questionContent").click(function (e) {
+//     $(this).tooltip("hide");
+// });
+// $("#topic").click(function (e) {
+//     $(this).tooltip("hide");
+// });
+
+$("#askBtn").on("click", function () {
+    var questionTitle = $("#questionTitle").val();
+    var questionContent = $("#questionContent").val();
+    var topicString = $("#topic").val();
+    /* Act on the event */
+    if (!questionTitle) {
+        $.notify({
+                icon: 'glyphicon glyphicon-warning-sign',
+                title: "<strong>注意</strong>",
+                message: "请输入题目名称"
+            },
+            {
+                type: 'warning',
+                element: 'div#exampleModal',
+                allow_dismiss: true,
+                placement: {
+                    from: "top",
+                    align: "center"
+                },
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                },
+                offset: 10,
+                delay: 1000,
+                timer: 1000,
+                onShow: function() {
+                    this.css({'width':'230px','height':'auto'});
+                },
+            });
+    }
+    // if (!questionContent) {
+    //     $('#questionContent').tooltip("show");  // Show tooltip
+    // }
+    // if (!topicString) {
+    //     $('#topic').tooltip("show");  // Show tooltip
+    // }
+
+    if (questionTitle && topicString) {
+        submitQuestion(questionTitle, questionContent, topicString);
+    }
+
+
+});
+
+$('#exampleModal').on('shown.bs.modal', function () {
+    $("#questionTitle").focus();
+})
 
 $(document).keyup(function (e) {
     if ($("#keyword").is(":focus") && (e.keyCode == 13)) {
@@ -35,11 +112,13 @@ $(document).keyup(function (e) {
 
 /*提问表单处理*/
 /* 提问处理 */
-$("#askBtn").on("click", function () {
+
+// $("#askBtn").on("click", function () {
+function submitQuestion(questionTitle, questionContent, topicString) {
     var formData = {
-        "questionTitle": $("#questionTitle").val(),
-        "questionContent": $("#questionContent").val(),
-        "topicString": $("#topic").val()
+        "questionTitle": questionTitle,
+        "questionContent": questionContent,
+        "topicString": topicString
     };
 
     $.ajax({
@@ -55,7 +134,8 @@ $("#askBtn").on("click", function () {
             }
         }
     });
-});
+}
+
 
 /* 关键字搜索处理 */
 $("#searchBtn").on("click", function () {
@@ -68,6 +148,7 @@ $("#searchBtn").on("click", function () {
     }
 });
 
+// ------------------------返回顶部按钮----------------------------------------
 window.onscroll = function () {
     scrollFunction()
 };
@@ -89,3 +170,4 @@ function topFunction(event) {
     }, 1000);
 
 }
+
