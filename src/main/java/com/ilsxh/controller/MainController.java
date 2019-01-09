@@ -33,6 +33,10 @@ public class MainController {
         return "redirect:/following";
     }
 
+    /**
+     * 返回注册页面
+     * @return
+     */
     @RequestMapping(value = {"register"}, method = RequestMethod.GET)
     public ModelAndView register() {
         return new ModelAndView("register", "", null);

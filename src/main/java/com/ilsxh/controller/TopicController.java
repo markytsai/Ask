@@ -29,6 +29,13 @@ public class TopicController {
     @Autowired
     private TopicService topicService;
 
+    /**
+     * 话题页面：简介tab
+     * @param topicId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/topic/{topicId}/introduction")
     public String getTopicIntroduction(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
@@ -40,6 +47,13 @@ public class TopicController {
         return "topic/topic-introduction";
     }
 
+    /**
+     * 话题页面：相关问题tab
+     * @param topicId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/topic/{topicId}/question")
     public String getTopicQuestion(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
@@ -51,6 +65,13 @@ public class TopicController {
         return "topic/topic-question";
     }
 
+    /**
+     * 话题页面：相关回答tab
+     * @param topicId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/topic/{topicId}/answer")
     public String getTopicExAnswer(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
@@ -63,6 +84,13 @@ public class TopicController {
         return "topic/topic-exAnswer";
     }
 
+    /**
+     * 话题页面：话题相关热门用户tab
+     * @param topicId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/topic/{topicId}/users")
     public String getTopicExcellentUsers(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 

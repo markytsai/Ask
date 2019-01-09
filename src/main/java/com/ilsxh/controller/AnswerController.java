@@ -32,6 +32,14 @@ public class AnswerController {
     @Autowired
     private RedisService redisService;
 
+    /**
+     * 用户给回答投票
+     * @param answerId
+     * @param currVoteStatus 当下投票状态
+     * @param upOrDownClick -1：反对；1：赞同
+     * @param request
+     * @return
+     */
     @RequestMapping("/voteAnswer/{answerId}")
     @ResponseBody
     public Response voteAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("userVote") Integer currVoteStatus,
@@ -46,6 +54,13 @@ public class AnswerController {
         return new Response(1, "", "");
     }
 
+    /**
+     * 用户收藏回答
+     * @param answerId
+     * @param isCollect
+     * @param request
+     * @return
+     */
     @RequestMapping("/collectAnswer/{answerId}")
     @ResponseBody
     public Response collectAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("isCollect") Boolean isCollect, HttpServletRequest request) {
@@ -59,6 +74,12 @@ public class AnswerController {
         }
     }
 
+    /**
+     * 获取问题详情页面，登录用户的回答
+     * @param questionId
+     * @param request
+     * @return
+     */
     @RequestMapping("/getAnswerId/{questionId}")
     @ResponseBody
     public Response getAnswerId(@PathVariable Integer questionId, HttpServletRequest request) {

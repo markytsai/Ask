@@ -23,6 +23,13 @@ public class CollectionController {
     @Autowired
     private CollectionService collectionService;
 
+    /**
+     * 个人主页，收藏tab
+     * @param userId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/userHome/collection/{userId}")
     public String userHomeCollection(@PathVariable String userId, HttpServletRequest request, Model model) {
         String localUserId = userService.getUserIdFromRedis(request);

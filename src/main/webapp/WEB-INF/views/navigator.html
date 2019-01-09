@@ -102,8 +102,10 @@
                     <li><a th:href="@{/}" style="font-size: large"><i class="icon-home"/>首页</a></li>
                     <li><a th:href="@{/following}" style="font-size: large"><i class="icon-book"/>关注</a></li>
                     <li><a th:href="@{/recommend}" style="font-size: large"><i class="icon-lightbulb"/>推荐</a></li>
-                    <li><a th:href="@{#}" style="font-size: large"><i class="icon-bell-alt"/>消息<span
-                            class="badge badge-warning">4</span></a></li>
+                    <li><a th:href="@{#}" style="font-size: large"><i class="icon-bell-alt"/>消息
+                        <span class="badge badge-warning" style="margin-top: -25px;margin-left: -10px;border-radius: 100%;
+                        background-color: #d9534f;text-align: center;" th:text="10"/>
+                    </a></li>
 
                 </ul>
 
@@ -128,6 +130,8 @@
             </div>
         </div>
     </nav>
+
+    <span onclick="topFunction()" id="myBtn" title="返回顶部"><i class="icon-arrow-up"/> </span>
 </div>
 
 <!--不要包含任何js文件-->

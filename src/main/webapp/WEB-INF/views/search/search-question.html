@@ -68,7 +68,7 @@
                                 <a href="/userHome/question/${question.userId}"
                                    th:href="@{'/userHome/question/' + ${question.userId}}"
                                    class="card-link"
-                                   th:text="${question.user.username}">waylau</a>
+                                   th:text="${question.user.username}"/>
                                 发表于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
 
                                 <span class="glyphicon glyphicon-eye-open"></span>围观<span
