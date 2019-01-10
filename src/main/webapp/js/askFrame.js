@@ -3,6 +3,99 @@ var topicList;
 var hint;
 var topicChosenNum = 0;
 var topicChosenString = "";
+var quill;
+
+
+$(document).ready(function () {
+
+    quill = new Quill('#questionContent', {
+        modules: {
+            toolbar: [
+                [{header: [1, 2, false]}],
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block']
+            ]
+        },
+        placeholder: '这里输入问题详情...',
+        theme: 'snow'
+    });
+
+    // $('#summernote').summernote();
+    // $('#questionContent').summernote({focus: true});
+});
+
+
+$("#askBtn").on("click", function () {
+    var questionTitle = $("#questionTitle").val();
+    var questionContent = quill.root.innerHTML;
+    var topicString = getChosedTopics();
+    /* Act on the event */
+    if (!questionTitle) {
+        $.notify({
+                icon: 'glyphicon glyphicon-warning-sign',
+                title: "<strong>注意</strong>",
+                message: "请输入题目名称"
+            },
+            {
+                type: 'warning',
+                element: 'div#exampleModal',
+                allow_dismiss: true,
+                placement: {
+                    from: "top",
+                    align: "center"
+                },
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                },
+                offset: 10,
+                delay: 1000,
+                timer: 1000,
+                onShow: function () {
+                    this.css({'width': '230px', 'height': 'auto'});
+                },
+            });
+    }
+
+    if (questionTitle && !topicString) {
+        $.notify({
+                icon: 'glyphicon glyphicon-warning-sign',
+                title: "<strong>注意</strong>",
+                message: "至少需要输入一个话题名称"
+            },
+            {
+                type: 'warning',
+                element: 'div#exampleModal',
+                allow_dismiss: true,
+                placement: {
+                    from: "top",
+                    align: "center"
+                },
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                },
+                offset: 10,
+                delay: 1000,
+                timer: 1000,
+                onShow: function () {
+                    this.css({'width': '270px', 'height': 'auto'});
+                },
+            });
+    }
+    // if (!questionContent) {
+    //     $('#questionContent').tooltip("show");  // Show tooltip
+    // }
+    // if (!topicString) {
+    //     $('#topic').tooltip("show");  // Show tooltip
+    // }
+
+    if (questionTitle && topicString) {
+        submitQuestion(questionTitle, questionContent, topicString);
+    }
+
+
+});
 
 
 function autoSearchRelativeQuestion(partialWord) {
@@ -203,7 +296,6 @@ function addTopicThroughSearch(inp) {
         topicRoot.removeChild(this.parentNode);
     });
 }
-
 
 
 // ----------------------------------------------------------------------------------------

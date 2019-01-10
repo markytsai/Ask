@@ -2,14 +2,15 @@ package com.ilsxh.util;
 
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyUtil {
 
@@ -106,6 +107,55 @@ public class MyUtil {
 
     }
 
+    /**
+     * 对问题详情进行修改，转换上传图片的URL到七牛云上
+     * @param questionContent
+     * @return
+     */
+    public static String modifyQuestionContent(String questionContent, String questionTitle) {
+        List<String> imgSrc = new ArrayList<>();
+        Matcher matcher = Pattern.compile("src=\"?(.*?)(\"|>|\\s+)").matcher(questionContent);
 
+        try {
+            while (matcher.find()) {
+                imgSrc.add(matcher.group(1));
+            }
+
+            for (int i = 0; i < imgSrc.size(); i++) {
+                String remoteFileName = "questionTitle-" + questionTitle + "-No." + (i + 1) + ".jpeg";
+                QiniuyunUtil.upload(Base64.getDecoder().decode(imgSrc.get(i).substring(imgSrc.get(i).indexOf(',') + 1)), remoteFileName);
+                questionContent = questionContent.replace(imgSrc.get(i), "http://pknhrkp8l.bkt.clouddn.com/" + remoteFileName);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return questionContent;
+    }
+
+    public static String modifAnswerContent(String answerContent) {
+        List<String> imgSrc = new ArrayList<>();
+        Matcher matcher = Pattern.compile("src=\"?(.*?)(\"|>|\\s+)").matcher(answerContent);
+
+        try {
+            while (matcher.find()) {
+                imgSrc.add(matcher.group(1));
+            }
+
+            for (int i = 0; i < imgSrc.size(); i++) {
+                String remoteFileName = "answerContent-No." + (i + 1) + ".jpeg";
+                QiniuyunUtil.upload(Base64.getDecoder().decode(imgSrc.get(i).substring(imgSrc.get(i).indexOf(',') + 1)), remoteFileName);
+                answerContent = answerContent.replace(imgSrc.get(i), "http://pknhrkp8l.bkt.clouddn.com/" + remoteFileName);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return answerContent;
+    }
 
 }

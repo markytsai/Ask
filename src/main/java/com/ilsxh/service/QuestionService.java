@@ -8,6 +8,8 @@ import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
+import com.ilsxh.redis.AnswerKey;
+import com.ilsxh.util.MyUtil;
 import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,9 @@ public class QuestionService {
 
     @Autowired
     private TopicDao topicDao;
+
+    @Autowired
+    private RedisService redisService;
 
 
     public List<Question> getFollowingQuestionByUserId(String userId) {
@@ -131,8 +136,20 @@ public class QuestionService {
         return questionDao.unfollowQuestion(localUserId, questionId);
     }
 
-    public void submitAnswer(Answer answer) {
+    public Answer submitAnswer(String answerContent, Integer questionId, String localUserId) {
+        Answer answer = new Answer();
+        answer.setAnswerUserId(localUserId);
+
+        MyUtil.modifAnswerContent(answerContent);
+
+        answer.setAnswerContent(answerContent);
+        answer.setQuestionId(questionId);
+        answer.setCreateTime(new Date().getTime());
+
         questionDao.submitAnswer(answer);
+
+        redisService.set(AnswerKey.answerKey, "-" + localUserId + "-" + questionId, answer.getAnswerId());
+        return answer;
     }
 
     public void updateAnswer(String userId, Integer answerId, String answerContent, Integer questionId) {

@@ -7,20 +7,30 @@ import com.ilsxh.entity.Question;
 import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import com.ilsxh.redis.AnswerKey;
-import com.ilsxh.service.RedisService;
-import com.ilsxh.service.HotService;
-import com.ilsxh.service.IndexService;
-import com.ilsxh.service.QuestionService;
-import com.ilsxh.service.UserService;
+import com.ilsxh.service.*;
+import com.ilsxh.util.MyUtil;
+import com.ilsxh.util.QiniuyunUtil;
 import com.ilsxh.util.Response;
+
+import java.util.ArrayList;
+import java.util.Base64;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class QuestionController {
@@ -32,7 +42,7 @@ public class QuestionController {
     private UserService userService;
 
     @Autowired
-    private QuestionDao questionDao;
+    private SearchService searchService;
 
     @Autowired
     private IndexService indexService;
@@ -159,15 +169,10 @@ public class QuestionController {
 
         String localUserId = userService.getUserIdFromRedis(request);
 
-        Answer answer = new Answer();
-        answer.setAnswerUserId(localUserId);
-        answer.setAnswerContent(answerContent);
-        answer.setQuestionId(questionId);
-        answer.setCreateTime(new Date().getTime());
 
-        questionService.submitAnswer(answer);
+        Answer answer = questionService.submitAnswer(answerContent, questionId, localUserId);
 
-        redisService.set(AnswerKey.answerKey, "-" + localUserId + "-" + questionId, answer.getAnswerId());
+
         return new Response(1, "已成功提交你的回答", answer.getAnswerId());
     }
 
@@ -210,6 +215,10 @@ public class QuestionController {
         String userId = userService.getUserIdFromRedis(request);
         Question question = new Question();
         question.setQuestionTitle(questionTitle);
+
+        // 在设置questionContent 之前修改图片的URL
+        questionContent = MyUtil.modifyQuestionContent(questionContent, questionTitle);
+
         question.setQuestionContent(questionContent);
         question.setUserId(userId);
         question.setCreateTime(new Date().getTime());
@@ -226,6 +235,22 @@ public class QuestionController {
         List<Question> questionList = questionService.getProbablyRelativeQestions(partialWord);
         return new Response(1, "已经存在相关问题", questionList);
     }
+
+
+    /**
+     * 获取更多热门问题，然后跳转到更多的
+     *
+     * @return
+     */
+    @RequestMapping("/moreHotQuestion")
+    public String getMoreHotQuestion(HttpServletRequest request, Model model) {
+        searchService.getCommonData(request, "", model);
+
+        List<Question> questionList = questionService.getRecommendedQuestionByUserId();
+        model.addAttribute("questionList", questionList);
+        return "hotQuestionDetail";
+    }
+
 
 }
 
