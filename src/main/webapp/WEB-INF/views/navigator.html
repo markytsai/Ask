@@ -57,11 +57,18 @@
                                 <span><h5>你所选择的话题<span
                                         style="color: red;"> 至少添加一个话题</span></h5></span>
                             </div>
-                            <ul id="ask-topic-list" style="margin-top:10px;margin-bottom: -10px;margin-left: -39px;"/>
+                            <ul id="ask-topic-list" style="margin-top:10px;margin-bottom: -10px;margin-left: -39px;">
+                                <!--<span class="topicItem"-->
+                                      <!--style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;">-->
+                                    <!--<a th:href="@{'/topic/2/introduction'}" data-id="1"-->
+                                       <!--th:text="互联网"/>-->
+                                    <!--<i th:id="2" class="icon-remove"/></span>-->
+                            </ul>
                         </div>
+
                         <div class="form-group" style="margin-top: 20px;">
                             <label for="topic" class="col-form-label">所属话题</label>
-                            <input id="topic" class="form-control"/>
+                            <input id="topic" class="form-control" autocomplete="off"/>
                         </div>
                     </form>
                 </div>

@@ -47,6 +47,7 @@ function addTopicThroughSearch(inp) {
         // 根据topicChosenString，更新topicList
         var temp = topicChosenString.split(',');
 
+        // 这里双重循环去除已经选中的话题
         for (var i = 0; i < topicList.length; i++) {
             for (var j = 0; j < temp.length; j++) {
                 if (topicList[i].topicId == temp[j]) {
@@ -152,6 +153,7 @@ function addTopicThroughSearch(inp) {
                     s.appendChild(i);
 
                     x[currentFocus].click();
+                    $('#topic').val("");
                 }
             }
         }
@@ -186,39 +188,23 @@ function addTopicThroughSearch(inp) {
         }
     }
 
+    /*execute a function when someone clicks in the document:*/
+    document.addEventListener("click", function (e) {
+        if (e.target.getAttribute('class') == 'icon-remove') {
+            document.getElementById('ask-topic-list').removeChild(e.target.parentNode);
+        }
+        closeAllLists(e.target);
+        // $('#topic').val("");
+    });
 
+    // 这个点击事件不起做用，不知道为什么
+    $(".icon-remove").on('click', function (e) {
+        var topicRoot = document.getElementById('ask-topic-list');
+        topicRoot.removeChild(this.parentNode);
+    });
 }
 
-$(".icon-remove").on('click', function (e) {
-    var topicRoot = document.getElementById('ask-topic-list');
-    topicRoot.removeChild(this.parentNode);
-});
 
-
-function addTopicToSpan(x, currentFocus) {
-    var s, a, i;
-    // var topicRoot = $('.ask-topic-list');
-    var topicRoot = document.getElementById('ask-topic-list');
-    s = document.createElement("SPAN");
-    s.setAttribute("class", "topicItem");
-    s.setAttribute('style', 'border-radius: 40%;background-color: #cbcbd8;padding: 1px;');
-    /*append the DIV element as a child of the autocomplete container:*/
-    topicRoot.appendChild(s);
-
-    a = document.createElement('A');
-    s.setAttribute("class", "icon-remove");
-    a.setAttribute('href', '/topic/' + topicList[currentFocus].topicId + '/introduction');
-    a.setAttribute('text', topicList[currentFocus].topicName);
-    s.appendChild(a);
-    i = document.createElement("I");
-    i.setAttribute('class', 'icon-remove');
-    a.appendChild(i);
-}
-
-/*execute a function when someone clicks in the document:*/
-document.addEventListener("click", function (e) {
-    closeAllLists(e.target);
-});
 
 // ----------------------------------------------------------------------------------------
 function autocomplete(inp) {

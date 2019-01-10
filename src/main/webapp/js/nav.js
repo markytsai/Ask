@@ -92,6 +92,33 @@ $("#askBtn").on("click", function () {
                 },
             });
     }
+
+    if (questionTitle && !topicString) {
+        $.notify({
+                icon: 'glyphicon glyphicon-warning-sign',
+                title: "<strong>注意</strong>",
+                message: "至少需要输入一个话题名称"
+            },
+            {
+                type: 'warning',
+                element: 'div#exampleModal',
+                allow_dismiss: true,
+                placement: {
+                    from: "top",
+                    align: "center"
+                },
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                },
+                offset: 10,
+                delay: 1000,
+                timer: 1000,
+                onShow: function () {
+                    this.css({'width': '270px', 'height': 'auto'});
+                },
+            });
+    }
     // if (!questionContent) {
     //     $('#questionContent').tooltip("show");  // Show tooltip
     // }
