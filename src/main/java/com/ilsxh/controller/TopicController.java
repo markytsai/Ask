@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ public class TopicController {
 
     /**
      * 话题页面：简介tab
+     *
      * @param topicId
      * @param request
      * @param model
@@ -43,14 +45,18 @@ public class TopicController {
 
         topicService.getSideCardInfo(topicId, request, model);
 
+        Integer userFollowTopic = topicService.getCurrStatInDB(userService.getUserIdFromRedis(request), topicId);
+
         model.addAttribute("hasFollowQuestion", questionService.hasUserFollowQuestion(userService.getUserIdFromRedis(request), 1));
         model.addAttribute("localUserAnswer", 0);
+        model.addAttribute("userFollowTopic", userFollowTopic == null ? 0 : userFollowTopic);
 
         return "topic/topic-introduction";
     }
 
     /**
      * 话题页面：相关问题tab
+     *
      * @param topicId
      * @param request
      * @param model
@@ -69,6 +75,7 @@ public class TopicController {
 
     /**
      * 话题页面：相关回答tab
+     *
      * @param topicId
      * @param request
      * @param model
@@ -88,6 +95,7 @@ public class TopicController {
 
     /**
      * 话题页面：话题相关热门用户tab
+     *
      * @param topicId
      * @param request
      * @param model
@@ -110,5 +118,23 @@ public class TopicController {
     public Response getProbablyRelativeTopics(@PathVariable String partialWord) {
         List<Topic> topicList = topicService.getProbablyRelativeTopics(partialWord);
         return new Response(1, "相关话题", topicList);
+    }
+
+    @RequestMapping("/followTopic/{topicId}")
+    @ResponseBody
+    public Response followTopic(@PathVariable Integer topicId, HttpServletRequest request) {
+
+        String localUserId = userService.getUserIdFromRedis(request);
+        Integer opRetStat = topicService.followTopic(localUserId, topicId);
+        return new Response(opRetStat, "", "");
+    }
+
+    @RequestMapping("/unfollowTopic/{topicId}")
+    @ResponseBody
+    public Response unfollowTopic(@PathVariable Integer topicId, HttpServletRequest request) {
+
+        String localUserId = userService.getUserIdFromRedis(request);
+        Integer opRetStat = topicService.unfollowTopic(localUserId, topicId);
+        return new Response(opRetStat, "", "");
     }
 }

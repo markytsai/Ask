@@ -102,4 +102,29 @@ public class TopicService {
     public List<Topic> getProbablyRelativeTopics(String partialWord) {
         return topicDao.getProbablyRelativeTopics(partialWord);
     }
+
+    public Integer followTopic(String localUserId, Integer topicId) {
+        Integer retStat = -1;
+
+        Integer currStatInDB = getCurrStatInDB(localUserId, topicId);
+
+        if (currStatInDB == null) {
+            retStat = topicDao.insertfollowTopic(localUserId, topicId, 1);
+        } else {
+            retStat = topicDao.updateFollowTopic(localUserId, topicId, 1);
+        }
+        return retStat;
+    }
+
+    public Integer unfollowTopic(String localUserId, Integer topicId) {
+        Integer retStat = -1;
+        retStat = topicDao.updateFollowTopic(localUserId, topicId, 0);
+        return retStat;
+    }
+
+    public Integer getCurrStatInDB(String userId, Integer topicId) {
+        Integer retStat = topicDao.getCurrStat(userId, topicId);
+        return retStat;
+    }
+
 }

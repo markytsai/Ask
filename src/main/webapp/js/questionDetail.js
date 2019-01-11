@@ -18,6 +18,25 @@ $(document).ready(function () {
     // $('#afterAnswerCard').style.display = "none";
 });
 
+$('.dropdown').on("click", function (e) {
+    e.target.nextElementSibling.classList.toggle('show');
+});
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function (event) {
+    if (!event.target.matches('.icon-ellipsis-horizonta')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
+
 function getAnswerId() {
     $.ajax({
         url: "/getAnswerId/" + $('#getQuestionId').val(),
@@ -188,7 +207,7 @@ $('.glyphicon-thumbs-up').click(function (event) {
                 $.notify({
                     // options
                     message: response.message
-                },{
+                }, {
                     type: 'info',
                     placement: {
                         from: "top",
@@ -203,8 +222,8 @@ $('.glyphicon-thumbs-up').click(function (event) {
                         enter: 'animated fadeInDown',
                         exit: 'animated fadeOutUp'
                     },
-                    onShow: function() {
-                        this.css({'width':'200px','height':'auto'});
+                    onShow: function () {
+                        this.css({'width': '200px', 'height': 'auto'});
                     },
                 });
             }
@@ -249,7 +268,7 @@ $('.glyphicon-thumbs-down').click(function (event) {
                 $.notify({
                     // options
                     message: response.message
-                },{
+                }, {
                     type: 'info',
                     placement: {
                         from: "top",
@@ -264,8 +283,8 @@ $('.glyphicon-thumbs-down').click(function (event) {
                         enter: 'animated fadeInDown',
                         exit: 'animated fadeOutUp'
                     },
-                    onShow: function() {
-                        this.css({'width':'200px','height':'auto'});
+                    onShow: function () {
+                        this.css({'width': '200px', 'height': 'auto'});
                     },
                 });
             } else {
@@ -299,7 +318,7 @@ $('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
             if (response.state == 1) {
                 $.notify({
                     message: response.message
-                },{
+                }, {
                     type: 'info',
                     placement: {
                         from: "top",
@@ -314,15 +333,15 @@ $('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
                         enter: 'animated fadeInDown',
                         exit: 'animated fadeOutUp'
                     },
-                    onShow: function() {
-                        this.css({'width':'200px','height':'auto'});
+                    onShow: function () {
+                        this.css({'width': '200px', 'height': 'auto'});
                     },
                 });
             } else {
                 $.notify({
                     // options
                     message: response.message
-                },{
+                }, {
                     type: 'info',
                     placement: {
                         from: "top",
@@ -337,8 +356,8 @@ $('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
                         enter: 'animated fadeInDown',
                         exit: 'animated fadeOutUp'
                     },
-                    onShow: function() {
-                        this.css({'width':'200px','height':'auto'});
+                    onShow: function () {
+                        this.css({'width': '200px', 'height': 'auto'});
                     },
                 });
             }

@@ -2,8 +2,8 @@
 
     <div class="col-md-3 ">
         <!-- 热门问题 根据关注量排序-->
-        <div class="card my-4" style='background-color: #fff;'>
-            <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</h5>
+        <div class="card my-4" style='background-color: #fff;padding: 6px;'>
+            <span class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</span>
 
             <ul class="list-group" th:each="question, userStat : ${hotQuestions}">
                 <div class="card-block border-black">
@@ -15,27 +15,25 @@
                     <a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注
                     <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.answerCount}">10</a>个回答
                 </div>
-                <div th:if="${userStat.index} lt ${userStat.size - 1}">
-                    <hr color="#f8f8f8"/>
-                </div>
+                <hr color="#f8f8f8"/>
             </ul>
             <div>
-                <a th:href="@{/#}" style="float: right;">更多热门问题>>></a>
+                <a th:href="@{/moreHotQuestion}" style="float: right;margin-top: -15px;">更多热门问题>>></a>
             </div>
-
         </div>
-
-        <!-- 热门用户 根据关注量排序-->
         <br/>
-        <div class="card my-4" style='background-color: #fff;'>
-            <h5 class="card-header"><i class="fa fa-users" aria-hidden="true"></i>活跃用户</h5>
+        <!-- 热门用户 根据关注量排序-->
+
+        <div class="card my-4" style='background-color: #fff;padding: 6px;'>
+            <span class="card-header"><i class="fa fa-users" aria-hidden="true"></i>活跃用户</span>
             <div class="card-block">
                 <div class="row">
                     <div class="col-lg-12">
                         <span th:each="user : ${hotUsers}">
                             <div class="avatarImgSided" style="display:inline-block; width:36px; height:36px;">
                                 <a class="" th:href="@{'/userHome/activity/' + ${user.userId}}">
-                                    <img th:src="${user.avatarUrl}" width="36px" height="36px" style="border-radius: 100px"/>
+                                    <img th:src="${user.avatarUrl}" width="36px" height="36px"
+                                         style="border-radius: 100px"/>
                                 </a>
                             </div>
                         </span>
@@ -46,26 +44,27 @@
         <br/>
 
         <!-- 热门标签 根据问题相关度-->
-        <div class="card" style='background-color: #fff;'>
-            <h5 class="card-header">
+        <div class="card" style='background-color: #fff;padding: 6px;'>
+            <span class="card-header">
                 <i class="fa fa-tags" aria-hidden="true"></i>热门话题
-            </h5>
+            </span>
             <div class="card-block">
                 <div class="row">
 
                     <ul class="topic-list" style="margin-top:2px;margin-bottom: 7px;margin-left: -30px;">
                         <span th:each="topic : ${hotTopics}" class="topicItem"
                               style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;display: inline-block"><a
-                                th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}" data-id="1" th:text="${topic.topicName}"></a></span>
+                                th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}" data-id="1"
+                                th:text="${topic.topicName}"></a></span>
                     </ul>
                 </div>
             </div>
         </div>
-
+        <br/>
 
         <!-- 最新发布 -->
-        <div class="card my-4" style='background-color: #fff;'>
-            <h5 class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i>最新发问</h5>
+        <div class="card my-4" style="background-color: #fff;padding: 6px;">
+            <span class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i>最新发问</span>
             <div class="list-group">
                 <ul class="list-group" th:each="question : ${newestQuestions}">
                     <div class="card-block border-black">

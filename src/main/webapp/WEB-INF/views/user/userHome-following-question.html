@@ -25,7 +25,7 @@
 
 </head>
 
-<body style='background-color: #f8f8f8;'>
+<body class="body-color">
 
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
 <div th:include="navigator :: ask"></div>
@@ -76,7 +76,7 @@
                                    th:text="${question.questionTitle}">
                                 </a>
                             </h4>
-                            <p class="card-text" th:text="${question.questionContent}">
+                            <p class="card-text" th:utext="${question.questionContent}">
                             </p>
 
                             <div class="card-text">

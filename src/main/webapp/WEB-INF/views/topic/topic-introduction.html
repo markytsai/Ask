@@ -33,7 +33,7 @@
 
 </head>
 
-<body style='background-color: #f8f8f8;'>
+<body class="body-color">
 
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
 <div th:include="navigator :: ask"></div>
@@ -129,19 +129,32 @@
 
                                     <div style="font-size: larger;margin-top: 37px;position: absolute;bottom: 0;">
 
-                                        <span class="icon-rss" style="cursor: pointer" id="focusQuestion"
+                                        <span th:id="'no-' + ${topic.topicId}" th:if="${userFollowTopic == 0}" class="icon-rss focusTopic"
+                                              style="cursor: pointer"
+                                              data-id="${topic.topicId}"
                                               th:text="关注话题"/>
 
+                                        <span th:id="'yes-' + ${topic.topicId}" th:if="${userFollowTopic == 1}" class="icon-rss focusTopic"
+                                              style="cursor: pointer"
+                                              data-id="${topic.topicId}"
+                                              th:text="取消关注"/>
+
                                         <!--<i class="icon-rss"/></span>&nbsp;-->
-                                        <span class="icon-bell" id="iWantAnswer" data-id="0"
+                                        <span class="icon-bell" id="notifyMe"
                                               style="cursor: pointer"
                                               th:text="通知我"/>&nbsp;
 
-                                        <!--<span class="icon-pencil" id="inviteOtherAnswer"-->
-                                        <!--style="cursor: pointer" th:text="XXXX"></span>-->
-
-                                        <span id="readLater" style="cursor: pointer;margin-left: 315px;" title="分享话题">
+                                        <span class="shareTopicIcon" style="cursor: pointer;margin-left: 315px;"
+                                              title="分享话题">
                                             <i class="fa fa-share-alt" aria-hidden="true"/></span>
+                                        <ul class="share-list hideShareItem" style="position: absolute;right: 0;">
+                                            <a th:href="@{/#}"><img th:src="@{/images/share-wechat.jpg}" height="30px"
+                                                                    width="30px"/></a>
+                                            <a th:href="@{/#}"><img th:src="@{/images/share-weibo.jpg}" height="30px"
+                                                                    width="30px"/></a>
+                                            <a th:href="@{/#}"><img th:src="@{/images/share-zhihu.jpg}" height="30px"
+                                                                    width="30px"/></a>
+                                        </ul>
                                     </div>
 
                                 </div>

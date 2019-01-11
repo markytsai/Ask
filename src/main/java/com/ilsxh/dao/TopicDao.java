@@ -22,4 +22,10 @@ public interface TopicDao {
 
     List<Topic> getProbablyRelativeTopics(@Param("partialWord") String partialWord);
 
+    Integer getCurrStat(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId);
+
+    Integer insertfollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
+
+    Integer updateFollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
+
 }

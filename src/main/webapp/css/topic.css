@@ -13,6 +13,15 @@
 }
 
 
+.hideShareItem {
+    display: none;
+}
+
+
+.showShareItem {
+    display: block;
+}
+
 
 
 

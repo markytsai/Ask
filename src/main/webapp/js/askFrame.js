@@ -233,6 +233,7 @@ function addTopicThroughSearch(inp) {
                     var topicRoot = document.getElementById('ask-topic-list');
                     s = document.createElement("SPAN");
                     s.setAttribute("class", "topicItem");
+                    s.setAttribute("id", "topicId-" + topicList[currentFocus].topicId);
                     s.setAttribute('style', 'border-radius: 40%;background-color: #cbcbd8;padding: 2px;margin-right: 4px;');
                     /*append the DIV element as a child of the autocomplete container:*/
                     topicRoot.appendChild(s);
@@ -285,6 +286,7 @@ function addTopicThroughSearch(inp) {
     document.addEventListener("click", function (e) {
         if (e.target.getAttribute('class') == 'icon-remove') {
             document.getElementById('ask-topic-list').removeChild(e.target.parentNode);
+            topicChosenString = topicChosenString.replace(e.target.parentNode.id.split('-')[1] + ",", "");
         }
         closeAllLists(e.target);
         // $('#topic').val("");

@@ -97,13 +97,7 @@ public class IndexService {
             resultList.addAll(activityFollowingUser);
         }
 
-        Collections.sort(resultList, new Comparator<Activity>() {
-            @Override
-            public int compare(Activity o1, Activity o2) {
-                return (int) o2.getCreateTime() - (int) o1.getCreateTime();
-            }
-        });
-
+        resultList.sort(Comparator.comparing(Activity::getCreateTime).reversed());
 
         return resultList;
     }

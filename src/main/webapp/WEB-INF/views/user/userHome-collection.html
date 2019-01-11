@@ -27,7 +27,7 @@
 
 </head>
 
-<body style='background-color: #f8f8f8;'>
+<body class="body-color">
 
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
 <div th:include="navigator :: ask"></div>
@@ -109,11 +109,11 @@
 
                             <div class="card-text">
                                 <div class="foldContent" th:if="${answer.answerContent.length() lt 46}">
-                                    <p class="card-text hideContent" th:text="${answer.answerContent}"
+                                    <p class="card-text hideContent" th:utext="${answer.answerContent}"
                                        style="height: 20px"/>
                                 </div>
                                 <div class="foldContent" th:if="${answer.answerContent.length() gt 46}">
-                                    <p class="card-text hideContent" th:text="${answer.answerContent}"/>
+                                    <p class="card-text hideContent" th:utext="${answer.answerContent}"/>
                                 </div>
                                 <div class="show-more" th:if="${answer.answerContent.length() gt 92}">
                                     <p style="float:right;" class="moreContent">展开<span

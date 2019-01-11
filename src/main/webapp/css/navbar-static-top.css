@@ -23,6 +23,9 @@ body {
     border-radius: 50%;
 }
 
+.body-color {
+    background-color: #f5f8f9;
+}
 
 /*#myBtn:hover {*/
     /*background-color: #555;*/
