@@ -48,7 +48,7 @@
     </div>
     <div class="introduce" style="margin-left: 55px; display: none;">
         <div class="avatarImgFloated" style="float:left; width:45px; height:45px;margin-left: -40px;">
-            <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+            <a th:href="@{'/userHome/activity/' + ${user.userId}}" target="_blank">
                 <img th:src="${user.avatarUrl}" width="100%" height="100%"
                      style="border-radius: 100%"/>
             </a>
@@ -168,7 +168,7 @@
                         <div class="card-block">
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                    <a th:href="@{'/userHome/activity/' + ${answer.user.userId}}">
+                                    <a th:href="@{'/userHome/activity/' + ${answer.user.userId}}" target="_blank">
                                         <img th:src="${answer.user.avatarUrl}" width="100%" height="100%"
                                              style="border-radius: 100%"/>
                                     </a>
@@ -184,7 +184,7 @@
                                         <span th:text="${answer.user.simpleDesc}"/>
                                     </h5>
                                 </div>
-                                &nbsp;<a th:href="@{'/userHome/activity/' + ${answer.user.userId}}">
+                                &nbsp;<a th:href="@{'/userHome/activity/' + ${answer.user.userId}}" target="_blank">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a>
                                 <span th:text="${answer.user.username}"/>于

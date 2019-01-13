@@ -48,7 +48,7 @@
                             <div class="card-text">
                                 <a href="/userHome/activity/${question.userId}"
                                    th:href="@{'/userHome/activity/' + ${question.userId}}"
-                                   class="card-link" th:text="${question.user.username}"/>
+                                   class="card-link" th:text="${question.user.username}" target="_blank"/>
 
                                 发表于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
 

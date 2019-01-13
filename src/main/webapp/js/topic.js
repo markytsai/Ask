@@ -12,20 +12,35 @@ $('.exchange-en-zh-edition').click(function () {
 });
 
 
-$('.shareTopicIcon').mouseover(function () {
-    // $('.share-list').switchClass("hideShareItem", "showShareItem");
-    $('.share-list').show();
+$('.shareTopicIcon').on("click", function () {
+    // var listStatus = $('.share-list').style.display;
+    if ($('.share-list').hasClass("hideShareItem")) {
+        $('.share-list').switchClass("hideShareItem", "showShareItem");
+    } else {
+        $('.share-list').switchClass("showShareItem", "hideShareItem");
+    }
+
+    // if (listStatus == "block") {
+    //     $('.share-list').hide();
+    // } else {
+    //     $('.share-list').show();
+    // }
 });
 
-$('.shareTopicIcon').mouseleave(function () {
-    // $('.share-list').switchClass("showShareItem", "hideShareItem");
-    $('.share-list').hide();
-})
+document.addEventListener("click", function (e) {
+    if ($('.share-list').hasClass("showShareItem")) {
+        $('.share-list').switchClass("showShareItem", "hideShareItem");
+    }
+});
 
-$('.share-list').mouseleave(function () {
-    // $('.share-list').switchClass("showShareItem", "hideShareItem");
-    $('.share-list').hide();
-})
+// $('.shareTopicIcon').mouseleave(function () {
+//     // $('.share-list').switchClass("showShareItem", "hideShareItem");
+// })
+
+// $('.share-list').mouseleave(function () {
+//     // $('.share-list').switchClass("showShareItem", "hideShareItem");
+//     $('.share-list').hide();
+// })
 
 $('.focusTopic').on("click", function () {
     var topicId = this.id.split('-')[1];

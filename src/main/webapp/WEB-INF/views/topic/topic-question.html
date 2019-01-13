@@ -48,9 +48,9 @@
     </div>
     <div class="introduce" style="margin-left: 55px; display: none;">
         <div class="avatarImgFloated" style="float:left; width:45px; height:45px;margin-left: -40px;">
-            <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+            <a th:href="@{'/userHome/activity/' + ${user.userId}}" target="_blank">
                 <img th:src="${user.avatarUrl}" width="100%" height="100%"
-                     style="border-radius: 100%"/>
+                     style="border-radius: 100%" target="_blank"/>
             </a>
         </div>
         <div class="usernameFloat" style="margin-left: 15px">
@@ -59,7 +59,7 @@
                     <a href="'/userHome/activity/' + ${user.userId}" style="color: black;"
                        th:href="@{'/userHome/activity/' + ${user.userId}}"
                        class="card-link usernameLink"
-                       th:text="${user.username}">
+                       th:text="${user.username}" target="_blank">
                     </a>&nbsp;
                 </h3>
             </div>
@@ -168,7 +168,7 @@
                         <div class="card-block border-dark">
                             <h4 class="card-title text-dark">
                                 <a th:href="@{'/question/' + ${question.questionId}}" class="text-title"
-                                   th:text="${question.questionTitle}">
+                                   th:text="${question.questionTitle}" target="_blank">
                                 </a>
                             </h4>
                             <p class="card-text" th:text="${question.questionContent}"/>
@@ -176,7 +176,7 @@
                             <div class="card-text">
                                 <a href="/userHome/activity/${question.userId}"
                                    th:href="@{'/userHome/activity/' + ${question.userId}}"
-                                   class="card-link" th:text="${question.user.username}"/>
+                                   class="card-link" th:text="${question.user.username}" target="_blank"/>
 
                                 发表于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
 

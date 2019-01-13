@@ -198,6 +198,7 @@ function addTopicThroughSearch(inp) {
             hrefA.setAttribute('href', '/topic/' + topicList[i].topicId + '/introduction');
             hrefA.setAttribute('style', 'color: black;');
             hrefA.setAttribute('title', '点击查看话题详情');
+            hrefA.setAttribute('target', '_blank');
             b.appendChild(hrefA);
             a.appendChild(b);
         }

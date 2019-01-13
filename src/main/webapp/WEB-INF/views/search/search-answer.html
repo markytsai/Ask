@@ -60,7 +60,7 @@
                         <div class="card-block">
                             <h4 class="card-title text-dark" style="font-weight: bolder;">
                                 <a th:href="@{'/question/' + ${answer.question.questionId}}" class="text-title"
-                                   th:text="${answer.question.questionTitle}">
+                                   th:text="${answer.question.questionTitle}" target="_blank">
                                 </a>
                             </h4>
                             <div class="card-title answer-meta">
@@ -79,7 +79,7 @@
                                         <span th:text="${answer.user.simpleDesc}"/>
                                     </h5>
                                 </div>
-                                &nbsp;<a th:href="@{'/userHome/question/' + ${answer.user.userId}}">
+                                &nbsp;<a th:href="@{'/userHome/question/' + ${answer.user.userId}}" target="_blank">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a><span th:text="${answer.user.username}"/>于
                                 <span th:text="${#dates.format(answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>回答了该问题

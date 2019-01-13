@@ -8,8 +8,8 @@
             <ul class="list-group" th:each="question, userStat : ${hotQuestions}">
                 <div class="card-block border-black">
                     <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
-                       style="color: #333333;"></a><i
-                        class="glyphicon glyphicon-fire"/>
+                       style="color: #333333;" target="_blank"></a><i
+                        class="glyphicon glyphicon-fire" target="_blank"/>
                 </div>
                 <div style="float:right;">
                     <a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注
@@ -18,7 +18,7 @@
                 <hr color="#f8f8f8"/>
             </ul>
             <div>
-                <a th:href="@{/moreHotQuestion}" style="float: right;margin-top: -15px;">更多热门问题>>></a>
+                <a th:href="@{/moreHotQuestion}" style="float: right;margin-top: -15px;" target="_blank">更多热门问题>>></a>
             </div>
         </div>
         <br/>
@@ -33,7 +33,7 @@
                             <div class="avatarImgSided" style="display:inline-block; width:36px; height:36px;">
                                 <a class="" th:href="@{'/userHome/activity/' + ${user.userId}}">
                                     <img th:src="${user.avatarUrl}" width="36px" height="36px"
-                                         style="border-radius: 100px"/>
+                                         style="border-radius: 100px;" target="_blank"/>
                                 </a>
                             </div>
                         </span>
@@ -55,7 +55,7 @@
                         <span th:each="topic : ${hotTopics}" class="topicItem"
                               style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;display: inline-block"><a
                                 th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}" data-id="1"
-                                th:text="${topic.topicName}"></a></span>
+                                th:text="${topic.topicName}" target="_blank"></a></span>
                     </ul>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <ul class="list-group" th:each="question : ${newestQuestions}">
                     <div class="card-block border-black">
                         <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
-                           style="color: #333333;"></a>
+                           style="color: #333333;" target="_blank"></a>
                     </div>
                     <div><p style="float:right;">提问于<span
                             th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>

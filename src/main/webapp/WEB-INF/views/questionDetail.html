@@ -79,6 +79,7 @@
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
 <div th:include="navigator :: ask"></div>
 <div th:include="navigator :: delConfirm"></div>
+<div th:include="navigator :: delCommentConfirm"></div>
 
 <!--头像悬浮信息展示框-->
 <div th:include="floatingDiv :: floatingDiv"></div>
@@ -168,7 +169,7 @@
                         <div class="card-block">
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                    <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+                                    <a th:href="@{'/userHome/activity/' + ${user.userId}}" target="_blank">
                                         <img th:src="${user.avatarUrl}" width="100%" height="100%"
                                              style="border-radius: 100%"/>
                                     </a>
@@ -176,13 +177,13 @@
                                 <div style="margin-left: 55px">
                                     <h5>
                                         <a th:href="@{'/userHome/activity/' + ${user.userId}}" class="card-link"
-                                           th:text="${user.username}">
+                                           th:text="${user.username}" target="_blank">
                                         </a>&nbsp;
                                         <span th:text="${user.position}"/>&nbsp;
                                         <span th:text="${user.simpleDesc}"/>
                                     </h5>
                                 </div>
-                                &nbsp;<a th:href="@{'/userHome/activity/' + ${user.userId}}">
+                                &nbsp;<a th:href="@{'/userHome/activity/' + ${user.userId}}" target="_blank">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a>
                                 <span th:text="你"/>
@@ -237,7 +238,7 @@
                         <div class="card-block">
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                    <a th:href="@{'/userHome/activity/' + ${answer.user.userId}}">
+                                    <a th:href="@{'/userHome/activity/' + ${answer.user.userId}}" target="_blank">
                                         <img th:src="${answer.user.avatarUrl}" width="100%" height="100%"
                                              style="border-radius: 100%"/>
                                     </a>
@@ -256,7 +257,7 @@
                                         <!--th:text="${answer.user.followStatus == 1} ? '已关注答主' : '关注答主'">关注答主</span>-->
                                     </h5>
                                 </div>
-                                &nbsp;<a th:href="@{'/userHome/activity/' + ${answer.user.userId}}">
+                                &nbsp;<a th:href="@{'/userHome/activity/' + ${answer.user.userId}}" target="_blank">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a>
                                 <span th:text="${answer.user.username}"/>于
@@ -312,8 +313,10 @@
                                       th:text="${answer.collectAnswer == true} ? '已收藏' : '收藏'"></span>&nbsp;&nbsp;
 
                                 <i class="icon-comments"
-                                   style="margin-left: 3px;margin-right: 9px;cursor: pointer;">评论<span
-                                        th:text="${answer.likedCount}"></span>条</i>
+                                   style="margin-left: 3px;margin-right: 9px;"><span class="comment-span"
+                                                                                     style="cursor: pointer;"
+                                                                                     th:title="点击展开评论"
+                                                                                     th:text="'评论' + ${answer.likedCount} + '条'"/></i>
 
                                 <!--<div class="dropdown" style="float: right;cursor: pointer;">-->
                                 <!--<i class="icon-ellipsis-horizontal dropdown-toggle" data-toggle="dropdown"-->
@@ -332,10 +335,16 @@
                                        aria-haspopup="true" aria-expanded="false" style="float: right;"/>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
                                          style="margin-left: -55px;min-width: 75px;">
-                                        <div style="text-align: center;"><a style="color: #333333;" class="dropdown-item"
-                                                th:href="@{'/deleteAnswer/' + ${answer.answerId}}">删除</a></div>
-                                        <div style="text-align: center;"><a style="color: #333333;" class="dropdown-item" href="@{#seal}">不感兴趣</a></div>
-                                        <div style="text-align: center;"><a style="color: #333333;" class="dropdown-item" href="@{#report}">举报</a></div>
+                                        <div style="text-align: center;"><a style="color: #333333;"
+                                                                            class="dropdown-item"
+                                                                            th:href="@{'/deleteAnswer/' + ${answer.answerId}}">删除</a>
+                                        </div>
+                                        <div style="text-align: center;"><a style="color: #333333;"
+                                                                            class="dropdown-item"
+                                                                            href="@{#seal}">不感兴趣</a></div>
+                                        <div style="text-align: center;"><a style="color: #333333;"
+                                                                            class="dropdown-item"
+                                                                            href="@{#report}">举报</a></div>
                                     </div>
                                 </div>
 
@@ -345,6 +354,92 @@
                                     <!--<span class=""></span>-->
                                 </button>
                             </div>
+
+
+                            <!--<div class="content-loading card-text" style="margin-top: 4px;display: none;">-->
+                            <!--<i class="icon-spinner icon-spin icon-3x" style="text-align: center;"/>-->
+                            <!--</div>-->
+                            <div th:id="comment + '-' + ${answer.answerId}" class="commentModule"
+                                 style="background-color: #fafafa;border: 1px solid #fafafa;display: none;margin-top: 10px;">
+                                <div class="makeComentArea" style="margin-top: 10px;">
+                                    <div style="float: left;margin-right: 6px;">
+                                        <img th:src="${user.avatarUrl}" width="35px" height="35px"
+                                             style="border-radius: 100%"/>
+                                    </div>
+                                    <div style="float: left;margin-right: 6px;width: 68%;">
+                                        <div class="form-group">
+                                            <input class="form-control commentText" placeholder="这里输入你的评论..."/>
+                                        </div>
+                                    </div>
+                                    <div style="float: left;margin-right: 15px;">
+                                        <button class="btn btn-info commentBtn" disabled="true">评论</button>
+                                    </div>
+                                    <div class="commentOpt" style="line-height: 2.5;">
+                                        <span th:text="全部" style="cursor: pointer;"/>&nbsp;&nbsp;
+                                        <span th:text="推荐" style="cursor: pointer;"/>
+                                    </div>
+                                </div>
+
+                                <!--具体评论详情列表-->
+                                <div class="comment-list">
+                                    <!--这里div开始遍历commentlist-->
+                                    <div th:id="answer + '-' + ${answer.answerId} + '-' + comment + '-' + ${comment.answerCommentId}"
+                                         th:each="comment : ${answer.answerCommentList}">
+                                        <!--评论作者头像-->
+                                        <div class="avatarImg"
+                                             style="float:left; width:35px; height:35px;margin-left: 0;">
+                                            <a th:href="@{'/userHome/activity/' + ${comment.user.userId}}"
+                                               target="_blank">
+                                                <img th:src="${comment.user.avatarUrl}" width="100%" height="100%"
+                                                     style="border-radius: 100%"/>
+                                            </a>
+                                        </div>
+                                        <!--评论作者用户名和评论时间-->
+                                        <div class="commentAuthor" style="margin-left: 45px">
+                                            <div>
+                                                <h3 style="font-size: 15px;">
+                                                    <a href="'/userHome/activity/' + ${comment.userId}"
+                                                       style="color: black;"
+                                                       th:href="@{'/userHome/activity/' + ${comment.user.userId}}"
+                                                       class="card-link usernameLink"
+                                                       th:text="${comment.user.username}">
+                                                    </a>&nbsp;
+                                                </h3>
+                                            </div>
+                                            <div class="desc" style="margin-top: -7px;margin-right: 15px;">
+                                                <span class="info-piece-fontsize"
+                                                      th:text="'评论于' + ${#dates.format(comment.createTime, 'yyyy年MM月dd日HH:mm')}"/>
+                                            </div>
+                                        </div>
+                                        <!--详细评论内容-->
+                                        <div class="commentContent" style="margin-top: 3px;display: flex;">
+                                            <div class="verticalLine"
+                                                 style="border-left: 1px solid #e6e6e6;margin-left: 17px;width: 36px;padding-right: 21px;">
+                                            </div>
+                                            <div style="padding-right: 15px;">
+                                                <p th:text="${comment.answerCommentContent}"/>
+                                            </div>
+                                        </div>
+                                        <div class="commentOpt" style="margin-left: 47px;font-size: 1px;">
+                                            <span th:if="${user.userId != comment.user.userId}" class="replyComment"
+                                                  th:text="回复" style="cursor: pointer;"/>&nbsp;&nbsp;
+                                            <span th:if="${user.userId == comment.user.userId}" class="delComment"
+                                                  th:text="删除" style="cursor: pointer;margin-left: -12px;" data-toggle="modal"
+                                                  data-target="#delComment"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div class="comment card-text" style="margin-top: 4px;">-->
+                            <!--<div class="avatarImg" style="float:left; width:30px; height:30px;">-->
+                            <!--<img th:src="${user.avatarUrl}" width="45px" height="45px"-->
+                            <!--style="border-radius: 100%"/>-->
+                            <!--</div>-->
+                            <!--<input class="form-control" style="width: 70%;" type="text" placeholder="这里输入你的评论"/>-->
+                            <!--<button type="button" class="btn btn-parimary" aria-label="Left Align" value="评论"/>-->
+
+                            <!--</div>-->
                         </div>
                         <br/>
                     </div>

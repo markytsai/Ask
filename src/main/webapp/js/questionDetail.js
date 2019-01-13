@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     $('#summernote').summernote();
 
     var isColleced = $('#collectBtnValue').val();
@@ -14,6 +15,7 @@ $(document).ready(function () {
     $('.example-popover').popover({
         container: 'body'
     })
+
 
     // $('#afterAnswerCard').style.display = "none";
 });
@@ -805,3 +807,151 @@ function sleep(delay) {
     var start = new Date().getTime();
     while (new Date().getTime() < start + delay) ;
 }
+
+$('.comment-span').on('click', function (event) {
+    if (event.target.parentNode.parentNode.nextElementSibling.style.display == "none") {
+        $('#comment-' + event.target.parentNode.parentNode.id.split('-')[1]).fadeIn(2000);
+        event.target.title = '点击折叠评论';
+    } else {
+        $('#comment-' + event.target.parentNode.parentNode.id.split('-')[1]).fadeOut(10);
+        event.target.title = '点击展开评论';
+    }
+});
+
+// $('.comment-span')
+//
+// $('.commentBtn').click(function () {
+//     if (!$('.commentText').val()) {
+//         $('.commentBtn').prop('disabled', true);
+//     }
+// });
+
+$(".commentText").keyup(function (event) {
+    if ($(this).val() == "") {
+        $('.commentBtn').attr("disabled", true);
+    } else {
+        $('.commentBtn').attr("disabled", null);
+    }
+});
+
+$('.commentBtn').on('click', function (event) {
+    var answerId = event.target.parentNode.parentNode.parentNode.id.split('-')[1];
+    var commentContent = event.target.parentNode.previousElementSibling.children[0].children[0].value;
+    event.target.parentNode.previousElementSibling.children[0].children[0].value = "";
+
+    var formData = {
+        "commentContent": commentContent,
+        "answerId": answerId
+    };
+
+    $.ajax({
+        url: "/commentAnswer",
+        data: formData,
+        type: "post",
+        success: function (response) {
+            if (response.state == 1) {
+
+                var answerComment = response.data;
+
+                var newCommentItem = "<div class=\"avatarImg\" style=\"float:left; width:35px; height:35px;margin-left: 0;\">\n" +
+                    "    <a href=\"/userHome/activity/" + answerComment.user.userId + "\" target=\"_blank\">\n" +
+                    "      <img src=\"" + answerComment.user.avatarUrl + "\" width=\"100%\" height=\"100%\" style=\"border-radius: 100%\" /></a>\n" +
+                    "  </div>\n" +
+                    "  <!--评论作者用户名和评论时间-->\n" +
+                    "  <div class=\"commentAuthor\" style=\"margin-left: 45px\">\n" +
+                    "    <div>\n" +
+                    "      <h3 style=\"font-size: 15px;\">\n" +
+                    "        <a href=\"/userHome/activity/" + answerComment.userId + "\" style=\"color: black;\" href=\"/userHome/activity/" + answerComment.user.userId + "\" class=\"card-link usernameLink\">" + answerComment.user.username + "</a>&nbsp;</h3>\n" +
+                    "    </div>\n" +
+                    "    <div class=\"desc\" style=\"margin-top: -7px;margin-right: 15px;\">\n" +
+                    "      <span class=\"info-piece-fontsize\">" + "刚刚发表了评论" + "</span></div>\n" +
+                    "  </div>\n" +
+                    "  <!--详细评论内容-->\n" +
+                    "  <div class=\"commentContent\" style=\"margin-top: 3px;display: flex;\">\n" +
+                    "    <div class=\"verticalLine\" style=\"border-left: 1px solid #e6e6e6;margin-left: 17px;width: 29px;padding-right: 21px;\"></div>\n" +
+                    "    <div style=\"padding-right: 15px;\">\n" +
+                    "      <p>" + answerComment.answerCommentContent + "</p></div>\n" +
+                    "  </div>\n" +
+                    "  <div class=\"commentOpt\" style=\"margin-left: 46px;font-size: 1px;\">\n" +
+                    "    <span style=\"cursor: pointer;\">" + "回复" + "</span>&nbsp;&nbsp;\n" +
+                    "    <span style=\"cursor: pointer;\">" + "删除" + "</span></div>";
+
+                var div = document.createElement('div');
+                div.setAttribute("id", "answer-" + answerComment.answerId + "-comment-" + answerComment.answerCommentId);
+                div.innerHTML = newCommentItem;
+                $('#comment-' + answerId).children()[1].prepend(div);
+                // var commentListId = $('#comment-' + answerId).children[1];
+                // $('#' + commentListId).appendChild(newCommentItem);
+
+            } else {
+            }
+        }
+    });
+});
+
+$('.delComment').on("click", function (event) {
+
+    var answerId = event.target.parentNode.parentNode.id.split('-')[1];
+    var commentId = event.target.parentNode.parentNode.id.split('-')[3];
+
+    if (this.textContent == "删除") {
+        // this.textContent = "还原";
+
+        $(".modal-footer #delCommentId").val("answer-" + answerId + "-comment-" + commentId);
+        // startTimer(10, this);
+        // setTimeout(function () {
+        //     document.getElementById("answer-" + answerId + "-comment-" + commentId).style.display = "none";
+        // }, 10000);
+
+    } else {
+        this.textContent = "删除";
+    }
+});
+
+$('#delCommentId').on("click", function () {
+    $('#delComment').modal('toggle');
+    var commentId = $('#delCommentId').val();
+    $.ajax({
+        url: "/delComment/" + commentId.split('-')[3],
+        type: "get",
+        success: function (response) {
+            if (response.state == 1) {
+
+                document.getElementById(commentId).parentNode.removeChild(document.getElementById(commentId));
+                // document.getElementById(commentId).style.display = "none";
+            }
+
+        }
+    });
+});
+
+// function startTimer(duration, display) {
+//     var start = Date.now(),
+//         diff,
+//         minutes,
+//         seconds;
+//
+//     function timer() {
+//         // get the number of seconds that have elapsed since
+//         // startTimer() was called
+//         diff = duration - (((Date.now() - start) / 1000) | 0);
+//
+//         // does the same job as parseInt truncates the float
+//         // minutes = (diff / 60) | 0;
+//         seconds = (diff % 60) | 0;
+//
+//         // minutes = minutes < 10 ? "0" + minutes : minutes;
+//         seconds = seconds < 10 ? "0" + seconds : seconds;
+//
+//         display.textContent = "还原(" + seconds + ")";
+//
+//         if (diff <= 0) {
+//             // add one second so that the count down starts at the full duration
+//             // example 05:00 not 04:59
+//             start = Date.now() + 1000;
+//         }
+//     };
+//     // we don't want to wait a full second before the timer starts
+//     // timer();
+//     setInterval(timer, 1000);
+// }

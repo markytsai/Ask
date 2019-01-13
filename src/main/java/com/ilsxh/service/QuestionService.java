@@ -46,6 +46,9 @@ public class QuestionService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private TopicService topicService;
+
 
     public List<Question> getFollowingQuestionByUserId(String userId) {
         List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId);
@@ -76,27 +79,8 @@ public class QuestionService {
 
         List<Answer> answerList = questionDao.selectAnswersByQuestionId(questionId);
         for (Answer answer : answerList) {
-            User user = userDao.selectUserByUserId(answer.getAnswerUserId());
-            Integer upOrDownVote = answerDao.getUserVoteStatus(answer.getAnswerId(), userId);
-            Integer isCollectAnswer = answerDao.isCollectAnswer(answer.getAnswerId(), userId);
-            // 获取答主关注状态，是否被关注
-            Integer userFollowStatus = userDao.getUserFollowStatus(userId, answer.getAnswerUserId());
-            if (userFollowStatus == null) {
-                user.setFollowStatus(0);
-            } else {
-                user.setFollowStatus(userFollowStatus);
-            }
-            if (upOrDownVote != null) {
-                user.setVote(upOrDownVote);
-            } else {
-                user.setVote(0);
-            }
-            if (isCollectAnswer != null && isCollectAnswer == 1) {
-                answer.setCollectAnswer(Boolean.TRUE);
-            } else {
-                answer.setCollectAnswer(Boolean.FALSE);
-            }
-            answer.setUser(user);
+            topicService.getDataAboutAnswer(answer, userId);
+
         }
         return answerList;
     }

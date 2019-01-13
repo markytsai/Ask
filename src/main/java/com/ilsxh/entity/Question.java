@@ -44,7 +44,7 @@ public class Question {
 	 */
 	private Integer answerCount;
 
-//	private List<QuestionComment> questionCommentList;
+
 
 
 	public Question() {

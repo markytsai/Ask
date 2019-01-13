@@ -31,3 +31,34 @@
 .title-color {
     color: black;
 }
+
+/*评论窗口样式*/
+.input-bar {
+    display: table;
+    /*width: 100%;*/
+}
+
+.input-bar-item > button {
+    margin-left: 5px;
+}
+
+.input-bar-item >  {
+    margin-left: 5px;
+}
+
+.width100 {
+    width: 100%;
+}
+.input-bar .form-group {
+    float: left;
+    vertical-align: middle;
+    width: 90%;
+}
+.input-bar-item-btn {
+    float: left;
+    width:10%;
+}
+
+.commentOpt span:hover {
+    text-decoration: underline;
+}

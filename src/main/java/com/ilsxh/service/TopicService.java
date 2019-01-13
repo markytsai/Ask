@@ -1,13 +1,7 @@
 package com.ilsxh.service;
 
-import com.ilsxh.dao.AnswerDao;
-import com.ilsxh.dao.QuestionDao;
-import com.ilsxh.dao.TopicDao;
-import com.ilsxh.dao.UserDao;
-import com.ilsxh.entity.Answer;
-import com.ilsxh.entity.Question;
-import com.ilsxh.entity.Topic;
-import com.ilsxh.entity.User;
+import com.ilsxh.dao.*;
+import com.ilsxh.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -26,6 +20,9 @@ public class TopicService {
 
     @Autowired
     private AnswerDao answerDao;
+
+    @Autowired
+    private CommentDao commentDao;
 
     @Autowired
     private UserService userService;
@@ -70,29 +67,50 @@ public class TopicService {
     public List<Answer> getAnswersByTopicId(String userId, Integer topicId) {
         List<Answer> answerList = topicDao.getAnswersByTopicId(topicId);
         for (Answer answer : answerList) {
-            User user = userDao.selectUserByUserId(answer.getAnswerUserId());
-            Integer upOrDownVote = answerDao.getUserVoteStatus(answer.getAnswerId(), userId);
-            Integer isCollectAnswer = answerDao.isCollectAnswer(answer.getAnswerId(), userId);
-            // 获取答主关注状态，是否被关注
-            Integer userFollowStatus = userDao.getUserFollowStatus(userId, answer.getAnswerUserId());
-            if (userFollowStatus == null) {
-                user.setFollowStatus(0);
-            } else {
-                user.setFollowStatus(userFollowStatus);
-            }
-            if (upOrDownVote != null) {
-                user.setVote(upOrDownVote);
-            } else {
-                user.setVote(0);
-            }
-            if (isCollectAnswer != null && isCollectAnswer == 1) {
-                answer.setCollectAnswer(Boolean.TRUE);
-            } else {
-                answer.setCollectAnswer(Boolean.FALSE);
-            }
-            answer.setUser(user);
+            getDataAboutAnswer(answer, userId);
         }
         return answerList;
+    }
+
+    public void getDataAboutAnswer(Answer answer, String userId) {
+        User user = userDao.selectUserByUserId(answer.getAnswerUserId());
+        Integer upOrDownVote = answerDao.getUserVoteStatus(answer.getAnswerId(), userId);
+        Integer isCollectAnswer = answerDao.isCollectAnswer(answer.getAnswerId(), userId);
+        // 获取答主关注状态，是否被关注
+        Integer userFollowStatus = userDao.getUserFollowStatus(userId, answer.getAnswerUserId());
+        if (userFollowStatus == null) {
+            user.setFollowStatus(0);
+        } else {
+            user.setFollowStatus(userFollowStatus);
+        }
+        if (upOrDownVote != null) {
+            user.setVote(upOrDownVote);
+        } else {
+            user.setVote(0);
+        }
+        if (isCollectAnswer != null && isCollectAnswer == 1) {
+            answer.setCollectAnswer(Boolean.TRUE);
+        } else {
+            answer.setCollectAnswer(Boolean.FALSE);
+        }
+        answer.setUser(user);
+
+        // 获取回答的相关评论
+        List<AnswerComment> answerCommentList = commentDao.listAnswerCommentByAnswerId(answer.getAnswerId());
+        for (AnswerComment comment : answerCommentList) {
+            // 为评论绑定用户信息
+            User commentUser = userService.getUserByUserId(comment.getUserId());
+            comment.setUser(commentUser);
+            // 判断用户是否赞过该评论
+//            Long rank = jedis.zrank(userId + RedisKey.LIKE_ANSWER_COMMENT, comment.getAnswerCommentId() + "");
+//            comment.setLikeState(rank == null ? "false" : "true");
+            // 获取该评论被点赞次数
+//            Long likedCount = jedis.zcard(comment.getAnswerCommentId() + RedisKey.LIKED_ANSWER_COMMENT);
+            comment.setLikedCount(Integer.valueOf(1));
+
+        }
+        answer.setAnswerCommentList(answerCommentList);
+
     }
 
     public List<User> getExcellentUsersByTopicId(Integer topicId) {

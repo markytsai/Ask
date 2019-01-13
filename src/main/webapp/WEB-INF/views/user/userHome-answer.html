@@ -68,19 +68,19 @@
                     <!--底部提示信息-->
                     <div th:if="${answerList.size() == 0}" style="text-align: center;">
                         <span th:if="${isLoginUser} == 'true'">你还没有回答任何问题哦(⊙⊙！) &nbsp;</span>
-                        <span>到<a th:href="@{/recommend}">这里</a>去看一看推荐的问题吧</span>
+                        <span>到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的问题吧</span>
                         <span th:if="${isLoginUser} == 'false'">他还没有回答任何问题(⊙⊙！) &nbsp;</span>
                     </div>
                     <div class="card mb-4" th:each="answer : ${answerList}">
                         <div class="card-block">
                             <h4 class="card-title text-dark" style="font-weight: bolder;">
                                 <a th:href="@{'/question/' + ${answer.question.questionId}}" class="text-title"
-                                   th:text="${answer.question.questionTitle}">
+                                   th:text="${answer.question.questionTitle}" target="_blank">
                                 </a>
                             </h4>
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                    <a th:href="@{'/userHome/activity/' + ${answer.user.userId}}">
+                                    <a th:href="@{'/userHome/activity/' + ${answer.user.userId}}" target="_blank">
                                         <img th:src="${answer.user.avatarUrl}" width="100%" height="100%"
                                              style="border-radius: 100%"/>
                                     </a>
@@ -96,7 +96,7 @@
                                         <span th:text="${answer.user.simpleDesc}"/>
                                     </h5>
                                 </div>
-                                &nbsp;<a th:href="@{'/userHome/question/' + ${answer.user.userId}}">
+                                &nbsp;<a th:href="@{'/userHome/question/' + ${answer.user.userId}}" target="_blank">
                                 <span class="glyphicon glyphicon-user"></span>
                             </a><span th:text="${answer.user.username}"/>于
                                 <span th:text="${#dates.format(answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>回答了该问题

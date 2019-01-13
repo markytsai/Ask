@@ -66,7 +66,7 @@
                     <!--底部提示信息-->
                     <div th:if="${followingUserList.size() == 0}" style="text-align: center;">
                         <span th:if="${isLoginUser} == 'true'">你还没有关注任何人哦(⊙⊙！) &nbsp;</span>
-                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}">这里</a>去看一看推荐的用户吧</span>
+                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的用户吧</span>
                         <span th:if="${isLoginUser} == 'false'">他还没有关注任何人(⊙⊙！) &nbsp;</span>
                     </div>
                     <div class="card mb-4" th:each="user : ${followingUserList}">

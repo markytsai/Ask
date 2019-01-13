@@ -48,7 +48,7 @@
     </div>
     <div class="introduce" style="margin-left: 55px; display: none;">
         <div class="avatarImgFloated" style="float:left; width:45px; height:45px;margin-left: -40px;">
-            <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+            <a th:href="@{'/userHome/activity/' + ${user.userId}}" target="_blank">
                 <img th:src="${user.avatarUrl}" width="100%" height="100%"
                      style="border-radius: 100%"/>
             </a>
@@ -159,46 +159,49 @@
                                     th:href="@{'/topic/' + ${topic.topicId} + '/question'}">相关问题</a></li>
                             <li role="presentation"><a
                                     th:href="@{'/topic/' + ${topic.topicId} + '/answer'}">优秀回答</a></li>
-                            <li role="presentation" class="active"><a th:href="@{'/topic/' + ${topic.topicId} + '/users'}">热门用户</a>
+                            <li role="presentation" class="active"><a
+                                    th:href="@{'/topic/' + ${topic.topicId} + '/users'}">热门用户</a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="card mb-4" th:each="user : ${ExcellentUserList}">
-                    <div class="card-block">
-                        <div class="card-title answer-meta">
-                            <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                <img th:src="${user.avatarUrl}" width="100%" height="100%"
-                                     style="border-radius: 100%"/>
-                            </div>
-                            <div style="margin-left: 55px">
-                                <h5>
-                                    <a href="'/userHome/question/' + ${user.userId}"
-                                       th:href="@{'/userHome/question/' + ${user.userId}}"
-                                       class="card-link"
-                                       th:text="${user.username}">
-                                    </a>&nbsp;
-                                    <span th:text="${user.position}"/>&nbsp;
-                                    <span th:text="${user.simpleDesc}"/>
-                                    <span th:id="userId + '-' + ${user.userId}"
-                                          class="glyphicon label label-primary followUser" style="float:right"
-                                          th:text="${user.followStatus == 1} ? '取消关注' : '关注答主'">关注答主</span>
-                                </h5>
-                            </div>
-                            <div style="margin-left: 55px">&nbsp;
-                                <span th:text="'回答' + ${user.likedCount} + '条'"></span>
-                                <span class="vertical-line" style="width: px; height: 15px;border: 2px inset;"/>
+                        <div class="card-block">
+                            <div class="card-title answer-meta">
+                                <div class="avatarImg" style="float:left; width:45px; height:45px;">
+                                    <a class="" th:href="@{'/userHome/activity/' + ${user.userId}}" target="_blank">
+                                        <img th:src="${user.avatarUrl}" width="100%" height="100%"
+                                             style="border-radius: 100%"/>
+                                    </a>
+                                </div>
+                                <div style="margin-left: 55px">
+                                    <h5>
+                                        <a href="'/userHome/question/' + ${user.userId}"
+                                           th:href="@{'/userHome/question/' + ${user.userId}}"
+                                           class="card-link"
+                                           th:text="${user.username}">
+                                        </a>&nbsp;
+                                        <span th:text="${user.position}"/>&nbsp;
+                                        <span th:text="${user.simpleDesc}"/>
+                                        <span th:id="userId + '-' + ${user.userId}"
+                                              class="glyphicon label label-primary followUser" style="float:right"
+                                              th:text="${user.followStatus == 1} ? '取消关注' : '关注答主'">关注答主</span>
+                                    </h5>
+                                </div>
+                                <div style="margin-left: 55px">&nbsp;
+                                    <span th:text="'回答' + ${user.likedCount} + '条'"></span>
+                                    <span class="vertical-line" style="width: px; height: 15px;border: 2px inset;"/>
 
-                                <span th:text="'关注' + ${user.followCount} + '人'"></span>
-                                <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+                                    <span th:text="'关注' + ${user.followCount} + '人'"></span>
+                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
 
-                                <span th:text="'被关注量' + ${user.followedCount}"></span>
-                                <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+                                    <span th:text="'被关注量' + ${user.followedCount}"></span>
+                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+                                </div>
                             </div>
+                            <hr color="#f8f8f8"/>
                         </div>
-                        <hr color="#f8f8f8"/>
                     </div>
-                </div>
 
                 </div>
             </div>

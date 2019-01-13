@@ -27,6 +27,32 @@
     </div>
 </div>
 
+
+<!--删除评论确认框-->
+<div th:fragment="delCommentConfirm" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="delComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delCommentModalLabel">需要你的再次验证</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h4>
+                        删除后的评论无法找回，你确定删除你的评论吗？
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">点错了</button>
+                    <button th:id="delCommentId" type="button" class="btn btn-primary" th:value="0">确定删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div th:fragment="ask" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -68,7 +94,7 @@
 
                         <div class="form-group" style="margin-top: 20px;">
                             <label for="topic" class="col-form-label">所属话题</label>
-                            <input id="topic" class="form-control" autocomplete="off"/>
+                            <input id="topic" class="form-control" autocomplete="off" placeholder="输入搜索话题"/>
                         </div>
                     </form>
                 </div>

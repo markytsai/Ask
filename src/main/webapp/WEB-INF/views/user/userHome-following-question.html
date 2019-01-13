@@ -66,14 +66,14 @@
                     <!--底部提示信息-->
                     <div th:if="${questionList.size() == 0}" style="text-align: center;">
                         <span th:if="${isLoginUser} == 'true'">你还没有关注任何问题哦(⊙⊙！) &nbsp;</span>
-                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}">这里</a>去看一看推荐的问题吧</span>
+                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的问题吧</span>
                         <span th:if="${isLoginUser} == 'false'">他还没有关注任何问题(⊙⊙！) &nbsp;</span>
                     </div>
                     <div class="card mb-4" th:each="question : ${questionList}">
                         <div class="card-block border-dark">
                             <h4 class="card-title text-dark" style="font-weight: bolder;">
                                 <a th:href="@{'/question/' + ${question.questionId}}" class="text-title"
-                                   th:text="${question.questionTitle}">
+                                   th:text="${question.questionTitle}" target="_blank">
                                 </a>
                             </h4>
                             <p class="card-text" th:utext="${question.questionContent}">

@@ -2,13 +2,13 @@
 
     <div class="col-md-3 ">
         <!-- 热门问题 根据关注量排序-->
-        <div class="card my-4" style='background-color: #fff;'>
-            <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>相关问题</h5>
+        <div class="card my-4" style='background-color: #fff;padding: 6px;'>
+            <span class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>相关问题</span>
 
             <ul class="list-group" th:each="question, userStat : ${relatedQuestion}" style="margin-bottom: 3px;">
                 <div class="card-block border-black">
                     <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
-                       style="color: #333333;"></a>
+                       style="color: #333333;" target="_blank"></a>
                 </div>
                 <div th:if="${userStat.index} lt ${userStat.size - 1}">
                 </div>
