@@ -8,10 +8,10 @@ public abstract class BasePrefix implements KeyPrefix {
 
     public BasePrefix(String prefix) {
         //0代表永不过期
-        this(0, prefix);
+        this(prefix, 0);
     }
 
-    public BasePrefix(int expireSeconds, String prefix) {
+    public BasePrefix(String prefix, int expireSeconds) {
         this.expireSeconds = expireSeconds;
         this.prefix = prefix;
     }
@@ -24,7 +24,7 @@ public abstract class BasePrefix implements KeyPrefix {
     @Override
     public String getPrefix() {
         String className = getClass().getSimpleName();
-        return className + ":" + prefix;
+        return className + ":" + prefix + "-";
     }
 
 }

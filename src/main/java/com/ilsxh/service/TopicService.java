@@ -2,6 +2,7 @@ package com.ilsxh.service;
 
 import com.ilsxh.dao.*;
 import com.ilsxh.entity.*;
+import com.ilsxh.redis.TopicKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -28,6 +29,9 @@ public class TopicService {
     private UserService userService;
 
     @Autowired
+    private RedisService redisService;
+
+    @Autowired
     private QuestionService questionService;
 
     @Autowired
@@ -48,15 +52,28 @@ public class TopicService {
         model.addAttribute("user", user);
 
         // 侧边栏相关话题
-        List<Question> relatedQuestion = questionService.getRecommendedQuestionByUserId();
+
+        List<Question> relatedQuestion = redisService.getList(TopicKey.relatedQuestionKey, topicId.toString(), Question.class);
+        if (relatedQuestion == null) {
+            relatedQuestion = questionService.getRecommendedQuestionByUserId();
+            redisService.setList(TopicKey.relatedQuestionKey, topicId.toString(), relatedQuestion);
+        }
         model.addAttribute("relatedQuestion", relatedQuestion);
 
-        // 侧边栏相关用户
-        List<User> relatedExcellentUsers = userService.getollowingUserByUserId(userService.getUserIdFromRedis(request));
+        // 侧边栏相关优秀回答用户
+        List<User> relatedExcellentUsers = redisService.getList(TopicKey.relatedExcellentUserKey, topicId.toString(), User.class);
+        if (relatedExcellentUsers == null) {
+            relatedExcellentUsers = userService.getollowingUserByUserId(userService.getUserIdFromRedis(request));
+            redisService.setList(TopicKey.relatedExcellentUserKey, topicId.toString(), relatedExcellentUsers);
+        }
         model.addAttribute("relatedExcellentUsers", relatedExcellentUsers);
 
         // 侧边栏相关话题
-        List<Topic> relatedTopics = hotService.getHotTopic();
+        List<Topic> relatedTopics = redisService.getList(TopicKey.relatedTopicKey, topicId.toString(), Topic.class);
+        if (relatedTopics == null) {
+            relatedTopics = hotService.getHotTopic();
+            redisService.setList(TopicKey.relatedTopicKey, topicId.toString(), relatedTopics);
+        }
         model.addAttribute("relatedTopics", relatedTopics);
     }
 
@@ -96,7 +113,7 @@ public class TopicService {
         answer.setUser(user);
 
         // 获取回答的相关评论
-        List<AnswerComment> answerCommentList = commentDao.listAnswerCommentByAnswerId(answer.getAnswerId());
+        List<AnswerComment> answerCommentList = commentDao.listAnswerCommentByAnswerId(answer.getAnswerId(), "REPLY_TARGET_NOT_EXISTS");
         for (AnswerComment comment : answerCommentList) {
             // 为评论绑定用户信息
             User commentUser = userService.getUserByUserId(comment.getUserId());
@@ -108,7 +125,17 @@ public class TopicService {
 //            Long likedCount = jedis.zcard(comment.getAnswerCommentId() + RedisKey.LIKED_ANSWER_COMMENT);
             comment.setLikedCount(Integer.valueOf(1));
 
+            List<AnswerComment> replyCommentList = commentDao.listAnswerCommentByAnswerId1(answer.getAnswerId(), "REPLY_TARGET_EXISTS");
+
+            for (AnswerComment replyComment : replyCommentList) {
+                // 为评论绑定用户信息
+                User replyCommentUser = userService.getUserByUserId(replyComment.getUserId());
+                replyComment.setUser(replyCommentUser);
+                replyComment.setLikedCount(Integer.valueOf(1));
+            }
+            comment.setCommentReplyList(replyCommentList);
         }
+
         answer.setAnswerCommentList(answerCommentList);
 
     }

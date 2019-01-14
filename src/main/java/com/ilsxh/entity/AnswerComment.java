@@ -1,5 +1,7 @@
 package com.ilsxh.entity;
 
+import java.util.List;
+
 public class AnswerComment {
 
     private Integer answerCommentId;
@@ -9,6 +11,8 @@ public class AnswerComment {
     private Integer likedCount;
 
     private Long createTime;
+
+    private Integer atAnswerCommentId;
 
     private String atUserId;
 
@@ -21,6 +25,8 @@ public class AnswerComment {
     private String likeState;
 
     private User user;
+
+    private List<AnswerComment> commentReplyList;
 
     public Integer getAnswerCommentId() {
         return answerCommentId;
@@ -100,6 +106,22 @@ public class AnswerComment {
 
     public void setLikeState(String likeState) {
         this.likeState = likeState;
+    }
+
+    public List<AnswerComment> getCommentReplyList() {
+        return commentReplyList;
+    }
+
+    public void setCommentReplyList(List<AnswerComment> commentReplyList) {
+        this.commentReplyList = commentReplyList;
+    }
+
+    public Integer getAtAnswerCommentId() {
+        return atAnswerCommentId;
+    }
+
+    public void setAtAnswerCommentId(Integer atAnswerCommentId) {
+        this.atAnswerCommentId = atAnswerCommentId;
     }
 
     @Override

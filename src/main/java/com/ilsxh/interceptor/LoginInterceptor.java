@@ -1,5 +1,7 @@
 package com.ilsxh.interceptor;
 
+import com.ilsxh.redis.UserKey;
+import com.ilsxh.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +24,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
     private JedisPool jedisPool;
+
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
@@ -57,9 +62,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
 
-        Jedis jedis = jedisPool.getResource();
-        String userId = jedis.get(loginToken);
-        jedis.close();
+        String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
+//        Jedis jedis = jedisPool.getResource();
+//        String userId = jedis.get(loginToken);
+//        jedis.close();
 
         // 根据loginToken是否能从redis中获取userId
         if (StringUtils.isEmpty(userId)) {

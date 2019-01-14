@@ -826,13 +826,13 @@ $('.comment-span').on('click', function (event) {
 //     }
 // });
 
-$(".commentText").keyup(function (event) {
-    if ($(this).val() == "") {
-        $('.commentBtn').attr("disabled", true);
-    } else {
-        $('.commentBtn').attr("disabled", null);
-    }
-});
+// $(".commentText").keyup(function (event) {
+//     if ($(this).val() == "") {
+//         $('.commentBtn').attr("disabled", true);
+//     } else {
+//         $('.commentBtn').attr("disabled", null);
+//     }
+// });
 
 $('.commentBtn').on('click', function (event) {
     var answerId = event.target.parentNode.parentNode.parentNode.id.split('-')[1];
@@ -873,11 +873,11 @@ $('.commentBtn').on('click', function (event) {
                     "      <p>" + answerComment.answerCommentContent + "</p></div>\n" +
                     "  </div>\n" +
                     "  <div class=\"commentOpt\" style=\"margin-left: 46px;font-size: 1px;\">\n" +
-                    "    <span style=\"cursor: pointer;\">" + "回复" + "</span>&nbsp;&nbsp;\n" +
-                    "    <span style=\"cursor: pointer;\">" + "删除" + "</span></div>";
+                    "    <span class=\"replyComment\" style=\"cursor: pointer;\">" + "回复" + "</span>&nbsp;&nbsp;\n" +
+                    "    <span class=\"delComment\" style=\"cursor: pointer;\">" + "删除" + "</span></div>";
 
                 var div = document.createElement('div');
-                div.setAttribute("id", "answer-" + answerComment.answerId + "-comment-" + answerComment.answerCommentId);
+                div.setAttribute("id", answerComment.answerId + "-" + answerComment.answerCommentId + "-" + answerComment.atAnswerCommentId + "-" + answerComment.atUserId + "-" + answerComment.atUserName);
                 div.innerHTML = newCommentItem;
                 $('#comment-' + answerId).children()[1].prepend(div);
                 // var commentListId = $('#comment-' + answerId).children[1];
@@ -889,15 +889,23 @@ $('.commentBtn').on('click', function (event) {
     });
 });
 
+
+
+//删除评论按钮
 $('.delComment').on("click", function (event) {
 
-    var answerId = event.target.parentNode.parentNode.id.split('-')[1];
-    var commentId = event.target.parentNode.parentNode.id.split('-')[3];
+    var answerId = event.target.parentNode.parentNode.id.split('-')[0];
+    var commentId = event.target.parentNode.parentNode.id.split('-')[1];
+    var atAnswerCommentId = event.target.parentNode.parentNode.id.split('-')[2];
+    var atUserId = event.target.parentNode.parentNode.id.split('-')[3];
+    var atUserName = event.target.parentNode.parentNode.id.split('-')[4];
+
+    var commentFullId = event.target.parentNode.parentNode.id;
 
     if (this.textContent == "删除") {
         // this.textContent = "还原";
 
-        $(".modal-footer #delCommentId").val("answer-" + answerId + "-comment-" + commentId);
+        $(".modal-footer #delCommentId").val(commentFullId);
         // startTimer(10, this);
         // setTimeout(function () {
         //     document.getElementById("answer-" + answerId + "-comment-" + commentId).style.display = "none";
@@ -908,6 +916,7 @@ $('.delComment').on("click", function (event) {
     }
 });
 
+// 删除评论弹出modal确认按钮
 $('#delCommentId').on("click", function () {
     $('#delComment').modal('toggle');
     var commentId = $('#delCommentId').val();
@@ -918,12 +927,115 @@ $('#delCommentId').on("click", function () {
             if (response.state == 1) {
 
                 document.getElementById(commentId).parentNode.removeChild(document.getElementById(commentId));
-                // document.getElementById(commentId).style.display = "none";
             }
 
         }
     });
 });
+
+$('.replyComment').on("click", function (event) {
+
+    var id = event.target.parentNode.id;
+    var answerId = event.target.parentNode.parentNode.id.split('-')[0];
+    var commentId = event.target.parentNode.parentNode.id.split('-')[1];
+    var atAnswerCommentId = event.target.parentNode.parentNode.id.split('-')[2];
+    var atUserId = event.target.parentNode.parentNode.id.split('-')[2];
+    var atUserName = event.target.parentNode.parentNode.id.split('-')[2];
+    var replyTargetUserId = event.target.parentNode.parentNode.children[0].children[0].children[0].href.split("activity/")[1];
+
+    $.ajax({
+        url: "/getUser/" + replyTargetUserId,
+        type: "get",
+        dataType: 'json',
+        success: function (response) {
+            if (response.state == 1) {
+
+                var user = response.data.user;
+
+                var replyInputAreaDiv = "<div style=\"float: left;margin-right: 6px;\">\n" +
+                    "    <img th:src=\"" + user.avatarUrl + "\" width=\"35px\" height=\"35px\" style=\"border-radius: 100%\" /></div>\n" +
+                    "  <div style=\"float: left;margin-right: 6px;width: 68%;\">\n" +
+                    "    <div class=\"form-group\">\n" +
+                    "      <input class=\"form-control commentText\" value='@:" + user.username + "' autofocus='true'/></div>\n" +
+                    "  </div>\n" +
+                    "  <div style=\"float: left;margin-right: 15px;\">\n" +
+                    "    <button class=\"btn btn-info replyBtn\">回复</button>\n" +
+                    "</div>";
+
+                var div = document.createElement('div');
+                div.setAttribute("id", answerId + "-" + commentId + "-" + atAnswerCommentId + "-" + atUserId + "-" + atUserName);
+                div.setAttribute("class", "makeCommentArea");
+                div.setAttribute("style", "margin-top: 10px;margin-left: 47px;width: 110%;height: 35px;");
+                div.innerHTML = replyInputAreaDiv;
+                event.target.parentNode.parentNode.append(div);
+
+
+            } else {
+            }
+        }
+    });
+
+
+});
+
+//回复按钮
+$('.replyBtn').on('click', function (event) {
+    // 目标评论的具体信息
+    var id = event.target.parentNode.parentNode.id;
+
+    var commentContent = event.target.parentNode.previousElementSibling.children[0].children[0].value;
+    event.target.parentNode.previousElementSibling.children[0].children[0].value = "";
+
+    var formData = {
+        "commentContent": commentContent,
+        "id": id
+    };
+
+    $.ajax({
+        url: "/replyComment",
+        data: formData,
+        type: "post",
+        success: function (response) {
+            if (response.state == 1) {
+
+                var answerComment = response.data;
+
+                var newCommentItem = "<div class=\"avatarImg\" style=\"float:left; width:35px; height:35px;margin-left: 0;\">\n" +
+                    "    <a href=\"/userHome/activity/" + answerComment.user.userId + "\" target=\"_blank\">\n" +
+                    "      <img src=\"" + answerComment.user.avatarUrl + "\" width=\"100%\" height=\"100%\" style=\"border-radius: 100%\" /></a>\n" +
+                    "  </div>\n" +
+                    "  <!--评论作者用户名和评论时间-->\n" +
+                    "  <div class=\"commentAuthor\" style=\"margin-left: 45px\">\n" +
+                    "    <div>\n" +
+                    "      <h3 style=\"font-size: 15px;\">\n" +
+                    "        <a href=\"/userHome/activity/" + answerComment.userId + "\" style=\"color: black;\" href=\"/userHome/activity/" + answerComment.user.userId + "\" class=\"card-link usernameLink\">" + answerComment.user.username + "</a>&nbsp;</h3>\n" +
+                    "    </div>\n" +
+                    "    <div class=\"desc\" style=\"margin-top: -7px;margin-right: 15px;\">\n" +
+                    "      <span class=\"info-piece-fontsize\">" + "刚刚发表了评论" + "</span></div>\n" +
+                    "  </div>\n" +
+                    "  <!--详细评论内容-->\n" +
+                    "  <div class=\"commentContent\" style=\"margin-top: 3px;display: flex;\">\n" +
+                    "    <div class=\"verticalLine\" style=\"border-left: 1px solid #e6e6e6;margin-left: 17px;width: 29px;padding-right: 21px;\"></div>\n" +
+                    "    <div style=\"padding-right: 15px;\">\n" +
+                    "      <p>" + answerComment.answerCommentContent + "</p></div>\n" +
+                    "  </div>\n" +
+                    "  <div class=\"commentOpt\" style=\"margin-left: 46px;font-size: 1px;\">\n" +
+                    "    <span class=\"replyComment\" style=\"cursor: pointer;\">" + "回复" + "</span>&nbsp;&nbsp;\n" +
+                    "    <span class=\"delComment\" style=\"cursor: pointer;\">" + "删除" + "</span></div>";
+
+                var div = document.createElement('div');
+                div.setAttribute("id", answerComment.answerId + "-" + answerComment.answerCommentId + "-" + answerComment.atAnswerCommentId + "-" + answerComment.atUserId + "-" + answerComment.atUserName);
+                div.innerHTML = newCommentItem;
+                $('#comment-' + answerId).children()[1].prepend(div);
+                // var commentListId = $('#comment-' + answerId).children[1];
+                // $('#' + commentListId).appendChild(newCommentItem);
+
+            } else {
+            }
+        }
+    });
+});
+
 
 // function startTimer(duration, display) {
 //     var start = Date.now(),

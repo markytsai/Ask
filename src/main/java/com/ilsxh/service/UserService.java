@@ -6,6 +6,7 @@ import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.redis.UserKey;
 import com.ilsxh.util.Response;
 import com.ilsxh.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class UserService {
 
     @Autowired
     private JedisPool jedisPool;
+
+    @Autowired
+    private RedisService redisService;
 
     /**
      * expire time is one single day
@@ -114,9 +118,10 @@ public class UserService {
         }
         response.addCookie(cookie);
 
-        Jedis jedis = jedisPool.getResource();
-        jedis.set(loginToken, userId.toString(), "nx", "ex", EXPIRE_TIME);
-        jedis.close();
+        redisService.set(UserKey.loginUserKey, loginToken, userId);
+//        Jedis jedis = jedisPool.getResource();
+//        jedis.set(loginToken, userId.toString(), "nx", "ex", EXPIRE_TIME);
+//        jedis.close();
     }
 
     /**
@@ -135,9 +140,7 @@ public class UserService {
             }
         }
 
-        Jedis jedis = jedisPool.getResource();
-        String userId = jedis.get(loginToken);
-        jedis.close();
+        String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
 
         return userId;
     }
@@ -174,7 +177,7 @@ public class UserService {
         return map;
     }
 
-    public Integer selectUserByUserIdWithFollowingStatus(String userId,String localUserId) {
+    public Integer selectUserByUserIdWithFollowingStatus(String userId, String localUserId) {
         return userDao.selectUserByUserIdWithFollowingStatus(userId, localUserId);
     }
 
@@ -222,7 +225,6 @@ public class UserService {
     }
 
 
-
     public void followUser(String userId, String userIdToBeFollowed, Long createTime) {
 
         Integer followExisted = userDao.getUserFollowStatus(userId, userIdToBeFollowed);
@@ -231,7 +233,7 @@ public class UserService {
         } else if (followExisted == 0) { // 曾经关注过，再次关注操作
             userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 1, createTime);
         } else { // 取关操作
-            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0,createTime);
+            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0, createTime);
         }
 
     }

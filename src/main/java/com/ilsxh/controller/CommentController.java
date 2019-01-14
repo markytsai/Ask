@@ -55,6 +55,14 @@ public class CommentController {
         return new Response(1, "", comment);
     }
 
+    @RequestMapping(value = "/replyComment", method = RequestMethod.POST)
+    @ResponseBody
+    public Response replyComment(String commentId, String commentContent, HttpServletRequest request) {
+        String userId = userService.getUserIdFromRedis(request);
+        AnswerComment comment = commentService.replyComment(commentId, commentContent, userId);
+        return new Response(1, "", comment);
+    }
+
     @RequestMapping("/delComment/{commentId}")
     @ResponseBody
     public Response delComment(@PathVariable Integer commentId, HttpServletRequest request) {

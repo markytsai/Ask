@@ -1,20 +1,20 @@
 package com.ilsxh.service;
 
-import com.ilsxh.dao.AnswerDao;
-import com.ilsxh.dao.QuestionDao;
-import com.ilsxh.dao.TopicDao;
-import com.ilsxh.dao.UserDao;
+import com.ilsxh.dao.*;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import com.ilsxh.redis.AnswerKey;
+import com.ilsxh.redis.HotDataKey;
 import com.ilsxh.util.MyUtil;
 import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +32,9 @@ import java.util.List;
 public class QuestionService {
 
     @Autowired
+    private JedisPool jedisPool;
+
+    @Autowired
     private QuestionDao questionDao;
 
     @Autowired
@@ -42,6 +45,9 @@ public class QuestionService {
 
     @Autowired
     private TopicDao topicDao;
+
+    @Autowired
+    private HotDao hotDao;
 
     @Autowired
     private RedisService redisService;
@@ -166,5 +172,43 @@ public class QuestionService {
 
     public List<Question> getProbablyRelativeQestions(@PathVariable String partialWord) {
         return questionDao.getProbablyRelativeQestions(partialWord);
+    }
+
+    /**
+     * 获取热点数据，从缓存中取，并且十分钟更新一次
+     *
+     * @param model
+     */
+    public void getCommonHotData(Model model) {
+
+        List<Question> hotQuestions = redisService.getList(HotDataKey.hotQuestionKey, "", Question.class);
+        if (hotQuestions == null) {
+            hotQuestions = hotDao.getHotQuestions();
+            redisService.setList(HotDataKey.hotQuestionKey, "", hotQuestions);
+        }
+        model.addAttribute("hotQuestions", hotQuestions);
+
+        List<User> hotUsers = redisService.getList(HotDataKey.hotUserKey, "", User.class);
+        if (hotUsers == null) {
+            hotUsers = hotDao.getHotUsers();
+            redisService.setList(HotDataKey.hotUserKey, "", hotUsers);
+        }
+        model.addAttribute("hotUsers", hotUsers);
+
+
+        List<Topic> hotTopics = redisService.getList(HotDataKey.hotTopicsKey, "", Topic.class);
+        if (hotTopics == null) {
+            hotTopics = hotDao.getHotTopics();
+            redisService.setList(HotDataKey.hotTopicsKey, "", hotTopics);
+        }
+        model.addAttribute("hotTopics", hotTopics);
+
+
+        List<Question> newestQuestions = redisService.getList(HotDataKey.newestQuestionKey, "", Question.class);
+        if (newestQuestions == null) {
+            newestQuestions = hotDao.getNewestRaisedQuestions();
+            redisService.setList(HotDataKey.newestQuestionKey, "", newestQuestions);
+        }
+        model.addAttribute("newestQuestions", newestQuestions);
     }
 }

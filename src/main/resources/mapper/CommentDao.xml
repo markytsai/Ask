@@ -4,10 +4,20 @@
 <!-- 设置为AnswerDao接口方法提供sql语句配置 -->
 <mapper namespace="com.ilsxh.dao.CommentDao">
 
+
     <select id="listAnswerCommentByAnswerId" resultType="AnswerComment">
-        select answer_comment_id,answer_comment_content,liked_count,create_time,at_user_id,at_user_name,answer_id,user_id
+        select
+        answer_comment_id,answer_comment_content,liked_count,create_time,at_answer_comment_id,at_user_id,at_user_name,answer_id,user_id
         from answer_comment
-        where answer_id = #{answerId}
+        where answer_id = #{answerId} and at_user_id = 0
+    </select>
+
+
+    <select id="listAnswerCommentByAnswerId1" resultType="AnswerComment">
+        select
+        answer_comment_id,answer_comment_content,liked_count,create_time,at_user_id,at_user_name,answer_id,user_id
+        from answer_comment
+        where answer_id = #{answerId} and at_user_id != 0
     </select>
 
     <insert id="insertAnswerComment">
@@ -26,6 +36,13 @@
         answer_comment(answer_comment_id,answer_comment_content,create_time,answer_id,user_id,at_user_id,at_user_name)
         values(#{answerCommentId},#{answerCommentContent},#{createTime},#{answerId},#{userId},#{atUserId},#{atUserName})
     </insert>
+
+    <select id="selectCommentByCommentId" resultType="AnswerComment">
+        select
+        answer_comment_id,answer_comment_content,liked_count,create_time,at_answer_comment_id,at_user_id,at_user_name,answer_id,user_id
+        from answer_comment
+        where answer_comment_id = #{answerCommentId}
+    </select>
 
     <select id="selectAnswerCommentCountByAnswerId" resultType="int">
         select count(answer_comment_id) from answer_comment

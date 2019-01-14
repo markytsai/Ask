@@ -6,8 +6,8 @@ public class AnswerKey extends BasePrefix {
         super(prefix);
     }
 
-    private AnswerKey(int expireSeconds, String prefix) {
-        super(expireSeconds, prefix);
+    private AnswerKey( String prefix, int expireSeconds) {
+        super(prefix, expireSeconds);
     }
 
     public static AnswerKey answerKey = new AnswerKey("");

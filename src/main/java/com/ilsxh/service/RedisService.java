@@ -61,6 +61,54 @@ public class RedisService {
     }
 
     /**
+     * 设置列表到缓存中去
+     * @param prefix
+     * @param key
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public <T> boolean setList(KeyPrefix prefix, String key, List<T> list) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            //生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            int seconds = prefix.expireSeconds();
+            if (seconds <= 0) {
+                jedis.set(realKey, JSON.toJSONString(list));
+            } else {
+                jedis.setex(realKey, seconds, JSON.toJSONString(list));
+            }
+            return true;
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
+     * 获取缓存中的列表
+     * @param prefix
+     * @param key
+     * @param list
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getList(KeyPrefix prefix, String key, Class<T> clazz) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            //生成真正的key
+            String realKey = prefix.getPrefix() + key;
+            String ret = jedis.get(realKey);
+            return JSON.parseArray(ret, clazz);
+        } finally {
+            returnToPool(jedis);
+        }
+    }
+
+    /**
      * 判断key是否存在
      */
     public <T> boolean exists(KeyPrefix prefix, String key) {

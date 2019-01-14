@@ -1,5 +1,6 @@
 package com.ilsxh.util;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -59,38 +60,37 @@ public class MyUtil {
         return list;
     }
 
+    private <T> T stringToBean(String str, Class<T> clazz) {
+        if (str == null || str.length() <= 0 || clazz == null) {
+            return null;
+        }
+        if (clazz == int.class || clazz == Integer.class) {
+            return (T) Integer.valueOf(str);
+        } else if (clazz == String.class) {
+            return (T) str;
+        } else if (clazz == long.class || clazz == Long.class) {
+            return (T) Long.valueOf(str);
+        } else {
+            return JSON.toJavaObject(JSON.parseObject(str), clazz);
+        }
+    }
 
-//    private <T> T stringToBean(String str, Class<T> clazz) {
-//        if (str == null || str.length() <= 0 || clazz == null) {
-//            return null;
-//        }
-//        if (clazz == int.class || clazz == Integer.class) {
-//            return (T) Integer.valueOf(str);
-//        } else if (clazz == String.class) {
-//            return (T) str;
-//        } else if (clazz == long.class || clazz == Long.class) {
-//            return (T) Long.valueOf(str);
-//        } else {
-//            return JSON.toJavaObject(JSON.parseObject(str), clazz);
-//        }
-//    }
-//
-//    private <T> String beanToString(T value) {
-//        if (value == null) {
-//            return null;
-//        }
-//        Class<?> clazz = value.getClass();
-//        if (clazz == int.class || clazz == Integer.class) {
-//            return "" + value;
-//        } else if (clazz == String.class) {
-//            return (String) value;
-//        } else if (clazz == long.class || clazz == Long.class) {
-//            return "" + value;
-//        } else {
-//            return JSON.toJSONString(value);
-//        }
-//    }
-//
+    private <T> String beanToString(T value) {
+        if (value == null) {
+            return null;
+        }
+        Class<?> clazz = value.getClass();
+        if (clazz == int.class || clazz == Integer.class) {
+            return "" + value;
+        } else if (clazz == String.class) {
+            return (String) value;
+        } else if (clazz == long.class || clazz == Long.class) {
+            return "" + value;
+        } else {
+            return JSON.toJSONString(value);
+        }
+    }
+
 
     public static final String AVATAR_BASE_DIR = "E:\\IdeaProjects\\Ask\\src\\main\\webapp\\images\\userAvatar\\";
 

@@ -40,11 +40,37 @@ public class CommentService {
         comment.setAnswerId(answerId);
         comment.setUserId(userId);
 
+
+        comment.setAtUserId("0");
+        comment.setAtUserName("0");
         commentDao.insertAnswerComment(comment);
+
+        comment = commentDao.selectCommentByCommentId(comment.getAnswerCommentId());
+
         User user = userService.getUserByUserId(userId);
         comment.setUser(user);
 
         return comment;
+    }
+
+    // 回复评论
+    public AnswerComment replyComment(String commentId, String commentContent, String userId) {
+        Integer answerId = Integer.valueOf(commentId.split("-")[0]);
+        Integer answerCommentId = Integer.valueOf(commentId.split("-")[1]);
+//        Integer atAnswerCommentId = Integer.valueOf(commentId.split("-")[2]);
+        String atUserId = commentId.split("-")[3];
+        String atUserName = commentId.split("-")[4];
+
+        AnswerComment comment = new AnswerComment();
+        comment.setLikedCount(0);
+        comment.setCreateTime(new Date().getTime());
+        comment.setAnswerCommentContent(commentContent);
+        comment.setAnswerId(answerId);
+        comment.setUserId(userId);
+        comment.setAnswerCommentId(answerCommentId);
+
+        return comment;
+
     }
 
     public AnswerComment replyAnswerComment(AnswerComment comment, String userId) {

@@ -8,7 +8,8 @@ import java.util.List;
 public interface CommentDao {
 //    List<QuestionComment> listQuestionCommentByQuestionId(@Param("questionId") Integer questionId);
 
-    List<AnswerComment> listAnswerCommentByAnswerId(@Param("answerId") Integer answerId);
+    List<AnswerComment> listAnswerCommentByAnswerId(@Param("answerId") Integer answerId, @Param("replyTargetStatus") String replyTargetStatus);
+    List<AnswerComment> listAnswerCommentByAnswerId1(@Param("answerId") Integer answerId, @Param("replyTargetStatus") String replyTargetStatus);
 
 //    void insertQuestionComment(QuestionComment comment);
 //
@@ -17,6 +18,8 @@ public interface CommentDao {
     void insertAnswerComment(AnswerComment comment);
 
     void insertAnswerCommentReply(AnswerComment comment);
+
+    AnswerComment selectCommentByCommentId(@Param("answerCommentId") Integer answerCommentId);
 
     int selectAnswerCommentCountByAnswerId(@Param("answerId") Integer answerId);
 

@@ -23,6 +23,9 @@ public class SearchService {
     @Autowired
     private HotService hotService;
 
+    @Autowired
+    private QuestionService questionService;
+
     public List<Question> globalSearchQuestion(String queryKeyWord) {
         return searchDao.globalSearchQuestion(queryKeyWord);
     }
@@ -42,11 +45,7 @@ public class SearchService {
         model.addAttribute("isLoginUser", "true");
         model.addAttribute("user", userService.getUserByUserId(localUserId));
 
-
-        model.addAttribute("hotQuestions", hotService.getHotQuestion());
-        model.addAttribute("hotUsers", hotService.getHotUsers());
-        model.addAttribute("hotTopics", hotService.getHotTopic());
-        model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
+        questionService.getCommonHotData(model);
 
         if (keyword != null) {
             model.addAttribute("keyword", keyword);

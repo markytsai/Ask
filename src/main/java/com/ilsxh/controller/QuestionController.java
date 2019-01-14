@@ -65,10 +65,8 @@ public class QuestionController {
 
         List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
         model.addAttribute("questionList", questionList);
-        model.addAttribute("hotQuestions", hotService.getHotQuestion());
-        model.addAttribute("hotUsers", hotService.getHotUsers());
-        model.addAttribute("hotTopics", hotService.getHotTopic());
-        model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
+
+        questionService.getCommonHotData(model);
         return "index-following";
     }
 
@@ -88,10 +86,7 @@ public class QuestionController {
 
         List<Question> questionList = questionService.getRecommendedQuestionByUserId();
         model.addAttribute("recommendQuestionList", questionList);
-        model.addAttribute("hotQuestions", hotService.getHotQuestion());
-        model.addAttribute("hotUsers", hotService.getHotUsers());
-        model.addAttribute("hotTopics", hotService.getHotTopic());
-        model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
+        questionService.getCommonHotData(model);
         return "index-recommend";
     }
 
@@ -125,10 +120,8 @@ public class QuestionController {
         model.addAttribute("hasFollowQuestion", hasFollowQuestion);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionDetail", question);
-        model.addAttribute("hotQuestions", hotService.getHotQuestion());
-        model.addAttribute("hotUsers", hotService.getHotUsers());
-        model.addAttribute("hotTopics", hotService.getHotTopic());
-        model.addAttribute("newestQuestions", hotService.getNewestRaisedQuestion());
+
+        questionService.getCommonHotData(model);
         return "questionDetail";
     }
 
