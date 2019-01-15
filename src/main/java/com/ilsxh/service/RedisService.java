@@ -15,8 +15,12 @@ import java.util.List;
 @Service
 public class RedisService {
 
-    @Autowired
     JedisPool jedisPool;
+
+    @Autowired
+    public RedisService(JedisPool jedisPool) {
+        this.jedisPool = jedisPool;
+    }
 
     /**
      * 获取单个对象
@@ -36,7 +40,7 @@ public class RedisService {
     }
 
     /**
-     * 设置对象
+     * 设置单个对象
      */
     public <T> boolean set(KeyPrefix prefix, String key, T value) {
         Jedis jedis = null;
@@ -61,7 +65,7 @@ public class RedisService {
     }
 
     /**
-     * 设置列表到缓存中去
+     * 设置列表
      * @param prefix
      * @param key
      * @param list

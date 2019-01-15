@@ -4,17 +4,13 @@ import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
-import com.ilsxh.service.HotService;
-import com.ilsxh.service.QuestionService;
-import com.ilsxh.service.TopicService;
-import com.ilsxh.service.UserService;
+import com.ilsxh.service.*;
 import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,14 +19,16 @@ import java.util.List;
 @Controller
 public class TopicController {
 
-    @Autowired
-    private QuestionService questionService;
-
-    @Autowired
+    private UserHelperService userHelperService;
     private UserService userService;
+    private TopicService topicService;
 
     @Autowired
-    private TopicService topicService;
+    public TopicController(UserHelperService userHelperService, UserService userService, TopicService topicService) {
+        this.userHelperService = userHelperService;
+        this.userService = userService;
+        this.topicService = topicService;
+    }
 
     /**
      * 话题页面：简介tab
@@ -43,14 +41,9 @@ public class TopicController {
     @RequestMapping("/topic/{topicId}/introduction")
     public String getTopicIntroduction(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
-        topicService.getSideCardInfo(topicId, request, model);
-
-        Integer userFollowTopic = topicService.getCurrStatInDB(userService.getUserIdFromRedis(request), topicId);
-
-        model.addAttribute("hasFollowQuestion", questionService.hasUserFollowQuestion(userService.getUserIdFromRedis(request), 1));
-        model.addAttribute("localUserAnswer", 0);
-        model.addAttribute("userFollowTopic", userFollowTopic == null ? 0 : userFollowTopic);
-
+        String userId = userHelperService.getUserIdFromRedis(request);
+        topicService.getSideCardInfo(topicId, userId, model);
+        topicService.getTopicDetail(topicId, userId, model);
         return "topic/topic-introduction";
     }
 
@@ -65,7 +58,8 @@ public class TopicController {
     @RequestMapping("/topic/{topicId}/question")
     public String getTopicQuestion(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
-        topicService.getSideCardInfo(topicId, request, model);
+        String userId = userHelperService.getUserIdFromRedis(request);
+        topicService.getSideCardInfo(topicId, userId, model);
 
         List<Question> withTopicQuestionList = topicService.getQuestionWithThisTopic(topicId);
         model.addAttribute("withTopicQuestionList", withTopicQuestionList);
@@ -85,7 +79,7 @@ public class TopicController {
     public String getTopicExAnswer(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
         String localUserId = userService.getUserIdFromRedis(request);
-        topicService.getSideCardInfo(topicId, request, model);
+        topicService.getSideCardInfo(topicId, localUserId, model);
 
         List<Answer> answerList = topicService.getAnswersByTopicId(localUserId, topicId);
         model.addAttribute("answerList", answerList);
@@ -105,7 +99,7 @@ public class TopicController {
     public String getTopicExcellentUsers(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
         String localUserId = userService.getUserIdFromRedis(request);
-        topicService.getSideCardInfo(topicId, request, model);
+        topicService.getSideCardInfo(topicId, localUserId, model);
 
         List<User> excellentUserList = topicService.getExcellentUsersByTopicId(topicId);
         model.addAttribute("ExcellentUserList", excellentUserList);

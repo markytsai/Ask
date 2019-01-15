@@ -14,31 +14,58 @@ import java.util.List;
 @Service
 public class SearchService {
 
-    @Autowired
     private SearchDao searchDao;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private HotService hotService;
-
-    @Autowired
     private QuestionService questionService;
 
-    public List<Question> globalSearchQuestion(String queryKeyWord) {
-        return searchDao.globalSearchQuestion(queryKeyWord);
+    @Autowired
+    public SearchService(SearchDao searchDao, UserService userService, QuestionService questionService) {
+        this.searchDao = searchDao;
+        this.userService = userService;
+        this.questionService = questionService;
     }
 
-    public List<User> globalSearchUser(String queryKeyWord) {
-        return searchDao.globalSearchUser(queryKeyWord);
+    /**
+     * 全局搜索，三种类型：问题，回答，话题名称
+     * @param type
+     * @param keyword
+     * @param model
+     * @param request
+     * @return
+     */
+    public String globalSearch(String type, String keyword, Model model, HttpServletRequest request) {
+
+        if ("question".equals(type)) {
+            this.getCommonData(request, keyword, model);
+            List<Question> searchQuestionList = searchDao.globalSearchQuestion(keyword);
+            for (Question question : searchQuestionList) {
+                question.setUser(userService.getUserByUserId(question.getUserId()));
+            }
+            model.addAttribute("searchQuestionList", searchQuestionList);
+            return "search/search-question";
+        } else if ("user".equals(type)) {
+            this.getCommonData(request, keyword, model);
+            List<User> searchUserList = searchDao.globalSearchUser(keyword);
+            model.addAttribute("searchUserList", searchUserList);
+            return "search/search-user";
+        } else {
+            this.getCommonData(request, keyword, model);
+            List<Answer> searchAnswerList = searchDao.globalSearchAnswer(keyword);
+            for (Answer answer : searchAnswerList) {
+                answer.setUser(userService.getUserByUserId(answer.getAnswerUserId()));
+                answer.setQuestion(userService.getQuestionById(answer.getQuestionId()));
+            }
+            model.addAttribute("searchAnswerList", searchAnswerList);
+            return "search/search-answer";
+        }
     }
 
-
-    public List<Answer> globalSearchAnswer(String queryKeyWord) {
-        return searchDao.globalSearchAnswer(queryKeyWord);
-    }
-
+    /**
+     * 获取问题的一些公共信息，包括热点数据
+     * @param request
+     * @param keyword
+     * @param model
+     */
     public void getCommonData(HttpServletRequest request, String keyword, Model model) {
         String localUserId = userService.getUserIdFromRedis(request);
 

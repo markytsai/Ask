@@ -1,15 +1,14 @@
 package com.ilsxh.service;
 
 import com.ilsxh.dao.AnswerDao;
-import com.ilsxh.dao.QuestionDao;
-import com.ilsxh.entity.Answer;
-import com.ilsxh.entity.Question;
-import com.ilsxh.entity.User;
+import com.ilsxh.redis.AnswerKey;
+import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class AnswerService {
@@ -18,18 +17,28 @@ public class AnswerService {
     public final static Integer DOWNVOTE_FOR_ANSWER = -1;
     public final static Integer NOT_VOTE_FOR_ANSWER = 0;
 
-    @Autowired
     private AnswerDao answerDao;
+    private UserHelperService userHelperService;
+    private RedisService redisService;
+
+    @Autowired
+    public AnswerService(UserHelperService userHelperService, AnswerDao answerDao, RedisService redisService) {
+        this.answerDao = answerDao;
+        this.userHelperService = userHelperService;
+        this.redisService = redisService;
+    }
 
     /**
      * 投票活动（点赞，反对）
-     *
-     * @param userId
+     * @param request
      * @param answerId
      * @param currVoteStatus currrent status for answers
      * @param upOrDownClick  点击了赞同按钮(Integer:1) or 反对按钮(Integer:-1)
      */
-    public void vote(String userId, Integer answerId, Integer currVoteStatus, Integer upOrDownClick, Long createTime) {
+    public void vote(HttpServletRequest request, Integer answerId, Integer currVoteStatus, Integer upOrDownClick) {
+
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Long createTime = new Date().getTime();
 
         Integer voteExisted = answerDao.userVoteExisted(answerId, userId);
         if (voteExisted != null && voteExisted == 1) { // 曾经进行过投票活动,数据库中存在记录
@@ -75,12 +84,37 @@ public class AnswerService {
     }
 
 
-    public void cancelCollectAnswer(String localUserId, Integer answerId) {
+    /**
+     * 取消收藏回答
+     * @param answerId
+     * @param request
+     */
+    public void cancelCollectAnswer(Integer answerId, HttpServletRequest request) {
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         answerDao.cancelCollectAnswer(localUserId, answerId);
     }
 
-    public void collectAnswer(String localUserId, Integer answerId) {
+    /**
+     * 收藏回答
+     * @param answerId
+     * @param request
+     */
+    public void collectAnswer(Integer answerId, HttpServletRequest request) {
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         answerDao.collectAnswer(localUserId, answerId, new Date().getTime());
+    }
+
+    /**
+     * 获取回答详情
+     * @param questionId
+     * @param request
+     * @return
+     */
+    public Integer getAnswerId(@PathVariable Integer questionId, HttpServletRequest request) {
+
+        String localUserId = userHelperService.getUserIdFromRedis(request);
+        Integer answerId = redisService.get(AnswerKey.answerKey, "-" + localUserId + "-" + questionId, Integer.class);
+        return answerId;
     }
 
 

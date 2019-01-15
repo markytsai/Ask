@@ -7,48 +7,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
 public class TopicService {
 
-    @Autowired
     private TopicDao topicDao;
-
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private AnswerDao answerDao;
-
-    @Autowired
-    private CommentDao commentDao;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
     private RedisService redisService;
-
-    @Autowired
     private QuestionService questionService;
+    private HotService hotService;
+    private UserHelperService userHelperService;
 
     @Autowired
-    private HotService hotService;
+    public TopicService(TopicDao topicDao, RedisService redisService, QuestionService questionService,
+                        HotService hotService, UserHelperService userHelperService) {
+        this.topicDao = topicDao;
+        this.redisService = redisService;
+        this.questionService = questionService;
+        this.hotService = hotService;
+        this.userHelperService = userHelperService;
+    }
 
+    /**
+     * 获取话题详情
+     * @param topicId
+     * @return
+     */
     public Topic getTopicByTopicId(Integer topicId) {
         return topicDao.getTopicByTopicId(topicId);
     }
 
-    public void getSideCardInfo(Integer topicId, HttpServletRequest request, Model model) {
+    /**
+     * 获取话题页面侧边连数据
+     * @param topicId
+     * @param userId
+     * @param model
+     */
+    public void getSideCardInfo(Integer topicId, String userId, Model model) {
 
         // 话题简介
         Topic topic = getTopicByTopicId(topicId);
         model.addAttribute("topic", topic);
 
         // 登录用户
-        User user = userService.getUserByUserId(userService.getUserIdFromRedis(request));
+        User user = userHelperService.getUserByUserId(userId);
         model.addAttribute("user", user);
 
         // 侧边栏相关话题
@@ -63,7 +65,7 @@ public class TopicService {
         // 侧边栏相关优秀回答用户
         List<User> relatedExcellentUsers = redisService.getList(TopicKey.relatedExcellentUserKey, topicId.toString(), User.class);
         if (relatedExcellentUsers == null) {
-            relatedExcellentUsers = userService.getollowingUserByUserId(userService.getUserIdFromRedis(request));
+            relatedExcellentUsers = userHelperService.getollowingUserByUserId(userId);
             redisService.setList(TopicKey.relatedExcellentUserKey, topicId.toString(), relatedExcellentUsers);
         }
         model.addAttribute("relatedExcellentUsers", relatedExcellentUsers);
@@ -77,77 +79,67 @@ public class TopicService {
         model.addAttribute("relatedTopics", relatedTopics);
     }
 
+    /**
+     * 话题页面tab中一些公共数据
+     * @param topicId
+     * @param userId
+     * @param model
+     */
+    public void getTopicDetail(Integer topicId, String userId, Model model) {
+        Integer userFollowTopic = this.getCurrStatInDB(userId, topicId);
+
+        model.addAttribute("hasFollowQuestion", questionService.hasUserFollowQuestion(userId, 1));
+        model.addAttribute("localUserAnswer", 0);
+        model.addAttribute("userFollowTopic", userFollowTopic == null ? 0 : userFollowTopic);
+    }
+
+    /**
+     * 获取话题相关的问题列表
+     * @param topicId
+     * @return
+     */
     public List<Question> getQuestionWithThisTopic(Integer topicId) {
         return topicDao.getQuestionWithThisTopic(topicId);
     }
 
+    /**
+     * 获取话题下相关的回答
+     * @param userId
+     * @param topicId
+     * @return
+     */
     public List<Answer> getAnswersByTopicId(String userId, Integer topicId) {
         List<Answer> answerList = topicDao.getAnswersByTopicId(topicId);
         for (Answer answer : answerList) {
-            getDataAboutAnswer(answer, userId);
+            questionService.getDataAboutAnswer(answer, userId);
         }
         return answerList;
     }
 
-    public void getDataAboutAnswer(Answer answer, String userId) {
-        User user = userDao.selectUserByUserId(answer.getAnswerUserId());
-        Integer upOrDownVote = answerDao.getUserVoteStatus(answer.getAnswerId(), userId);
-        Integer isCollectAnswer = answerDao.isCollectAnswer(answer.getAnswerId(), userId);
-        // 获取答主关注状态，是否被关注
-        Integer userFollowStatus = userDao.getUserFollowStatus(userId, answer.getAnswerUserId());
-        if (userFollowStatus == null) {
-            user.setFollowStatus(0);
-        } else {
-            user.setFollowStatus(userFollowStatus);
-        }
-        if (upOrDownVote != null) {
-            user.setVote(upOrDownVote);
-        } else {
-            user.setVote(0);
-        }
-        if (isCollectAnswer != null && isCollectAnswer == 1) {
-            answer.setCollectAnswer(Boolean.TRUE);
-        } else {
-            answer.setCollectAnswer(Boolean.FALSE);
-        }
-        answer.setUser(user);
-
-        // 获取回答的相关评论
-        List<AnswerComment> answerCommentList = commentDao.listAnswerCommentByAnswerId(answer.getAnswerId(), "REPLY_TARGET_NOT_EXISTS");
-        for (AnswerComment comment : answerCommentList) {
-            // 为评论绑定用户信息
-            User commentUser = userService.getUserByUserId(comment.getUserId());
-            comment.setUser(commentUser);
-            // 判断用户是否赞过该评论
-//            Long rank = jedis.zrank(userId + RedisKey.LIKE_ANSWER_COMMENT, comment.getAnswerCommentId() + "");
-//            comment.setLikeState(rank == null ? "false" : "true");
-            // 获取该评论被点赞次数
-//            Long likedCount = jedis.zcard(comment.getAnswerCommentId() + RedisKey.LIKED_ANSWER_COMMENT);
-            comment.setLikedCount(Integer.valueOf(1));
-
-            List<AnswerComment> replyCommentList = commentDao.listAnswerCommentByAnswerId1(answer.getAnswerId(), "REPLY_TARGET_EXISTS");
-
-            for (AnswerComment replyComment : replyCommentList) {
-                // 为评论绑定用户信息
-                User replyCommentUser = userService.getUserByUserId(replyComment.getUserId());
-                replyComment.setUser(replyCommentUser);
-                replyComment.setLikedCount(Integer.valueOf(1));
-            }
-            comment.setCommentReplyList(replyCommentList);
-        }
-
-        answer.setAnswerCommentList(answerCommentList);
-
-    }
-
+    /**
+     * 获取话题下优秀的回答用户
+     * @param topicId
+     * @return
+     */
     public List<User> getExcellentUsersByTopicId(Integer topicId) {
         return topicDao.getollowingUserByUserId(topicId);
     }
 
+    /**
+     * 获取话题页面下相关的话题列表
+     * @param partialWord
+     * @return
+     */
     public List<Topic> getProbablyRelativeTopics(String partialWord) {
         return topicDao.getProbablyRelativeTopics(partialWord);
     }
 
+    /**
+     * 关注话题
+     * @param localUserId
+     * @param topicId
+     * @return
+     */
     public Integer followTopic(String localUserId, Integer topicId) {
         Integer retStat = -1;
 
@@ -161,12 +153,24 @@ public class TopicService {
         return retStat;
     }
 
+    /**
+     * 取消关注话题
+     * @param localUserId
+     * @param topicId
+     * @return
+     */
     public Integer unfollowTopic(String localUserId, Integer topicId) {
         Integer retStat = -1;
         retStat = topicDao.updateFollowTopic(localUserId, topicId, 0);
         return retStat;
     }
 
+    /**
+     * 获取当前用户关注话题状态
+     * @param userId
+     * @param topicId
+     * @return
+     */
     public Integer getCurrStatInDB(String userId, Integer topicId) {
         Integer retStat = topicDao.getCurrStat(userId, topicId);
         return retStat;

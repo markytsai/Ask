@@ -1,30 +1,28 @@
 package com.ilsxh.controller;
 
-import com.ilsxh.entity.Answer;
 import com.ilsxh.service.CollectionService;
-import com.ilsxh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping
 public class CollectionController {
 
-    @Autowired
-    private UserService userService;
+    private CollectionService collectionService;
 
     @Autowired
-    private CollectionService collectionService;
+    public CollectionController(CollectionService collectionService) {
+        this.collectionService = collectionService;
+    }
 
     /**
      * 个人主页，收藏tab
+     *
      * @param userId
      * @param request
      * @param model
@@ -32,13 +30,8 @@ public class CollectionController {
      */
     @RequestMapping("/userHome/collection/{userId}")
     public String userHomeCollection(@PathVariable String userId, HttpServletRequest request, Model model) {
-        String localUserId = userService.getUserIdFromRedis(request);
-        // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
-
         // 获取回答列表
-        List<Answer> answerCollectionList = collectionService.getAnswerCollectionByUserId(userId);
-        map.put("answerCollectionList", answerCollectionList);
+        Map<String, Object> map = collectionService.getAnswerCollectionByUserId(userId, request);
         model.addAllAttributes(map);
 
         return "user/userHome-collection";

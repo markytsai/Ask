@@ -13,33 +13,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * 关于用户设置，详情的控制器
  */
 
 @Controller
-//@RequestMapping("/")
 public class IndexController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private IndexService indexService;
+    private QuestionService questionService;
 
     @Autowired
-    private QuestionService questionService;
+    public IndexController(UserService userService, IndexService indexService, QuestionService questionService) {
+        this.userService = userService;
+        this.indexService = indexService;
+        this.questionService = questionService;
+    }
 
     /**
      * 跳转到用户信息设置页面
@@ -54,7 +49,8 @@ public class IndexController {
         User user = indexService.getProfileInfo(userId);
         model.addAttribute("user", user);
         System.out.println();
-        return "editProfile";
+        return "setting/updateProfile";
+//        return "editProfile";
     }
 
     /**
@@ -96,34 +92,7 @@ public class IndexController {
     }
 
     /**
-     * update user's avatar
-     *
-     * @param paramName
-     * @param request
-     * @return
-     * @throws IOException
-     */
-    @RequestMapping("/updateAvatarUrl")
-    public String updateAvatarUrl(MultipartFile paramName, HttpServletRequest request) throws IOException {
-        String userId = userService.getUserIdFromRedis(request);
-
-        // 包含原始文件名的字符串
-        String fi = paramName.getOriginalFilename();
-        // 提取文件拓展名
-        String fileNameExtension = fi.substring(fi.indexOf("."), fi.length());
-        // 生成云端的真实文件名
-//        String remoteFileName = UUID.randomUUID().toString() + fileNameExtension;
-//        QiniuyunUtil.upload(paramName.getBytes(), remoteFileName);
-        // 返回图片的URL地址
-        String avatarUrl = MyUtil.AVATAR_BASE_DIR + userId + ".jpg";
-        MyUtil.saveToLocal(paramName.getBytes(), avatarUrl);
-
-        indexService.updateAvatarUrl(userId, avatarUrl);
-        return "redirect:/profile/" + userId;
-    }
-
-    /**
-     * user home page with activity tab
+     * 个人主页-动态列表tab
      *
      * @param userId
      * @param request
@@ -145,7 +114,7 @@ public class IndexController {
     }
 
     /**
-     * user home page with answer tab
+     * 个人主页-回答列表tab
      *
      * @param userId
      * @param request
@@ -168,7 +137,7 @@ public class IndexController {
 
 
     /**
-     * user home page with question tab
+     * 个人主页-提出的问题列表tab
      *
      * @param userId
      * @param request
@@ -193,6 +162,13 @@ public class IndexController {
         return "user/userHome-question";
     }
 
+    /**
+     * 个人主页-关注问题列表tab
+     * @param userId
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/userHome/followingQuestion/{userId}")
     public String userHomeFollowingQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
         String localUserId = userService.getUserIdFromRedis(request);
@@ -209,7 +185,7 @@ public class IndexController {
     }
 
     /**
-     * 获取用户主页的关注用户
+     * 个人主页-关注用户列表tab
      *
      * @param userId
      * @param request
@@ -231,6 +207,13 @@ public class IndexController {
         return "user/userHome-following-user";
     }
 
+    /**
+     * 更新头像
+     * @param request
+     * @param img
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/uploadAvatar", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
     @ResponseBody
     public Response springUpload(HttpServletRequest request, @RequestParam("file") MultipartFile img) throws Exception {

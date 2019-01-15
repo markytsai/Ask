@@ -13,25 +13,22 @@ import java.util.Date;
 @Service
 public class CommentService {
 
-    @Autowired
     private CommentDao commentDao;
-
-    @Autowired
     private UserService userService;
 
-//    public QuestionComment replyQuestionComment(QuestionComment comment, Integer userId) {
-//        comment.setLikedCount(0);
-//        comment.setCreateTime(new Date().getTime());
-//        comment.setUserId(userId);
-//
-//        commentMapper.insertQuestionCommentReply(comment);
-//        User user = userMapper.selectUserInfoByUserId(userId);
-//        comment.setUser(user);
-//
-//        return comment;
-//    }
+    @Autowired
+    public CommentService(CommentDao commentDao, UserService userService) {
+        this.commentDao = commentDao;
+        this.userService = userService;
+    }
 
-    // 评论回答
+    /**
+     * 对回答进行评论
+     * @param answerId
+     * @param commentContent
+     * @param userId
+     * @return
+     */
     public AnswerComment commentAnswer(Integer answerId, String commentContent, String userId) {
         AnswerComment comment = new AnswerComment();
         comment.setLikedCount(0);
@@ -53,7 +50,13 @@ public class CommentService {
         return comment;
     }
 
-    // 回复评论
+    /**
+     * 对评论进行回复，暂时！！！不可用！！！
+     * @param commentId
+     * @param commentContent
+     * @param userId
+     * @return
+     */
     public AnswerComment replyComment(String commentId, String commentContent, String userId) {
         Integer answerId = Integer.valueOf(commentId.split("-")[0]);
         Integer answerCommentId = Integer.valueOf(commentId.split("-")[1]);
@@ -73,33 +76,14 @@ public class CommentService {
 
     }
 
-    public AnswerComment replyAnswerComment(AnswerComment comment, String userId) {
-        comment.setLikedCount(0);
-        comment.setCreateTime(new Date().getTime());
-        comment.setUserId(userId);
-
-        commentDao.insertAnswerCommentReply(comment);
-        User user = userService.getUserByUserId(userId);
-        comment.setUser(user);
-
-        return comment;
-    }
-
+    /**
+     * 删除对回答的评论
+     * @param commentId
+     * @param userId
+     * @return
+     */
     public Integer delComment(Integer commentId, String userId) {
         commentDao.delComment(commentId, userId);
         return Integer.valueOf(1);
     }
-//    public void likeQuestionComment(Integer userId, Integer questionCommentId) {
-//        Jedis jedis = jedisPool.getResource();
-//        jedis.zadd(userId + RedisKey.LIKE_QUESTION_COMMENT, new Date().getTime(), String.valueOf(questionCommentId));
-//        jedis.zadd(questionCommentId + RedisKey.LIKED_QUESTION_COMMENT, new Date().getTime(), String.valueOf(userId));
-//        jedisPool.returnResource(jedis);
-//    }
-
-//    public void likeAnswerComment(Integer userId, Integer answerCommentId) {
-//        Jedis jedis = jedisPool.getResource();
-//        jedis.zadd(userId + RedisKey.LIKE_ANSWER_COMMENT, new Date().getTime(), String.valueOf(answerCommentId));
-//        jedis.zadd(answerCommentId + RedisKey.LIKED_ANSWER_COMMENT, new Date().getTime(), String.valueOf(userId));
-//        jedisPool.returnResource(jedis);
-//    }
 }

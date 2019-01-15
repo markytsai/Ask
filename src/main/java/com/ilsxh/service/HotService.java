@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class HotService {
 
-    @Autowired
     private HotDao hotDao;
+
+    @Autowired
+    public HotService(HotDao hotDao) {
+        this.hotDao = hotDao;
+    }
 
     public List<Question> getHotQuestion() {
 

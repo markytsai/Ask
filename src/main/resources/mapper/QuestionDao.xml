@@ -51,6 +51,7 @@
         answer_count
         FROM
         question
+        limit 10
 
     </select>
 
@@ -156,6 +157,13 @@
         where question_title like CONCAT(CONCAT('%',#{partialWord}),'%')
         limit 3
     </select>
+
+
+    <select id="isQuestionAnswered" resultType="Integer">
+        select answer_id from answer
+        where answer_user_id = #{userId} and question_id = #{questionId}
+    </select>
+
 </mapper>
 
 

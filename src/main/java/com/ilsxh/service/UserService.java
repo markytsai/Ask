@@ -125,7 +125,7 @@ public class UserService {
     }
 
     /**
-     * 根据cookie值来获取用户唯一ID
+     * 根据cookie值来获取用户唯一ID，工具类
      *
      * @param request
      * @return
@@ -174,6 +174,19 @@ public class UserService {
 
         map.put("user", loginUser);
         map.put("homeUser", homeUser);
+        return map;
+    }
+
+    public Map<String, Object> getUserDetailWithLoginUser(String userId, String localUserId){
+        Map<String, Object> map = new HashMap<>();
+        User user = this.getUserByUserId(userId);
+
+        Integer isExistFollowStatus = selectUserByUserIdWithFollowingStatus(userId, localUserId);
+        user.setFollowStatus(isExistFollowStatus == null ? 0 : isExistFollowStatus);
+
+        map.put("user", user);
+        map.put("localUserId", localUserId);
+
         return map;
     }
 

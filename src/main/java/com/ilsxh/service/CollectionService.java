@@ -10,33 +10,44 @@ import com.ilsxh.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CollectionService {
 
-    @Autowired
     private CollectionDao collectionDao;
-
-    @Autowired
     private QuestionDao questionDao;
-
-    @Autowired
     private AnswerDao answerDao;
-
-    @Autowired
     private UserDao userDao;
+    private UserHelperService userHelperService;
 
     @Autowired
-    private UserService userService;
+    public CollectionService(CollectionDao collectionDao, QuestionDao questionDao, AnswerDao answerDao, UserDao userDao, UserHelperService userHelperService) {
+        this.collectionDao = collectionDao;
+        this.questionDao = questionDao;
+        this.answerDao = answerDao;
+        this.userDao = userDao;
+        this.userHelperService = userHelperService;
+    }
 
-    public List<Answer> getAnswerCollectionByUserId(String userId) {
+    /**
+     * 获取用户的回答收藏列表
+     * @param userId
+     * @param request
+     * @return
+     */
+    public Map getAnswerCollectionByUserId(String userId, HttpServletRequest request) {
 
+        String localUserId = userHelperService.getUserIdFromRedis(request);
+        // 获取用户信息,userId from parameter, localhost from token
+        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
         List<Answer> answerCollectionList = collectionDao.getAnswerCollectionByUserId(userId);
 
         for (Answer answer : answerCollectionList) {
             Question question = questionDao.selectQuestionByQuestionId(answer.getQuestionId());
-            User user = userService.getUserByUserId(answer.getAnswerUserId());
+            User user = userHelperService.getUserByUserId(answer.getAnswerUserId());
             answer.setQuestion(question);
 
             // 获取登录用户和被查看直接的收藏，点赞关系
@@ -62,6 +73,7 @@ public class CollectionService {
 
             answer.setUser(user);
         }
-        return answerCollectionList;
+        map.put("answerCollectionList", answerCollectionList);
+        return map;
     }
 }

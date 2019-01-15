@@ -11,9 +11,18 @@ import java.util.*;
 @Service
 public class IndexService {
 
-    @Autowired
     private IndexDao indexDao;
 
+    @Autowired
+    public IndexService(IndexDao indexDao) {
+        this.indexDao = indexDao;
+    }
+
+    /**
+     * 获取用户个人信息
+     * @param userId
+     * @return
+     */
     public User getProfileInfo(String userId) {
 
         User user = indexDao.selectProfileInfoByUserId(userId);
@@ -21,19 +30,21 @@ public class IndexService {
         return user;
     }
 
-    public Integer isQuestionAnswered(String userId, Integer questionId) {
-        Integer ret = indexDao.isQuestionAnswered(userId, questionId);
-        if (ret == null || ret == 0) {
-            return 0;
-        } else {
-            return ret;
-        }
-    }
-
+    /**
+     * 更新用户资料
+     * @param user
+     */
     public void updateProfile(User user) {
         indexDao.updateProfile(user);
     }
 
+    /**
+     * 更新密码
+     * @param userId
+     * @param password
+     * @param newpassword
+     * @return
+     */
     public Map<String, String> updatePassword(String userId, String password, String newpassword) {
 
         Map<String, String> map = new HashMap<>();
@@ -46,6 +57,11 @@ public class IndexService {
         return map;
     }
 
+    /**
+     * 更新头像云端链接
+     * @param userId
+     * @param avatarUrl
+     */
     public void updateAvatarUrl(String userId, String avatarUrl) {
         indexDao.updateAvatarUrl(userId, avatarUrl);
     }

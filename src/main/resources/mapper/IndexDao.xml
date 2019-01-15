@@ -11,11 +11,6 @@
     	from user where user_id = #{userId}
     </select>
 
-    <select id="isQuestionAnswered" resultType="Integer">
-        select answer_id from answer
-        where answer_user_id = #{userId} and question_id = #{questionId}
-    </select>
-
     <update id="updateProfile" parameterType="com.ilsxh.entity.User">
         update user
         set username=#{username},

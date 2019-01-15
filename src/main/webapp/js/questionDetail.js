@@ -502,7 +502,8 @@ function submitFirstAnswer(answerContent, questionId) {
         success: function (response) {
             if (response.state == 1) {
                 // 回答成功提交
-                $('#answerContent').text(answerContent);
+                // $('#answerContent').text(answerContent);
+                $('#answerContent').innerHTML = answerContent;
                 $('#afterAnswerCard').show();
                 $('#iWantAnswer').text('修改回答');
                 $('#iWantAnswer').data('id', response.data);
