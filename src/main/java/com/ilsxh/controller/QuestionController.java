@@ -1,5 +1,6 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
@@ -37,6 +38,7 @@ public class QuestionController {
      * @param model
      * @return
      */
+    @OperAnnotation(moduleName = "问题模块",option = "获取关注问题列表")
     @RequestMapping("/following")
     public String getFollowingQuestionsByUserId(HttpServletRequest request, Model model) {
 
@@ -58,6 +60,7 @@ public class QuestionController {
      * @param model
      * @return
      */
+    @OperAnnotation(moduleName = "推荐模块",option = "获取推荐问题列表")
     @RequestMapping("/recommend")
     public String getRecommendQuestionsByUserId(HttpServletRequest request, Model model) {
 

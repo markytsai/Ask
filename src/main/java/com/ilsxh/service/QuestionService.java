@@ -1,5 +1,6 @@
 package com.ilsxh.service;
 
+import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.dao.*;
 import com.ilsxh.entity.*;
 import com.ilsxh.enums.StatusEnum;
@@ -51,6 +52,7 @@ public class QuestionService {
      * @param userId
      * @return
      */
+    @OperAnnotation(moduleName = "关注模块",option = "获取用户关注问题列表")
     public List<Question> getFollowingQuestionByUserId(String userId) {
 
         List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId);
@@ -69,6 +71,7 @@ public class QuestionService {
      *
      * @return
      */
+    @OperAnnotation(moduleName = "推荐模块",option = "获取用户推荐问题列表")
     public List<Question> getRecommendedQuestionByUserId() {
         List<Question> questionList = questionDao.selectRecommendedQuestionByUserId();
 

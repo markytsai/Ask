@@ -8,6 +8,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.List;
 
 @ControllerAdvice
@@ -27,7 +28,7 @@ public class CustomExceptionResolver {
             String msg = error.getDefaultMessage();
             return BaseResponse.createFail(StatusEnum.FAIL.getCode(), msg);
         } else {
-            return new BaseResponse(StatusEnum.KNOWN_ERROR);
+            return BaseResponse.create(StatusEnum.KNOWN_ERROR, ExceptionUtils.getStackTrace(e));
         }
     }
 }
