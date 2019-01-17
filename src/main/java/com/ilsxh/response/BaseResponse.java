@@ -101,15 +101,9 @@ public class BaseResponse<T> implements Serializable {
      * @param <T>
      * @return
      */
-    public static <T> BaseResponse<T> createFail(T t, String message){
-        return new BaseResponse<T>(StatusEnum.FAIL.getCode(), StringUtil.isNullOrEmpty(message) ? StatusEnum.FAIL.getMessage() : message, t);
+    public static <T> BaseResponse<T> createFail(String message, T dataBody){
+        return new BaseResponse<T>(StatusEnum.FAIL.getCode(), StringUtil.isNullOrEmpty(message) ? StatusEnum.FAIL.getMessage() : message, dataBody);
     }
-
-    public static <T> BaseResponse<T> create(T t, StatusEnum statusEnum, String message){
-
-        return new BaseResponse<T>(statusEnum.getCode(), message, t);
-    }
-
 
     public String getCode() {
         return code;

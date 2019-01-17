@@ -55,6 +55,8 @@
         </property>
     </bean>
 
+    <bean class="com.ilsxh.exception.CustomExceptionResolver"/>
+
 
     <mvc:resources location="/css/" mapping="/css/**"/>
     <mvc:resources location="/fonts/" mapping="/fonts/**"/>

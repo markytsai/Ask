@@ -34,8 +34,6 @@ $("#loginButton").on("click", function () {
         dataType: 'json',
         success: function (response) {
             if (response.code == 1) {
-                // localStorage.setItem("userId", response.data.loginUserInfo.userId);
-                // localStorage.setItem("username", response.data.loginUserInfo.username);
                 window.location.href = "/index";
             } else {
                 $("#login-password-error").text(response.message);

@@ -7,6 +7,7 @@ import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.exception.CustomException;
 import com.ilsxh.redis.UserKey;
 import com.ilsxh.response.BaseResponse;
 import com.ilsxh.util.UUIDUtil;
@@ -56,8 +57,9 @@ public class UserService {
 
         String userId = userDao.selectUserIdByEmailAndPassword(email, password);
         if (userId == null) {
-            loginUserMap.put("loginError", "用户名或密码错误");
-            return loginUserMap;
+            throw new CustomException(StatusEnum.LOGIN_ERROR);
+//            loginUserMap.put("loginError", "用户名或密码错误");
+//            return loginUserMap;
         }
 
         autoGenCookie(response, userId, rememberMe);

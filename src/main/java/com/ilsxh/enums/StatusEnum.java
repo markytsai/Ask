@@ -6,13 +6,18 @@ import java.util.List;
 public enum StatusEnum {
 
     /** 成功 */
-    SUCCESS("1", "成功"),
+    SUCCESS("1", "操作成功"),
     /** 失败 */
-    FAIL("0", "失败"),
-    /**
-     * 未知错误
-     */
+    FAIL("0", "操作失败"),
+
+    LOGIN_ERROR("101", "用户名或密码错误"),
+    REGISTER_ERROR("102", "注册出现错误"),
+
+    KNOWN_ERROR("100", "未知错误"),
+
+
     OPERATION_ERROR("400", "操作失败"),
+
     PARAMETER_IS_NULL("200", "传入的参数为空"),
     LOGIN_SUCCESS("1", ""),
     LOGIN_FAILURE("0", ""),

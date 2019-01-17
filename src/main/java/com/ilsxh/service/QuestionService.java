@@ -2,6 +2,8 @@ package com.ilsxh.service;
 
 import com.ilsxh.dao.*;
 import com.ilsxh.entity.*;
+import com.ilsxh.enums.StatusEnum;
+import com.ilsxh.exception.CustomException;
 import com.ilsxh.redis.AnswerKey;
 import com.ilsxh.redis.HotDataKey;
 import com.ilsxh.util.MyUtil;
@@ -45,6 +47,7 @@ public class QuestionService {
 
     /**
      * 获取用户的关注问题列表
+     *
      * @param userId
      * @return
      */
@@ -63,6 +66,7 @@ public class QuestionService {
 
     /**
      * 获取用户的推荐问题列表
+     *
      * @return
      */
     public List<Question> getRecommendedQuestionByUserId() {
@@ -79,6 +83,7 @@ public class QuestionService {
 
     /**
      * 获取问题的回答列表详情
+     *
      * @param questionId
      * @param userId
      * @return
@@ -94,6 +99,7 @@ public class QuestionService {
 
     /**
      * 获取用户的提出问题列表
+     *
      * @param userId
      * @return
      */
@@ -111,6 +117,7 @@ public class QuestionService {
 
     /**
      * 获取问题详情
+     *
      * @param questionID
      * @return
      */
@@ -120,6 +127,7 @@ public class QuestionService {
 
     /**
      * 判断用户是否已经关注了该问题
+     *
      * @param userId
      * @param questionId
      * @return
@@ -136,6 +144,7 @@ public class QuestionService {
 
     /**
      * 用户是否已经回答该问题
+     *
      * @param userId
      * @param questionId
      * @return
@@ -151,6 +160,7 @@ public class QuestionService {
 
     /**
      * 用户关注问题
+     *
      * @param localUserId
      * @param questionId
      * @return
@@ -161,6 +171,7 @@ public class QuestionService {
 
     /**
      * 用户取消关注问题
+     *
      * @param localUserId
      * @param questionId
      * @return
@@ -172,6 +183,7 @@ public class QuestionService {
 
     /**
      * 提交回答
+     *
      * @param answerContent
      * @param questionId
      * @param localUserId
@@ -195,6 +207,7 @@ public class QuestionService {
 
     /**
      * 更新回答
+     *
      * @param userId
      * @param answerId
      * @param answerContent
@@ -207,6 +220,7 @@ public class QuestionService {
 
     /**
      * 删除回答
+     *
      * @param answerId
      */
     public Integer deleteAnswer(String answerId) {
@@ -216,6 +230,7 @@ public class QuestionService {
 
     /**
      * 提出问题
+     *
      * @param questionTitle
      * @param questionContent
      * @param topicString
@@ -241,6 +256,7 @@ public class QuestionService {
 
     /**
      * 为提出的问题设置话题标签集合
+     *
      * @param question
      * @param topicString
      */
@@ -254,6 +270,7 @@ public class QuestionService {
 
     /**
      * 获取问题的相关话题标签
+     *
      * @param qustionId
      * @return
      */
@@ -263,6 +280,7 @@ public class QuestionService {
 
     /**
      * 提问键入文字，实时获取相关问题并显示，供用户选择
+     *
      * @param partialWord
      * @return
      */
@@ -308,6 +326,7 @@ public class QuestionService {
 
     /**
      * 获取一些公共的回答信息
+     *
      * @param answer
      * @param userId
      */

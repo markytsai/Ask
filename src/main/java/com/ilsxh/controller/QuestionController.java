@@ -3,6 +3,7 @@ package com.ilsxh.controller;
 import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.exception.CustomException;
 import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.*;
 
@@ -46,6 +47,7 @@ public class QuestionController {
         model.addAttribute("questionList", questionList);
 
         questionService.getCommonHotData(model);
+
         return "index-following";
     }
 
