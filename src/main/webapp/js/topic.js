@@ -58,7 +58,7 @@ function followTopic(topicId) {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 $('.focusTopic').text('取消关注');
             } else {
                 alert("操作失败");
@@ -74,7 +74,7 @@ function unfollowTopic(topicId) {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 $('.focusTopic').text('关注话题');
             } else {
                 alert("操作失败");

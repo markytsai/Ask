@@ -28,7 +28,7 @@ function init(){
         contentType:false,
         async:false,
         success:function(response){
-        	flag = response.data;
+        	flag = response.dataBody;
         }
     });
 	

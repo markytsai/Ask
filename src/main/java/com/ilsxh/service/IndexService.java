@@ -62,8 +62,9 @@ public class IndexService {
      * @param userId
      * @param avatarUrl
      */
-    public void updateAvatarUrl(String userId, String avatarUrl) {
-        indexDao.updateAvatarUrl(userId, avatarUrl);
+    public Integer updateAvatarUrl(String userId, String avatarUrl) {
+        Integer updEffectRow = indexDao.updateAvatarUrl(userId, avatarUrl);
+        return updEffectRow;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.ilsxh.service;
 
+import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.dao.AnswerDao;
 import com.ilsxh.dao.QuestionDao;
 import com.ilsxh.dao.UserDao;
@@ -7,13 +8,10 @@ import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
 import com.ilsxh.redis.UserKey;
-import com.ilsxh.util.Response;
+import com.ilsxh.response.BaseResponse;
 import com.ilsxh.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -25,20 +23,18 @@ import java.util.Map;
 @Service
 public class UserService {
 
-    @Autowired
     private UserDao userDao;
-
-    @Autowired
     private AnswerDao answerDao;
-
-    @Autowired
     private QuestionDao questionDao;
-
-    @Autowired
-    private JedisPool jedisPool;
-
-    @Autowired
     private RedisService redisService;
+
+    @Autowired
+    public UserService(UserDao userDao, AnswerDao answerDao, QuestionDao questionDao, RedisService redisService) {
+        this.userDao = userDao;
+        this.answerDao = answerDao;
+        this.questionDao = questionDao;
+        this.redisService = redisService;
+    }
 
     /**
      * expire time is one single day
@@ -80,7 +76,6 @@ public class UserService {
             registerUserMap.put("loginError", "用户名或密码错误");
         }
         User user = userDao.selectUserByUserId(userId);
-//        addCookie(user, response);
         return registerUserMap;
     }
 
@@ -90,10 +85,9 @@ public class UserService {
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
                 loginToken = cookie.getValue();
-                // 从Redis缓存中清除loginToken
-                Jedis jedis = jedisPool.getResource();
-                jedis.del(loginToken);
-                jedis.close();
+                if (redisService.delete(UserKey.loginUserKey, loginToken)) {
+                    System.out.println("token刪除成功");
+                }
                 break;
             }
         }
@@ -108,7 +102,6 @@ public class UserService {
 
 
     private void autoGenCookie(HttpServletResponse response, String userId, Boolean rememberMe) {
-        // generate cookies to backward browsers
         String loginToken = UUIDUtil.uuid();
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, loginToken);
         cookie.setPath("/");
@@ -119,65 +112,9 @@ public class UserService {
         response.addCookie(cookie);
 
         redisService.set(UserKey.loginUserKey, loginToken, userId);
-//        Jedis jedis = jedisPool.getResource();
-//        jedis.set(loginToken, userId.toString(), "nx", "ex", EXPIRE_TIME);
-//        jedis.close();
     }
 
-    /**
-     * 根据cookie值来获取用户唯一ID，工具类
-     *
-     * @param request
-     * @return
-     */
-    public String getUserIdFromRedis(HttpServletRequest request) {
-        String loginToken = null;
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
-                loginToken = cookie.getValue();
-                break;
-            }
-        }
-
-        String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
-
-        return userId;
-    }
-
-    /**
-     * 根据传来的参数和token里面的userId，判断是不是登录用户
-     *
-     * @param userId
-     * @param localUserId
-     * @return
-     */
-    public Map<String, Object> getUserProfile(String userId, String localUserId) {
-        Map<String, Object> map = new HashMap<>();
-        // 登录用户
-        User loginUser = userDao.selectUserByUserId(localUserId);
-        User homeUser = null;
-        homeUser = userDao.selectUserByUserId(userId);
-
-        if (userId.equals(localUserId)) {
-            // 即将被访问主页的用户
-            map.put("isLoginUser", "true");
-        } else {
-            map.put("isLoginUser", "false");
-            Integer isExistFollowStatus = selectUserByUserIdWithFollowingStatus(userId, localUserId);
-            if (isExistFollowStatus == null) {
-                homeUser.setFollowStatus(0);
-            } else {
-                homeUser.setFollowStatus(isExistFollowStatus);
-            }
-        }
-
-        map.put("user", loginUser);
-        map.put("homeUser", homeUser);
-        return map;
-    }
-
-    public Map<String, Object> getUserDetailWithLoginUser(String userId, String localUserId){
+    public Map<String, Object> getUserDetailWithLoginUser(String userId, String localUserId) {
         Map<String, Object> map = new HashMap<>();
         User user = this.getUserByUserId(userId);
 
@@ -238,15 +175,19 @@ public class UserService {
     }
 
 
-    public void followUser(String userId, String userIdToBeFollowed, Long createTime) {
+    public BaseResponse followUser(String userId, String userIdToBeFollowed, Long createTime) {
 
+        Integer effectRow = 0;
         Integer followExisted = userDao.getUserFollowStatus(userId, userIdToBeFollowed);
         if (followExisted == null) { // 第一次关注答主
-            userDao.insertUserFollowStatus(userId, userIdToBeFollowed, 1, createTime);
+            effectRow = userDao.insertUserFollowStatus(userId, userIdToBeFollowed, 1, createTime);
+            return new BaseResponse(effectRow == 1 ? StatusEnum.SUCCESS.getCode() : StatusEnum.FAIL.getCode(), "成功关注用户", "");
         } else if (followExisted == 0) { // 曾经关注过，再次关注操作
-            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 1, createTime);
+            effectRow = userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 1, createTime);
+            return new BaseResponse(effectRow == 1 ? StatusEnum.SUCCESS.getCode() : StatusEnum.FAIL.getCode(), "成功关注用户", "");
         } else { // 取关操作
-            userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0, createTime);
+            effectRow = userDao.updateUserFollowStatus(userId, userIdToBeFollowed, 0, createTime);
+            return new BaseResponse(effectRow == 1 ? StatusEnum.SUCCESS.getCode() : StatusEnum.FAIL.getCode(), "取消关注用户", "");
         }
 
     }

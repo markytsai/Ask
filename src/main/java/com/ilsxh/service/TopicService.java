@@ -15,16 +15,16 @@ public class TopicService {
     private TopicDao topicDao;
     private RedisService redisService;
     private QuestionService questionService;
-    private HotService hotService;
+    private HotDao hotDao;
     private UserHelperService userHelperService;
 
     @Autowired
     public TopicService(TopicDao topicDao, RedisService redisService, QuestionService questionService,
-                        HotService hotService, UserHelperService userHelperService) {
+                        HotDao hotDao, UserHelperService userHelperService) {
         this.topicDao = topicDao;
         this.redisService = redisService;
         this.questionService = questionService;
-        this.hotService = hotService;
+        this.hotDao = hotDao;
         this.userHelperService = userHelperService;
     }
 
@@ -58,7 +58,7 @@ public class TopicService {
         List<Question> relatedQuestion = redisService.getList(TopicKey.relatedQuestionKey, topicId.toString(), Question.class);
         if (relatedQuestion == null) {
             relatedQuestion = questionService.getRecommendedQuestionByUserId();
-            redisService.setList(TopicKey.relatedQuestionKey, topicId.toString(), relatedQuestion);
+            redisService.setList(TopicKey.relatedQuestionKey, "topicId:" + topicId.toString(), relatedQuestion);
         }
         model.addAttribute("relatedQuestion", relatedQuestion);
 
@@ -66,15 +66,15 @@ public class TopicService {
         List<User> relatedExcellentUsers = redisService.getList(TopicKey.relatedExcellentUserKey, topicId.toString(), User.class);
         if (relatedExcellentUsers == null) {
             relatedExcellentUsers = userHelperService.getollowingUserByUserId(userId);
-            redisService.setList(TopicKey.relatedExcellentUserKey, topicId.toString(), relatedExcellentUsers);
+            redisService.setList(TopicKey.relatedExcellentUserKey, "topicId:" + topicId.toString(), relatedExcellentUsers);
         }
         model.addAttribute("relatedExcellentUsers", relatedExcellentUsers);
 
         // 侧边栏相关话题
         List<Topic> relatedTopics = redisService.getList(TopicKey.relatedTopicKey, topicId.toString(), Topic.class);
         if (relatedTopics == null) {
-            relatedTopics = hotService.getHotTopic();
-            redisService.setList(TopicKey.relatedTopicKey, topicId.toString(), relatedTopics);
+            relatedTopics = hotDao.getHotTopics();
+            redisService.setList(TopicKey.relatedTopicKey, "topicId:" + topicId.toString(), relatedTopics);
         }
         model.addAttribute("relatedTopics", relatedTopics);
     }

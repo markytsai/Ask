@@ -45,8 +45,8 @@ function getAnswerId() {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
-                var answerId = response.data;
+            if (response.code == 1) {
+                var answerId = response.dataBody;
                 // 该问题还没有回答
                 if (answerId == 0) {
                 } else {
@@ -205,7 +205,7 @@ $('.glyphicon-thumbs-up').click(function (event) {
         data: {"userVote": userVote, "upOrDownClick": 1},
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 $.notify({
                     // options
                     message: response.message
@@ -266,7 +266,7 @@ $('.glyphicon-thumbs-down').click(function (event) {
         data: {"userVote": userVote, "upOrDownClick": -1},
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 $.notify({
                     // options
                     message: response.message
@@ -317,7 +317,7 @@ $('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
         data: {"isCollect": isCollect},
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 $.notify({
                     message: response.message
                 }, {
@@ -388,7 +388,7 @@ $('.delConfirmBtn').click(function (event) {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 $('#iWantAnswer').text('我要回答');
             } else {
             }
@@ -414,7 +414,7 @@ function followQuestion() {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
             } else {
             }
         }
@@ -450,7 +450,7 @@ function updateAnswer(answerContent, questionId, answerId) {
         data: {'answerContent': answerContent, "questionId": questionId, "answerId": answerId},
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 $('#answerContent').text(answerContent);
                 $('#afterAnswerCard').show();
 
@@ -500,14 +500,14 @@ function submitFirstAnswer(answerContent, questionId) {
         data: {'answerContent': answerContent},
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
                 // 回答成功提交
                 // $('#answerContent').text(answerContent);
                 $('#answerContent').innerHTML = answerContent;
                 $('#afterAnswerCard').show();
                 $('#iWantAnswer').text('修改回答');
-                $('#iWantAnswer').data('id', response.data);
-                $('#modifyAfterAnswerBtn').data('id', response.data);
+                $('#iWantAnswer').data('id', response.dataBody);
+                $('#modifyAfterAnswerBtn').data('id', response.dataBody);
             } else {
             }
         }
@@ -590,7 +590,7 @@ function followQuestion() {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
             } else {
             }
         }
@@ -613,7 +613,7 @@ $('.followHimclass').click(function (event) {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
             } else {
             }
         }
@@ -677,7 +677,7 @@ var readURL = function (input) {
             // 告诉jQuery不要去设置Content-Type请求头
             contentType: false,
             success: function (response) {
-                if (response.state == 1) {
+                if (response.code == 1) {
                 } else {
                 }
             }
@@ -753,10 +753,10 @@ $(".avatarImg").hover(function () {
             type: "get",
             dataType: 'json',
             success: function (response) {
-                if (response.state == 1) {
+                if (response.code == 1) {
 
-                    var user = response.data.user;
-                    if (user.userId != response.data.localUserId) {
+                    var user = response.dataBody.user;
+                    if (user.userId != response.dataBody.localUserId) {
                         setFloatingDivData(user);
                     } else {
                         $('.floatingCard').hide();
@@ -787,10 +787,10 @@ $(".avatarImgSided").hover(function () {
             type: "get",
             dataType: 'json',
             success: function (response) {
-                if (response.state == 1) {
+                if (response.code == 1) {
 
-                    var user = response.data.user;
-                    if (user.userId != response.data.localUserId) {
+                    var user = response.dataBody.user;
+                    if (user.userId != response.dataBody.localUserId) {
                         setFloatingDivData(user);
                     } else {
                         $('.floatingCard').hide();
@@ -850,9 +850,9 @@ $('.commentBtn').on('click', function (event) {
         data: formData,
         type: "post",
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
 
-                var answerComment = response.data;
+                var answerComment = response.dataBody;
 
                 var newCommentItem = "<div class=\"avatarImg\" style=\"float:left; width:35px; height:35px;margin-left: 0;\">\n" +
                     "    <a href=\"/userHome/activity/" + answerComment.user.userId + "\" target=\"_blank\">\n" +
@@ -922,14 +922,13 @@ $('#delCommentId').on("click", function () {
     $('#delComment').modal('toggle');
     var commentId = $('#delCommentId').val();
     $.ajax({
-        url: "/delComment/" + commentId.split('-')[3],
+        url: "/delComment/" + commentId.split('-')[1],
         type: "get",
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
 
                 document.getElementById(commentId).parentNode.removeChild(document.getElementById(commentId));
             }
-
         }
     });
 });
@@ -949,9 +948,9 @@ $('.replyComment').on("click", function (event) {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
 
-                var user = response.data.user;
+                var user = response.dataBody.user;
 
                 var replyInputAreaDiv = "<div style=\"float: left;margin-right: 6px;\">\n" +
                     "    <img th:src=\"" + user.avatarUrl + "\" width=\"35px\" height=\"35px\" style=\"border-radius: 100%\" /></div>\n" +
@@ -997,9 +996,9 @@ $('.replyBtn').on('click', function (event) {
         data: formData,
         type: "post",
         success: function (response) {
-            if (response.state == 1) {
+            if (response.code == 1) {
 
-                var answerComment = response.data;
+                var answerComment = response.dataBodyBody;
 
                 var newCommentItem = "<div class=\"avatarImg\" style=\"float:left; width:35px; height:35px;margin-left: 0;\">\n" +
                     "    <a href=\"/userHome/activity/" + answerComment.user.userId + "\" target=\"_blank\">\n" +

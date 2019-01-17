@@ -105,8 +105,8 @@ function autoSearchRelativeQuestion(partialWord) {
         async: false,
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
-                questionList = response.data;
+            if (response.code == 1) {
+                questionList = response.dataBody;
                 hint = response.message;
             } else {
             }
@@ -121,8 +121,8 @@ function autoSearchRelativeTopic(partialWord) {
         async: false,
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
-                topicList = response.data;
+            if (response.code == 1) {
+                topicList = response.dataBody;
                 hint = response.message;
             } else {
             }

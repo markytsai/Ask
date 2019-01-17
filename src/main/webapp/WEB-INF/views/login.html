@@ -15,89 +15,140 @@
     <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
 
 </head>
-<body background="/images/login.jpg" style="width: 100%; height: 100%">
+<body background="/images/back.jpeg">
 <div>
     <div class="container">
 
-        <form class="form-signin">
-            <h2 class="form-signin-heading">请登录</h2>
-            <label for="inputEmail" class="sr-only">电子邮件</label>
+        <div id="mainContainer" style="width: 600px;height: 545px;margin: 0 auto;background-color: white">
+            <div style="text-align: center;padding-top: 25px;height: 145px;">
+                <div style="height: 66px">
+                    <img th:src="@{/images/logo.png}"
+                         style="display: inline-block; height: 66px;"/>
+                </div>
+                <div>
+                    <span><h4>一部思维火花碰撞、有问必有答的问答词典，尽在于此</h4></span>
+                </div>
+            </div>
+            <div style="display: flex;">
 
-            <input type="email" id="inputEmail" class="form-control" placeholder="电子邮件" required="true"
-                   autofocus="true"/>
-            <label for="inputPassword" class="sr-only">登录密码</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="登录密码" required="true"/>
-            <div class="checkbox">
-                <label>
-                    <input id="rememberMe" type="checkbox" value="remember-me"/>三天内保持登录
-                </label>
-            </div>
-            <span id="login-email-error" class="text-danger"></span>
-            <span id="login-password-error" class="text-danger"></span>
-            <button id="loginButton" class="btn btn-lg btn-primary btn-block" type="button">登录</button>
-            <br/>
-            <div style="float: right;">
-                <a th:href="@{/register}">没有账号，立即注册</a><br/>
-            </div>
-            <div style="float: left;">
-                <a th:href="@{/touristLogin}">游客登录</a>
+                <!--其他登录+注册栏-->
+                <div>
+                    <div class="form-signin">
+                        <button id="weiboLogin" class="btn btn-lg btn-danger  btn-block"
+                                style="width: 260px;height: 35px;padding-top: 5px;border-radius: 0;" type="button">谷歌登录</button><br/>
+
+                        <button id="googleLogin" class="btn btn-lg btn-danger btn-block"
+                                style="width: 260px;height: 35px;padding-top: 5px;border-radius: 0;" type="button">微博登录</button>
+
+                        <br/>
+                        <div style="width: 260px;">
+                            <span>注意：你可以通过谷歌或者微博账号来直接登录AnswerPedia来查阅这个问答百科词典。如果你进行了注册的操作，我们默许
+                            你已经同意AnswerPedia的<a th:href="@{/#}">隐私规则</a>。</span>
+                        </div>
+                    </div>
+                    <div id="registerModule" style="display: none;">
+                        <form class="form-signin">
+                            <h5 class="form-signin-heading">注册你的账号</h5>
+
+                            <label for="inputEmailReg" class="sr-only">Email address</label>
+                            <input type="email" id="inputEmailReg" style="width: 260px;height: 35px;padding-bottom: 8px;"
+                                   class="form-control" placeholder="电子邮箱" required="true" autocomplete="off" autofocus="true"/><br/>
+
+                            <label for="inputUsernameReg" class="sr-only">Username</label>
+                            <input id="inputUsernameReg" class="form-control"
+                                   style="width: 260px;height: 35px;padding-bottom: 8px;" placeholder="用户名" autocomplete="off"
+                                   required="true"/><br/>
+
+                            <label for="inputPasswordReg" class="sr-only" autocomplete="off">Password</label>
+                            <input type="password" id="inputPasswordReg"
+                                   style="width: 260px;height: 35px;padding-bottom: 8px;"
+                                   class="form-control" placeholder="密码" required="true"/><br/>
+
+                            <span id="regi-username-error" class="text-danger"></span>
+                            <span id="regi-email-error" class="text-danger"></span>
+                            <span id="regi-password-error" class="text-danger"></span>
+                            <button id="registerButton" class="btn btn-lg btn-primary btn-block"
+                                    style="width: 260px;height: 35px;padding-top: 5px;border-radius: 0;" type="button">注册
+                            </button>
+                            <br/>
+                            <div style="width: 258px;height: 40px;margin-top: -10px;">
+                                <div style="float: left;">
+                                    <span class="cancelReg">取消</span>
+                                </div>
+                                <div style="text-align: right">
+                                    <span class="cancelReg" th:href="@{/login}">已有账号，立即登录</span>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+
+                <!--登录栏-->
+                <div>
+                    <div>
+                        <form class="form-signin" style="margin-top: -9px;">
+                            <h5 class="form-signin-heading">请登录</h5>
+                            <label for="inputEmail" class="sr-only">电子邮件</label>
+
+                            <input type="email" id="inputEmail" style="width: 260px;height: 35px;padding-bottom: 8px;"
+                                   class="form-control" placeholder="电子邮件" required="true"
+                                   autofocus="true"/><br/>
+                            <label for="inputPassword" class="sr-only">登录密码</label>
+                            <input type="password" id="inputPassword"
+                                   style="width: 260px;height: 35px;padding-bottom: 8px;"
+                                   class="form-control" placeholder="登录密码" required="true"/>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="rememberMe" type="checkbox" value="remember-me"/>三天内保持登录
+                                </label>
+                            </div>
+                            <span id="login-email-error" class="text-danger"></span>
+                            <span id="login-password-error" class="text-danger"></span>
+                            <button id="loginButton" style="width: 260px;height: 35px;padding-top: 5px;border-radius: 0;"
+                                    class="btn btn-lg btn-primary btn-block"
+                                    type="button">登录
+                            </button>
+                            <div style="width: 258px;height: 40px;padding-top: 10px;">
+                                <div style="float: right;">
+                                    <span class="toRegister">没有账号，立即注册</span><br/>
+                                </div>
+                                <div style="float: left;">
+                                    <span class="touristLogin">游客登录</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
-        </form>
+            <hr style="border-width: 2px;"/>
+            <div>
+                <div style="text-align: center;">
+                    <p>反馈邮箱：tsaizhenya@gmail.com  违法和不良信息举报电话：010-58341833</p>
+                </div>
+            </div>
+
+            <hr style="border-width: 2px;"/>
+            <div class="illustration">
+                <div style="text-align: center;">
+                    <span><a style="color: #949494;" th:href="@{/#}">关于</a></span>
+                    <span><a style="color: #949494;" th:href="@{/#}">隐私</a></span>
+                    <span><a style="color: #949494;" th:href="@{/#}">联系我</a></span>
+                    <span><a style="color: #949494;" th:href="@{/#}">免责声明</a></span>
+                    <span><a style="color: #949494;" th:href="@{/#}">举报</a></span>
+                </div>
+
+            </div>
+        </div>
 
     </div> <!-- /container -->
 </div>
-<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/loginReg.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/jquery-ui.js"></script>
 
-<script>
-
-
-    $("#inputEmail").blur(function () {
-        var email = $(this).val();
-
-        if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(email)) {
-            $("#login-email-error").text("请输入正确的邮箱");
-        } else {
-            $("#login-email-error").text("");
-        }
-    });
-    $("#inputPassword").blur(function () {
-        var value = $(this).val();
-
-        if (!/[a-zA-Z0-9]{6,10}/.test(value)) {
-            $("#login-password-error").text("密码长度须在6-20个字符");
-        } else {
-            $("#login-password-error").text("");
-        }
-    });
-
-
-    $("#loginButton").on("click", function () {
-
-        var userData = {
-            "email": $("#inputEmail").val(),
-            "password": $("#inputPassword").val(),
-            "rememberMe": document.getElementById("rememberMe").checked,
-        }
-
-        $.ajax({
-            url: "/toLogin",
-            type: "post",
-            data: userData,
-            dataType: 'json',
-            success: function (response) {
-                if (response.state == 1) {
-                    // localStorage.setItem("userId", response.data.loginUserInfo.userId);
-                    // localStorage.setItem("username", response.data.loginUserInfo.username);
-                    window.location.href = "/index";
-                } else {
-                    $("#login-password-error").text(response.message);
-                }
-            }
-        });
-    });
-
-</script>
 </body>
 </html>

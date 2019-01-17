@@ -166,7 +166,8 @@ public class QuestionService {
      * @return
      */
     public Integer unfollowQuestion(String localUserId, Integer questionId) {
-        return questionDao.unfollowQuestion(localUserId, questionId);
+        Integer effectRow = questionDao.unfollowQuestion(localUserId, questionId);
+        return effectRow;
     }
 
     /**
@@ -199,16 +200,18 @@ public class QuestionService {
      * @param answerContent
      * @param questionId
      */
-    public void updateAnswer(String userId, Integer answerId, String answerContent, Integer questionId) {
-        questionDao.updateAnswer(userId, answerId, answerContent, new Date().getTime(), questionId);
+    public Integer updateAnswer(String userId, Integer answerId, String answerContent, Integer questionId) {
+        Integer effectRow = questionDao.updateAnswer(userId, answerId, answerContent, new Date().getTime(), questionId);
+        return effectRow;
     }
 
     /**
      * 删除回答
      * @param answerId
      */
-    public void deleteAnswer(String answerId) {
-        questionDao.deleteAnswer(answerId);
+    public Integer deleteAnswer(String answerId) {
+        Integer effectRow = questionDao.deleteAnswer(answerId);
+        return effectRow;
     }
 
     /**
@@ -274,31 +277,31 @@ public class QuestionService {
      */
     public void getCommonHotData(Model model) {
 
-        List<Question> hotQuestions = redisService.getList(HotDataKey.hotQuestionKey, "", Question.class);
+        List<Question> hotQuestions = redisService.getList(HotDataKey.hotQuestionKey, "hotQuestions", Question.class);
         if (hotQuestions == null) {
             hotQuestions = hotDao.getHotQuestions();
-            redisService.setList(HotDataKey.hotQuestionKey, "", hotQuestions);
+            redisService.setList(HotDataKey.hotQuestionKey, "hotQuestions", hotQuestions);
         }
         model.addAttribute("hotQuestions", hotQuestions);
 
-        List<User> hotUsers = redisService.getList(HotDataKey.hotUserKey, "", User.class);
+        List<User> hotUsers = redisService.getList(HotDataKey.hotUserKey, "hotUsers", User.class);
         if (hotUsers == null) {
             hotUsers = hotDao.getHotUsers();
-            redisService.setList(HotDataKey.hotUserKey, "", hotUsers);
+            redisService.setList(HotDataKey.hotUserKey, "hotUsers", hotUsers);
         }
         model.addAttribute("hotUsers", hotUsers);
 
-        List<Topic> hotTopics = redisService.getList(HotDataKey.hotTopicsKey, "", Topic.class);
+        List<Topic> hotTopics = redisService.getList(HotDataKey.hotTopicsKey, "hotTopics", Topic.class);
         if (hotTopics == null) {
             hotTopics = hotDao.getHotTopics();
-            redisService.setList(HotDataKey.hotTopicsKey, "", hotTopics);
+            redisService.setList(HotDataKey.hotTopicsKey, "hotTopics", hotTopics);
         }
         model.addAttribute("hotTopics", hotTopics);
 
-        List<Question> newestQuestions = redisService.getList(HotDataKey.newestQuestionKey, "", Question.class);
+        List<Question> newestQuestions = redisService.getList(HotDataKey.newestQuestionKey, "newestQuestions", Question.class);
         if (newestQuestions == null) {
             newestQuestions = hotDao.getNewestRaisedQuestions();
-            redisService.setList(HotDataKey.newestQuestionKey, "", newestQuestions);
+            redisService.setList(HotDataKey.newestQuestionKey, "newestQuestions", newestQuestions);
         }
         model.addAttribute("newestQuestions", newestQuestions);
     }

@@ -1,11 +1,14 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.entity.Activity;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.IndexService;
 import com.ilsxh.service.QuestionService;
+import com.ilsxh.service.UserHelperService;
 import com.ilsxh.service.UserService;
 import com.ilsxh.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +31,14 @@ public class IndexController {
     private UserService userService;
     private IndexService indexService;
     private QuestionService questionService;
+    private UserHelperService userHelperService;
 
     @Autowired
-    public IndexController(UserService userService, IndexService indexService, QuestionService questionService) {
+    public IndexController(UserService userService, IndexService indexService, QuestionService questionService, UserHelperService userHelperService) {
         this.userService = userService;
         this.indexService = indexService;
         this.questionService = questionService;
+        this.userHelperService = userHelperService;
     }
 
     /**
@@ -45,7 +50,7 @@ public class IndexController {
      */
     @RequestMapping("/settings")
     public String setting(HttpServletRequest request, Model model) {
-        String userId = userService.getUserIdFromRedis(request);
+        String userId = userHelperService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
         model.addAttribute("user", user);
         System.out.println();
@@ -62,7 +67,7 @@ public class IndexController {
      */
     @RequestMapping("/editProfile")
     public String editProfile(User user, HttpServletRequest request, Model model) {
-        String userId = userService.getUserIdFromRedis(request);
+        String userId = userHelperService.getUserIdFromRedis(request);
         user.setUserId(userId);
 
         indexService.updateProfile(user);
@@ -81,7 +86,7 @@ public class IndexController {
      */
     @RequestMapping("/updatePassword")
     public String updatePassword(String password, String newpassword, HttpServletRequest request, Model model) {
-        String userId = userService.getUserIdFromRedis(request);
+        String userId = userHelperService.getUserIdFromRedis(request);
         Map<String, String> map = indexService.updatePassword(userId, password, newpassword);
         if (map.get("error") != null) {
             model.addAttribute("error", map.get("error"));
@@ -101,9 +106,9 @@ public class IndexController {
      */
     @RequestMapping("/userHome/activity/{userId}")
     public String userHomeActivity(@PathVariable String userId, HttpServletRequest request, Model model) {
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
         // 获取动态列表
         List<Activity> activityList = indexService.getActivityByUserId(userId);
@@ -123,9 +128,9 @@ public class IndexController {
      */
     @RequestMapping("/userHome/answer/{userId}")
     public String userHomeAnswer(@PathVariable String userId, HttpServletRequest request, Model model) {
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
         // 获取回答列表
         List<Answer> answerList = userService.getAnswersByUserId(userId);
@@ -149,9 +154,9 @@ public class IndexController {
 
 //        model.addAttribute("user", userDao.selectUserByUserId(userId));
 
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
         // 获取提问列表
         List<Question> questionList = questionService.getRaisedQuestionByUserId(userId);
@@ -164,6 +169,7 @@ public class IndexController {
 
     /**
      * 个人主页-关注问题列表tab
+     *
      * @param userId
      * @param request
      * @param model
@@ -171,9 +177,9 @@ public class IndexController {
      */
     @RequestMapping("/userHome/followingQuestion/{userId}")
     public String userHomeFollowingQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
         // 获取关注问题列表
         List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
@@ -194,9 +200,9 @@ public class IndexController {
      */
     @RequestMapping(value = "/userHome/followingUser/{userId}")
     public String userHomeFollowingUser(@PathVariable String userId, HttpServletRequest request, Model model) {
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userService.getUserProfile(userId, localUserId);
+        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
         // 获取关注用户列表
         List<User> followingUserList = userService.getollowingUserByUserId(userId);
@@ -209,6 +215,7 @@ public class IndexController {
 
     /**
      * 更新头像
+     *
      * @param request
      * @param img
      * @return
@@ -216,13 +223,17 @@ public class IndexController {
      */
     @RequestMapping(value = "/uploadAvatar", headers = ("content-type=multipart/*"), method = RequestMethod.POST)
     @ResponseBody
-    public Response springUpload(HttpServletRequest request, @RequestParam("file") MultipartFile img) throws Exception {
-        String localUserId = userService.getUserIdFromRedis(request);
+    public BaseResponse springUpload(HttpServletRequest request, @RequestParam("file") MultipartFile img) throws Exception {
+        String localUserId = userHelperService.getUserIdFromRedis(request);
 
         String avatar = "userId-avatar-" + localUserId + "-" + img.getOriginalFilename();
         QiniuyunUtil.uploadAvatar(img, avatar);
-        indexService.updateAvatarUrl(localUserId, "http://pknhrkp8l.bkt.clouddn.com/" + avatar);
+        Integer updEffectRow = indexService.updateAvatarUrl(localUserId, "http://pknhrkp8l.bkt.clouddn.com/" + avatar);
 
-        return new Response(1, "", "");
+        if (updEffectRow != null && updEffectRow == 1) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功上传头像", "");
+        } else {
+            return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "上传头像失败", "");
+        }
     }
 }

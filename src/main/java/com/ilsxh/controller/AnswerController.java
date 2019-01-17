@@ -1,14 +1,17 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.enums.StatusEnum;
+import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.AnswerService;
-import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
+
 import static com.ilsxh.service.AnswerService.NOT_VOTE_FOR_ANSWER;
 
 @Controller
@@ -33,16 +36,22 @@ public class AnswerController {
      */
     @RequestMapping("/voteAnswer/{answerId}")
     @ResponseBody
-    public Response voteAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("userVote") Integer currVoteStatus,
-                               @RequestParam("upOrDownClick") Integer upOrDownClick, HttpServletRequest request) {
+    public BaseResponse<String> voteAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("userVote") Integer currVoteStatus,
+                                           @RequestParam("upOrDownClick") Integer upOrDownClick, HttpServletRequest request) {
         answerService.vote(request, answerId, currVoteStatus, upOrDownClick);
 
+        BaseResponse<String> response = new BaseResponse();
+
         if (currVoteStatus == NOT_VOTE_FOR_ANSWER && upOrDownClick == 1) {
-            return new Response(1, "你赞同了此回答", "");
+            response.setCode(StatusEnum.SUCCESS.getCode());
+            response.setMessage("你赞同的此回答");
+            return response;
         } else if (currVoteStatus == NOT_VOTE_FOR_ANSWER && upOrDownClick == -1) {
-            return new Response(1, "你反对了此回答", "");
+            response.setCode(StatusEnum.SUCCESS.getCode());
+            response.setMessage("你反对了此回答");
+            return response;
         }
-        return new Response(1, "", "");
+        return new BaseResponse<>(StatusEnum.FAIL.getCode(), "", "");
     }
 
     /**
@@ -55,13 +64,26 @@ public class AnswerController {
      */
     @RequestMapping("/collectAnswer/{answerId}")
     @ResponseBody
-    public Response collectAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("isCollect") Boolean isCollect, HttpServletRequest request) {
+    public BaseResponse collectAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("isCollect") Boolean isCollect, HttpServletRequest request) {
+        // 默认不成功
+        Integer effectRow = 0;
+        BaseResponse<String> response = new BaseResponse();
         if (isCollect == Boolean.TRUE) {
-            answerService.cancelCollectAnswer(answerId, request);
-            return new Response(0, "你取消了收藏此回答", "");
+            effectRow = answerService.cancelCollectAnswer(answerId, request);
+            if (effectRow != null && effectRow == 0) {
+                return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "取消收藏失败", "");
+            }
+            response.setCode(StatusEnum.SUCCESS.getCode());
+            response.setMessage("你取消了收藏此回答");
+            return response;
         } else {
-            answerService.collectAnswer(answerId, request);
-            return new Response(1, "你收藏了此回答", "");
+            effectRow = answerService.collectAnswer(answerId, request);
+            if (effectRow != null && effectRow == 0) {
+                return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "取消收藏失败", "");
+            }
+            response.setCode(StatusEnum.SUCCESS.getCode());
+            response.setMessage("你收藏了此回答");
+            return response;
         }
     }
 
@@ -74,16 +96,15 @@ public class AnswerController {
      */
     @RequestMapping("/getAnswerId/{questionId}")
     @ResponseBody
-    public Response getAnswerId(@PathVariable Integer questionId, HttpServletRequest request) {
-
+    public BaseResponse getAnswerId(@PathVariable Integer questionId, HttpServletRequest request) {
 
         Integer answerId = answerService.getAnswerId(questionId, request);
+        BaseResponse<String> response;
 
-        Response response = null;
         if (answerId != null) {
-            response = new Response(1, "成功获取已回答ID", answerId);
+            response = new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功获取已回答ID", answerId);
         } else {
-            response = new Response(1, "还没有回答问题", 0);
+            response = new BaseResponse(StatusEnum.SUCCESS.getCode(), "还没有回答问题", answerId);
         }
         return response;
     }

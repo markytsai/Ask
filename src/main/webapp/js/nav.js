@@ -117,8 +117,8 @@ function submitQuestion(questionTitle, questionContent, topicString) {
         data: formData,
         dataType: 'json',
         success: function (response) {
-            if (response.state == 1) {
-                window.location.href = "/question/" + response.data;
+            if (response.code == 1) {
+                window.location.href = "/question/" + response.dataBody;
             } else {
                 alert("出现了错误...");
             }

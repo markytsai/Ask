@@ -29,7 +29,7 @@ public class AnswerService {
     }
 
     /**
-     * 投票活动（点赞，反对）
+     * 投票活动（点赞，反对）bug:
      * @param request
      * @param answerId
      * @param currVoteStatus currrent status for answers
@@ -89,9 +89,10 @@ public class AnswerService {
      * @param answerId
      * @param request
      */
-    public void cancelCollectAnswer(Integer answerId, HttpServletRequest request) {
+    public Integer cancelCollectAnswer(Integer answerId, HttpServletRequest request) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
-        answerDao.cancelCollectAnswer(localUserId, answerId);
+        Integer delEffectRow = answerDao.cancelCollectAnswer(localUserId, answerId);
+        return delEffectRow;
     }
 
     /**
@@ -99,9 +100,10 @@ public class AnswerService {
      * @param answerId
      * @param request
      */
-    public void collectAnswer(Integer answerId, HttpServletRequest request) {
+    public Integer collectAnswer(Integer answerId, HttpServletRequest request) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
-        answerDao.collectAnswer(localUserId, answerId, new Date().getTime());
+        Integer effectRow = answerDao.collectAnswer(localUserId, answerId, new Date().getTime());
+        return effectRow;
     }
 
     /**

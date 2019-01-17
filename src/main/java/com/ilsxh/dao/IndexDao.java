@@ -27,7 +27,7 @@ public interface IndexDao {
      * @param userId
      * @param avatarUrl
      */
-    void updateAvatarUrl(@Param("userId") String userId, @Param("avatarUrl") String avatarUrl);
+    Integer updateAvatarUrl(@Param("userId") String userId, @Param("avatarUrl") String avatarUrl);
 
     List<Activity> getFollowedQuestion(@Param("userId") String userId);
 

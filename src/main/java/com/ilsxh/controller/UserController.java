@@ -1,14 +1,16 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.enums.StatusEnum;
+import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.UserHelperService;
 import com.ilsxh.service.UserService;
-import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
@@ -18,10 +20,6 @@ import java.util.Map;
 @RequestMapping
 public class UserController {
 
-    private static final Integer LOGIN_SUCCESS = 1;
-    private static final Integer LOGIN_FAILURE = 0;
-    private static final Integer REGISTER_SUCCESS = 1;
-    private static final Integer REGISTER_FAILURE = 0;
 
     private UserService userService;
     private UserHelperService userHelperService;
@@ -34,6 +32,7 @@ public class UserController {
 
     /**
      * 登录
+     *
      * @param email
      * @param password
      * @param rememberMe
@@ -43,20 +42,21 @@ public class UserController {
      */
     @RequestMapping(value = "/toLogin")
     @ResponseBody
-    public Response login(@RequestParam("email") String email, @RequestParam("password") String password,
-                          @RequestParam("rememberMe") Boolean rememberMe, HttpServletRequest request, HttpServletResponse response) {
+    public BaseResponse login(@RequestParam("email") String email, @RequestParam("password") String password,
+                              @RequestParam("rememberMe") Boolean rememberMe, HttpServletRequest request, HttpServletResponse response) {
 
         Map<String, Object> userInfoMap = userService.login(email, password, rememberMe, response);
 
         if (userInfoMap.get("loginError") == null) {
-            return new Response(LOGIN_SUCCESS, "", userInfoMap);
+            return new BaseResponse(StatusEnum.LOGIN_SUCCESS.getCode(), "成功登录", userInfoMap);
         } else {
-            return new Response(LOGIN_FAILURE, userInfoMap.get("loginError").toString());
+            return new BaseResponse(StatusEnum.LOGIN_FAILURE.getCode(), userInfoMap.get("loginError").toString());
         }
     }
 
     /**
      * 注册
+     *
      * @param email
      * @param username
      * @param password
@@ -65,33 +65,35 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/doRegister")
-    public Response register(@RequestParam("email") String email, @RequestParam("username") String username,
-                             @RequestParam("password") String password, HttpServletResponse response) {
+    public BaseResponse register(@RequestParam("email") String email, @RequestParam("username") String username,
+                                 @RequestParam("password") String password, HttpServletResponse response) {
         Map<String, Object> userInfoMap = userService.registerNewUser(email, username, password, response);
         if (userInfoMap.get("errorInfo") == null) {
-            return new Response(REGISTER_SUCCESS, "", userInfoMap);
+            return new BaseResponse(StatusEnum.REGISTER_SUCCESS.getCode(), "成功注册", userInfoMap);
         } else {
-            return new Response(REGISTER_FAILURE, userInfoMap.get("errorInfo").toString());
+            return new BaseResponse(StatusEnum.REGISTER_FAILURE.getCode(), userInfoMap.get("errorInfo").toString());
         }
     }
 
 
     /**
      * 关注用户
+     *
      * @param userIdToBeFollowed
      * @param request
      * @return
      */
     @RequestMapping("/followUser/{userIdToBeFollowed}")
     @ResponseBody
-    public Response followUser(@PathVariable String userIdToBeFollowed, HttpServletRequest request) {
-        String localUserId = userService.getUserIdFromRedis(request);
-        userService.followUser(localUserId, userIdToBeFollowed, new Date().getTime());
-        return new Response(1, "你已成功关注此用户", "");
+    public BaseResponse followUser(@PathVariable String userIdToBeFollowed, HttpServletRequest request) {
+        String localUserId = userHelperService.getUserIdFromRedis(request);
+        BaseResponse response = userService.followUser(localUserId, userIdToBeFollowed, new Date().getTime());
+        return response;
     }
 
     /**
      * 退出登录
+     *
      * @param request
      * @param response
      * @return
@@ -104,6 +106,7 @@ public class UserController {
 
     /**
      * 游客登录，暂时不可用
+     *
      * @param request
      * @param response
      * @return
@@ -115,18 +118,20 @@ public class UserController {
 
     /**
      * 获取登录用户和被访问用户的关系
+     *
      * @param userId
      * @param request
      * @return
      */
     @RequestMapping("/getUser/{userId}")
     @ResponseBody
-    public Response getUser(@PathVariable String userId, HttpServletRequest request) {
+    public BaseResponse getUser(@PathVariable String userId, HttpServletRequest request) {
 
-        Map<String, Object> map = userService.getUserDetailWithLoginUser(userId,  userHelperService.getUserIdFromRedis(request));
+        Map<String, Object> map = userService.getUserDetailWithLoginUser(userId, userHelperService.getUserIdFromRedis(request));
         if (map.get("user") != null) {
-            return new Response(1, "成功获取用户信息", map);
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功获取用户信息", map);
+        } else {
+            return new BaseResponse(StatusEnum.FAIL.getCode(), "获取用户信息失败", null);
         }
-        return new Response(1, "获取用户信息失败", map);
     }
 }

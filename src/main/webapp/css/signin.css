@@ -8,7 +8,7 @@ body {
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
-    margin-top: 80px;
+    /*margin-top: 80px;*/
 }
 
 .form-signin .form-signin-heading,
@@ -44,4 +44,31 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.registerhidden {
+    display: none;
+}
+
+registershow {
+    display: block;
+}
+
+.toRegister {
+    cursor: pointer;
+    color: #2b689c;
+}
+
+.cancelReg {
+    cursor: pointer;
+    color: #2b689c;
+}
+
+.touristLogin {
+    cursor: pointer;
+    color: #2b689c;
+}
+
+.choices:hover{
+    text-decoration: underline;
 }

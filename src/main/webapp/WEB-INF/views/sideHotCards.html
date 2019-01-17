@@ -5,19 +5,18 @@
         <div class="card my-4" style='background-color: #fff;padding: 6px;'>
             <span class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</span>
 
-            <ul class="list-group" th:each="question, userStat : ${hotQuestions}">
+            <ul class="list-group" style="margin-bottom: 3px;" th:each="question, userStat : ${hotQuestions}">
                 <div class="card-block border-black">
                     <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
-                       style="color: #333333;" target="_blank"></a><i
-                        class="glyphicon glyphicon-fire" target="_blank"/>
+                       target="_blank"/>
                 </div>
-                <div style="float:right;">
-                    <a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注
-                    <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.answerCount}">10</a>个回答
-                </div>
-                <hr color="#f8f8f8"/>
+                <!--<div style="float:right;">-->
+                    <!--<a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注-->
+                    <!--<a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.answerCount}">10</a>个回答-->
+                <!--</div>-->
+                <!--<hr color="#f8f8f8"/>-->
             </ul>
-            <div>
+            <div style="margin-top: 15px;">
                 <a th:href="@{/moreHotQuestion}" style="float: right;margin-top: -15px;" target="_blank">更多热门问题>>></a>
             </div>
         </div>
@@ -66,14 +65,14 @@
         <div class="card my-4" style="background-color: #fff;padding: 6px;">
             <span class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i>最新发问</span>
             <div class="list-group">
-                <ul class="list-group" th:each="question : ${newestQuestions}">
+                <ul class="list-group" style="margin-bottom: 3px;" th:each="question : ${newestQuestions}">
                     <div class="card-block border-black">
                         <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
-                           style="color: #333333;" target="_blank"></a>
+                           target="_blank"></a>
                     </div>
-                    <div><p style="float:right;">提问于<span
-                            th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>
-                    <hr color="#f8f8f8"/>
+                    <!--<div><p style="float:right;">提问于<span-->
+                            <!--th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>-->
+                    <!--<hr color="#f8f8f8"/>-->
                 </ul>
             </div>
         </div>

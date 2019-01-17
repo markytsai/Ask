@@ -39,9 +39,9 @@ public interface QuestionDao {
 
     void submitAnswer(@Param("answer") Answer answer);
 
-    void updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") Integer questionId);
+    Integer updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") Integer questionId);
 
-    void deleteAnswer(@Param("answerId") String answerId);
+    Integer deleteAnswer(@Param("answerId") String answerId);
 
     void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("createTime") Long createTime);
 

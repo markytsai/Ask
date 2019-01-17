@@ -1,14 +1,18 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.*;
-import com.ilsxh.util.Response;
+
 import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -27,6 +31,7 @@ public class QuestionController {
 
     /**
      * 获取用户关注列表，并返回到关注列表页面
+     *
      * @param request
      * @param model
      * @return
@@ -87,19 +92,25 @@ public class QuestionController {
      */
     @RequestMapping("/followQuestion/{questionId}")
     @ResponseBody
-    public Response followQuestion(@PathVariable("questionId") Integer questionId, HttpServletRequest request) {
+    public BaseResponse followQuestion(@PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userHelperService.getUserIdFromRedis(request);
 
         String hasUserFollowQuestion = questionService.hasUserFollowQuestion(localUserId, questionId);
 
+        Integer effectRow = 0;
         if (hasUserFollowQuestion != null && hasUserFollowQuestion == "true") {
-            questionService.unfollowQuestion(localUserId, questionId);
+            effectRow = questionService.unfollowQuestion(localUserId, questionId);
+            if (effectRow != null && effectRow == 1) {
+                return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功取消关注问题", "");
+            }
         } else {
-            questionService.followQuestion(localUserId, questionId);
+            effectRow = questionService.followQuestion(localUserId, questionId);
+            if (effectRow != null && effectRow == 1) {
+                return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功关注问题", "");
+            }
         }
-
-        return new Response(1, "关注问题成功", "");
+        return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "操作失败", "");
     }
 
     /**
@@ -111,16 +122,21 @@ public class QuestionController {
      */
     @RequestMapping("/submitAnswer/{questionId}")
     @ResponseBody
-    public Response submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
+    public BaseResponse submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userHelperService.getUserIdFromRedis(request);
         Answer answer = questionService.submitAnswer(answerContent, questionId, localUserId);
-        return new Response(1, "已成功提交你的回答", answer.getAnswerId());
+        if (answer != null) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "已成功提交你的回答", answer.getAnswerId());
+        } else {
+            return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "未能成功提交你的回答", 0);
+        }
     }
 
 
     /**
      * 更新回答
+     *
      * @param answerContent
      * @param answerId
      * @param questionId
@@ -129,11 +145,16 @@ public class QuestionController {
      */
     @RequestMapping("/updateAnswer/{questionId}")
     @ResponseBody
-    public Response updateAnswer(@RequestParam("answerContent") String answerContent, @RequestParam("answerId") Integer answerId, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
+    public BaseResponse updateAnswer(@RequestParam("answerContent") String answerContent, @RequestParam("answerId") Integer answerId, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userHelperService.getUserIdFromRedis(request);
-        questionService.updateAnswer(localUserId, answerId, answerContent, questionId);
-        return new Response(1, "", "");
+        Integer effectRow = 0;
+        effectRow = questionService.updateAnswer(localUserId, answerId, answerContent, questionId);
+        if (effectRow != null && effectRow == 1) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "已成功更新你的回答", effectRow);
+        } else {
+            return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "未能更新你的回答", 0);
+        }
     }
 
     /**
@@ -144,9 +165,14 @@ public class QuestionController {
      */
     @RequestMapping("/deleteAnswer/{answerId}")
     @ResponseBody
-    public Response deleteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
-        questionService.deleteAnswer(answerId);
-        return new Response(1, "", "");
+    public BaseResponse deleteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
+        Integer effectRow = 0;
+        effectRow = questionService.deleteAnswer(answerId);
+        if (effectRow != null && effectRow == 1) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "已成功删除你的回答", effectRow);
+        } else {
+            return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "未能删除你的回答", 0);
+        }
     }
 
     /**
@@ -157,23 +183,32 @@ public class QuestionController {
      */
     @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
     @ResponseBody
-    public Response askQuestion(@RequestParam String questionTitle, @RequestParam String questionContent, @RequestParam String topicString, HttpServletRequest request) {
+    public BaseResponse askQuestion(@RequestParam String questionTitle, @RequestParam String questionContent, @RequestParam String topicString, HttpServletRequest request) {
         String userId = userHelperService.getUserIdFromRedis(request);
 
         Question raisedQuestion = questionService.addQuestion(questionTitle, questionContent, topicString, userId);
-        return new Response(1, "问题发布成功", raisedQuestion.getQuestionId());
+        if (raisedQuestion != null) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "问题发布成功", raisedQuestion.getQuestionId());
+        } else {
+            return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "问题发布失败", raisedQuestion.getQuestionId());
+        }
     }
 
     /**
      * 提问键入文字，实时获取相关问题并显示，供用户选择
+     *
      * @param partialWord
      * @return
      */
     @RequestMapping("/getProbablyRelativeQestions/{partialWord}")
     @ResponseBody
-    public Response getProbablyRelativeQestions(@PathVariable String partialWord) {
+    public BaseResponse getProbablyRelativeQestions(@PathVariable String partialWord) {
         List<Question> questionList = questionService.getProbablyRelativeQestions(partialWord);
-        return new Response(1, "已经存在相关问题", questionList);
+        if (questionList != null) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "问题发布成功", questionList);
+        } else {
+            return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "获取相关问题失败", "");
+        }
     }
 
 

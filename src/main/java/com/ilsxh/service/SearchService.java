@@ -17,12 +17,14 @@ public class SearchService {
     private SearchDao searchDao;
     private UserService userService;
     private QuestionService questionService;
+    private UserHelperService userHelperService;
 
     @Autowired
-    public SearchService(SearchDao searchDao, UserService userService, QuestionService questionService) {
+    public SearchService(SearchDao searchDao, UserService userService, QuestionService questionService, UserHelperService userHelperService) {
         this.searchDao = searchDao;
         this.userService = userService;
         this.questionService = questionService;
+        this.userHelperService = userHelperService;
     }
 
     /**
@@ -67,7 +69,7 @@ public class SearchService {
      * @param model
      */
     public void getCommonData(HttpServletRequest request, String keyword, Model model) {
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
 
         model.addAttribute("isLoginUser", "true");
         model.addAttribute("user", userService.getUserByUserId(localUserId));

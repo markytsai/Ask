@@ -1,11 +1,12 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
+import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.*;
-import com.ilsxh.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,7 +79,7 @@ public class TopicController {
     @RequestMapping("/topic/{topicId}/answer")
     public String getTopicExAnswer(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         topicService.getSideCardInfo(topicId, localUserId, model);
 
         List<Answer> answerList = topicService.getAnswersByTopicId(localUserId, topicId);
@@ -98,7 +99,7 @@ public class TopicController {
     @RequestMapping("/topic/{topicId}/users")
     public String getTopicExcellentUsers(@PathVariable Integer topicId, HttpServletRequest request, Model model) {
 
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         topicService.getSideCardInfo(topicId, localUserId, model);
 
         List<User> excellentUserList = topicService.getExcellentUsersByTopicId(topicId);
@@ -109,26 +110,38 @@ public class TopicController {
 
     @RequestMapping("/getProbablyRelativeTopics/{partialWord}")
     @ResponseBody
-    public Response getProbablyRelativeTopics(@PathVariable String partialWord) {
+    public BaseResponse getProbablyRelativeTopics(@PathVariable String partialWord) {
         List<Topic> topicList = topicService.getProbablyRelativeTopics(partialWord);
-        return new Response(1, "相关话题", topicList);
+        if (topicList != null) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "问题发布成功", topicList);
+        } else {
+            return new BaseResponse(StatusEnum.FAIL.getCode(), "获取相关话题失败", "");
+        }
     }
 
     @RequestMapping("/followTopic/{topicId}")
     @ResponseBody
-    public Response followTopic(@PathVariable Integer topicId, HttpServletRequest request) {
+    public BaseResponse followTopic(@PathVariable Integer topicId, HttpServletRequest request) {
 
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         Integer opRetStat = topicService.followTopic(localUserId, topicId);
-        return new Response(opRetStat, "", "");
+        if (opRetStat != null && opRetStat == 1) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功获取登录用户与被访问用户的关注关系", "");
+        } else {
+            return new BaseResponse(StatusEnum.FAIL.getCode(), "未能获取登录用户与被访问用户的关注关系", "");
+        }
     }
 
     @RequestMapping("/unfollowTopic/{topicId}")
     @ResponseBody
-    public Response unfollowTopic(@PathVariable Integer topicId, HttpServletRequest request) {
+    public BaseResponse unfollowTopic(@PathVariable Integer topicId, HttpServletRequest request) {
 
-        String localUserId = userService.getUserIdFromRedis(request);
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         Integer opRetStat = topicService.unfollowTopic(localUserId, topicId);
-        return new Response(opRetStat, "", "");
+        if (opRetStat != null && opRetStat == 1) {
+            return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功获取登录用户与话题之间的关注关系", "");
+        } else {
+            return new BaseResponse(StatusEnum.FAIL.getCode(), "未能获取登录用户与话题之间的关注关系", "");
+        }
     }
 }

@@ -1,5 +1,6 @@
 body {
-    min-height: 2000px;
+    /*body的默认最小高度*/
+    /*min-height: 2000px;*/
     padding-top: 65px;
 }
 
@@ -24,7 +25,8 @@ body {
 }
 
 .body-color {
-    background-color: #eee;
+    /*background-color: #eee;*/
+    background-color: #fff;
     /*background-color: #f5f8f9;*/
 }
 
