@@ -38,7 +38,6 @@ public class QuestionController {
      * @param model
      * @return
      */
-    @OperAnnotation(moduleName = "问题模块",option = "获取关注问题列表")
     @RequestMapping("/following")
     public String getFollowingQuestionsByUserId(HttpServletRequest request, Model model) {
 
@@ -46,6 +45,7 @@ public class QuestionController {
         userHelperService.getUserDetails(userId, model);
 
         List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
+
         model.addAttribute("questionList", questionList);
 
         questionService.getCommonHotData(model);
@@ -60,7 +60,6 @@ public class QuestionController {
      * @param model
      * @return
      */
-    @OperAnnotation(moduleName = "推荐模块",option = "获取推荐问题列表")
     @RequestMapping("/recommend")
     public String getRecommendQuestionsByUserId(HttpServletRequest request, Model model) {
 

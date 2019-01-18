@@ -41,7 +41,6 @@ public class UserController {
      * @param response
      * @return
      */
-    @OperAnnotation(moduleName = "登录系统",option = "登录")
     @RequestMapping(value = "/toLogin")
     @ResponseBody
     public BaseResponse login(@RequestParam("email") String email, @RequestParam("password") String password,

@@ -52,7 +52,7 @@ public class QuestionService {
      * @param userId
      * @return
      */
-    @OperAnnotation(moduleName = "关注模块",option = "获取用户关注问题列表")
+    @OperAnnotation(descpition = "获取用户关注问题列表", include = "userId")
     public List<Question> getFollowingQuestionByUserId(String userId) {
 
         List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId);
@@ -71,7 +71,7 @@ public class QuestionService {
      *
      * @return
      */
-    @OperAnnotation(moduleName = "推荐模块",option = "获取用户推荐问题列表")
+    @OperAnnotation(descpition = "获取用户推荐问题列表")
     public List<Question> getRecommendedQuestionByUserId() {
         List<Question> questionList = questionDao.selectRecommendedQuestionByUserId();
 
@@ -168,6 +168,7 @@ public class QuestionService {
      * @param questionId
      * @return
      */
+    @OperAnnotation(descpition = "关注问题")
     public Integer followQuestion(String localUserId, Integer questionId) {
         return questionDao.followQuestion(localUserId, questionId, new Date().getTime());
     }
@@ -179,6 +180,7 @@ public class QuestionService {
      * @param questionId
      * @return
      */
+    @OperAnnotation(descpition = "取消关注问题")
     public Integer unfollowQuestion(String localUserId, Integer questionId) {
         Integer effectRow = questionDao.unfollowQuestion(localUserId, questionId);
         return effectRow;
@@ -192,6 +194,7 @@ public class QuestionService {
      * @param localUserId
      * @return
      */
+    @OperAnnotation(descpition = "提交回答", include = "userId")
     public Answer submitAnswer(String answerContent, Integer questionId, String localUserId) {
         Answer answer = new Answer();
         answer.setAnswerUserId(localUserId);

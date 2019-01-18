@@ -53,7 +53,6 @@ public class UserService {
      * @param response
      * @return
      */
-    @OperAnnotation(moduleName = "登录模块",option = "用户登录")
     public Map<String, Object> login(String email, String password, Boolean rememberMe, HttpServletResponse response) {
         Map<String, Object> loginUserMap = new HashMap<>();
 
@@ -71,7 +70,6 @@ public class UserService {
         return loginUserMap;
     }
 
-    @OperAnnotation(moduleName = "注册模块",option = "用户注册")
     public Map<String, Object> registerNewUser(String email, String username, String password, HttpServletResponse response) {
         Map<String, Object> registerUserMap = new HashMap<>();
 
@@ -84,7 +82,6 @@ public class UserService {
         return registerUserMap;
     }
 
-    @OperAnnotation(moduleName = "登录模块",option = "用户退出登录")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         String loginToken = null;
         Cookie[] cookies = request.getCookies();

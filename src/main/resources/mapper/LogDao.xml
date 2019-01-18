@@ -5,8 +5,10 @@
 <mapper namespace="com.ilsxh.dao.LogDao">
 
     <insert id="insertLog">
-        insert into log(username, create_date, module_name, operation, work_time, oper_result, user_ip)
-        values(#{log.username}, #{log.createDate}, #{log.moduleName}, #{log.operation}, #{log.workTime}, #{log.operResult}, #{log.userIp})
+        INSERT INTO t_log (log_username, create_time, log_desc, log_duration, user_ip, log_level, log_type, req_param, res_result, req_method)
+        VALUES (#{log.logUsername}, #{log.createTime}, #{log.logDesc}, #{log.logDuration},
+        #{log.userIp}, #{log.logLevel}, #{log.logType}, #{log.reqParam}, #{log.resResult},
+        #{log.reqMethods})
     </insert>
 
 

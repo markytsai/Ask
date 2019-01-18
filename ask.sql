@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-01-13 17:25:19
+Date: 2019-01-18 18:49:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,16 +42,16 @@ CREATE TABLE `answer` (
   `question_id` int(11) NOT NULL,
   `answer_user_id` varchar(128) NOT NULL,
   PRIMARY KEY (`answer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer
 -- ----------------------------
 INSERT INTO `answer` VALUES ('52', '\n\n                        aaaaa', '0', '0', '1546425832762', '9', '3bad1b8a3c284cab8d19d441651c7615');
-INSERT INTO `answer` VALUES ('53', '<span>蔡振亚的小号</span> <span>蔡振亚的小号</span> 问题', '2', '0', '1546425866694', '1', '3bad1b8a3c284cab8d19d441651c7615');
 INSERT INTO `answer` VALUES ('81', '<h1>11111问题java</h1>', '0', '0', '1546506595626', '3', '45e6c1985fe640e09cd770d95e6e2c8b');
 INSERT INTO `answer` VALUES ('82', '\n                                \n                                \n                                \n                                \n                                \n                                    \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                \n                                    \n                                    3333\n                                \n                                \n                                \n                                \n                                \n                                \n                            ', '0', '0', '1546609620039', '10', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer` VALUES ('83', '\n\n                        <div><span style=\"color: rgb(51, 51, 51);\">java工程师</span></div>', '0', '0', '1547292825997', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('85', '<span style=\"color: rgb(51, 51, 51); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">1月14日晚间消息，前快播创始人王欣将于今日发布的新社交产品“</span><span class=\"s-color-red\" style=\"margin: 0px; padding: 0px; color: rgb(239, 77, 88); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">马桶</span><span class=\"s-color-red\" style=\"margin: 0px; padding: 0px; color: rgb(239, 77, 88); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">MT</span><span style=\"color: rgb(51, 51, 51); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">”的分享链接遭微信屏蔽，页面显示“已停止访问该网页”。王欣在微博上发出截图称，“不知道你怕什么？”截至发稿，微信方面尚未回应。</span><br style=\"color: rgb(51, 51, 51); margin: 0px; padding: 0px; font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\"><span style=\"color: rgb(51, 51, 51); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">此前，王欣宣布将于15日发布“我们换个方式聊”社交新品发布会，疑似推出出狱后首个社交产品。日前，该产品在网上曝光，名称为“</span><span class=\"s-color-red\" style=\"margin: 0px; padding: 0px; color: rgb(239, 77, 88); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">马桶</span><span class=\"s-color-red\" style=\"margin: 0px; padding: 0px; color: rgb(239, 77, 88); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">MT</span><span style=\"color: rgb(51, 51, 51); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">”。产品官网显示，</span><span class=\"s-color-red\" style=\"margin: 0px; padding: 0px; color: rgb(239, 77, 88); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">马桶</span><span class=\"s-color-red\" style=\"margin: 0px; padding: 0px; color: rgb(239, 77, 88); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">MT</span><span style=\"color: rgb(51, 51, 51); font-family: Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif;\">主打匿名社交，宣传口号为“匿名打探秘密神器”。王欣也曾在微博上否认新产品对标微信的传言，称“微信比你想象的更强大，所以熟人社交不要碰，但匿名熟人社交可以。 ”暗指新产品将主打匿名熟人社交。</span>\n\n                        ', '1', '0', '1547520749347', '1', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer` VALUES ('86', '妈妈们非官方就就和给 给', '0', '0', '1547522175604', '1033', '45e6c1985fe640e09cd770d95e6e2c8b');
 
 -- ----------------------------
 -- Table structure for answer_comment
@@ -62,29 +62,24 @@ CREATE TABLE `answer_comment` (
   `answer_comment_content` text NOT NULL COMMENT '回答评论内容',
   `liked_count` int(11) NOT NULL DEFAULT '0' COMMENT '回答评论赞同数量',
   `create_time` bigint(20) NOT NULL DEFAULT '0',
-  `at_user_id` varchar(11) DEFAULT '',
-  `at_user_name` varchar(100) DEFAULT '',
+  `at_answer_comment_id` int(11) NOT NULL DEFAULT '0' COMMENT '默认为0代表该评论直接是回答下一级，不是回复其他评论的',
+  `at_user_id` varchar(128) DEFAULT '0' COMMENT '默认为0代表该评论直接是回答下一级，不是回复其他评论的，目标可以从answer_id字段得出',
+  `at_user_name` varchar(100) DEFAULT '0' COMMENT '默认为0代表该评论直接是回答下一级，不是回复其他评论的，目标可以从answer_id字段得出',
   `answer_id` int(50) NOT NULL DEFAULT '0' COMMENT '回答ID',
   `user_id` varchar(128) DEFAULT '' COMMENT '回答评论作者ID',
   PRIMARY KEY (`answer_comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of answer_comment
 -- ----------------------------
-INSERT INTO `answer_comment` VALUES ('1', '展讯萌超越mtk吗？感觉难。。拿着补贴打价格战刷销量。。至于中芯国际和台积电，就更没办法比了，这不是技术问题，而是先进的光刻机都被外国封锁了，怎么在超越？巧妇难为无米之炊啊。。', '0', '1493605918130', null, null, '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('2', '展讯不行有海思，海思不行还有其他。smic现在是有差距，不过以前差距更大，不过高端光刻机这点我是不认同的，想搞一定能搞到，不要人云亦云。我不回避差距，但无疑我们现在有正视问题的经济实力，缺的是点恒心。', '0', '1493644376202', null, null, '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('3', '而且很多人都很清醒，我觉得这是好事。另外光刻机这事我没法给你举例子和渠道。你就随便听听吧。主要是管中窥豹举个栗子，说说台湾问题。', '0', '1494319166237', null, null, '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('4', '和我同年生，我92年，帝都某学校医学硕士，毕业得回省会了，在北京太没意思了，不愿意费尽一生的精力就为了一个睡觉的地方，况且，光是住就费劲了自己的精力，那其他所谓城市的优势和我不会有任何关系的', '0', '1494319193706', '31', 'fanfan', '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('5', '加油！我大三了 双非破烂二本我都幻想自己可以在这里扎下根，觉的自己还真是年少无知……', '0', '1494494102802', null, null, '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('6', '加油啦，你自己有想留下来的信念比什么都重要！我就是比较不坚定才会觉得不开心。而且就留北京这件事来说，驻京高校比起京外高校还是有一定优势的嘛', '0', '1494494115474', null, null, '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('7', '福利~~我当时就是不知道户口重要，稀里糊涂去了外企，现在虽然有房，但孩子户口还没地方放呢。', '0', '1494506267077', null, null, '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('35', '地ask的发掘士大夫上来打飞机收到发', '0', '1547368116850', '', '', '53', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('36', '同样的状况，差不多时间入职，户口违约金30万，服务年限10年，每年递减10%，工作没干劲，想走暂时走不了，又要面临离职带来的违约金赔偿，其他生活问题就太多了。', '0', '1547369544888', '', '', '83', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('37', '我在一家店打工两年了，店员都非常随和有礼貌，起初大家都还都不熟，所以说的话都是一本正经，后来就有点画风诡异…店里的男生店员也好女生店员也好，经常讨论他们的那些恋爱故事，跟我混熟之后也会来跟我讲他们是怎么脚踏N条船的，或者某些“恋爱密话”，店里的厨师都是单身，但是今年有两个男士闪婚了，都是奉子成婚，并且其中一个在老婆怀孕期间还公开表示想和我们店里另一个可爱的女生约会并且让我去帮他联系……这也就算了，刚交到女朋友的副厨还十分为他的稀有行为沾沾自喜\n\n', '0', '1547369551278', '', '', '83', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('39', '我去', '0', '1547369594152', '', '', '83', '6a99cf86555243ba8b23927c0748b562');
-INSERT INTO `answer_comment` VALUES ('41', '是么', '0', '1547370619562', '', '', '53', '45e6c1985fe640e09cd770d95e6e2c8b');
-INSERT INTO `answer_comment` VALUES ('42', 'is that so?', '0', '1547370627209', '', '', '53', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer_comment` VALUES ('1', '展讯萌超越mtk吗？感觉难。。拿着补贴打价格战刷销量。。至于中芯国际和台积电，就更没办法比了，这不是技术问题，而是先进的光刻机都被外国封锁了，怎么在超越？巧妇难为无米之炊啊。。', '0', '1493605918130', '0', '0', '0', '85', '6a99cf86555243ba8b23927c0748b562');
+INSERT INTO `answer_comment` VALUES ('43', '注意 可以将 Apache Velocity 作为动态语言来使用，更多细节请参考 MyBatis-Velocity 项目。  你前面看到的所有 xml 标签都是默认 MyBatis 语言提供的，它是由别名为 xml 语言驱动器 org.apache.ibatis.scripting.xmltags.XmlLanguageDriver 驱动的。', '0', '1547392524855', '0', '0', '0', '85', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer_comment` VALUES ('48', '啊啊啊', '0', '1547444710390', '0', '0', '0', '85', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer_comment` VALUES ('49', 'aaaaa', '0', '1547447441050', '0', '0', '0', '85', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer_comment` VALUES ('50', '八八八八', '0', '1547447497513', '0', '0', '0', '85', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer_comment` VALUES ('51', '踩踩踩踩踩', '0', '1547448502163', '0', '0', '0', '85', '45e6c1985fe640e09cd770d95e6e2c8b');
+INSERT INTO `answer_comment` VALUES ('52', '啊啊啊', '0', '1547453326868', '0', '0', '0', '85', '45e6c1985fe640e09cd770d95e6e2c8b');
 
 -- ----------------------------
 -- Table structure for favorite
@@ -335,7 +330,7 @@ CREATE TABLE `mid_question_topic` (
   `question_id` int(11) NOT NULL,
   `topic_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_question_topic
@@ -398,6 +393,9 @@ INSERT INTO `mid_question_topic` VALUES ('56', '1029', '5');
 INSERT INTO `mid_question_topic` VALUES ('57', '1030', '5');
 INSERT INTO `mid_question_topic` VALUES ('58', '1031', '5');
 INSERT INTO `mid_question_topic` VALUES ('59', '1032', '20');
+INSERT INTO `mid_question_topic` VALUES ('60', '1033', '2');
+INSERT INTO `mid_question_topic` VALUES ('61', '1033', '188');
+INSERT INTO `mid_question_topic` VALUES ('62', '1034', '3');
 
 -- ----------------------------
 -- Table structure for mid_user_collect_answer
@@ -410,12 +408,12 @@ CREATE TABLE `mid_user_collect_answer` (
   `favorite_id` int(11) NOT NULL COMMENT '收藏夹的编号',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_collect_answer
 -- ----------------------------
-INSERT INTO `mid_user_collect_answer` VALUES ('52', '45e6c1985fe640e09cd770d95e6e2c8b', '53', '1', '1547362009737');
+INSERT INTO `mid_user_collect_answer` VALUES ('54', '45e6c1985fe640e09cd770d95e6e2c8b', '86', '1', '1547536108703');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_question
@@ -427,13 +425,12 @@ CREATE TABLE `mid_user_follow_question` (
   `question_id` int(11) NOT NULL COMMENT '问题ID',
   `create_time` bigint(13) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mid_user_follow_question
 -- ----------------------------
 INSERT INTO `mid_user_follow_question` VALUES ('8', '45e6c1985fe640e09cd770d95e6e2c8b', '2', '1546183629283');
-INSERT INTO `mid_user_follow_question` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '3', '1546183629283');
 INSERT INTO `mid_user_follow_question` VALUES ('10', '45e6c1985fe640e09cd770d95e6e2c8b', '4', '1546183629283');
 INSERT INTO `mid_user_follow_question` VALUES ('11', '45e6c1985fe640e09cd770d95e6e2c8b', '6', '1546183629283');
 INSERT INTO `mid_user_follow_question` VALUES ('12', '45e6c1985fe640e09cd770d95e6e2c8b', '8', '1546183629283');
@@ -500,7 +497,9 @@ INSERT INTO `mid_user_follow_question` VALUES ('77', '45e6c1985fe640e09cd770d95e
 INSERT INTO `mid_user_follow_question` VALUES ('78', '45e6c1985fe640e09cd770d95e6e2c8b', '1030', '1547110898342');
 INSERT INTO `mid_user_follow_question` VALUES ('79', '45e6c1985fe640e09cd770d95e6e2c8b', '1031', '1547110966376');
 INSERT INTO `mid_user_follow_question` VALUES ('80', '45e6c1985fe640e09cd770d95e6e2c8b', '1032', '1547197911362');
-INSERT INTO `mid_user_follow_question` VALUES ('81', '45e6c1985fe640e09cd770d95e6e2c8b', '1', '1547260889784');
+INSERT INTO `mid_user_follow_question` VALUES ('82', '45e6c1985fe640e09cd770d95e6e2c8b', '3', '1547516226680');
+INSERT INTO `mid_user_follow_question` VALUES ('83', '45e6c1985fe640e09cd770d95e6e2c8b', '1033', '1547520816266');
+INSERT INTO `mid_user_follow_question` VALUES ('84', '45e6c1985fe640e09cd770d95e6e2c8b', '1034', '1547540376889');
 
 -- ----------------------------
 -- Table structure for mid_user_follow_topic
@@ -531,16 +530,19 @@ CREATE TABLE `mid_user_follow_user` (
   `follow_status` int(1) NOT NULL DEFAULT '0' COMMENT '1:following;0:not follow',
   `create_time` bigint(13) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_follow_user
 -- ----------------------------
 INSERT INTO `mid_user_follow_user` VALUES ('1', '6a99cf86555243ba8b23927c0748b562', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546183629283');
 INSERT INTO `mid_user_follow_user` VALUES ('2', '3bad1b8a3c284cab8d19d441651c7615', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546322274739');
-INSERT INTO `mid_user_follow_user` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '3bad1b8a3c284cab8d19d441651c7615', '1', '1546851270339');
+INSERT INTO `mid_user_follow_user` VALUES ('3', '45e6c1985fe640e09cd770d95e6e2c8b', '3bad1b8a3c284cab8d19d441651c7615', '0', '1547542711384');
 INSERT INTO `mid_user_follow_user` VALUES ('4', '45e6c1985fe640e09cd770d95e6e2c8b', '45e6c1985fe640e09cd770d95e6e2c8b', '0', '1546763038804');
 INSERT INTO `mid_user_follow_user` VALUES ('5', '45e6c1985fe640e09cd770d95e6e2c8b', '6a99cf86555243ba8b23927c0748b562', '0', '1547257501808');
+INSERT INTO `mid_user_follow_user` VALUES ('6', '3bad1b8a3c284cab8d19d441651c7611', '3bad1b8a3c284cab8d19d441651c7611', '0', '0');
+INSERT INTO `mid_user_follow_user` VALUES ('7', '3bad1b8a3c284cab8d19d441651c7612', '3bad1b8a3c284cab8d19d441651c7612', '0', '0');
+INSERT INTO `mid_user_follow_user` VALUES ('8', '3bad1b8a3c284cab8d19d441651c7613', '3bad1b8a3c284cab8d19d441651c7613', '0', '0');
 
 -- ----------------------------
 -- Table structure for mid_user_vote_answer
@@ -553,15 +555,15 @@ CREATE TABLE `mid_user_vote_answer` (
   `vote` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'upvate:1;downvote:-1;not vote:0',
   `create_time` bigint(13) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of mid_user_vote_answer
 -- ----------------------------
-INSERT INTO `mid_user_vote_answer` VALUES ('9', '45e6c1985fe640e09cd770d95e6e2c8b', '53', '1', '1547024917634');
 INSERT INTO `mid_user_vote_answer` VALUES ('11', '45e6c1985fe640e09cd770d95e6e2c8b', '79', '1', '1546492981705');
 INSERT INTO `mid_user_vote_answer` VALUES ('13', '45e6c1985fe640e09cd770d95e6e2c8b', '81', '0', '1546506615115');
-INSERT INTO `mid_user_vote_answer` VALUES ('14', '3bad1b8a3c284cab8d19d441651c7615', '53', '1', '1547034809065');
+INSERT INTO `mid_user_vote_answer` VALUES ('15', '45e6c1985fe640e09cd770d95e6e2c8b', '86', '0', '1547535902932');
+INSERT INTO `mid_user_vote_answer` VALUES ('16', '45e6c1985fe640e09cd770d95e6e2c8b', '85', '1', '1547643597853');
 
 -- ----------------------------
 -- Table structure for question
@@ -578,24 +580,22 @@ CREATE TABLE `question` (
   `user_id` varchar(128) NOT NULL,
   `answer_count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1033 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1035 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of question
 -- ----------------------------
-INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '3', '0', '1546138996000', '45e6c1985fe640e09cd770d95e6e2c8b', '2');
-INSERT INTO `question` VALUES ('2', '为什么手机只能围绕其中两个很大的特别重对称轴稳定的旋转？这个不太明白啊啊啊啊啊啊', '', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('3', '霸王龙前面两只小手手是干嘛用的？', '霸王龙前面两只小手手是干嘛用的？霸王龙前面两只小手手是干嘛用的？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
-INSERT INTO `question` VALUES ('4', '如何看待大疆员工猝死？', '才刚毕业几个月就去世了,真让人心寒', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('5', 'PowerPoint 到底有多厉害？', '因为见识了Excel 到底有多厉害？ - 软件，所以想看看PPT的过人之处', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('6', '如何优雅地使用 Jupyter？', '如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？', '', '2', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('7', '不爱睡觉怎么办？', '不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('8', '有没有bootstrap 学习的例子?', '有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?v', '', '1', '0', '1546138993520', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('9', '小号的第一个问题', '', '', '1', '0', '1546320447149', '3bad1b8a3c284cab8d19d441651c7615', '1');
-INSERT INTO `question` VALUES ('10', '小号的第二个问题', '小号的第二个问题小号的第二个问题', '', '1', '0', '1546323690120', '3bad1b8a3c284cab8d19d441651c7615', '0');
-INSERT INTO `question` VALUES ('17', '今天星期几？', '今天星期几？今天星期几？', '', '1', '0', '1546927774849', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('18', '今天星期几？', '今天星期几？今天星期几？', '', '1', '0', '1546929688874', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
-INSERT INTO `question` VALUES ('19', 'Cape Verde', 'Cape VerdeCape Verde', '', '1', '0', '1546934343030', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('1', 'java开发，入职半年。对未来迷茫，如何发展？', '各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。', '', '2', '0', '1546934343030', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `question` VALUES ('2', '为什么手机只能围绕其中两个很大的特别重对称轴稳定的旋转？这个不太明白啊啊啊啊啊啊', '', '', '1', '0', '1546934343031', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('3', '霸王龙前面两只小手手是干嘛用的？', '霸王龙前面两只小手手是干嘛用的？霸王龙前面两只小手手是干嘛用的？', '', '1', '0', '1546934343032', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `question` VALUES ('4', '如何看待大疆员工猝死？', '才刚毕业几个月就去世了,真让人心寒', '', '1', '0', '1546934343033', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('5', 'PowerPoint 到底有多厉害？', '因为见识了Excel 到底有多厉害？ - 软件，所以想看看PPT的过人之处', '', '2', '0', '1546934343034', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('6', '如何优雅地使用 Jupyter？', '如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？如何优雅地使用 Jupyter？', '', '2', '0', '1546934343035', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('7', '不爱睡觉怎么办？', '不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？不爱睡觉怎么办？', '', '1', '0', '1546934343036', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('8', '有没有bootstrap 学习的例子?', '有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?有没有 SpringMVC + Angular + bootstrap 学习的例子?v', '', '1', '0', '1546934343037', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('9', '小号的第一个问题', '', '', '1', '0', '1546934343038', '3bad1b8a3c284cab8d19d441651c7615', '1');
+INSERT INTO `question` VALUES ('18', '今天星期几？', '今天星期几？今天星期几？', '', '1', '0', '1546934343039', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('19', 'Cape Verde', 'Cape VerdeCape Verde', '', '1', '0', '1546934343040', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('20', 'Spring，Django，Rails，Express这些框架技术的出现都是为了解决什么问题，现在这些框架都应用在哪些方面？', 'Spring，Django，Rails，Express这些框架技术的出现都是为了解决什么问题，现在这些框架都应用在哪些方面？Spring，Django，Rails，Express这些框架技术的出现都是为了解决什么问题，现在这些框架都应用在哪些方面？', '{180:\"算法\",40:\"java\"}', '0', '0', '1493520121386', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('21', '零基础应该选择学习 java、php、前端 还是 python？', '零基础应该选择学习 java、php、前端 还是 python？零基础应该选择学习 java、php、前端 还是 python？', '{160:\"c++\",40:\"java\"}', '0', '0', '1493520177143', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 INSERT INTO `question` VALUES ('22', 'IT行业都有哪些职位，初学者（0基础，新人）该如何选择，才能够快速进入这个行业？', 'IT行业都有哪些职位，初学者（0基础，新人）该如何选择，才能够快速进入这个行业？IT行业都有哪些职位，初学者（0基础，新人）该如何选择，才能够快速进入这个行业？', '{181:\"javaee\",40:\"java\"}', '0', '0', '1493555405611', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
@@ -1565,6 +1565,8 @@ INSERT INTO `question` VALUES ('985', 'Java新手如何学习Spring、Struts、H
 INSERT INTO `question` VALUES ('986', '家政服务app开发的发展前景如何？', '家政服务app开发的发展前景如何？家政服务app开发的发展前景如何？', '{96:\"Android 开发\",97:\"Android\",226:\"移动开发\",122:\"iOS 开发\",225:\"移动互联网\"}', '0', '0', '1493871362553', '3bad1b8a3c284cab8d19d441651c7615', '0');
 INSERT INTO `question` VALUES ('1031', '1111111', '<p><img src=\"http://pknhrkp8l.bkt.clouddn.com/questionTitle-1111111-No.1.jpeg\"><img src=\"http://pknhrkp8l.bkt.clouddn.com/questionTitle-1111111-No.2.jpeg\"></p>', '', '1', '0', '1547110966369', '3bad1b8a3c284cab8d19d441651c7615', '0');
 INSERT INTO `question` VALUES ('1032', '今天星期几？', '<h1>啊啊啊啊啊啊啊啊</h1>', '', '1', '0', '1547197911285', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
+INSERT INTO `question` VALUES ('1033', '马桶MT发布，会给微信带来什么威胁？', '<p><br></p>', '', '1', '0', '1547520816243', '45e6c1985fe640e09cd770d95e6e2c8b', '1');
+INSERT INTO `question` VALUES ('1034', 'python开发，入职半年。对未来迷茫，如何发展？', '<p><span style=\"color: rgb(51, 51, 51);\">各位前辈你们好。今年三月实习到最近转正，工作了这半年，现在感觉对未来很迷茫。我想努力提升自己的能力，在工作中，大部分时间都在写着重复的业务代码。感觉成长很低。自己每天上下班五个小时，都在车上看视频学习技术，但是在实际的公司开发中，都用不到。因为公司用的后端技术比较旧，还是用的servlet加jsp和公司自己封装的很多组件api进行开发。我想努力成为一名真正的java开发工程师，一步一步。自己该如何走下去？现在在公司，脑子里面全是如何提升自己的技术，我该学习哪些技术呢？现在自己自学了ssm和ssh。</span></p>', '', '1', '0', '1547540376767', '45e6c1985fe640e09cd770d95e6e2c8b', '0');
 
 -- ----------------------------
 -- Table structure for topic
@@ -1843,6 +1845,33 @@ INSERT INTO `topic` VALUES ('256', '老哥稳', '', '暂无描述', '', 'http://
 INSERT INTO `topic` VALUES ('257', '人生，诗词', '', '暂无描述', '', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '0');
 
 -- ----------------------------
+-- Table structure for t_log
+-- ----------------------------
+DROP TABLE IF EXISTS `t_log`;
+CREATE TABLE `t_log` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `log_username` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `log_desc` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `log_duration` mediumtext,
+  `user_ip` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `log_level` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `log_type` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `req_param` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `res_result` blob,
+  `req_method` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`log_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of t_log
+-- ----------------------------
+INSERT INTO `t_log` VALUES ('22', 'tsaizhenya', '2019-01-18 18:37:15', '获取用户关注问题列表', '173', '0:0:0:0:0:0:0:1', 'INFO', 'WEB', '{\"userId\":\"45e6c1985fe640e09cd770d95e6e2c8b\"}', 0x7B22726573706F6E73654C69737453697A65223A31337D, 'getFollowingQuestionByUserId');
+INSERT INTO `t_log` VALUES ('23', 'tsaizhenya', '2019-01-18 18:39:43', '获取用户关注问题列表', '66', '0:0:0:0:0:0:0:1', 'INFO', 'WEB', '{\"userId\":\"45e6c1985fe640e09cd770d95e6e2c8b\"}', 0x7B22726573706F6E73654C69737453697A65223A31337D, 'getFollowingQuestionByUserId');
+INSERT INTO `t_log` VALUES ('24', 'tsaizhenya', '2019-01-18 18:40:44', '关注问题', '13', '0:0:0:0:0:0:0:1', 'INFO', 'WEB', '{\"localUserId\":\"45e6c1985fe640e09cd770d95e6e2c8b\",\"questionId\":1}', 0x7B22726573706F6E7365436F6E74656E74223A317D, 'followQuestion');
+INSERT INTO `t_log` VALUES ('25', 'tsaizhenya', '2019-01-18 18:40:45', '取消关注问题', '14', '0:0:0:0:0:0:0:1', 'INFO', 'WEB', '{\"localUserId\":\"45e6c1985fe640e09cd770d95e6e2c8b\",\"questionId\":1}', 0x7B22726573706F6E7365436F6E74656E74223A317D, 'unfollowQuestion');
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -1876,6 +1905,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7611', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-3bad1b8a3c284cab8d19d441651c7615-20181211191204.png', '1', '蔡振亚的小号问题蔡振亚的小号问题蔡振亚的小号问题啊', '广东省深圳市', 'java工程师', '互联网行业', '深圳市弘长科技有限公司', '深圳大学小号', '啦啦啦啦啦啦啦啦啦', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7612', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-3bad1b8a3c284cab8d19d441651c7615-20181211191204.png', '1', '蔡振亚的小号问题蔡振亚的小号问题蔡振亚的小号问题啊', '广东省深圳市', 'java工程师', '互联网行业', '深圳市弘长科技有限公司', '深圳大学小号', '啦啦啦啦啦啦啦啦啦', '0', '0', '0', '0', '0', '');
+INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7613', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-3bad1b8a3c284cab8d19d441651c7615-20181211191204.png', '1', '蔡振亚的小号问题蔡振亚的小号问题蔡振亚的小号问题啊', '广东省深圳市', 'java工程师', '互联网行业', '深圳市弘长科技有限公司', '深圳大学小号', '啦啦啦啦啦啦啦啦啦', '0', '0', '0', '0', '0', '');
 INSERT INTO `user` VALUES ('3bad1b8a3c284cab8d19d441651c7615', 'tsai@gmail.com', '123456', '0', '', '0', '小号', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-3bad1b8a3c284cab8d19d441651c7615-20181211191204.png', '1', '蔡振亚的小号问题蔡振亚的小号问题蔡振亚的小号问题啊', '广东省深圳市', 'java工程师', '互联网行业', '深圳市弘长科技有限公司', '深圳大学小号', '啦啦啦啦啦啦啦啦啦', '0', '0', '0', '0', '0', '');
 INSERT INTO `user` VALUES ('45e6c1985fe640e09cd770d95e6e2c8b', 'cc@126.com', '123456', '0', '1212313', '0', 'tsaizhenya', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-45e6c1985fe640e09cd770d95e6e2c8b-author.jpg', '1', '社会主义的接班人，社会主义的接班人，社会主义的接班人', '深圳市', 'java工程师', '互联网行业', '杭州有赞科技有限公司', '深圳大学蔡振亚', '世界上最聪明的人', '12', '23', '34', '345', '3454', '2312312');
 INSERT INTO `user` VALUES ('6a99cf86555243ba8b23927c0748b562', '992085263@qq.com', '123456', '0', '', '0', '滕飞', 'http://pknhrkp8l.bkt.clouddn.com/userId-avatar-6a99cf86555243ba8b23927c0748b562-tengfei.jpg', '1', '世界上最帅最帅最帅的人问题', '深圳市', '学生', '金融', '', '深圳大学滕飞', '', '3', '234', '345', '45', '345', '');
