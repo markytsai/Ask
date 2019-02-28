@@ -3,6 +3,7 @@ package com.ilsxh.dao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.vo.UserTopicVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -52,6 +53,5 @@ public interface UserDao {
     Integer updateUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Long createTime);
 
     List<User> getollowingUserByUserId(@Param("userId") String userId);
-
 }
 

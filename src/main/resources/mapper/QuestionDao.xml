@@ -164,6 +164,24 @@
         where answer_user_id = #{userId} and question_id = #{questionId}
     </select>
 
+    <select id="getQuestionListById" resultMap="QuestionList" parameterType="java.util.List">
+        select
+        question_id,
+        question_title,
+        question_content,
+        followed_count,
+        scanned_count,
+        create_time,
+        user_id,
+        answer_count
+        FROM
+        question
+        WHERE
+        question_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
 
 

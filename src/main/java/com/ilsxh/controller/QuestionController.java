@@ -65,7 +65,7 @@ public class QuestionController {
 
         String userId = userHelperService.getUserIdFromRedis(request);
         userHelperService.getUserDetails(userId, model);
-        List<Question> questionList = questionService.getRecommendedQuestionByUserId();
+        List<Question> questionList = questionService.getRecommendedQuestionByUserId(userId);
         model.addAttribute("recommendQuestionList", questionList);
         questionService.getCommonHotData(model);
         return "index-recommend";
@@ -224,8 +224,8 @@ public class QuestionController {
     @RequestMapping("/moreHotQuestion")
     public String getMoreHotQuestion(HttpServletRequest request, Model model) {
         searchService.getCommonData(request, "", model);
-
-        List<Question> questionList = questionService.getRecommendedQuestionByUserId();
+        String userId = userHelperService.getUserIdFromRedis(request);
+        List<Question> questionList = questionService.getRecommendedQuestionByUserId(userId);
         model.addAttribute("questionList", questionList);
         return "hotQuestionDetail";
     }

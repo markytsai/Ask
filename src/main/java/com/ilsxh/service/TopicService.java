@@ -57,7 +57,7 @@ public class TopicService {
 
         List<Question> relatedQuestion = redisService.getList(TopicKey.relatedQuestionKey, topicId.toString(), Question.class);
         if (relatedQuestion == null) {
-            relatedQuestion = questionService.getRecommendedQuestionByUserId();
+            relatedQuestion = questionService.getRecommendedQuestionByUserId(userId);
             redisService.setList(TopicKey.relatedQuestionKey, "topicId:" + topicId.toString(), relatedQuestion);
         }
         model.addAttribute("relatedQuestion", relatedQuestion);

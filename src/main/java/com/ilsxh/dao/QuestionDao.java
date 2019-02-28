@@ -52,4 +52,6 @@ public interface QuestionDao {
     List<Question> getProbablyRelativeQestions(@Param("partialWord") String partialWord);
 
     Integer isQuestionAnswered(@Param("userId") String userId, @Param("questionId") Integer questionId);
+
+    List<Question> getQuestionListById(List<Integer> list);
 }
