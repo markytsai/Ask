@@ -109,6 +109,9 @@ public class QuestionService {
             System.out.println();
         }
 
+        Set<Integer> recommendQuestionIdsSet = this.questionCF(1, userId);
+        recommendQuestionIdsSet.stream().forEach(x -> recommendQuestionIdList.add(x));
+
         List<Question> questionList = questionDao.getQuestionListById(recommendQuestionIdList);
 
         for (Question question : questionList) {
@@ -443,7 +446,7 @@ public class QuestionService {
     }
 
     /**
-     * 通过矩阵计算，得到前topK的相似用户集合
+     * 通过矩阵计算，得到前topK的相似用户集合，计算依据：用户关注话题
      *
      * @param topK
      * @param targetUserId
@@ -452,7 +455,7 @@ public class QuestionService {
     public Set<String> getSimilarUserSet(int topK, String targetUserId) {
 
         List<UserTopicVo> list = trainDao.getAllUserTopic();
-        list.stream().forEach(x -> System.out.println(x.getId()));
+//        list.stream().forEach(x -> System.out.println(x.getId()));
 
         // 通过set获取人数
         Set<String> set = new HashSet<>();
@@ -464,7 +467,7 @@ public class QuestionService {
 
         String[] userIds = new String[userNum];
         int n = 0;
-        // 用户user_id 和 矩阵序号的 对照
+        // 用户user_id 和 矩阵序号的 对照map
         Map<String, Integer> userIdSerialMap = new HashMap<>(userNum);
         int serialNum = 0;
         for (String s : set) {
@@ -554,4 +557,90 @@ public class QuestionService {
 
         return tempSet;
     }
+
+    /**
+     * ItemCF 根据同时关注两个问题的用户个数来确定两个用户之间的强弱关系
+     * @param topK
+     * @param userId
+     * @return
+     */
+    public Set<Integer> questionCF(int topK, String userId) {
+        // 获取数据库中所有的用户关注问题集合
+        List<UserQuestionVo> userQuestionVoList = trainDao.getAllUserFollowQuestion();
+
+        // 目标用户关注的问题集合
+        Set<Integer> targetUserFollowQuestionSet = new HashSet<>();
+
+        // 计算问题的总数，确定矩阵的边长
+        Set<Integer> questionIdSet = new HashSet<>();
+        userQuestionVoList.stream().forEach(q -> questionIdSet.add(q.getQuestionId()));
+        int questionNum = questionIdSet.size();
+
+        // 计算每一个矩阵序号（也即是问题序号）的对应用户集合
+        Map<Integer, Set<String>> questionUserMap = new HashMap<>();
+
+        // 得到问题编号 和 矩阵编号 对照
+        Map<Integer, Integer> questionIdMatrixIdLinkMap = new HashMap<>(questionNum);
+        int temp = 0;
+        // 可以通过矩阵编号获取对应的问题编号
+        int[] fromMatrixIdToQuestionIdLink = new int[questionNum];
+        for (Integer num : questionIdSet) {
+            questionUserMap.put(temp, new HashSet<String>());
+            fromMatrixIdToQuestionIdLink[temp] = num;
+            questionIdMatrixIdLinkMap.put(num, temp++);
+        }
+
+        for (UserQuestionVo userQuestionVo : userQuestionVoList) {
+            int matrixId = questionIdMatrixIdLinkMap.get(userQuestionVo.getQuestionId());
+            questionUserMap.get(matrixId).add(userQuestionVo.getUserId());
+
+            if (userQuestionVo.getUserId().equals(userId)) {
+                targetUserFollowQuestionSet.add(userQuestionVo.getQuestionId());
+            }
+        }
+
+
+        double[][] questionSimilarityMatrix = new double[questionNum][questionNum];
+//        Arrays.fill(questionSimilarityMatrix, 0.0);
+
+        Set<String> tempSet = new HashSet<>();
+        for (int i = 0; i < questionNum; i++) {
+            for (int j = i + 1; j < questionNum; j++) {
+                tempSet.clear();
+
+                Set<String> setI = questionUserMap.get(i);
+                Set<String> setJ = questionUserMap.get(j);
+                tempSet.addAll(setI);
+                tempSet.retainAll(setJ);
+
+                questionSimilarityMatrix[i][j] = questionSimilarityMatrix[j][i] =
+                        tempSet.size() / Math.sqrt(1.0 * setI.size() * setJ.size());
+            }
+        }
+
+        // 目标用户推荐问题结果集合
+        Set<Integer> recommendQuestionIdsSet = new HashSet<>();
+
+        // 找出目标用户关注的问题集合中  每一个问题最相似的问题推荐给该用户
+        for (Integer questionId : targetUserFollowQuestionSet) {
+
+            int matrixRow = questionIdMatrixIdLinkMap.get(questionId);
+            double[] tempCompArray = new double[questionNum];
+            tempCompArray = Arrays.copyOf(questionSimilarityMatrix[matrixRow], questionNum);
+            Arrays.sort(tempCompArray);
+            for (int k = questionNum - 1; k >= questionNum - topK; k--) {
+                for (int l = 0; l < questionNum; l++) {
+                    if (k != l && questionSimilarityMatrix[matrixRow][l] == tempCompArray[k]) {
+                        recommendQuestionIdsSet.add(fromMatrixIdToQuestionIdLink[l]);
+                        break;
+                    }
+                }
+            }
+
+
+            System.out.println(questionId);
+        }
+        return recommendQuestionIdsSet;
+    }
+
 }

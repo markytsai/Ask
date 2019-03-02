@@ -31,4 +31,6 @@ public interface TrainDao {
 
     Integer getUserInterestedQuestionIds(@Param("userId") String userId);
 
+    List<UserQuestionVo> getAllUserFollowQuestion();
+
 }

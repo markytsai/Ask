@@ -12,15 +12,21 @@ import com.ilsxh.exception.CustomException;
 import com.ilsxh.redis.UserKey;
 import com.ilsxh.response.BaseResponse;
 import com.ilsxh.util.UUIDUtil;
+import com.ilsxh.vo.FirstLoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.ilsxh.enums.StatusEnum.CONTINUE_LOGIN;
+import static com.ilsxh.enums.StatusEnum.FIRST_LOGIN;
+import static com.ilsxh.util.MyConstant.FIRST_LOGIN_STATUS;
 
 @Service
 public class UserService {
@@ -56,15 +62,21 @@ public class UserService {
     public Map<String, Object> login(String email, String password, Boolean rememberMe, HttpServletResponse response) {
         Map<String, Object> loginUserMap = new HashMap<>();
 
-        String userId = userDao.selectUserIdByEmailAndPassword(email, password);
-        if (userId == null) {
+        FirstLoginVo user = userDao.selectUserIdByEmailAndPassword(email, password);
+        if (user == null || user.getUserId() == null) {
             throw new CustomException(StatusEnum.LOGIN_ERROR);
-//            loginUserMap.put("loginError", "用户名或密码错误");
-//            return loginUserMap;
         }
 
-        autoGenCookie(response, userId, rememberMe);
-        User loginUser = userDao.selectUserByUserId(userId);
+        // 用户首次登录，更新状态码
+        if (user.getFirstLogin().equals(FIRST_LOGIN.getCode())) {
+            loginUserMap.put(FIRST_LOGIN_STATUS, StatusEnum.FIRST_LOGIN.getCode());
+            userDao.updateFirstLoginStatus(user.getUserId(), CONTINUE_LOGIN.getCode());
+        } else {
+            loginUserMap.put(FIRST_LOGIN_STATUS, StatusEnum.CONTINUE_LOGIN.getCode());
+        }
+
+        autoGenCookie(response, user.getUserId(), rememberMe);
+        User loginUser = userDao.selectUserByUserId(user.getUserId());
         loginUserMap.put("loginUserInfo", loginUser);
 
         return loginUserMap;

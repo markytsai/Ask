@@ -31,9 +31,12 @@ $("#loginButton").on("click", function () {
         url: "/toLogin",
         type: "post",
         data: userData,
+        async: false,
         dataType: 'json',
         success: function (response) {
-            if (response.code == 1) {
+            if (response.code == "103") {
+                window.location.href = "/chooseTopic";
+            } else if (response.code == "104") {
                 window.location.href = "/index";
             } else {
                 $("#login-password-error").text(response.message);

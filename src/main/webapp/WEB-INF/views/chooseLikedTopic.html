@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>编辑信息</title>
+    <link rel="stylesheet" type="text/css" href="css/wangEditor.css"/>
+    <link rel="stylesheet" type="text/css" href="css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="css/nav.css"/>
+    <link rel="stylesheet" type="text/css" href="css/editProfile.css"/>
+    <link rel="stylesheet" type="text/css" href="css/build.css"/>
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css"/>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link href="css/navbar-static-top.css" rel="stylesheet"/>
+</head>
+<body style='background-color: #f6f6f6;'>
+
+<div class="container">
+    <form role="form">
+        <div class="row">
+            <div class="col-md-4">
+                <fieldset>
+                    <legend>
+                        电影
+                    </legend>
+                    <p>
+                        电影归类：包括华语、欧洲、美洲以及东南亚各类题材电影
+                    </p>
+                    <div th:each="topic : ${topicList}" class="checkbox checkbox-danger">
+                        <input th:id="${topic.topicId}" type="checkbox" class="styled" name="selectedIds" th:value="${topic.topicId}"/>
+                        <label th:text="${topic.topicName}"/>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px;margin-bottom: 30px;text-align: center;">
+            <input id="startBtn" type="button" class="btn btn-danger" value="开始探索"/>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/wangEditor.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/topic.js"></script>
+
+</body>
+</html>
+

@@ -15,9 +15,11 @@ public class MyConstant {
     public static final String DOMAIN_NAME = "http://naivee.me/";
 
 
-//    日志模块
+    //    日志模块
     public static final String PrintLogInConsole = "YES";
     public static final String NotPintLogInConsole = "NO";
+
+    public static final String FIRST_LOGIN_STATUS = "firstLoginInfo";
 
 
 }

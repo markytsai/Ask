@@ -176,4 +176,11 @@ public class TopicService {
         return retStat;
     }
 
+    public List<Topic> getAllTopics() {
+        return topicDao.getAllTopics();
+    }
+
+    public void insertUserFollowTopics(String userId, List<Integer> topicIds) {
+        topicDao.insertfollowTopics(userId, topicIds);
+    }
 }

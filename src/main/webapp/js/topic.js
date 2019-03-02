@@ -82,3 +82,29 @@ function unfollowTopic(topicId) {
         }
     });
 }
+
+
+$("#startBtn").on("click", function () {
+
+    var checkVal = [];
+    $("input.styled[name='selectedIds']:checkbox").each(function () {
+        if ($(this).is(":checked")) {
+            var s = $(this).val();
+            checkVal.push(s);
+        }
+    });
+    $.ajax({
+        url: "/doChooseTopic",
+        type: "post",
+        data: {"topicIds" : checkVal},
+        success: function (response) {
+            if (response.code == 1) {
+                window.location.href = "/recommend";
+            } else {
+                alert("操作失败");
+            }
+        }
+    });
+    alert(checkVal);
+});
+

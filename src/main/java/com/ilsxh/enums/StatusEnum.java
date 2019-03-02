@@ -23,6 +23,9 @@ public enum StatusEnum {
     LOGIN_FAILURE("0", ""),
     REGISTER_SUCCESS("1", ""),
     REGISTER_FAILURE ("0", ""),
+
+    FIRST_LOGIN("103", "用户首次登录"),
+    CONTINUE_LOGIN("104", "用户持续登录"),
     ;
 
 

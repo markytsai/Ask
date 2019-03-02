@@ -12,9 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -143,5 +146,41 @@ public class TopicController {
         } else {
             return new BaseResponse(StatusEnum.FAIL.getCode(), "未能获取登录用户与话题之间的关注关系", "");
         }
+    }
+
+    /**
+     * 获取 话题选择页面
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/chooseTopic")
+    public String chooseTopic(HttpServletRequest request, Model model) {
+
+        String userId = userHelperService.getUserIdFromRedis(request);
+        userHelperService.getUserDetails(userId, model);
+
+        List<Topic> topicList = topicService.getAllTopics();
+        model.addAttribute("topicList", topicList);
+
+        return "chooseLikedTopic";
+    }
+
+    /**
+     * 将用户的话题偏好持久化
+     *
+     * @param request
+     * @param topicIds
+     */
+    @RequestMapping("/doChooseTopic")
+    @ResponseBody
+    public BaseResponse<String> saveChosenTopics(HttpServletRequest request, @RequestParam(value = "topicIds[]") Integer[] topicIds, Model model) {
+
+        String userId = userHelperService.getUserIdFromRedis(request);
+        userHelperService.getUserDetails(userId, model);
+        topicService.insertUserFollowTopics(userId, Arrays.asList(topicIds));
+
+        return new BaseResponse<>("1", "成功保存用户话题偏好");
     }
 }

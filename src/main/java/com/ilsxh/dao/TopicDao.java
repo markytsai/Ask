@@ -26,6 +26,10 @@ public interface TopicDao {
 
     Integer insertfollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
 
+    Integer insertfollowTopics(@Param("localUserId") String localUserId, @Param("topicIds") List<Integer> topicIds);
+
     Integer updateFollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
+
+    List<Topic> getAllTopics();
 
 }

@@ -7,15 +7,15 @@ import com.ilsxh.service.UserHelperService;
 import com.ilsxh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Map;
+
+import static com.ilsxh.util.MyConstant.FIRST_LOGIN_STATUS;
 
 @Controller
 @RequestMapping
@@ -46,13 +46,17 @@ public class UserController {
     public BaseResponse login(@RequestParam("email") String email, @RequestParam("password") String password,
                               @RequestParam("rememberMe") Boolean rememberMe, HttpServletRequest request, HttpServletResponse response) {
 
+
         Map<String, Object> userInfoMap = userService.login(email, password, rememberMe, response);
 
-        if (userInfoMap.get("loginError") == null) {
-            return new BaseResponse(StatusEnum.LOGIN_SUCCESS.getCode(), "成功登录", userInfoMap);
-        } else {
-            return new BaseResponse(StatusEnum.LOGIN_FAILURE.getCode(), userInfoMap.get("loginError").toString());
-        }
+        // 首次登录，跳转到话题选择页面
+        return new BaseResponse((String) userInfoMap.get(FIRST_LOGIN_STATUS), "", userInfoMap);
+
+//        if (userInfoMap.get(FIRST_LOGIN_STATUS).equals(StatusEnum.FIRST_LOGIN.getCode())) {
+//            return new BaseResponse(StatusEnum.FIRST_LOGIN.getCode(), "首次登录", userInfoMap);
+//        } else {
+//            return new BaseResponse(StatusEnum.CONTINUE_LOGIN.getCode(), "持续登录", userInfoMap);
+//        }
     }
 
     /**
@@ -135,4 +139,6 @@ public class UserController {
             return new BaseResponse(StatusEnum.FAIL.getCode(), "获取用户信息失败", null);
         }
     }
+
+
 }
