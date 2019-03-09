@@ -6,7 +6,7 @@
 
     <select id="selectProfileInfoByUserId" resultType="com.ilsxh.entity.User" parameterType="String">
 
-        select user_id as userId,username,avatar_url as avatarUrl,gender,simple_desc as simpleDesc,residence_place,position,industry,career,education,full_desc,
+        select user_id, username,avatar_url,gender,email, simple_desc,residence_place,position,industry,career,education,full_desc,
         liked_count,collected_count,follow_count,followed_count,scanned_count
     	from user where user_id = #{userId}
     </select>

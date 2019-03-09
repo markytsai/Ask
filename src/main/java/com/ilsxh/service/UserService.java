@@ -211,4 +211,36 @@ public class UserService {
     public List<User> getollowingUserByUserId(String userId) {
         return userDao.getollowingUserByUserId(userId);
     }
+
+    public Integer updateUsernameByUserId(String userId, String newContent) {
+        return userDao.updateUsernameByUserId(userId, newContent);
+    }
+
+    public Integer updateUserGenderByUserId(String userId, String newContent) {
+        if ("女".equals(newContent)) {
+            return userDao.updateUserGenderByUserId(userId, 1);
+        } else {
+            return userDao.updateUserGenderByUserId(userId, 2);
+        }
+    }
+
+    public Integer updateUserEmailByUserId(String userId, String newContent) {
+        return userDao.updateUserEmailByUserId(userId, newContent);
+    }
+
+    public Integer updateUserIndustryByUserId(String userId, String newContent) {
+        return userDao.updateUserIndustryByUserId(userId, newContent);
+    }
+
+    public Integer updateUserPositionByUserId(String userId, String newContent) {
+        return userDao.updateUserPositionByUserId(userId, newContent);
+    }
+
+    public Integer updateUserSimpleDescByUserId(String userId, String newContent) {
+        return userDao.updateUserSimpleDescByUserId(userId, newContent);
+    }
+
+    public Integer updateUserFullDescByUserId(String userId, String newContent) {
+        return userDao.updateUserFullDescByUserId(userId, newContent);
+    }
 }

@@ -52,3 +52,15 @@
     font: 14px/36px "微软雅黑";
     cursor: pointer;
 }
+
+.modifyButton {
+    cursor: pointer;
+    color: #175199;
+    margin-left: 16px;
+    font-size: 15px;
+    /*display: none;*/
+}
+
+.showModify:hover {
+
+}

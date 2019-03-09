@@ -142,4 +142,130 @@ public class UserController {
     }
 
 
+    /**
+     * 更新用户名
+     *
+     * @param newUsername
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updateUsername/{newUsername}")
+    @ResponseBody
+    public BaseResponse updateUsername(@PathVariable String newUsername, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Integer updateRet = userService.updateUsernameByUserId(userId, newUsername);
+        if (updateRet != null && updateRet.intValue() == 1) {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_SUCCESS.getCode(), "更新用户名成功", "");
+        } else {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_FAIL.getCode(), "更新用户名失败", "");
+        }
+    }
+
+    /**
+     * 更新用户性别
+     *
+     * @param newUserGender
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updateGender/{newUserGender}")
+    @ResponseBody
+    public BaseResponse updateUserGender(@PathVariable String newUserGender, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Integer updateRet = userService.updateUserGenderByUserId(userId, newUserGender);
+        if (updateRet != null && updateRet.intValue() == 1) {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_SUCCESS.getCode(), "更新用户名成功", "");
+        } else {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_FAIL.getCode(), "更新用户名失败", "");
+        }
+    }
+
+    /**
+     * 更新用户登录邮箱
+     *
+     * @param newEmail
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updateEmail/{newEmail}")
+    @ResponseBody
+    public BaseResponse updateUserEmail(@PathVariable String newEmail, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Integer updateRet = userService.updateUserEmailByUserId(userId, newEmail);
+        if (updateRet != null && updateRet.intValue() == 1) {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_SUCCESS.getCode(), "更新用户名成功", "");
+        } else {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_FAIL.getCode(), "更新用户名失败", "");
+        }
+    }
+
+    /**
+     * 更新用户所在行业
+     *
+     * @param newPosition
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updatePosition/{newPosition}")
+    @ResponseBody
+    public BaseResponse updatePosition(@PathVariable String newPosition, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Integer updateRet = userService.updateUserPositionByUserId(userId, newPosition);
+        if (updateRet != null && updateRet.intValue() == 1) {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_SUCCESS.getCode(), "更新用户名成功", "");
+        } else {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_FAIL.getCode(), "更新用户名失败", "");
+        }
+    }
+
+    @RequestMapping("/updateIndustry/{newIndustry}")
+    @ResponseBody
+    public BaseResponse updateIndustry(@PathVariable String newIndustry, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Integer updateRet = userService.updateUserIndustryByUserId(userId, newIndustry);
+        if (updateRet != null && updateRet.intValue() == 1) {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_SUCCESS.getCode(), "更新用户名成功", "");
+        } else {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_FAIL.getCode(), "更新用户名失败", "");
+        }
+    }
+
+    /**
+     * 更新用户简介
+     *
+     * @param newSimpleDesc
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updateSimpleDesc/{newSimpleDesc}")
+    @ResponseBody
+    public BaseResponse updatSimpleDesc(@PathVariable String newSimpleDesc, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Integer updateRet = userService.updateUserSimpleDescByUserId(userId, newSimpleDesc);
+        if (updateRet != null && updateRet.intValue() == 1) {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_SUCCESS.getCode(), "更新用户名成功", "");
+        } else {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_FAIL.getCode(), "更新用户名失败", "");
+        }
+    }
+
+    /**
+     * 更新用户简介
+     *
+     * @param newFullDesc
+     * @param request
+     * @return
+     */
+    @RequestMapping("/updateFullDesc/{newFullDesc}")
+    @ResponseBody
+    public BaseResponse updateFullDesc(@PathVariable String newFullDesc, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        Integer updateRet = userService.updateUserFullDescByUserId(userId, newFullDesc);
+        if (updateRet != null && updateRet.intValue() == 1) {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_SUCCESS.getCode(), "更新用户名成功", "");
+        } else {
+            return new BaseResponse(StatusEnum.UPDATE_USERNAME_FAIL.getCode(), "更新用户名失败", "");
+        }
+    }
+
 }

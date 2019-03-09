@@ -48,14 +48,12 @@ public class IndexController {
      * @param model
      * @return
      */
-    @RequestMapping("/settings")
+    @RequestMapping("/user/settings")
     public String setting(HttpServletRequest request, Model model) {
         String userId = userHelperService.getUserIdFromRedis(request);
         User user = indexService.getProfileInfo(userId);
         model.addAttribute("user", user);
-        System.out.println();
         return "setting/updateProfile";
-//        return "editProfile";
     }
 
     /**

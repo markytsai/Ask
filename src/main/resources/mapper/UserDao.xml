@@ -106,5 +106,39 @@
         where user_id = #{userId}
     </update>
 
+    <update id="updateUsernameByUserId">
+        update user set username = #{newUsername}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateUserGenderByUserId">
+        update user set gender = #{newGender}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateUserEmailByUserId">
+        update user set email = ${newEmail}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateUserIndustryByUserId">
+        update user set industry = #{newIndustry}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateUserPositionByUserId">
+        update user set position = #{newPosition}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateUserSimpleDescByUserId">
+        update user set simple_desc = #{newSimpleDesc}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateUserFullDescByUserId">
+        update user set full_desc = #{newFullDesc}
+        where user_id = #{userId}
+    </update>
 </mapper>
 

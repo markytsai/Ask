@@ -26,6 +26,9 @@ public enum StatusEnum {
 
     FIRST_LOGIN("103", "用户首次登录"),
     CONTINUE_LOGIN("104", "用户持续登录"),
+
+    UPDATE_USERNAME_SUCCESS("105", "更新用户名成功"),
+    UPDATE_USERNAME_FAIL("106", "更新用户名失败"),
     ;
 
 

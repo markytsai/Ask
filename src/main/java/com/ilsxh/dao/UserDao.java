@@ -58,5 +58,22 @@ public interface UserDao {
     List<User> getollowingUserByUserId(@Param("userId") String userId);
 
     Integer updateFirstLoginStatus(@Param("userId") String userId, @Param("firstLogin") String continueLogin);
+
+    Integer updateUsernameByUserId(@Param("userId") String userId, @Param("newUsername") String newUsername);
+
+    Integer updateUserGenderByUserId(@Param("userId") String userId, @Param("newGender") Integer newGender);
+
+    Integer updateUserEmailByUserId(@Param("userId") String userId, @Param("newEmail") String newEmail);
+
+    Integer updateUserIndustryByUserId(@Param("userId") String userId, @Param("newIndustry") String newIndustry);
+
+    Integer updateUserPositionByUserId(@Param("userId") String userId, @Param("newPosition") String newPosition);
+
+    Integer updateUserSimpleDescByUserId(@Param("userId") String userId, @Param("newSimpleDesc") String newSimpleDesc);
+
+    Integer updateUserFullDescByUserId(@Param("userId") String userId, @Param("newFullDesc") String newFullDesc);
+
+
+
 }
 
