@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -209,7 +210,7 @@ public class QuestionService {
      */
     @OperAnnotation(descpition = "关注问题")
     public Integer followQuestion(String localUserId, Integer questionId) {
-        return questionDao.followQuestion(localUserId, questionId, new Date().getTime());
+        return questionDao.followQuestion(localUserId, questionId, new Timestamp(System.currentTimeMillis()));
     }
 
     /**
@@ -242,7 +243,7 @@ public class QuestionService {
 
         answer.setAnswerContent(answerContent);
         answer.setQuestionId(questionId);
-        answer.setCreateTime(new Date().getTime());
+        answer.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
         questionDao.submitAnswer(answer);
 
@@ -259,7 +260,7 @@ public class QuestionService {
      * @param questionId
      */
     public Integer updateAnswer(String userId, Integer answerId, String answerContent, Integer questionId) {
-        Integer effectRow = questionDao.updateAnswer(userId, answerId, answerContent, new Date().getTime(), questionId);
+        Integer effectRow = questionDao.updateAnswer(userId, answerId, answerContent, new Timestamp(System.currentTimeMillis()), questionId);
         return effectRow;
     }
 
@@ -290,10 +291,10 @@ public class QuestionService {
         questionContent = MyUtil.modifyQuestionContent(questionContent, questionTitle);
         question.setQuestionContent(questionContent);
         question.setUserId(userId);
-        question.setCreateTime(new Date().getTime());
+        question.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
-        questionDao.addQuestion(question, userId, new Date().getTime());
-        questionDao.followQuestion(userId, question.getQuestionId(), new Date().getTime());
+        questionDao.addQuestion(question, userId, new Timestamp(System.currentTimeMillis()));
+        questionDao.followQuestion(userId, question.getQuestionId(), new Timestamp(System.currentTimeMillis()));
         this.addQuestionTopics(question, topicString);
 
         return question;
@@ -426,6 +427,7 @@ public class QuestionService {
 
     }
 
+    @OperAnnotation(descpition = "获取问题详情", include = "userid, questionId, model")
     public void getQuestionDetail(String userId, Integer questionId, Model model) {
         User user = userHelperService.getUserByUserId(userId);
         String hasFollowQuestion = this.hasUserFollowQuestion(userId, questionId);
@@ -560,6 +562,7 @@ public class QuestionService {
 
     /**
      * ItemCF 根据同时关注两个问题的用户个数来确定两个用户之间的强弱关系
+     *
      * @param topK
      * @param userId
      * @return

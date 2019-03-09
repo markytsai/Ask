@@ -105,6 +105,5 @@ $("#startBtn").on("click", function () {
             }
         }
     });
-    alert(checkVal);
 });
 

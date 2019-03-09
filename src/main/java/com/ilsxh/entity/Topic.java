@@ -1,5 +1,7 @@
 package com.ilsxh.entity;
 
+import java.util.List;
+
 public class Topic {
 
     private Integer topicId;
@@ -9,6 +11,8 @@ public class Topic {
     private String topicFullDescEn;
     private String topicImage;
     private Integer followedCount;
+    private Integer parentTopicId;
+    private List<Topic> subTopicList;
 
     public Integer getTopicId() {
         return topicId;
@@ -64,5 +68,21 @@ public class Topic {
 
     public void setFollowedCount(Integer followedCount) {
         this.followedCount = followedCount;
+    }
+
+    public List<Topic> getSubTopicList() {
+        return subTopicList;
+    }
+
+    public void setSubTopicList(List<Topic> subTopicList) {
+        this.subTopicList = subTopicList;
+    }
+
+    public Integer getParentTopicId() {
+        return parentTopicId;
+    }
+
+    public void setParentTopicId(Integer parentTopicId) {
+        this.parentTopicId = parentTopicId;
     }
 }

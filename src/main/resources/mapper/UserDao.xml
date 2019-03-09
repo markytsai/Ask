@@ -30,8 +30,8 @@
     </select>
 
 
-    <select id="selectUserIdByEmailAndPassword" resultType="String">
-        SELECT user_id
+    <select id="selectUserIdByEmailAndPassword" resultType="com.ilsxh.vo.FirstLoginVo">
+        SELECT user_id, first_login
         FROM user
         WHERE email = #{email} AND password = #{password}
     </select>
@@ -100,6 +100,11 @@
             INNER JOIN user AS u ON u.user_id = mufu.user_id
         WHERE u.user_id = #{userId} and mufu.follow_status = 1;
     </select>
+
+    <update id="updateFirstLoginStatus">
+        update user set first_login = #{firstLogin}
+        where user_id = #{userId}
+    </update>
 
 </mapper>
 

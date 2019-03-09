@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
@@ -32,7 +33,7 @@ public class CommentService {
     public AnswerComment commentAnswer(Integer answerId, String commentContent, String userId) {
         AnswerComment comment = new AnswerComment();
         comment.setLikedCount(0);
-        comment.setCreateTime(new Date().getTime());
+        comment.setCreateTime(new Timestamp(System.currentTimeMillis()));
         comment.setAnswerCommentContent(commentContent);
         comment.setAnswerId(answerId);
         comment.setUserId(userId);
@@ -66,7 +67,7 @@ public class CommentService {
 
         AnswerComment comment = new AnswerComment();
         comment.setLikedCount(0);
-        comment.setCreateTime(new Date().getTime());
+        comment.setCreateTime(new Timestamp(System.currentTimeMillis()));
         comment.setAnswerCommentContent(commentContent);
         comment.setAnswerId(answerId);
         comment.setUserId(userId);

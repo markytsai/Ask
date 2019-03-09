@@ -1,5 +1,7 @@
 package com.ilsxh.entity;
 
+import java.sql.Timestamp;
+
 public class Activity {
 
     /**
@@ -20,7 +22,7 @@ public class Activity {
      */
     private Integer activityStaus;
 
-    private long createTime;
+    private Timestamp createTime;
 
     public Answer getAnswer() {
         return answer;
@@ -38,11 +40,11 @@ public class Activity {
         this.activityStaus = activityStaus;
     }
 
-    public long getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 }

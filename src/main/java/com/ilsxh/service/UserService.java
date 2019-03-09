@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -190,7 +191,7 @@ public class UserService {
     }
 
 
-    public BaseResponse followUser(String userId, String userIdToBeFollowed, Long createTime) {
+    public BaseResponse followUser(String userId, String userIdToBeFollowed, Timestamp createTime) {
 
         Integer effectRow = 0;
         Integer followExisted = userDao.getUserFollowStatus(userId, userIdToBeFollowed);

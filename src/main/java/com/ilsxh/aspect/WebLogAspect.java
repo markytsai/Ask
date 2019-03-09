@@ -67,7 +67,7 @@ public class WebLogAspect {
 
         LogMessage logMessage = new LogMessage();
         // 设置日志创建时间
-        logMessage.setCreateTime(new Timestamp(new Date().getTime()));
+        logMessage.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
         // 获取request
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -152,7 +152,6 @@ public class WebLogAspect {
         logMessage.setLogLevel(methodLogAnnon.logLevel());
         logMessage.setLogType(methodLogAnnon.logType());
 
-        //...省略部分构造logMessage信息代码
     }
 
     private Map<String, Object> getMethodParamNames(Class cls,

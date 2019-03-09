@@ -4,6 +4,15 @@
 <!-- 设置为AnswerDao接口方法提供sql语句配置 -->
 <mapper namespace="com.ilsxh.dao.TopicDao">
 
+    <resultMap id="topicMap" type="com.ilsxh.entity.Topic">
+        <id column="topic_id" property="topicId"/>
+        <result column="topic_name" property="topicName"/>
+        <result column="topic_simple_desc" property="topicSimpleDesc"/>
+        <result column="topic_image" property="topicImage"/>
+        <result column="parent_topic_id" property="parentTopicId"/>
+        <result column="followed_count" property="followedCount"/>
+    </resultMap>
+
     <select id="getTopicByTopicId" resultType="Topic">
 
         SELECT topic_id, topic_name, topic_simple_desc, topic_full_desc, topic_full_desc_en, topic_image, followed_count
@@ -107,9 +116,24 @@
         values(#{localUserId}, #{topicId}, 1)
     </insert>
 
+    <insert id="insertfollowTopics" parameterType="java.util.List">
+        insert into mid_user_follow_topic(user_id, topic_id, follow_topic_status)
+        values
+        <foreach collection="topicIds" item="item" index="index" separator=",">
+            (
+              #{localUserId}, #{item}, 1
+            )
+        </foreach>
+    </insert>
+
     <update id="updateFollowTopic">
         update mid_user_follow_topic set follow_topic_status = #{targetStatus}
         where user_id = #{localUserId} and topic_id = #{topicId}
     </update>
+
+    <select id="getAllTopics" resultMap="topicMap">
+        select topic_id, topic_name, topic_simple_desc, topic_image, parent_topic_id, followed_count
+        from topic_coldstart
+    </select>
 </mapper>
 

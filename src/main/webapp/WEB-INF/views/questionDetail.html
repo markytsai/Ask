@@ -110,7 +110,7 @@
                             <span th:text="${#dates.format(questionDetail.createTime, 'yyyy年MM月dd日HH:mm:ss')}"></span>&nbsp;&nbsp;
                             <span class="glyphicon glyphicon-eye-open"></span>浏览<span
                                 th:text="${questionDetail.scanedCount}"></span>次&nbsp;&nbsp;
-                            <span class="glyphicon glyphicon-user"></span>关注<span th:text="123"></span>人<br/>
+                            <span class="glyphicon glyphicon-user"></span>关注<span th:text="${questionDetail.followedCount}"></span>人<br/>
                             <br/>
                             <div style="font-size: larger;">
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,7 @@ public class TopicService {
 
     /**
      * 获取话题详情
+     *
      * @param topicId
      * @return
      */
@@ -39,6 +41,7 @@ public class TopicService {
 
     /**
      * 获取话题页面侧边连数据
+     *
      * @param topicId
      * @param userId
      * @param model
@@ -81,6 +84,7 @@ public class TopicService {
 
     /**
      * 话题页面tab中一些公共数据
+     *
      * @param topicId
      * @param userId
      * @param model
@@ -95,6 +99,7 @@ public class TopicService {
 
     /**
      * 获取话题相关的问题列表
+     *
      * @param topicId
      * @return
      */
@@ -104,6 +109,7 @@ public class TopicService {
 
     /**
      * 获取话题下相关的回答
+     *
      * @param userId
      * @param topicId
      * @return
@@ -118,6 +124,7 @@ public class TopicService {
 
     /**
      * 获取话题下优秀的回答用户
+     *
      * @param topicId
      * @return
      */
@@ -127,6 +134,7 @@ public class TopicService {
 
     /**
      * 获取话题页面下相关的话题列表
+     *
      * @param partialWord
      * @return
      */
@@ -136,6 +144,7 @@ public class TopicService {
 
     /**
      * 关注话题
+     *
      * @param localUserId
      * @param topicId
      * @return
@@ -155,6 +164,7 @@ public class TopicService {
 
     /**
      * 取消关注话题
+     *
      * @param localUserId
      * @param topicId
      * @return
@@ -167,6 +177,7 @@ public class TopicService {
 
     /**
      * 获取当前用户关注话题状态
+     *
      * @param userId
      * @param topicId
      * @return
@@ -177,7 +188,28 @@ public class TopicService {
     }
 
     public List<Topic> getAllTopics() {
-        return topicDao.getAllTopics();
+        List<Topic> tempList = topicDao.getAllTopics();
+
+        List<Topic> returnList = new ArrayList<>();
+        for (Topic topic : tempList) {
+            if (topic.getParentTopicId() == 0) {
+                returnList.add(topic);
+            }
+        }
+
+        for (Topic rootTopic : returnList) {
+            rootTopic.setSubTopicList(new ArrayList());
+        }
+
+        for (Topic topic : tempList) {
+
+            for (Topic rootTopic : returnList) {
+                if (rootTopic.getTopicId().equals(topic.getParentTopicId())) {
+                    rootTopic.getSubTopicList().add(topic);
+                }
+            }
+        }
+        return returnList;
     }
 
     public void insertUserFollowTopics(String userId, List<Integer> topicIds) {

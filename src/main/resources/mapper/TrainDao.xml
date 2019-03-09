@@ -59,6 +59,11 @@
         from user_recommend_question
         where user_id = #{userId}
     </select>
+    
+    <select id="getAllUserFollowQuestion" resultMap="userQuestionMap">
+        select user_id, question_id
+        from mid_user_follow_question
+    </select>
 
 </mapper>
 

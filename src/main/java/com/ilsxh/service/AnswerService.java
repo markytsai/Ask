@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
@@ -38,7 +39,7 @@ public class AnswerService {
     public void vote(HttpServletRequest request, Integer answerId, Integer currVoteStatus, Integer upOrDownClick) {
 
         String userId = userHelperService.getUserIdFromRedis(request);
-        Long createTime = new Date().getTime();
+        Timestamp createTime = new Timestamp(System.currentTimeMillis());
 
         Integer voteExisted = answerDao.userVoteExisted(answerId, userId);
         if (voteExisted != null && voteExisted == 1) { // 曾经进行过投票活动,数据库中存在记录
@@ -102,7 +103,7 @@ public class AnswerService {
      */
     public Integer collectAnswer(Integer answerId, HttpServletRequest request) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
-        Integer effectRow = answerDao.collectAnswer(localUserId, answerId, new Date().getTime());
+        Integer effectRow = answerDao.collectAnswer(localUserId, answerId, new Timestamp(System.currentTimeMillis()));
         return effectRow;
     }
 

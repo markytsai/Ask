@@ -9,6 +9,7 @@ import com.ilsxh.vo.UserTopicVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -50,9 +51,9 @@ public interface UserDao {
 
     Integer getUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed);
 
-    Integer insertUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Long createTime);
+    Integer insertUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Timestamp createTime);
 
-    Integer updateUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Long createTime);
+    Integer updateUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Timestamp createTime);
 
     List<User> getollowingUserByUserId(@Param("userId") String userId);
 

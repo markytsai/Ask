@@ -6,6 +6,7 @@ import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -33,17 +34,17 @@ public interface QuestionDao {
 
     Integer hasUserFollowQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId);
 
-    Integer followQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId, @Param("createTime") Long createTime);
+    Integer followQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId, @Param("createTime") Timestamp createTime);
 
     Integer unfollowQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId);
 
     void submitAnswer(@Param("answer") Answer answer);
 
-    Integer updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Long createTime, @Param("questionId") Integer questionId);
+    Integer updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Timestamp createTime, @Param("questionId") Integer questionId);
 
     Integer deleteAnswer(@Param("answerId") String answerId);
 
-    void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("createTime") Long createTime);
+    void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("createTime") Timestamp createTime);
 
     void addQuestionTopic(@Param("questionId") Integer questionId, @Param("topicId") Integer topicId);
 

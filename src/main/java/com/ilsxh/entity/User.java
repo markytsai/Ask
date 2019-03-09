@@ -1,5 +1,6 @@
 package com.ilsxh.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class User {
@@ -97,7 +98,7 @@ public class User {
     /**
      *
      */
-    private Long joinTime;
+    private Timestamp joinTime;
 
     /**
      * 是否已经投票：1：赞同；0：未投票；-1：反对
@@ -287,11 +288,11 @@ public class User {
         this.scanedCount = scanedCount;
     }
 
-    public Long getJoinTime() {
+    public Timestamp getJoinTime() {
         return joinTime;
     }
 
-    public void setJoinTime(Long joinTime) {
+    public void setJoinTime(Timestamp joinTime) {
         this.joinTime = joinTime;
     }
 

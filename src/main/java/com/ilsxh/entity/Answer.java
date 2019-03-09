@@ -1,5 +1,6 @@
 package com.ilsxh.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Answer {
@@ -23,7 +24,7 @@ public class Answer {
     /**
      * 回答时间
      */
-    private Long createTime;
+    private Timestamp createTime;
     /**
      * 回答对应的问题ID
      */
@@ -88,11 +89,11 @@ public class Answer {
         this.dislikedCount = dislikedCount;
     }
 
-    public Long getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Long createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 

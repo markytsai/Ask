@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -92,7 +93,7 @@ public class UserController {
     @ResponseBody
     public BaseResponse followUser(@PathVariable String userIdToBeFollowed, HttpServletRequest request) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
-        BaseResponse response = userService.followUser(localUserId, userIdToBeFollowed, new Date().getTime());
+        BaseResponse response = userService.followUser(localUserId, userIdToBeFollowed, new Timestamp(System.currentTimeMillis()));
         return response;
     }
 

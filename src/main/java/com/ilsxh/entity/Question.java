@@ -1,5 +1,6 @@
 package com.ilsxh.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Question {
@@ -30,7 +31,7 @@ public class Question {
 	/**
 	 * 创建时间
 	 */
-	private Long createTime;
+	private Timestamp createTime;
 	/**
 	 * 问题提出者ID
 	 */
@@ -90,11 +91,11 @@ public class Question {
 		this.scannedCount = scannedCount;
 	}
 
-	public Long getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Long createTime) {
+	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
 

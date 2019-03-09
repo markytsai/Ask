@@ -125,16 +125,28 @@
                                     <span>
                                         <h3 class="card-link" th:text="${topic.topicName}"/>
                                     </span>
-                                    <span th:utext="${topic.topicSimpleDesc}"/>
+
+                                    <p th:if="${topic.topicSimpleDesc == null}">
+                                        <span th:utext="暂无描述"/>
+                                    </p>
+                                    <p th:if="${#strings.length(topic.topicSimpleDesc) gt 130}">
+                                        <span th:utext="${#strings.substring(topic.topicSimpleDesc,0,130)} + '...查看详情'"/>
+                                    </p>
+                                    <p th:if="${#strings.length(topic.topicSimpleDesc) lt 130}">
+                                        <span th:utext="${topic.topicSimpleDesc}"/>
+                                    </p>
+
 
                                     <div style="font-size: larger;margin-top: 37px;position: absolute;bottom: 0;">
 
-                                        <span th:id="'no-' + ${topic.topicId}" th:if="${userFollowTopic == 0}" class="icon-rss focusTopic"
+                                        <span th:id="'no-' + ${topic.topicId}" th:if="${userFollowTopic == 0}"
+                                              class="icon-rss focusTopic"
                                               style="cursor: pointer"
                                               data-id="${topic.topicId}"
                                               th:text="关注话题"/>
 
-                                        <span th:id="'yes-' + ${topic.topicId}" th:if="${userFollowTopic == 1}" class="icon-rss focusTopic"
+                                        <span th:id="'yes-' + ${topic.topicId}" th:if="${userFollowTopic == 1}"
+                                              class="icon-rss focusTopic"
                                               style="cursor: pointer"
                                               data-id="${topic.topicId}"
                                               th:text="取消关注"/>
@@ -185,8 +197,14 @@
                                     <p class="exchange-en-zh-edition">切换英文介绍</p>
                                 </div>
                             </div>
+                            <p th:if="${topic.topicSimpleDesc == null}">
+                                <div class="zh-edition" th:utext="暂无描述" style="display: block;"/>
+                            </p>
+
+                            <p th:if="${topic.topicSimpleDesc != null}">
                             <div class="zh-edition" th:utext="${topic.topicFullDesc}" style="display: block;"/>
                             <div class="en-edition" th:utext="${topic.topicFullDescEn}" style="display: none;"/>
+                            </p>
                             <hr/>
                             <h4 class="text-title">
                                 <p class="card-text text-dark" th:text="详细信息"/>
