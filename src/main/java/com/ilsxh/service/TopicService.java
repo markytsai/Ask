@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TopicService {
@@ -187,8 +189,9 @@ public class TopicService {
         return retStat;
     }
 
+
     public List<Topic> getAllTopics() {
-        List<Topic> tempList = topicDao.getAllTopics();
+        List<Topic> tempList = topicDao.getAllTopicsFromColdStart();
 
         List<Topic> returnList = new ArrayList<>();
         for (Topic topic : tempList) {
@@ -212,7 +215,94 @@ public class TopicService {
         return returnList;
     }
 
-    public void insertUserFollowTopics(String userId, List<Integer> topicIds) {
-        topicDao.insertfollowTopics(userId, topicIds);
+    public List<Topic> getPreference(String userId) {
+        List<Topic> tempList = topicDao.getAllTopicsFromColdStart();
+
+        List<Topic> returnList = new ArrayList<>();
+        for (Topic topic : tempList) {
+            if (topic.getParentTopicId() == 0) {
+                returnList.add(topic);
+            }
+        }
+
+        for (Topic rootTopic : returnList) {
+            rootTopic.setSubTopicList(new ArrayList());
+        }
+
+        for (Topic topic : tempList) {
+
+            for (Topic rootTopic : returnList) {
+                if (rootTopic.getTopicId().equals(topic.getParentTopicId())) {
+                    rootTopic.getSubTopicList().add(topic);
+                }
+            }
+        }
+        return returnList;
     }
+
+    /**
+     * 用户首次登录，设置用户偏好，标签可以保存到redis中去
+     * @param userId
+     * @param chosedTopicIds
+     */
+    public void insertUserFollowTopics(String userId, List<Integer> chosedTopicIds) {
+        // 取出所有的标签，默所有的标签处于未关注的状态
+        List<Topic> topicList = topicDao.getAllTopicsFromColdStart();
+        topicList.addAll(topicDao.getAllTopics());
+        // 初始化所有的话题标签到mid_user_follow_topic中间表中去，follow_topic_status 设置为0
+        Integer totalTopics = topicDao.initUserFollowTopics(userId, topicList);
+
+        // 更新用户选中的话题标签
+        if (chosedTopicIds.get(0) != -1) {
+            topicDao.updateUserFollowTopics(userId, chosedTopicIds);
+        }
+    }
+
+    /**
+     * 用户修改个人偏好，标签可以保存到redis中去
+     * @param userId
+     * @param list
+     */
+    public void updateUserFollowTopics(String userId, List<Integer> list) {
+        // 取出所有的标签
+        List<Topic> topicList = topicDao.getAllTopicsFromColdStart();
+        topicList.addAll(topicDao.getAllTopics());
+
+        // 所有话题关注状态清零
+        topicDao.zeroAllTopicByUserId(userId);
+        if (list.get(0) != -1) {
+            topicDao.updateUserFollowTopics(userId, list);
+        }
+    }
+
+    public Map<String, List<Topic>> getSocialScienceTopics(String userId, Integer rootTopicId) {
+
+        Map<String, List<Topic>> retMap = new HashMap<>();
+
+        List<Topic> secondSubTopicList = topicDao.getChilrenTopicByTopicId(userId, rootTopicId);
+
+        // 每一个二级话题标签下的三级标签，需要判断是否已经被关注过
+        for (Topic topic : secondSubTopicList) {
+            List<Topic> thirdTopicList = topicDao.getAllThirdTopics(topic.getTopicId());
+            List<Integer> followedThirdTopicIdList = topicDao.getFollowedThirdTopics(userId, topic.getTopicId());
+
+            for (Topic t : thirdTopicList) {
+                for (Integer topicId : followedThirdTopicIdList) {
+                    if (topicId.intValue() == t.getTopicId().intValue()) {
+                        t.setTopicFollowd(1);
+                        followedThirdTopicIdList.remove(topicId);
+                        break;
+                    } else {
+                        t.setTopicFollowd(0);
+                    }
+                }
+            }
+
+            retMap.put(topic.getTopicId() + "-" + topic.getTopicFollowd(), thirdTopicList);
+        }
+
+        return retMap;
+    }
+
+
 }

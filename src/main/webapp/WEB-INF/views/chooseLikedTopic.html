@@ -13,27 +13,45 @@
     <!-- Custom styles for this template -->
     <link href="css/navbar-static-top.css" rel="stylesheet"/>
 </head>
-<body style='background-color: #f6f6f6;'>
+<body class="body-color">
 
 <div class="container">
-    <form role="form">
-        <div class="row">
-            <div class="col-md-4" th:each="rootTopic : ${topicList}">
-                <fieldset>
-                    <legend th:text="${rootTopic.topicName}"/>
-                    <p th:text="${rootTopic.topicSimpleDesc}"/>
-                    <div th:each="topic : ${rootTopic.subTopicList}" class="checkbox checkbox-danger">
-                        <input th:id="${topic.topicId}" type="checkbox" class="styled" name="selectedIds" th:value="${topic.topicId}"/>
-                        <label th:text="${topic.topicName}"/>
-                    </div>
-                </fieldset>
-            </div>
-        </div>
+    <!--<form role="form">-->
+    <div class="row" style="margin-top: -50px;margin-bottom: 30px;">
+        <span><h2 style="color: #d9534f;">让AnswerPedia知道你的擅长</h2>（点击话题名称可以查看子话题，收起子话题）</span>
+    </div>
+    <div class="row">
+        <div class="col-md-12" th:each="rootTopic : ${topicList}" style="margin-bottom: 20px;background-color: white;">
+            <fieldset th:id="${rootTopic.topicId}">
+                <legend th:text="${rootTopic.topicName}" style="margin-bottom: 10px;"/>
+                <!--<p th:text="${rootTopic.topicSimpleDesc}"/>-->
+                <div th:each="topic : ${rootTopic.subTopicList}" class="checkbox checkbox-inline checkbox-danger"
+                     style="margin-bottom: 16px;margin-left: 0px;">
+                    <input th:id="${topic.topicId}" type="checkbox" class="styled" name="selectedIds"
+                           th:value="${topic.topicId}"/>
+                    <label class="topicName" th:text="${topic.topicName}"
+                           style="padding-left: 3px;padding-right: 10px;"/>
+                </div>
 
-        <div style="margin-top: 30px;margin-bottom: 30px;text-align: center;">
-            <input id="startBtn" type="button" class="btn btn-danger" value="开始探索"/>
+                <!--<div id="12345678"-->
+                     <!--style="margin-left: 30px;background-color: #efe3e3;margin-top: -15px;padding-bottom: 0px;">-->
+                    <!--<h3 style="font-size: 16px;" th:text="子话题"></h3>-->
+                    <!--<p class="foldSubTopic" style="cursor: pointer;"><h3 style="font-size: 16px;" th:text="子话题"></h3>点此收起</p>-->
+                    <!--<div class="checkbox checkbox-inline checkbox-danger"-->
+                         <!--style="margin-bottom: 16px;margin-left: 0px;">-->
+                        <!--<input type="checkbox" class="styled" value="1" checked="true"/>-->
+                        <!--<label class="name" th:text="测试" style="padding-left: 3px;padding-right: 10px;"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            </fieldset>
         </div>
-    </form>
+    </div>
+
+    <div style="margin-top: 30px;margin-bottom: 30px;text-align: center;">
+        <input id="startBtn" type="button" class="btn btn-danger" value="开始探索"/>
+    </div>
+    <!--</form>-->
 </div>
 
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>

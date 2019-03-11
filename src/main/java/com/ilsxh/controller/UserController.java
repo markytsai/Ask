@@ -52,12 +52,6 @@ public class UserController {
 
         // 首次登录，跳转到话题选择页面
         return new BaseResponse((String) userInfoMap.get(FIRST_LOGIN_STATUS), "", userInfoMap);
-
-//        if (userInfoMap.get(FIRST_LOGIN_STATUS).equals(StatusEnum.FIRST_LOGIN.getCode())) {
-//            return new BaseResponse(StatusEnum.FIRST_LOGIN.getCode(), "首次登录", userInfoMap);
-//        } else {
-//            return new BaseResponse(StatusEnum.CONTINUE_LOGIN.getCode(), "持续登录", userInfoMap);
-//        }
     }
 
     /**

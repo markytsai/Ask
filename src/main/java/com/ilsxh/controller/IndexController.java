@@ -1,15 +1,9 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.entity.*;
 import com.ilsxh.enums.StatusEnum;
-import com.ilsxh.entity.Activity;
-import com.ilsxh.entity.Answer;
-import com.ilsxh.entity.Question;
-import com.ilsxh.entity.User;
 import com.ilsxh.response.BaseResponse;
-import com.ilsxh.service.IndexService;
-import com.ilsxh.service.QuestionService;
-import com.ilsxh.service.UserHelperService;
-import com.ilsxh.service.UserService;
+import com.ilsxh.service.*;
 import com.ilsxh.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,13 +26,16 @@ public class IndexController {
     private IndexService indexService;
     private QuestionService questionService;
     private UserHelperService userHelperService;
+    private TopicService topicService;
 
     @Autowired
-    public IndexController(UserService userService, IndexService indexService, QuestionService questionService, UserHelperService userHelperService) {
+    public IndexController(UserService userService, IndexService indexService, QuestionService questionService,
+                           UserHelperService userHelperService, TopicService topicService) {
         this.userService = userService;
         this.indexService = indexService;
         this.questionService = questionService;
         this.userHelperService = userHelperService;
+        this.topicService = topicService;
     }
 
     /**
@@ -54,6 +51,24 @@ public class IndexController {
         User user = indexService.getProfileInfo(userId);
         model.addAttribute("user", user);
         return "setting/updateProfile";
+    }
+
+    /**
+     * 获取用户偏好，修改用户偏好
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/user/preferece")
+    public String preference(HttpServletRequest request, Model model) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        User user = indexService.getProfileInfo(userId);
+        model.addAttribute("user", user);
+
+        List<Topic> topicList = topicService.getPreference(userId);
+        model.addAttribute("topicList", topicList);
+
+        return "setting/preference";
     }
 
     /**

@@ -1,0 +1,96 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="../../favicon.ico"/>
+
+    <title>AnswerPedia</title>
+
+    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/answer.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/custom.css"/>
+    <link href="http://localhost:8088/css/questionDetail.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/sidePersonCard.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/askFrame.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/quill.snow.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/editProfile.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/build.css"/>
+</head>
+
+<body class="body-color">
+
+<div th:include="navigator :: nav"></div>
+<div th:include="navigator :: ask"></div>
+
+<div th:include="floatingDiv :: floatingDiv"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            <div class="list-group ">
+                <a href="/user/settings" class="list-group-item list-group-item-action">个人资料</a>
+                <a href="/user/preferece" class="list-group-item list-group-item-action active">我的偏好</a>
+                <a href="#" class="list-group-item list-group-item-action">界面设置</a>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body" style="margin-left: 16px;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-md-12" style="margin-left: -17px;">
+                            <h4>你的偏好</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--<div class="col-md-12">-->
+                        <div class="col-md-12" th:each="rootTopic : ${topicList}">
+                            <fieldset th:id="${rootTopic.topicId}" >
+                                <legend th:text="${rootTopic.topicName}" style="margin-bottom: 10px;"/>
+                                <!--<p th:text="${rootTopic.topicSimpleDesc}"/>-->
+                                <div th:each="topic : ${rootTopic.subTopicList}"
+                                     class="checkbox checkbox-inline checkbox-danger"
+                                     style="margin-bottom: 16px;margin-left: 0px;">
+                                    <input th:id="${topic.topicId}" type="checkbox" class="styled" name="selectedIds"
+                                           th:value="${topic.topicId}"/>
+                                    <label class="topicName" th:text="${topic.topicName}" style="padding-left: 3px;padding-right: 10px;"/>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px;margin-bottom: 30px;text-align: center;">
+        <input id="updatePrefBtn" type="button" class="btn btn-danger" value="更新偏好"/>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://localhost:8088/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/nav.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/questionDetail.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/jquery-ui.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/notify.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/popper.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/askFrame.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/quill.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/modifyInfo.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/topic.js"></script>
+
+
+</body>
+</html>
+

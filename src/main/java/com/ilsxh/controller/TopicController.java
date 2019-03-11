@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class TopicController {
@@ -182,5 +183,30 @@ public class TopicController {
         topicService.insertUserFollowTopics(userId, Arrays.asList(topicIds));
 
         return new BaseResponse<>("1", "成功保存用户话题偏好");
+    }
+
+    @RequestMapping("/doUpdateTopic")
+    @ResponseBody
+    public BaseResponse<String> updateChosenTopics(HttpServletRequest request, @RequestParam(value = "topicIds[]") Integer[] topicIds, Model model) {
+
+        String userId = userHelperService.getUserIdFromRedis(request);
+        userHelperService.getUserDetails(userId, model);
+        topicService.updateUserFollowTopics(userId, Arrays.asList(topicIds));
+
+        return new BaseResponse<>("1", "成功保存用户话题偏好");
+    }
+
+
+
+    @RequestMapping("/getSocialScienceTopics/{rootTopicId}")
+    @ResponseBody
+    public BaseResponse<String> getSocialScienceTopics(@PathVariable Integer rootTopicId, HttpServletRequest request, Model model) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        userHelperService.getUserDetails(userId, model);
+
+        Map<String, List<Topic>> subTopicMap = topicService.getSocialScienceTopics(userId, rootTopicId);
+
+        return new BaseResponse("1", "", subTopicMap);
+
     }
 }

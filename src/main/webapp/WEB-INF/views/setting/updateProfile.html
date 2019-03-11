@@ -36,15 +36,15 @@
     <div class="row">
         <div class="col-md-3 col-md-offset-1">
             <div class="list-group ">
-                <a href="#" class="list-group-item list-group-item-action active">个人资料</a>
-                <a href="#" class="list-group-item list-group-item-action">我的偏好</a>
+                <a href="/user/settings" class="list-group-item list-group-item-action active">个人资料</a>
+                <a href="/user/preferece" class="list-group-item list-group-item-action">我的偏好</a>
                 <a href="#" class="list-group-item list-group-item-action">界面设置</a>
             </div>
         </div>
         <div class="col-md-7">
             <div class="card">
                 <div class="card-body" style="margin-left: 16px;">
-                    <div class="row">
+                    <div class="row" style="margin-bottom: 10px;">
                         <div class="col-md-12" style="margin-left: -17px;">
                             <h4>你的资料</h4>
                         </div>
@@ -151,7 +151,7 @@
                                 <div class="form-group row">
                                     <label class="col-4 col-form-label">详细介绍</label>
                                     <div id="saveFullDesc" style="display: none;">
-                                        <input id="fullDescInput" class="form-control here" type="text"/>
+                                        <textarea id="fullDescInput" class="form-control here" type="text"/>
                                         <input type="button" class="btn btn-default saveBtn"
                                                style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
                                         <input type="button" class="btn btn-default cancelSave"

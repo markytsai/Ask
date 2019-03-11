@@ -26,10 +26,24 @@ public interface TopicDao {
 
     Integer insertfollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
 
-    Integer insertfollowTopics(@Param("localUserId") String localUserId, @Param("topicIds") List<Integer> topicIds);
 
     Integer updateFollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
 
+    List<Topic> getAllTopicsFromColdStart();
+
     List<Topic> getAllTopics();
 
+    List<Topic> getChilrenTopicByTopicId(@Param("userId")String userId, @Param("rootTopicId") Integer rootTopicId);
+
+    List<Topic> getThirdLevelChilrenTopic(@Param("userId")String userId, @Param("topicId")Integer topicId);
+
+    List<Topic> getAllThirdTopics(@Param("topicId")Integer topicId);
+
+    List<Integer> getFollowedThirdTopics(@Param("userId")String userId, @Param("topicId") Integer topicId);
+
+    void updateUserFollowTopics(@Param("userId") String userId, @Param("topicIds") List<Integer> topicIds);
+
+    Integer initUserFollowTopics(@Param("userId") String userId, @Param("topicIds") List<Topic> topicIds);
+
+    void zeroAllTopicByUserId(String userId);
 }

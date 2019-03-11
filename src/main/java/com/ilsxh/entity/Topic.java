@@ -13,6 +13,18 @@ public class Topic {
     private Integer followedCount;
     private Integer parentTopicId;
     private List<Topic> subTopicList;
+    /**
+     * 话题是否别关注：1：已关注；0：未关注
+     */
+    private Integer topicFollowd;
+
+    public Integer getTopicFollowd() {
+        return topicFollowd;
+    }
+
+    public void setTopicFollowd(Integer topicFollowd) {
+        this.topicFollowd = topicFollowd;
+    }
 
     public Integer getTopicId() {
         return topicId;
