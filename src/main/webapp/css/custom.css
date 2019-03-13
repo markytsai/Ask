@@ -21,3 +21,52 @@ a:focus {
     text-decoration: underline;
 }
 
+.follow-nav li {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    padding-left: 30px;
+    padding-top: 15px;
+}
+
+.right-up .col-md-3 {
+    margin-top: -57px;
+}
+
+.topicItem {
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    display: inline-block;
+    padding: 2px 10px;
+    color: #333;
+    font-size: 12px;
+    margin-right: 2px;
+    background: #fff;
+    margin-bottom: 5px;
+    line-height: 16px;
+    position: relative;
+}
+
+.topicItem a {
+    color: #333333;
+}
+
+.topicItem:hover {
+    background-color: #cbcbd8;
+}
+
+.text-title:hover {
+    color: #d9534f;
+}
+
+.card-header {
+    font-size: 15px;
+}
+
+.sideTitle {
+    color: #333333;
+}
+
+.sideTitle:hover {
+    color: #d9534f;
+}

@@ -94,8 +94,7 @@
                         <div class="question-topic card-block">
                             <ul class="topic-list" style="margin-top:10px;margin-bottom: -10px;margin-left: -39px;">
                                 <i class="fa fa-tags" aria-hidden="true"/>
-                                <span class="topicItem" th:each="topic : ${relatedTopicList}"
-                                      style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;"><a
+                                <span class="topicItem" th:each="topic : ${relatedTopicList}"><a
                                         th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}" data-id="1"
                                         th:text="${topic.topicName}"/></span>
                             </ul>

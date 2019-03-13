@@ -235,7 +235,7 @@ function addTopicThroughSearch(inp) {
                     s = document.createElement("SPAN");
                     s.setAttribute("class", "topicItem");
                     s.setAttribute("id", "topicId-" + topicList[currentFocus].topicId);
-                    s.setAttribute('style', 'border-radius: 40%;background-color: #cbcbd8;padding: 2px;margin-right: 4px;');
+                    // s.setAttribute('style', 'border-radius: 40%;background-color: #cbcbd8;padding: 2px;margin-right: 4px;');
                     /*append the DIV element as a child of the autocomplete container:*/
                     topicRoot.appendChild(s);
 

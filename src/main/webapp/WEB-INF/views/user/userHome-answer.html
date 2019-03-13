@@ -54,7 +54,8 @@
                                 th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
                         <li role="presentation"><a th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a>
                         </li>
-                        <li role="presentation"><a href="#">关注话题</a></li>
+                        <li role="presentation"><a
+                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}}">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
                         <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-transfer"/> 我的<span

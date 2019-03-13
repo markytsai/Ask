@@ -305,4 +305,11 @@ public class TopicService {
     }
 
 
+    public List<Topic> getFollowingTopicByUserId(String userId) {
+
+        List<Topic> retList = topicDao.getFollowingTopicByUserId(userId);
+        return retList;
+
+
+    }
 }

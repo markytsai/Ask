@@ -50,66 +50,65 @@
                         <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}}">收藏</a></li>
                         <li role="presentation"><a
                                 th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
-                        <li role="presentation" class="active"><a
-                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a></li>
                         <li role="presentation"><a
+                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a></li>
+                        <li role="presentation" class="active"><a
                                 th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}}">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
                         <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-transfer"/> 我关注的<span
-                                th:if="${followingUserList.size() != 0}" th:text="${followingUserList.size() + '个'}"/>用户
+                                th:if="${followingTopicList.size() != 0}" th:text="${followingTopicList.size() + '个'}"/>用户
                         </h4>
                         <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-transfer"/>他关注的<span
-                                th:if="${followingUserList.size() != 0}" th:text="${followingUserList.size() + '个'}"/>用户
+                                th:if="${followingTopicList.size() != 0}" th:text="${followingTopicList.size() + '个'}"/>用户
                         </h4>
                     </div>
 
                     <!--底部提示信息-->
-                    <div th:if="${followingUserList.size() == 0}" style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true'">你还没有关注任何人哦(⊙⊙！) &nbsp;</span>
-                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的用户吧</span>
-                        <span th:if="${isLoginUser} == 'false'">他还没有关注任何人(⊙⊙！) &nbsp;</span>
+                    <div th:if="${followingTopicList.size() == 0}" style="text-align: center;">
+                        <span th:if="${isLoginUser} == 'true'">你还没有关注任何话题哦(⊙⊙！) &nbsp;</span>
+                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/user/preferece}" target="_blank">这里</a>去选择感兴趣的话题吧</span>
+                        <span th:if="${isLoginUser} == 'false'">他还没有关注任何话题(⊙⊙！) &nbsp;</span>
                     </div>
-                    <div class="card mb-4" th:each="user : ${followingUserList}">
+                    <div class="card mb-4" th:each="topic : ${followingTopicList}">
                         <div class="card-block">
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
-                                    <a th:href="@{'/userHome/activity/' + ${user.userId}}">
-                                        <img th:src="${user.avatarUrl}" width="100%" height="100%"
-                                             style="border-radius: 100%"/>
+                                    <a th:href="@{'/topic/' + ${topic.topicId} + '/introduction/'}">
+                                        <img th:src="${topic.topicImage}" width="100%" height="100%"/>
                                     </a>
                                 </div>
                                 <div style="margin-left: 55px">
                                     <h5>
-                                        <a href="'/userHome/question/' + ${user.userId}"
-                                           th:href="@{'/userHome/question/' + ${user.userId}}"
+                                        <a href="'/topic/' + ${topic.topicId} + '/introduction'"
+                                           th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}"
                                            class="card-link"
-                                           th:text="${user.username}">
+                                           th:text="${topic.topicName}">
                                         </a>&nbsp;
-                                        <span th:text="${user.position}"/>&nbsp;
-                                        <span th:text="${user.simpleDesc}"/>
+                                        <!--<span th:text="${user.position}"/>&nbsp;-->
+                                        <!--<span th:text="${user.simpleDesc}"/>-->
                                         <span th:id="userId + '-' + ${user.userId}"
                                               class="glyphicon label label-primary followUser" style="float:right"
-                                              th:text="${user.followStatus == 1} ? '取消关注' : '关注答主'">关注答主</span>
+                                              th:text="${topic.topicFollowd == 0} ? '取消关注' : '关注话题'">关注话题</span>
                                     </h5>
                                 </div>
                                 <div style="margin-left: 55px">&nbsp;
-                                    <span th:text="'回答' + ${user.likedCount} + '条'"></span>
-                                    <span class="vertical-line" style="width: px; height: 15px;border: 2px inset;"/>
+                                    <span th:text="${topic.followedCount} + '人关注'"></span>
+                                    <span class="vertical-line" style="width: px; height: 15px;"/>
 
-                                    <span th:text="'关注' + ${user.followCount} + '人'"></span>
-                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+                                    <!--<span th:text="'关注' + ${user.followCount} + '人'"></span>-->
+                                    <!--<span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>-->
 
-                                    <span th:text="'被关注量' + ${user.followedCount}"></span>
-                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+                                    <!--<span th:text="'被关注量' + ${user.followedCount}"></span>-->
+                                    <!--<span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>-->
                                 </div>
                             </div>
                             <hr color="#f8f8f8"/>
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true' and ${followingUserList.size() != 0}">你只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
-                        <span th:if="${isLoginUser} == 'false' and ${followingUserList.size() != 0}">他只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'true' and ${followingTopicList.size() != 0}">你只有这么多关注的话题了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'false' and ${followingTopicList.size() != 0}">他只有这么多关注的话题了(๑¯ิε ¯ิ๑)</span>
                     </div>
                 </div>
             </div>

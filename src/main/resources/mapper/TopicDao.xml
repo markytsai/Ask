@@ -178,5 +178,11 @@
         update mid_user_follow_topic set follow_topic_status = 0
         where user_id = #{userId}
     </update>
+
+    <select id="getFollowingTopicByUserId" resultMap="topicMap">
+        select t.topic_id, t.topic_name, topic_image, followed_count, topic_followed from topic as t
+        inner join mid_user_follow_topic as muft on t.topic_id = muft.topic_id
+        where muft.user_id = #{userId} and muft.follow_topic_status = 1
+    </select>
 </mapper>
 

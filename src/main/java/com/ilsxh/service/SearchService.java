@@ -58,6 +58,7 @@ public class SearchService {
                 answer.setQuestion(userService.getQuestionById(answer.getQuestionId()));
             }
             model.addAttribute("searchAnswerList", searchAnswerList);
+            model.addAttribute("keyword", keyword);
             return "search/search-answer";
         }
     }

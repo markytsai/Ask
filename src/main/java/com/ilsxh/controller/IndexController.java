@@ -226,6 +226,19 @@ public class IndexController {
         return "user/userHome-following-user";
     }
 
+    @RequestMapping("/userHome/followingTopic/{userId}")
+    public String userHomeFollowingTopic(@PathVariable String userId, HttpServletRequest request, Model model) {
+        String localUserId = userHelperService.getUserIdFromRedis(request);
+        // 获取用户信息,userId from parameter, localhost from token
+        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
+
+        List<Topic> followingTopicList = topicService.getFollowingTopicByUserId(userId);
+        map.put("followingTopicList", followingTopicList);
+        model.addAllAttributes(map);
+
+        return "user/userHome-following-topic";
+    }
+
     /**
      * 更新头像
      *

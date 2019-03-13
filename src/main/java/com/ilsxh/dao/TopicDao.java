@@ -46,4 +46,6 @@ public interface TopicDao {
     Integer initUserFollowTopics(@Param("userId") String userId, @Param("topicIds") List<Topic> topicIds);
 
     void zeroAllTopicByUserId(String userId);
+
+    List<Topic> getFollowingTopicByUserId(String userId);
 }

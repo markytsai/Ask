@@ -25,7 +25,7 @@
 </head>
 
 <!--<body class="body-color">-->
-<body style="background-color: #fafafa">
+<body class="body-color">
 
 <div th:include="navigator :: nav"></div>
 <div th:include="navigator :: ask"></div>
@@ -34,6 +34,30 @@
 
 <div class="container">
     <div class="row">
+        <nav>
+            <ul class="col-md-7 col-md-offset-1 follow-nav" style='background-color: #fff;display: flex;'>
+
+                <div>
+                    <img src="http://localhost:8088/images/author.jpg" style="max-width: 50px;max-height: 50px;"/>
+                </div>
+                <div style="padding-top: 16px;padding-left: 16px;">
+                    <p>今天发布了<span th:text="1000"/>条问题，产生了<span th:text="1000"/>条回答</p>
+                </div>
+                <li style="margin-left: 45px;">
+                    <img src="https://b-gold-cdn.xitu.io/v3/static/img/pin-icon.614c59d.svg"/>
+                    <!--精华问题是回答点赞过百个数排名靠前的问题，次页面重新刷新-->
+                    <a th:href="@{/#}" th:text="精华"/>
+                </li>
+                <li>
+                    <img src="https://b-gold-cdn.xitu.io/v3/static/img/pin-icon.614c59d.svg"/>
+                    <a th:href="@{/moreHotQuestion}" th:text="最新"/>
+                </li>
+                <li>
+                    <img src="https://b-gold-cdn.xitu.io/v3/static/img/write-icon.b3ba8ac.svg"/>
+                    <a th:href="@{/moreHotQuestion}" th:text="写回答"/>
+                </li>
+            </ul>
+        </nav>
         <div class="col-md-7 col-md-offset-1" style='background-color: #fff;'>
             <div id="mainContainer">
                 <div id="mainContainerRepleace">
@@ -44,7 +68,7 @@
                                    th:text="${question.questionTitle}">
                                 </a>
                             </h4>
-                            <p class="card-text" th:utext="${question.questionContent}"/>
+                            <p class="card-text" th:utext="${question.questionContent}"></p>
 
                             <div class="card-text">
                                 <a href="/userHome/activity/${question.userId}"
@@ -70,7 +94,7 @@
         </div>
 
         <!-- 右侧栏目 -->
-        <div th:include="sideHotCards :: sideCards"></div>
+        <div class="right-up" th:include="sideHotCards :: sideCards"></div>
 
     </div>
 </div>

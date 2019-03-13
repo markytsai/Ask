@@ -3,12 +3,12 @@
     <div class="col-md-3 ">
         <!-- 热门问题 根据关注量排序-->
         <div class="card my-4" style='background-color: #fff;padding: 6px;'>
-            <span class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</span>
+            <span class="card-header"><i class="fa fa-fire" aria-hidden="true" style="margin-right: 5px;"></i>热门问题</span>
 
-            <ul class="list-group" style="margin-bottom: 3px;" th:each="question, userStat : ${hotQuestions}">
+            <ul class="list-group" style="margin-bottom: 10px;" th:each="question, userStat : ${hotQuestions}">
                 <div class="card-block border-black">
-                    <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
-                       target="_blank"/>
+                    <a class="sideTitle" th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
+                       target="_blank"/><span style="padding-left: 10px;" th:text="${question.answerCount} + '个回答'"/>
                 </div>
                 <!--<div style="float:right;">-->
                     <!--<a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注-->
@@ -24,7 +24,7 @@
         <!-- 热门用户 根据关注量排序-->
 
         <div class="card my-4" style='background-color: #fff;padding: 6px;'>
-            <span class="card-header"><i class="fa fa-users" aria-hidden="true"></i>活跃用户</span>
+            <span class="card-header"><i class="fa fa-users" aria-hidden="true" style="margin-right: 5px;"></i>活跃用户</span>
             <div class="card-block">
                 <div class="row">
                     <div class="col-lg-12">
@@ -44,15 +44,12 @@
 
         <!-- 热门标签 根据问题相关度-->
         <div class="card" style='background-color: #fff;padding: 6px;'>
-            <span class="card-header">
-                <i class="fa fa-tags" aria-hidden="true"></i>热门话题
+            <span class="card-header"><i class="fa fa-tags" aria-hidden="true" style="margin-right: 5px;"></i>热门话题
             </span>
             <div class="card-block">
                 <div class="row">
-
                     <ul class="topic-list" style="margin-top:2px;margin-bottom: 7px;margin-left: -30px;">
-                        <span th:each="topic : ${hotTopics}" class="topicItem"
-                              style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;display: inline-block"><a
+                        <span th:each="topic : ${hotTopics}" class="topicItem"><a
                                 th:href="@{'/topic/' + ${topic.topicId} + '/introduction'}" data-id="1"
                                 th:text="${topic.topicName}" target="_blank"></a></span>
                     </ul>
@@ -63,11 +60,11 @@
 
         <!-- 最新发布 -->
         <div class="card my-4" style="background-color: #fff;padding: 6px;">
-            <span class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i>最新发问</span>
+            <span class="card-header"><i class="fa fa-line-chart" aria-hidden="true" style="margin-right: 5px;"></i>最新提问</span>
             <div class="list-group">
-                <ul class="list-group" style="margin-bottom: 3px;" th:each="question : ${newestQuestions}">
+                <ul class="list-group" style="margin-bottom:10px;" th:each="question : ${newestQuestions}">
                     <div class="card-block border-black">
-                        <a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
+                        <a class="sideTitle" th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
                            target="_blank"></a>
                     </div>
                     <!--<div><p style="float:right;">提问于<span-->
