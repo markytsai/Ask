@@ -10,6 +10,7 @@ import com.ilsxh.service.*;
 
 import java.util.*;
 
+import com.ilsxh.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,14 +40,18 @@ public class QuestionController {
      * @return
      */
     @RequestMapping("/following")
-    public String getFollowingQuestionsByUserId(HttpServletRequest request, Model model) {
+    public String getFollowingQuestionsByUserId(@RequestParam("page") Integer pageNo, HttpServletRequest request, Model model) {
 
         String userId = userHelperService.getUserIdFromRedis(request);
         userHelperService.getUserDetails(userId, model);
 
-        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId);
+        int pageSize = 30;
+        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId, (pageNo - 1) * pageSize, pageSize);
+        int totalCount = questionService.getTotalQuestionNum(userId);
 
-        model.addAttribute("questionList", questionList);
+        Page<Question> page = new Page<>(pageNo, pageSize, totalCount, questionList);
+
+        model.addAttribute("page", page);
 
         questionService.getCommonHotData(model);
 

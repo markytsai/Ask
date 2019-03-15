@@ -9,7 +9,15 @@
        where question_content like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
        or
        question_title like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+       limit ${pageNo}, 20
    </select>
+
+    <select id="getSearchQuestionTotal" resultType="Integer">
+       select count(*) from question
+       where question_content like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+       or
+       question_title like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+    </select>
 
     <select id="globalSearchUser" resultType="User">
 
@@ -17,10 +25,24 @@
         where username like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
         or
         simple_desc like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+        limit ${pageNo}, 20
+    </select>
+
+    <select id="getSearchUserTotal" resultType="Integer">
+        select count(*) from user
+        where username like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+        or
+        simple_desc like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
     </select>
 
     <select id="globalSearchAnswer" resultType="Answer">
         select * from answer
+        where answer_content like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
+        limit ${pageNo}, 20
+    </select>
+
+    <select id="getSearchAnswerTotal" resultType="Integer">
+        select count(*) from answer
         where answer_content like CONCAT(CONCAT('%',#{queryKeyWord}),'%')
     </select>
 

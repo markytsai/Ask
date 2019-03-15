@@ -42,21 +42,21 @@
                     <p><h4>搜索结果</h4></p>
                     <ul class="nav nav-tabs">
                         <li role="presentation"><a
-                                th:href="@{'/search'(keyword=${keyword}, type=question)}">问题</a></li>
+                                th:href="@{'/search'(keyword=${keyword}, type=question, page=1)}">问题</a></li>
                         <li role="presentation" class="active"><a
-                                th:href="@{'/search'(keyword=${keyword}, type=answer)}">回答</a></li>
-                        <li role="presentation"><a th:href="@{'/search'(keyword=${keyword}, type=user)}">用户</a></li>
-                        <li role="presentation"><a th:href="@{'/search'(keyword=${keyword}, type=topic)}">话题</a></li>
+                                th:href="@{'/search'(keyword=${keyword}, type=answer, page=1)}">回答</a></li>
+                        <li role="presentation"><a th:href="@{'/search'(keyword=${keyword}, type=user, page=1)}">用户</a></li>
+                        <li role="presentation"><a th:href="@{'/search'(keyword=${keyword}, type=topic, page=1)}">话题</a></li>
                     </ul>
 
                     <!--底部提示信息-->
-                    <div th:if="${searchAnswerList.size() == 0}" style="margin: 100px;">
+                    <div th:if="${page.dataList.size() == 0}" style="margin: 100px;">
                         <div style="text-align: center;">
                             <span style="font-size: large;">暂无任何搜索结果(⊙⊙）</span>
                         </div>
                     </div>
 
-                    <div class="card mb-4" th:each="answer : ${searchAnswerList}">
+                    <div class="card mb-4" th:each="answer : ${page.dataList}">
                         <div class="card-block">
                             <h4 class="card-title text-dark" style="font-weight: bolder;">
                                 <a th:href="@{'/question/' + ${answer.question.questionId}}" class="text-title"
@@ -131,11 +131,12 @@
                         </div>
                         <hr color="#f8f8f8"/>
                     </div>
-                    <div style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true' and ${searchAnswerList.size() != 0}">到底了(๑¯ิε ¯ิ๑)</span>
-                    </div>
+                    <!--<div style="text-align: center;">-->
+                        <!--<span th:if="${isLoginUser} == 'true' and ${page.dataList.size() != 0}">到底了(๑¯ิε ¯ิ๑)</span>-->
+                    <!--</div>-->
                 </div>
             </div>
+            <div class="pagination-parent" th:include="search/search-page :: search-page"></div>
         </div>
 
         <!-- 右侧栏目 -->

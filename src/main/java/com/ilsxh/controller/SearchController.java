@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -27,9 +29,11 @@ public class SearchController {
      * @return
      */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String globlalSearch(String type, String keyword, HttpServletRequest request, Model model) {
+    public String globlalSearch(String type, String keyword, @RequestParam("page") Integer pageNo, HttpServletRequest request, Model model) {
 
-        String responsePage = searchService.globalSearch(type, keyword, model, request);
+        String responsePage = searchService.globalSearch(type, keyword, pageNo, model, request);
+        model.addAttribute("type", type);
+        model.addAttribute("keyword", keyword);
         return responsePage;
     }
 }

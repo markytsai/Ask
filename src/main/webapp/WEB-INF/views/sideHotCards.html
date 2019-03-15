@@ -1,5 +1,12 @@
 <div th:fragment="sideCards" xmlns:th="http://www.w3.org/1999/xhtml">
 
+    <div class="col-md-3">
+        <div class="card my-4" style='background-color: #fff;padding: 6px;'>
+
+        </div>
+
+    </div>
+
     <div class="col-md-3 ">
         <!-- 热门问题 根据关注量排序-->
         <div class="card my-4" style='background-color: #fff;padding: 6px;'>
@@ -62,14 +69,14 @@
         <div class="card my-4" style="background-color: #fff;padding: 6px;">
             <span class="card-header"><i class="fa fa-line-chart" aria-hidden="true" style="margin-right: 5px;"></i>最新提问</span>
             <div class="list-group">
-                <ul class="list-group" style="margin-bottom:10px;" th:each="question : ${newestQuestions}">
+                <ul class="list-group" style="margin-bottom:-10px;" th:each="question : ${newestQuestions}">
                     <div class="card-block border-black">
                         <a class="sideTitle" th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
                            target="_blank"></a>
                     </div>
-                    <!--<div><p style="float:right;">提问于<span-->
-                            <!--th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>-->
-                    <!--<hr color="#f8f8f8"/>-->
+                    <div><p style="float:right;"><span
+                            th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"/></p></div>
+                    <hr color="#f8f8f8"/>
                 </ul>
             </div>
         </div>

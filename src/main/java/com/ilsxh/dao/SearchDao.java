@@ -9,9 +9,16 @@ import java.util.List;
 
 public interface SearchDao {
 
-    List<Question> globalSearchQuestion(@Param("queryKeyWord") String queryKeyWord);
+    List<Question> globalSearchQuestion(@Param("queryKeyWord") String queryKeyWord, @Param("pageNo") Integer pageNo);
 
-    List<User> globalSearchUser(@Param("queryKeyWord") String queryKeyWord);
+    Integer getSearchQuestionTotal(@Param("queryKeyWord") String queryKeyWord);
 
-    List<Answer> globalSearchAnswer(@Param("queryKeyWord") String queryKeyWord);
+    List<User> globalSearchUser(@Param("queryKeyWord") String queryKeyWord, @Param("pageNo")  Integer pageNo);
+
+    Integer getSearchUserTotal(@Param("queryKeyWord") String queryKeyWord);
+
+    List<Answer> globalSearchAnswer(@Param("queryKeyWord") String queryKeyWord, @Param("pageNo")  Integer pageNo);
+
+    Integer getSearchAnswerTotal(@Param("queryKeyWord") String queryKeyWord);
+
 }

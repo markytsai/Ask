@@ -44,7 +44,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // 是否有cookie
         Cookie[] cookies = request.getCookies();
         if (ArrayUtils.isEmpty(cookies)) {
-//            response.sendRedirect("login");
             request.getRequestDispatcher("login").forward(request, response);
             return false;
         } else {
@@ -63,17 +62,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
 
         String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
-//        Jedis jedis = jedisPool.getResource();
-//        String userId = jedis.get(loginToken);
-//        jedis.close();
 
         // 根据loginToken是否能从redis中获取userId
         if (StringUtils.isEmpty(userId)) {
             request.getRequestDispatcher("login").forward(request, response);
             return false;
         } else {
-            if ("/".equals(requestUri)) {
-                request.getRequestDispatcher("/following").forward(request, response);
+            if ("/".equals(requestUri) || "/chooseTopic".equals(requestUri)) {
+                // 会改变URL
+                response.sendRedirect("/following?page=1");
+                // 不会改变URL
+//                request.getRequestDispatcher("/following").forward(request, response);
             }
         }
         return true;

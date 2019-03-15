@@ -11,6 +11,7 @@ import com.ilsxh.entity.User;
 import com.ilsxh.exception.CustomException;
 import com.ilsxh.redis.UserKey;
 import com.ilsxh.response.BaseResponse;
+import com.ilsxh.util.Page;
 import com.ilsxh.util.UUIDUtil;
 import com.ilsxh.vo.FirstLoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,9 +156,11 @@ public class UserService {
         return userDao.selectQuestionByQuestionId(questionId);
     }
 
-    public List<Answer> getAnswersByUserId(String userId) {
+    public Page<Answer> getAnswersByUserId(String userId, Integer pageNo) {
 
-        List<Answer> answerList = userDao.getAnswersByUserId(userId);
+        int pageSize = 20;
+        List<Answer> answerList = userDao.getAnswersByUserId(userId, (pageNo - 1) * pageSize, pageSize);
+        int answerTotal = userDao.getTotalAnswerByUserId(userId);
 
         for (Answer answer : answerList) {
             Question question = questionDao.selectQuestionByQuestionId(answer.getQuestionId());
@@ -187,7 +190,7 @@ public class UserService {
 
             answer.setUser(user);
         }
-        return answerList;
+        return new Page<>(pageNo, pageSize, answerTotal, answerList);
     }
 
 

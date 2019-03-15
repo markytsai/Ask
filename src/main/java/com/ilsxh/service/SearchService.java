@@ -4,9 +4,11 @@ import com.ilsxh.dao.SearchDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,42 +31,52 @@ public class SearchService {
 
     /**
      * 全局搜索，三种类型：问题，回答，话题名称
+     *
      * @param type
      * @param keyword
      * @param model
      * @param request
      * @return
      */
-    public String globalSearch(String type, String keyword, Model model, HttpServletRequest request) {
+    public String globalSearch(String type, String keyword, Integer pageNo, Model model, HttpServletRequest request) {
 
+        int pageSize = 20;
         if ("question".equals(type)) {
             this.getCommonData(request, keyword, model);
-            List<Question> searchQuestionList = searchDao.globalSearchQuestion(keyword);
+            List<Question> searchQuestionList = searchDao.globalSearchQuestion(keyword, (pageNo - 1) * pageSize);
             for (Question question : searchQuestionList) {
                 question.setUser(userService.getUserByUserId(question.getUserId()));
             }
-            model.addAttribute("searchQuestionList", searchQuestionList);
+            Integer searchQuestionTotal = searchDao.getSearchQuestionTotal(keyword);
+            Page<Question> page = new Page<>(pageNo, pageSize, searchQuestionTotal, searchQuestionList);
+            model.addAttribute("page", page);
             return "search/search-question";
         } else if ("user".equals(type)) {
             this.getCommonData(request, keyword, model);
-            List<User> searchUserList = searchDao.globalSearchUser(keyword);
-            model.addAttribute("searchUserList", searchUserList);
+            List<User> searchUserList = searchDao.globalSearchUser(keyword, (pageNo - 1) * pageSize);
+            Integer searchUserTotal = searchDao.getSearchUserTotal(keyword);
+            Page<User> page = new Page<>(pageNo, pageSize, searchUserTotal, searchUserList);
+            model.addAttribute("page", page);
+
             return "search/search-user";
         } else {
             this.getCommonData(request, keyword, model);
-            List<Answer> searchAnswerList = searchDao.globalSearchAnswer(keyword);
+            List<Answer> searchAnswerList = searchDao.globalSearchAnswer(keyword, (pageNo-1)*pageSize);
             for (Answer answer : searchAnswerList) {
                 answer.setUser(userService.getUserByUserId(answer.getAnswerUserId()));
                 answer.setQuestion(userService.getQuestionById(answer.getQuestionId()));
             }
-            model.addAttribute("searchAnswerList", searchAnswerList);
-            model.addAttribute("keyword", keyword);
+
+            Integer searchAnswerTotal = searchDao.getSearchUserTotal(keyword);
+            Page<Answer> page = new Page<>(pageNo, pageSize, searchAnswerTotal, searchAnswerList);
+            model.addAttribute("page", page);
             return "search/search-answer";
         }
     }
 
     /**
      * 获取问题的一些公共信息，包括热点数据
+     *
      * @param request
      * @param keyword
      * @param model

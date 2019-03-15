@@ -29,6 +29,12 @@
 <div th:include="navigator :: ask"></div>
 <div th:include="floatingDiv :: floatingDiv"></div>
 
+<div th:id="preference-hint" style="margin-top: -25px;margin-bottom: 20px;background-color: white;padding-bottom: 10px;">
+    <div style="text-align: center;height: 60px;">
+        <p style="padding-top: 30px;padding-bottom: 30px;">让我们更好的了解你，你可以到
+            <a th:href="@{/user/preference}" target="_blank">这里</a>更新你的兴取爱好, <a class="nomore-hint" style="cursor: pointer;">不再显示</a></p>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <nav>

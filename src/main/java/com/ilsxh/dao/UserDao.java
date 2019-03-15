@@ -46,7 +46,14 @@ public interface UserDao {
 
     Integer regiterNewUser(@Param("userId") String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password);
 
-    List<Answer> getAnswersByUserId(@Param("userId") String userId);
+    List<Answer> getAnswersByUserId(@Param("userId") String userId, @Param("offSet") Integer offSet, @Param("pageSize") Integer pageSize);
+
+    /**
+     * 获取page的总记录数
+     * @param userId
+     * @return
+     */
+    Integer getTotalAnswerByUserId(@Param("userId") String userId);
 
 
     Integer getUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed);
@@ -72,7 +79,6 @@ public interface UserDao {
     Integer updateUserSimpleDescByUserId(@Param("userId") String userId, @Param("newSimpleDesc") String newSimpleDesc);
 
     Integer updateUserFullDescByUserId(@Param("userId") String userId, @Param("newFullDesc") String newFullDesc);
-
 
 
 }

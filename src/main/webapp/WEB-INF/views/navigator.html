@@ -142,7 +142,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a th:href="@{/}" style="font-size: large"><i class="icon-home"/>首页</a></li>
-                    <li><a th:href="@{/following}" style="font-size: large"><i class="icon-book"/>关注</a></li>
+                    <li><a th:href="@{/following?page=1}" style="font-size: large"><i class="icon-book"/>关注</a></li>
                     <li><a th:href="@{/recommend}" style="font-size: large"><i class="icon-lightbulb"/>推荐</a></li>
                     <li><a th:href="@{/notification}" style="font-size: large"><i class="icon-bell-alt"/>消息
                         <span class="badge badge-warning" style="margin-top: -25px;margin-left: -10px;border-radius: 100%;
@@ -160,7 +160,7 @@
                                     class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a th:href="@{'/userHome/activity/' + ${user.userId}}"><i
+                                <li><a th:href="@{'/userHome/activity/' + ${user.userId}}  + '?page=1'"><i
                                         class="icon-user"/>我的主页</a></li>
                                 <li><a th:href="@{/user/settings}"><i class="icon-cog"/>修改信息</a></li>
                                 <li><a th:href="@{/logout}"><i class="icon-signout"/>我要退出</a></li>

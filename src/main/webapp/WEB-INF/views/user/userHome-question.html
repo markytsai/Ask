@@ -42,30 +42,30 @@
                 <div id="mainContainerRepleace">
 
                     <ul class="nav nav-tabs">
-                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${homeUser.userId}}">动态</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${homeUser.userId}} + '?page=1'">动态</a></li>
                         <li role="presentation" class="active"><a
-                                th:href="@{'/userHome/question/' + ${homeUser.userId}}">问题</a></li>
+                                th:href="@{'/userHome/question/' + ${homeUser.userId}} + '?page=1'">问题</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/answer/' + ${homeUser.userId}}">回答</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}}">收藏</a></li>
+                                th:href="@{'/userHome/answer/' + ${homeUser.userId}} + '?page=1'">回答</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}} + '?page=1'">收藏</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a></li>
+                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}} + '?page=1'">关注问题</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/followingUser/' + ${homeUser.userId}} + '?page=1'">关注用户</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}}">关注话题</a></li>
+                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}} + '?page=1'">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
-                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-question-sign"/>我提出的<span th:if="${questionList.size() != 0}" th:text="${questionList.size() + '个'}"/>问题</h4>
-                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-question-sign"/>他提出的<span th:if="${questionList.size() != 0}" th:text="${questionList.size() + '个'}"/>问题</h4>
+                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-question-sign"/>我提出的<span th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>问题</h4>
+                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-question-sign"/>他提出的<span th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>问题</h4>
                     </div>
 
                     <!--底部提示信息-->
-                    <div th:if="${questionList.size() == 0}" style="text-align: center;">
+                    <div th:if="${page.dataList.size() == 0}" style="text-align: center;">
                         <span th:if="${isLoginUser} == 'true'">你还没有发布任何问题哦(⊙⊙！) &nbsp;</span>
                         <span th:if="${isLoginUser} == 'true'">开始提问自己的第一个问题吧:)，<p class="glyphicon glyphicon-arrow-up"/>提问按钮在正上方 </span>
                         <span th:if="${isLoginUser} == 'false'">他还没有发布任何问题(⊙⊙！) &nbsp;</span>
                     </div>
-                    <div class="card mb-4" th:each="question : ${questionList}">
+                    <div class="card mb-4" th:each="question : ${page.dataList}">
                         <div class="card-block border-dark">
                             <h4 class="card-title text-dark" style="font-weight: bolder;">
                                 <a th:href="@{'/question/' + ${question.questionId}}" class="text-title"
@@ -98,9 +98,11 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true' and ${questionList.size() != 0}">你只有这么多问题了(๑¯ิε ¯ิ๑)</span>
-                        <span th:if="${isLoginUser} == 'false' and ${questionList.size() != 0}">他只有这么多问题了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'true' and ${page.dataList.size() != 0}">你只有这么多问题了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'false' and ${page.dataList.size() != 0}">他只有这么多问题了(๑¯ิε ¯ิ๑)</span>
                     </div>
+
+                    <div class="pagination-parent" th:include="user/user-page :: user-page"></div>
                 </div>
             </div>
         </div>

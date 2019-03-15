@@ -57,9 +57,8 @@ function getChosedTopics() {
         topicStrings += temp;
     }
     return topicStrings;
-    
-}
 
+}
 
 
 $('#exampleModal').on('shown.bs.modal', function () {
@@ -71,7 +70,7 @@ $(document).keyup(function (e) {
         var keyWord = $('#keyword').val();
         if (keyWord != null && keyWord.length > 0) {
             // window.location.href = '/search/question/' + keyWord;
-            window.location.href = '/search?keyword=' + keyWord + '&type=question';
+            window.location.href = '/search?keyword=' + keyWord + '&type=question&page=1';
         } else {
             $.notify({
                 // options
@@ -132,7 +131,7 @@ $("#searchBtn").on("click", function () {
 
     var keyWord = $('#keyword').val();
     if (keyWord != null && keyWord.length > 0) {
-        window.location.href = '/search?keyword=' + keyWord + '&type=question';
+        window.location.href = '/search?keyword=' + keyWord + '&type=question&page=1';
     } else {
         $.notify({
             // options
@@ -182,3 +181,6 @@ function topFunction(event) {
 
 }
 
+$(".nomore-hint").on("click", function () {
+    $("#preference-hint").hide();
+});

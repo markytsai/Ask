@@ -16,7 +16,7 @@
     <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile.css"/>
     <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/sidePersonCard.css"/>
-
+    <link rel="stylesheet" href="http://localhost:8088/css/custom.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
     <link href="http://localhost:8088/css/askFrame.css" rel="stylesheet"/>
@@ -40,21 +40,21 @@
                     <p><h4 style="margin-left: 15px;">搜索结果</h4></p>
                     <ul class="nav nav-tabs">
                         <li role="presentation"><a
-                                th:href="@{'/search'(keyword=${keyword}, type=question)}">问题</a></li>
+                                th:href="@{'/search'(keyword=${keyword}, type=question, page=1)}">问题</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/search'(keyword=${keyword}, type=answer)}">回答</a></li>
-                        <li role="presentation" class="active"><a th:href="@{'/search'(keyword=${keyword}, type=user)}">用户</a></li>
-                        <li role="presentation"><a th:href="@{'/search'(keyword=${keyword}, type=topic)}">话题</a></li>
+                                th:href="@{'/search'(keyword=${keyword}, type=answer, page=1)}">回答</a></li>
+                        <li role="presentation" class="active"><a th:href="@{'/search'(keyword=${keyword}, type=user, page=1)}">用户</a></li>
+                        <li role="presentation"><a th:href="@{'/search'(keyword=${keyword}, type=topic, page=1)}">话题</a></li>
                     </ul>
 
                     <!--底部提示信息-->
-                    <div th:if="${searchUserList.size() == 0}" style="margin: 100px;">
+                    <div th:if="${page.dataList.size() == 0}" style="margin: 100px;">
                         <div style="text-align: center;">
                             <span style="font-size: large;">暂无任何搜索结果(⊙⊙！）</span>
                         </div>
                     </div>
 
-                    <div class="card mb-4" th:each="user : ${searchUserList}">
+                    <div class="card mb-4" th:each="user : ${page.dataList}">
                         <div class="card-block">
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
@@ -90,10 +90,12 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true' and ${searchUserList.size() != 0}">到底了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'true' and ${page.dataList.size() != 0}">到底了(๑¯ิε ¯ิ๑)</span>
                     </div>
                 </div>
             </div>
+
+            <div class="pagination-parent" th:include="search/search-page :: search-page"></div>
         </div>
 
         <!-- 右侧栏目 -->

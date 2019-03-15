@@ -36,6 +36,7 @@
             INNER JOIN mid_user_follow_question AS qum ON qum.question_id = q.question_id
         WHERE
             qum.user_id = #{userId}
+        limit ${pageNo}, ${limit}
     </select>
 
     <select id="selectRecommendedQuestionByUserId" parameterType="String" resultMap="QuestionList">
@@ -69,6 +70,13 @@
             question AS q
         WHERE
             user_id = #{userId}
+        limit ${offset}, ${limit}
+    </select>
+
+    <select id="getTotalQuestions" resultType="Integer">
+        select count(*)
+        from question
+        where user_id = #{userId}
     </select>
 
 
@@ -181,6 +189,13 @@
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
+    </select>
+
+    <select id="getTotalQuestionNum" resultType="Integer">
+
+        select count(q.question_id) from question as q
+        inner join mid_user_follow_question as mufq on q.question_id = mufq.question_id
+        where mufq.user_id = #{userId}
     </select>
 </mapper>
 

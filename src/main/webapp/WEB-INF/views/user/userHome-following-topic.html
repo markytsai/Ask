@@ -67,7 +67,7 @@
                     <!--底部提示信息-->
                     <div th:if="${followingTopicList.size() == 0}" style="text-align: center;">
                         <span th:if="${isLoginUser} == 'true'">你还没有关注任何话题哦(⊙⊙！) &nbsp;</span>
-                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/user/preferece}" target="_blank">这里</a>去选择感兴趣的话题吧</span>
+                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/user/preference}" target="_blank">这里</a>去选择感兴趣的话题吧</span>
                         <span th:if="${isLoginUser} == 'false'">他还没有关注任何话题(⊙⊙！) &nbsp;</span>
                     </div>
                     <div class="card mb-4" th:each="topic : ${followingTopicList}">

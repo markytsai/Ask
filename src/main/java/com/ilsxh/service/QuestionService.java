@@ -11,6 +11,7 @@ import com.ilsxh.exception.CustomException;
 import com.ilsxh.redis.AnswerKey;
 import com.ilsxh.redis.HotDataKey;
 import com.ilsxh.util.MyUtil;
+import com.ilsxh.util.Page;
 import com.ilsxh.vo.UserQuestionVo;
 import com.ilsxh.vo.UserTopicVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +61,9 @@ public class QuestionService {
      * @return
      */
     @OperAnnotation(descpition = "获取用户关注问题列表", include = "userId")
-    public List<Question> getFollowingQuestionByUserId(String userId) {
+    public List<Question> getFollowingQuestionByUserId(String userId, Integer pageNo, Integer pageSize) {
 
-        List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId);
+        List<Question> questionList = questionDao.selectFollowingQuestionByUserId(userId, pageNo, pageSize);
 
         for (Question question : questionList) {
             User user = new User();
@@ -146,8 +147,10 @@ public class QuestionService {
      * @param userId
      * @return
      */
-    public List<Question> getRaisedQuestionByUserId(String userId) {
-        List<Question> questionList = questionDao.getRaisedQuestionByUserId(userId);
+    public Page<Question> getRaisedQuestionByUserId(String userId, Integer pageNo) {
+        int totalQuestion = questionDao.getTotalQuestions(userId);
+        int pageSize = 30;
+        List<Question> questionList = questionDao.getRaisedQuestionByUserId(userId, (pageNo - 1) * pageSize, pageSize);
 
         for (Question question : questionList) {
             User user = new User();
@@ -155,7 +158,7 @@ public class QuestionService {
             user.setUsername(userHelperService.selectUsernameByUserId(question.getUserId()));
             question.setUser(user);
         }
-        return questionList;
+        return new Page<>(pageNo, pageSize, totalQuestion, questionList);
     }
 
     /**
@@ -646,4 +649,7 @@ public class QuestionService {
         return recommendQuestionIdsSet;
     }
 
+    public Integer getTotalQuestionNum(String userId) {
+        return questionDao.getTotalQuestionNum(userId);
+    }
 }

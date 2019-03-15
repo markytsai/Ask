@@ -20,11 +20,19 @@ public interface QuestionDao {
      * @param userId
      * @return
      */
-    List<Question> selectFollowingQuestionByUserId(@Param("userId") String userId);
+    List<Question> selectFollowingQuestionByUserId(@Param("userId") String userId, @Param("pageNo") Integer pageNo, @Param("limit") Integer limit);
 
     List<Question> selectRecommendedQuestionByUserId();
 
-    List<Question> getRaisedQuestionByUserId(@Param("userId") String userId);
+    List<Question> getRaisedQuestionByUserId(@Param("userId") String userId, @Param("offset") Integer offset, @Param("limit") Integer limit);
+
+    /**
+     * 获取提出问题的数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer getTotalQuestions(@Param("userId") String userId);
 
     List<Answer> selectAnswersByQuestionId(@Param("questionId") Integer questionId);
 
@@ -55,4 +63,6 @@ public interface QuestionDao {
     Integer isQuestionAnswered(@Param("userId") String userId, @Param("questionId") Integer questionId);
 
     List<Question> getQuestionListById(List<Integer> list);
+
+    Integer getTotalQuestionNum(@Param("userId") String userId);
 }

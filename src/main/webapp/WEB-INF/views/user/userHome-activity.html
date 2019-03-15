@@ -46,16 +46,16 @@
 
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a
-                                th:href="@{'/userHome/activity/' + ${homeUser.userId}}">动态</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId}}">问题</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/answer/' + ${homeUser.userId}}">回答</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}}">收藏</a></li>
+                                th:href="@{'/userHome/activity/' + ${homeUser.userId}} + '?page=1'">动态</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId}} + '?page=1'">问题</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/answer/' + ${homeUser.userId}} + '?page=1'">回答</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}} + '?page=1'">收藏</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
+                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}} + '?page=1'">关注问题</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a></li>
+                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId}} + '?page=1'">关注用户</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}}">关注话题</a></li>
+                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}} + '?page=1'">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
                         <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-pencil"/>我的<span
@@ -67,12 +67,12 @@
                     </div>
 
                     <!--底部提示信息-->
-                    <div th:if="${activityList.size() == 0}" style="text-align: center;">
+                    <div th:if="${page.dataList.size() == 0}" style="text-align: center;">
                         <span th:if="${isLoginUser} == 'true'">你还没有任何动态哦(⊙⊙！) &nbsp;</span>
                         <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的问题吧</span>
                         <span th:if="${isLoginUser} == 'false'">他还没有任何动态(⊙⊙！) &nbsp;</span>
                     </div>
-                    <div th:each="activity : ${activityList}">
+                    <div th:each="activity : ${page.dataList}">
                         <div class="card mb-4">
                             <div th:switch="${activity.activityStaus}">
 
@@ -424,9 +424,11 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true' and ${activityList.size() != 0}">你只有这么多动态了(๑¯ิε ¯ิ๑)</span>
-                        <span th:if="${isLoginUser} == 'false' and ${activityList.size() != 0}">他只有这么多动态了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'true' and ${page.dataList.size() != 0}">你只有这么多动态了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'false' and ${page.dataList.size() != 0}">他只有这么多动态了(๑¯ิε ¯ิ๑)</span>
                     </div>
+
+                    <!--<div th:include="user/user-page :: user-page"></div>-->
                 </div>
             </div>
         </div>
