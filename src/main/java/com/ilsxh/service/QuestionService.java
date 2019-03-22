@@ -82,38 +82,42 @@ public class QuestionService {
     @OperAnnotation(descpition = "获取用户推荐问题列表")
     public List<Question> getRecommendedQuestionByUserId(String userId) {
 
-        // 获取登录用户的相似用户集合
+        // 获取登录用户的相似用户集合，选取其中两个最高的
         Set<String> similarUsers = this.getSimilarUserSet(2, userId);
-        Map<String, Set<Integer>> userRecommendQuestionMap = new HashMap<>();
+
+        // 用来存 相似用户 所感兴趣的问题集合
+//        Map<String, Set<Integer>> userRecommendQuestionMap = new HashMap<>();
 
         List<Integer> recommendQuestionIdList = new ArrayList<>();
 
+        // 遍历得到的相似用户集合，集合为userId
         for (Iterator iterator = similarUsers.iterator(); iterator.hasNext(); ) {
             String userId1 = (String) iterator.next();
 
-            // 遍历相似用户集合，计算得到用户感兴趣的话题
+            // 遍历相似用户集合，计算得到单个用户感兴趣的话题，作为推荐问题给目标用户
             Set<Integer> set = this.getUserInterestedQuestions(userId1);
-            userRecommendQuestionMap.put(userId1, set);
+//            userRecommendQuestionMap.put(userId1, set);
 
+            // 推荐的问题 持久化，， 这里持久化只存了 userCF 的推荐结果
             if (trainDao.getUserInterestedQuestionIds(userId1) == null) {
                 trainDao.insertUserRecommendQuestion(userId1, JSONArray.toJSONString((set)));
             } else {
                 trainDao.updateUserRecommendQuestion(userId1, JSONArray.toJSONString(set));
             }
 
+            // 从数据库中获取推荐的问题集合，添加到待返回的集合中去
             String questionIds = trainDao.getRecommendQuestionByUserId(userId1);
             List<Integer> questionIdList = JSONObject.parseArray(questionIds, Integer.class);
             recommendQuestionIdList.addAll(questionIdList);
-
-            for (Iterator iterator1 = set.iterator(); iterator1.hasNext(); ) {
-                System.out.print("similar question number : " + iterator1.next() + "  ");
-            }
-            System.out.println();
         }
 
-        Set<Integer> recommendQuestionIdsSet = this.questionCF(1, userId);
-        recommendQuestionIdsSet.stream().forEach(x -> recommendQuestionIdList.add(x));
+        // ItemCF算法得到的问题推荐集合
+//        Set<Integer> recommendQuestionIdsSet = this.questionCF(1, userId);
 
+        // 暂时把userCF和ItemCF的推荐结果放在一起
+//        recommendQuestionIdsSet.stream().forEach(x -> recommendQuestionIdList.add(x));
+
+        // 获取具体问题实体信息
         List<Question> questionList = questionDao.getQuestionListById(recommendQuestionIdList);
 
         for (Question question : questionList) {
@@ -296,10 +300,13 @@ public class QuestionService {
         question.setUserId(userId);
         question.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
-        questionDao.addQuestion(question, userId, new Timestamp(System.currentTimeMillis()));
+        List<Integer> topicIdList = this.addQuestionTopics(question, topicString);
+        questionDao.addQuestion(question, userId, JSON.toJSONString(topicIdList), new Timestamp(System.currentTimeMillis()));
         questionDao.followQuestion(userId, question.getQuestionId(), new Timestamp(System.currentTimeMillis()));
-        this.addQuestionTopics(question, topicString);
 
+        for (Integer topicId : topicIdList) {
+            questionDao.addQuestionTopic(question.getQuestionId(), topicId);
+        }
         return question;
     }
 
@@ -309,12 +316,16 @@ public class QuestionService {
      * @param question
      * @param topicString
      */
-    public void addQuestionTopics(Question question, String topicString) {
-        String[] topicStrings = topicString.split(","); // 用英文逗号
+    public List<Integer> addQuestionTopics(Question question, String topicString) {
+        // 用英文逗号
+        String[] topicStrings = topicString.split(",");
+        List<Integer> topicIds = new ArrayList<>(topicStrings.length);
         for (int i = 0; i < topicStrings.length; i++) {
             Integer topicId = topicDao.getTopicIdByTopicName(topicStrings[i]);
-            questionDao.addQuestionTopic(question.getQuestionId(), topicId);
+            topicIds.add(topicId);
+
         }
+        return topicIds;
     }
 
     /**
@@ -459,34 +470,42 @@ public class QuestionService {
      */
     public Set<String> getSimilarUserSet(int topK, String targetUserId) {
 
+        // 获取所有的此用户关注的话题关系，表mid_user_follow_topic中取数据
         List<UserTopicVo> list = trainDao.getAllUserTopic();
-//        list.stream().forEach(x -> System.out.println(x.getId()));
 
-        // 通过set获取人数
+        // 通过set获取人数，共存在用户的数量
         Set<String> set = new HashSet<>();
         for (UserTopicVo userTopicVo : list) {
             set.add(userTopicVo.getUserId());
         }
+
+        // 用户的数量
         int userNum = set.size();
         System.out.println("Total user number: " + set.size());
 
+        // 矩阵序号对应userId, 因为map从value不能获取到key,所以要有一个反向的映射
         String[] userIds = new String[userNum];
         int n = 0;
         // 用户user_id 和 矩阵序号的 对照map
+        // String -> userId; Integer -> 矩阵序号
         Map<String, Integer> userIdSerialMap = new HashMap<>(userNum);
         int serialNum = 0;
+        // set存的是userId
         for (String s : set) {
+            // 按顺序去除用户的ID，然后匹配到矩阵的序号上去，从0到userNum - 1
             userIdSerialMap.put(s, serialNum++);
+            //
             userIds[n++] = s;
         }
 
-        // 初始化关注集合<user_id对应的矩阵序号， 话题set>
+        // 初始化关注集合<user_id对应的矩阵序号， 话题set
         Map<Integer, Set<Integer>> map = new HashMap<>();
         for (Map.Entry<String, Integer> entry : userIdSerialMap.entrySet()) {
             map.put(entry.getValue(), new HashSet<>());
         }
 
-        // 遍历列表，按照user_id进行归类
+        // 遍历列表，按照矩阵序号 进行归类
+        // 矩阵序号 <--->  关注的话题集合
         for (UserTopicVo userTopicVo : list) {
             map.get(userIdSerialMap.get(userTopicVo.getUserId())).add(userTopicVo.getTopicId());
         }
@@ -499,31 +518,39 @@ public class QuestionService {
 
                 result.clear();
 
+                // 获取矩阵纵向序号为i的话题集合，
                 Set setA = map.get(i);
                 int ASize = setA.size();
                 result.addAll(setA);
 
+                // 获取矩阵横向序号为j的话题集合
                 Set setB = map.get(j);
                 int BSize = setB.size();
 
+                // 计算两个集合之间的交集
                 result.retainAll(setB);
 
+                // 计算用户i和j的相似度
                 similarityMatrix[i][j] = similarityMatrix[j][i] = result.size() / (Math.sqrt(ASize * BSize) * 1.0);
             }
         }
 
+        // 获取目标userId所对应的一行数据，也就是所有其他用户于目标用户相似度暂时存到一个数组中去
         double tempArr[] = new double[similarityMatrix.length];
         int k = 0;
         for (double num : similarityMatrix[userIdSerialMap.get(targetUserId)]) {
             tempArr[k++] = num;
         }
 
+        // 升序排列
         Arrays.sort(tempArr);
         Set<String> retUsers = new HashSet<>();
 
+        // 找到相似度最大的两个用户的矩阵序号
         for (int j = userNum - 1; j >= userNum - topK; j--) {
             for (int i = 0; i < userNum; i++) {
                 if (i != j && similarityMatrix[userIdSerialMap.get(targetUserId)][i] == tempArr[j]) {
+                    // 获取对应矩阵序号的userId，不能从map反向获取
                     retUsers.add(userIds[i]);
                     similarityMatrix[userIdSerialMap.get(targetUserId)][i] = 0.0;
                     break;
@@ -555,6 +582,7 @@ public class QuestionService {
         Set<Integer> setContainer3 = new HashSet<>();
         userQuestionVos3.stream().forEach(x -> setContainer3.add(x.getQuestionId()));
 
+        // 得到三个行为同时存在的问题，所谓强关注
         Set<Integer> tempSet = new HashSet<>();
         tempSet.addAll(setContainer1);
         tempSet.retainAll(setContainer2);
@@ -596,10 +624,12 @@ public class QuestionService {
             questionIdMatrixIdLinkMap.put(num, temp++);
         }
 
+        // 计算得到 每一个问题 关注的用户集合
         for (UserQuestionVo userQuestionVo : userQuestionVoList) {
             int matrixId = questionIdMatrixIdLinkMap.get(userQuestionVo.getQuestionId());
             questionUserMap.get(matrixId).add(userQuestionVo.getUserId());
 
+            // 找到目标用户关注的问题集合， 在后面可以找到每一个问题的相似问题作为推荐结果
             if (userQuestionVo.getUserId().equals(userId)) {
                 targetUserFollowQuestionSet.add(userQuestionVo.getQuestionId());
             }
@@ -607,8 +637,8 @@ public class QuestionService {
 
 
         double[][] questionSimilarityMatrix = new double[questionNum][questionNum];
-//        Arrays.fill(questionSimilarityMatrix, 0.0);
 
+        // 计算问题相似度矩阵
         Set<String> tempSet = new HashSet<>();
         for (int i = 0; i < questionNum; i++) {
             for (int j = i + 1; j < questionNum; j++) {
@@ -631,8 +661,7 @@ public class QuestionService {
         for (Integer questionId : targetUserFollowQuestionSet) {
 
             int matrixRow = questionIdMatrixIdLinkMap.get(questionId);
-            double[] tempCompArray = new double[questionNum];
-            tempCompArray = Arrays.copyOf(questionSimilarityMatrix[matrixRow], questionNum);
+            double[] tempCompArray = Arrays.copyOf(questionSimilarityMatrix[matrixRow], questionNum);
             Arrays.sort(tempCompArray);
             for (int k = questionNum - 1; k >= questionNum - topK; k--) {
                 for (int l = 0; l < questionNum; l++) {
@@ -643,8 +672,7 @@ public class QuestionService {
                 }
             }
 
-
-            System.out.println(questionId);
+            System.out.println("---------ItemCF: similar questionId in question Set: " + questionId + "---------");
         }
         return recommendQuestionIdsSet;
     }

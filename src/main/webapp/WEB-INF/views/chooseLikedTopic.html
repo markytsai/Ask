@@ -18,10 +18,10 @@
 <div class="container">
     <!--<form role="form">-->
     <div class="row" style="margin-top: -50px;margin-bottom: 30px;">
-        <span><h2 style="color: #d9534f;">让AnswerPedia知道你的擅长</h2>（点击话题名称可以查看子话题，收起子话题）</span>
+        <span><h2 style="color: #d9534f;">让AnswerPedia知道你的偏好和擅长</h2>（点击话题名称可以查看子话题，收起子话题）</span>
     </div>
     <div class="row">
-        <div class="col-md-12" th:each="rootTopic : ${topicList}" style="margin-bottom: 20px;background-color: white;">
+        <div class="col-md-8 col-md-offset-2" th:each="rootTopic : ${topicList}" style="margin-bottom: 20px;background-color: white;">
             <fieldset th:id="${rootTopic.topicId}">
                 <legend th:text="${rootTopic.topicName}" style="margin-bottom: 10px;"/>
                 <!--<p th:text="${rootTopic.topicSimpleDesc}"/>-->

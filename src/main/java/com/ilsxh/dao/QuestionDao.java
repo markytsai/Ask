@@ -52,7 +52,7 @@ public interface QuestionDao {
 
     Integer deleteAnswer(@Param("answerId") String answerId);
 
-    void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("createTime") Timestamp createTime);
+    void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("topicJson") String topicString, @Param("createTime") Timestamp createTime);
 
     void addQuestionTopic(@Param("questionId") Integer questionId, @Param("topicId") Integer topicId);
 

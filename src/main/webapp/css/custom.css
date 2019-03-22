@@ -95,3 +95,8 @@ a:focus {
     position: relative;
     text-align: center;
 }
+
+.dropdown-menu li a i {
+    margin-right: 5px;
+    color: #b2bac2;
+}

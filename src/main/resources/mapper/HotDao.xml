@@ -9,15 +9,15 @@
     </select>
 
     <select id="getHotUsers" resultType="User">
-        select * from user;
+        select * from user limit 10
     </select>
 
     <select id="getHotTopics" resultType="Topic">
-        select * from topic limit 20;
+        select * from topic limit 20
     </select>
 
     <select id="getNewestRaisedQuestions" resultType="Question">
-        select * from question order by create_time desc limit 10;
+        select * from question order by create_time desc limit 10
     </select>
 
 </mapper>

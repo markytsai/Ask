@@ -140,7 +140,7 @@
     </delete>
 
     <insert id="addQuestion" useGeneratedKeys="true" keyProperty="question.questionId">
-        insert into question(question_title, question_content, user_id, create_time) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId}, #{question.createTime})
+        insert into question(question_title, question_content, user_id, topic_list, create_time) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId}, #{topicJson}, #{question.createTime})
     </insert>
 
     <insert id="addQuestionTopic" parameterType="Integer">

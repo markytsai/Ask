@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TopicService {
@@ -242,39 +239,62 @@ public class TopicService {
 
     /**
      * 用户首次登录，设置用户偏好，标签可以保存到redis中去
+     *
      * @param userId
      * @param chosedTopicIds
      */
     public void insertUserFollowTopics(String userId, List<Integer> chosedTopicIds) {
-        // 取出所有的标签，默所有的标签处于未关注的状态
-        List<Topic> topicList = topicDao.getAllTopicsFromColdStart();
-        topicList.addAll(topicDao.getAllTopics());
-        // 初始化所有的话题标签到mid_user_follow_topic中间表中去，follow_topic_status 设置为0
-        Integer totalTopics = topicDao.initUserFollowTopics(userId, topicList);
+        // 首次登录，直接insert选中的话题标签
+        topicDao.insertFollowTopicWhenFirstLogin(userId, chosedTopicIds);
+    }
 
-        // 更新用户选中的话题标签
-        if (chosedTopicIds.get(0) != -1) {
-            topicDao.updateUserFollowTopics(userId, chosedTopicIds);
+    /**
+     * 用户修改个人偏好，标签可以保存到redis中去，前端异步执行，
+     *
+     * @param userId
+     * @param newTopicIdsSet
+     */
+    public void updateUserFollowTopics(String userId, Set<Integer> newTopicIdsSet) {
+
+        List<Topic> followedTopicList = topicDao.getFollowingTopicByUserId(userId);
+        Set<Integer> followedTopicSet = new HashSet<>();
+
+        // 已关注的话题集合
+        followedTopicList.stream().forEach(t -> {
+            followedTopicSet.add(t.getTopicId());
+        });
+
+        // 首先要把原有的集合复制一份
+        Set<Integer> followTopicIdCopy = new HashSet<>();
+        followTopicIdCopy.addAll(followedTopicSet);
+
+        // 得到取消关注的话题集合
+        followTopicIdCopy.removeAll(newTopicIdsSet);
+        List<Integer> unfollowTopicIds = new ArrayList<>(followTopicIdCopy);
+        // 更新操作，直接更新状态码
+        if (unfollowTopicIds.size() != 0) {
+            topicDao.deleteFollowTopicByUserId(userId, unfollowTopicIds);
+        }
+
+
+        Set<Integer> newfollowTopicIdCopy = new HashSet<>();
+        newfollowTopicIdCopy.addAll(newTopicIdsSet);
+        // 得到新增加的话题集合
+        newfollowTopicIdCopy.removeAll(followedTopicSet);
+        List<Integer> newFollowTopicIds = new ArrayList<>(newfollowTopicIdCopy);
+        // 直接插入新的记录，状态码设置为1
+        if (newFollowTopicIds.size() != 0) {
+            topicDao.insertFollowTopicWhenFirstLogin(userId, newFollowTopicIds);
         }
     }
 
     /**
-     * 用户修改个人偏好，标签可以保存到redis中去
+     * 获取标签内容，共首次登录的用户选择
+     *
      * @param userId
-     * @param list
+     * @param rootTopicId
+     * @return
      */
-    public void updateUserFollowTopics(String userId, List<Integer> list) {
-        // 取出所有的标签
-        List<Topic> topicList = topicDao.getAllTopicsFromColdStart();
-        topicList.addAll(topicDao.getAllTopics());
-
-        // 所有话题关注状态清零
-        topicDao.zeroAllTopicByUserId(userId);
-        if (list.get(0) != -1) {
-            topicDao.updateUserFollowTopics(userId, list);
-        }
-    }
-
     public Map<String, List<Topic>> getSocialScienceTopics(String userId, Integer rootTopicId) {
 
         Map<String, List<Topic>> retMap = new HashMap<>();

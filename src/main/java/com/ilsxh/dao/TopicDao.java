@@ -6,7 +6,9 @@ import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public interface TopicDao {
 
@@ -24,22 +26,22 @@ public interface TopicDao {
 
     Integer getCurrStat(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId);
 
-    Integer insertfollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
+    Integer insertfollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus") Integer targetStatus);
 
 
-    Integer updateFollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus")Integer targetStatus);
+    Integer updateFollowTopic(@Param("localUserId") String localUserId, @Param("topicId") Integer topicId, @Param("targetStatus") Integer targetStatus);
 
     List<Topic> getAllTopicsFromColdStart();
 
     List<Topic> getAllTopics();
 
-    List<Topic> getChilrenTopicByTopicId(@Param("userId")String userId, @Param("rootTopicId") Integer rootTopicId);
+    List<Topic> getChilrenTopicByTopicId(@Param("userId") String userId, @Param("rootTopicId") Integer rootTopicId);
 
-    List<Topic> getThirdLevelChilrenTopic(@Param("userId")String userId, @Param("topicId")Integer topicId);
+    List<Topic> getThirdLevelChilrenTopic(@Param("userId") String userId, @Param("topicId") Integer topicId);
 
-    List<Topic> getAllThirdTopics(@Param("topicId")Integer topicId);
+    List<Topic> getAllThirdTopics(@Param("topicId") Integer topicId);
 
-    List<Integer> getFollowedThirdTopics(@Param("userId")String userId, @Param("topicId") Integer topicId);
+    List<Integer> getFollowedThirdTopics(@Param("userId") String userId, @Param("topicId") Integer topicId);
 
     void updateUserFollowTopics(@Param("userId") String userId, @Param("topicIds") List<Integer> topicIds);
 
@@ -48,4 +50,8 @@ public interface TopicDao {
     void zeroAllTopicByUserId(String userId);
 
     List<Topic> getFollowingTopicByUserId(String userId);
+
+    Integer insertFollowTopicWhenFirstLogin(@Param("userId") String userId, @Param("topicIds") List<Integer> chosedTopicIds);
+
+    void deleteFollowTopicByUserId(@Param("userId") String userId, @Param("topicIds") List<Integer> unfollowTopicIds);
 }

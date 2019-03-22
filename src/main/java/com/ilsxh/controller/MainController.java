@@ -30,7 +30,7 @@ public class MainController {
      */
     @RequestMapping(value = {"index"}, method = RequestMethod.GET)
     public String index() {
-        return "redirect:/following";
+        return "redirect:/following?page=1";
     }
 
     /**

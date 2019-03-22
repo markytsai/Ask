@@ -12,7 +12,7 @@
     <select id="getAllUserTopic" resultType="com.ilsxh.vo.UserTopicVo">
         select id, user_id, topic_id
         from mid_user_follow_topic
-        where follow_topic_status = 1
+        where follow_topic_status = 1 limit 1000
     </select>
 
     <select id="getUserCollectAnswer" resultMap="userQuestionMap">

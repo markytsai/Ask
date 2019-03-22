@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.expression.Sets;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class TopicController {
@@ -191,11 +189,10 @@ public class TopicController {
 
         String userId = userHelperService.getUserIdFromRedis(request);
         userHelperService.getUserDetails(userId, model);
-        topicService.updateUserFollowTopics(userId, Arrays.asList(topicIds));
+        topicService.updateUserFollowTopics(userId, new HashSet(Arrays.asList(topicIds)));
 
         return new BaseResponse<>("1", "成功保存用户话题偏好");
     }
-
 
 
     @RequestMapping("/getSocialScienceTopics/{rootTopicId}")

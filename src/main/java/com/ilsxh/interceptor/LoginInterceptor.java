@@ -68,7 +68,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             request.getRequestDispatcher("login").forward(request, response);
             return false;
         } else {
-            if ("/".equals(requestUri) || "/chooseTopic".equals(requestUri)) {
+            if ("/".equals(requestUri) ) {
                 // 会改变URL
                 response.sendRedirect("/following?page=1");
                 // 不会改变URL
