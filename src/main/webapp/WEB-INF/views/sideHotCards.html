@@ -1,11 +1,12 @@
 <div th:fragment="sideCards" xmlns:th="http://www.w3.org/1999/xhtml">
 
-    <div class="col-md-3">
-        <div class="card my-4" style='background-color: #fff;padding: 6px;'>
+    <!--网站名片-->
+    <!--<div class="col-md-3">-->
+        <!--<div class="card my-4" style='background-color: #fff;padding: 6px;'>-->
 
-        </div>
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
 
     <div class="col-md-3 ">
         <!-- 热门问题 根据关注量排序-->
@@ -17,11 +18,6 @@
                     <a class="sideTitle" th:href="@{'/question/' + ${question.questionId}}" th:text="${question.questionTitle}"
                        target="_blank"/><span style="padding-left: 10px;" th:text="${question.answerCount} + '个回答'"/>
                 </div>
-                <!--<div style="float:right;">-->
-                    <!--<a th:href="@{/#}" th:text="${question.followedCount}">10</a>个关注-->
-                    <!--<a th:href="@{'/question/' + ${question.questionId}}" th:text="${question.answerCount}">10</a>个回答-->
-                <!--</div>-->
-                <!--<hr color="#f8f8f8"/>-->
             </ul>
             <div style="margin-top: 15px;">
                 <a th:href="@{/moreHotQuestion}" style="float: right;margin-top: -15px;" target="_blank">更多热门问题>>></a>

@@ -40,7 +40,7 @@ public class QuestionController {
      * @return
      */
     @RequestMapping("/following")
-    public String getFollowingQuestionsByUserId(@RequestParam("page") Integer pageNo, HttpServletRequest request, Model model) {
+    public String getFollowingQuestionsByUserId(@RequestParam(value = "page", defaultValue = "1") Integer pageNo, HttpServletRequest request, Model model) {
 
         String userId = userHelperService.getUserIdFromRedis(request);
         userHelperService.getUserDetails(userId, model);

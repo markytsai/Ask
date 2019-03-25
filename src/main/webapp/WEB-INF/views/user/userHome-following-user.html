@@ -22,6 +22,7 @@
     <link href="http://localhost:8088/css/questionDetail.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/askFrame.css" rel="stylesheet"/>
     <link href="http://localhost:8088/css/quill.snow.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/notification.css" rel="stylesheet"/>
 
 </head>
 
@@ -43,34 +44,34 @@
                 <div id="mainContainerRepleace">
 
                     <ul class="nav nav-tabs">
-                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${homeUser.userId}}">动态</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId}}">问题</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${homeUser.userId} + '?page=1'}">动态</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId} + '?page=1'}">问题</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/answer/' + ${homeUser.userId}}">回答</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}}">收藏</a></li>
+                                th:href="@{'/userHome/answer/' + ${homeUser.userId} + '?page=1'}">回答</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId} + '?page=1'}">收藏</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}}">关注问题</a></li>
+                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId} + '?page=1'}">关注问题</a></li>
                         <li role="presentation" class="active"><a
-                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId}}">关注用户</a></li>
+                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId} + '?page=1'}">关注用户</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}}">关注话题</a></li>
+                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId} + '?page=1'}">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
                         <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-transfer"/> 我关注的<span
-                                th:if="${followingUserList.size() != 0}" th:text="${followingUserList.size() + '个'}"/>用户
+                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>用户
                         </h4>
                         <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-transfer"/>他关注的<span
-                                th:if="${followingUserList.size() != 0}" th:text="${followingUserList.size() + '个'}"/>用户
+                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>用户
                         </h4>
                     </div>
 
                     <!--底部提示信息-->
-                    <div th:if="${followingUserList.size() == 0}" style="text-align: center;">
+                    <div th:if="${page.dataList.size() == 0}" style="text-align: center;">
                         <span th:if="${isLoginUser} == 'true'">你还没有关注任何人哦(⊙⊙！) &nbsp;</span>
                         <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的用户吧</span>
                         <span th:if="${isLoginUser} == 'false'">他还没有关注任何人(⊙⊙！) &nbsp;</span>
                     </div>
-                    <div class="card mb-4" th:each="user : ${followingUserList}">
+                    <div class="card mb-4" th:each="user : ${page.dataList}">
                         <div class="card-block">
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
@@ -108,9 +109,11 @@
                         </div>
                     </div>
                     <div style="text-align: center;">
-                        <span th:if="${isLoginUser} == 'true' and ${followingUserList.size() != 0}">你只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
-                        <span th:if="${isLoginUser} == 'false' and ${followingUserList.size() != 0}">他只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'true' and ${page.dataList.size() != 0}">你只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'false' and ${page.dataList.size() != 0}">他只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
                     </div>
+
+                    <div class="pagination-parent" th:include="user/user-page :: user-page"></div>
                 </div>
             </div>
         </div>

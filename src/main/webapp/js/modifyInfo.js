@@ -10,6 +10,10 @@ $('.modifyButton').on('click', function (event) {
 });
 
 $('.cancelSave').on('click', function (event) {
+    
+    if (event.target.parentElement.parentElement.children[1].style.display == "inline-block") {
+        event.target.parentElement.parentElement.children[1].style.display = "none";
+    }
     // 判断点击是哪个修改按钮
     var modifyType = event.target.parentNode.id;
 
@@ -22,11 +26,15 @@ $('.cancelSave').on('click', function (event) {
 $('.saveBtn').on('click', function (event) {
 
     var saveType = event.target.parentNode.id;
-
     var saveData = saveType.substr(4, saveType.length);
+    var saveContent = document.getElementById(saveData.substr(0, 1).toLowerCase() + saveData.substr(1, saveData.length) + 'Input').value;
+    if (saveContent == null || saveContent.length == 0) {
+        event.target.parentElement.parentElement.children[1].style.display = "inline-block";
+        return;
+    }
 
-    doUpdateProfile(saveData, document.getElementById(saveData.substr(0, 1).toLowerCase() + saveData.substr(1, saveData.length) + 'Input').value);
-
+    doUpdateProfile(saveData, saveContent);
+    event.target.parentElement.parentElement.children[1].style.display = "none";
     // switch (saveType) {
     //     case 'saveUsername': {
     //         doModifyUsername(document.getElementById('usernameInput').value);

@@ -60,7 +60,7 @@ function getAnswerId() {
 
 }
 
-
+// 关注问题
 $('#focusQuestion').click(function () {
     var btnFocusQuestion = $("#focusQuestion");
     followQuestion();
@@ -74,7 +74,7 @@ $('#focusQuestion').click(function () {
     btnFocusQuestion.blur();
 });
 
-// 点击我要回答按钮事件，显示内容输入框
+// 点击我要回答（修改回答）按钮，显示内容输入框
 $('#iWantAnswer').click(function (event) {
 
 
@@ -88,9 +88,6 @@ $('#iWantAnswer').click(function (event) {
         var questionId = $('#getQuestionId').val();
         var answerId = $("#iWantAnswer").attr("data-id");
 
-        // event.target.parentNode.parentNode.nextElementSibling.style.display = "none";
-        // $('#answerId-' + answerId).parentNode.hide();
-        // $('.answerArea').attr('data-id', answerId);
         $('#answerId-' + answerId).closest('.card-block').hide();
 
         var existedAnswerContent = event.target.parentNode.parentNode.previousElementSibling.textContent;
@@ -99,7 +96,7 @@ $('#iWantAnswer').click(function (event) {
             $('#afterAnswerCard').hide();
             $('.answerArea').summernote('code', $('#answerContent').text());
         } else {// 点击的是回答详情中的修改链接
-            $('.answerArea').summernote('code', $('#answerId-' + answerId).prev().prev().children().text());
+            $('.answerArea').summernote('code', $('#answerId-' + answerId).prev()[0].children[0].children[0].innerHTML);
 
 
             $('#upvoteCountAfter').val($('#answerId-' + answerId));
@@ -120,6 +117,7 @@ $('#iWantAnswer').click(function (event) {
 //     $('#editFrame').hide();
 // });
 
+// 点击取消回答按钮
 $('#quitAnswer').click(function () {
     $('.answerArea').summernote('destroy');
     $('#submitBtn').hide();
@@ -127,6 +125,7 @@ $('#quitAnswer').click(function () {
 
     var answerId = $("#iWantAnswer").attr("data-id");
 
+    // 数据已经发送到后台，前端answer隐藏了
     if ($('#answerId-' + answerId).length == 1) {  // 取消回答后，要把更新的回答内容设置到即将显示出来的回答详情card中
         $('#answerId-' + answerId).closest('.card-block').show();
         var answerContent = $('#answerContent').text();
@@ -145,6 +144,7 @@ $('#quitAnswer').click(function () {
 
 });
 
+// 投票赞成
 $('.glyphicon-thumbs-up').click(function (event) {
     var id = event.target.parentNode.id;
 
@@ -233,6 +233,7 @@ $('.glyphicon-thumbs-up').click(function (event) {
     });
 });
 
+// 投票反对
 $('.glyphicon-thumbs-down').click(function (event) {
 
     var id = event.target.parentNode.id;
@@ -295,6 +296,7 @@ $('.glyphicon-thumbs-down').click(function (event) {
     });
 });
 
+// 收藏操作
 $('.glyphicon-star, .glyphicon-star-empty').click(function (event) {
     var id = event.target.parentNode.id;
     var answerId = id.split('-')[1];
@@ -379,7 +381,7 @@ $('.delConfirmBtn').click(function (event) {
 
     $('#delConfirmModal').modal('toggle');
     if ($('#answerId-' + answerId).length == 1) {
-        $('#answerId-' + answerId)[0].parentNode.parentNode.hidden = true;
+        $('#answerId-' + answerId)[0].parentNode.parentNode.remove($('#answerId-' + answerId)[0].parentNode);
     }
 
 
@@ -405,6 +407,7 @@ $('.delBtn').click(function (event) {
     $(".modal-footer #delId").val(deletedAnswerId);
 });
 
+// 关注问题，逻辑处理
 function followQuestion() {
 
     var questionId = $('#getQuestionId').val();
@@ -430,6 +433,11 @@ $('#submitAnswer').click(function () {
     $('#submitBtn').hide();
     $('#authorEditting').hide();
     $('.answerArea').hide();
+
+    if (answerContent == null || answerContent.trim().length == 0) {
+        alert("回答内容不能为空")
+        return;
+    }
 
     if ($('#submitAnswer').text() == '更新回答') {
         updateAnswer(answerContent, questionId, $('#iWantAnswer').attr('data-id'));
@@ -503,7 +511,8 @@ function submitFirstAnswer(answerContent, questionId) {
             if (response.code == 1) {
                 // 回答成功提交
                 // $('#answerContent').text(answerContent);
-                $('#answerContent').innerHTML = answerContent;
+                document.querySelector(".hideContent").innerHTML = answerContent
+                // $('#answerContent').innerHTML = answerContent;
                 $('#afterAnswerCard').show();
                 $('#iWantAnswer').text('修改回答');
                 $('#iWantAnswer').data('id', response.dataBody);

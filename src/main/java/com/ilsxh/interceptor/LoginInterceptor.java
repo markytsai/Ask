@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.thymeleaf.util.ArrayUtils;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.Cookie;
@@ -16,14 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.ilsxh.service.UserService.COOKIE_NAME_TOKEN;
+import static com.ilsxh.service.UserService.COOKIE_TOKEN_NAME;
 
+/**
+ * @author Tsaizhenya
+ */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     private List<String> excludedUrls = Arrays.asList("/login", "/toLogin", "/register", "/doRegister");
-
-    @Autowired
-    private JedisPool jedisPool;
 
     @Autowired
     private RedisService redisService;
@@ -44,11 +43,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // 是否有cookie
         Cookie[] cookies = request.getCookies();
         if (ArrayUtils.isEmpty(cookies)) {
-            request.getRequestDispatcher("login").forward(request, response);
+            response.sendRedirect("http://localhost:8088/login");
             return false;
         } else {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
+                if (cookie.getName().equals(COOKIE_TOKEN_NAME)) {
                     loginToken = cookie.getValue();
                     break;
                 }
@@ -57,7 +56,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         // cookie中是否有loginToken
         if (StringUtils.isEmpty(loginToken)) {
-            request.getRequestDispatcher("login").forward(request, response);
+            response.sendRedirect("http://localhost:8088/login");
             return false;
         }
 
@@ -65,14 +64,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         // 根据loginToken是否能从redis中获取userId
         if (StringUtils.isEmpty(userId)) {
-            request.getRequestDispatcher("login").forward(request, response);
+            response.sendRedirect("http://localhost:8088/login");
             return false;
         } else {
-            if ("/".equals(requestUri) ) {
+            if ("/".equals(requestUri)) {
                 // 会改变URL
-                response.sendRedirect("/following?page=1");
-                // 不会改变URL
-//                request.getRequestDispatcher("/following").forward(request, response);
+                response.sendRedirect("/following");
             }
         }
         return true;

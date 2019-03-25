@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface CollectionDao {
 
-    List<Answer> getAnswerCollectionByUserId(@Param("userId") String userId);
+    List<Answer> getAnswerCollectionByUserId(@Param("userId") String userId, @Param("offset") Integer offset, @Param("limit") Integer limit);
+
+    Integer getTotalCollectionNum(@Param("userId") String userId);
 }

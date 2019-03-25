@@ -105,6 +105,16 @@
             mid_user_follow_user AS mufu
             inner join user as fu on mufu.user_followed_id = fu.user_id
             INNER JOIN user AS u ON u.user_id = mufu.user_id
+        WHERE u.user_id = #{userId} and mufu.follow_status = 1
+        limit ${offset}, ${limit}
+    </select>
+
+    <select id="getTotalFollowingUserNum" resultType="Integer">
+        select count(fu.user_id)
+        FROM
+            mid_user_follow_user AS mufu
+            inner join user as fu on mufu.user_followed_id = fu.user_id
+            INNER JOIN user AS u ON u.user_id = mufu.user_id
         WHERE u.user_id = #{userId} and mufu.follow_status = 1;
     </select>
 

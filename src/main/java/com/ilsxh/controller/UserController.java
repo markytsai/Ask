@@ -1,23 +1,23 @@
 package com.ilsxh.controller;
 
-import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.UserHelperService;
 import com.ilsxh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Map;
 
 import static com.ilsxh.util.MyConstant.FIRST_LOGIN_STATUS;
 
+/**
+ * @author Tsaizhenya
+ */
 @Controller
 @RequestMapping
 public class UserController {
@@ -38,14 +38,13 @@ public class UserController {
      * @param email
      * @param password
      * @param rememberMe
-     * @param request
      * @param response
      * @return
      */
     @RequestMapping(value = "/toLogin")
     @ResponseBody
     public BaseResponse login(@RequestParam("email") String email, @RequestParam("password") String password,
-                              @RequestParam("rememberMe") Boolean rememberMe, HttpServletRequest request, HttpServletResponse response) {
+                              @RequestParam("rememberMe") Boolean rememberMe, HttpServletResponse response) {
 
 
         Map<String, Object> userInfoMap = userService.login(email, password, rememberMe, response);

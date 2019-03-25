@@ -51,7 +51,7 @@ public class UserService {
      */
     public static final int EXPIRE_TIME = 60 * 60 * 24 * 3;
 
-    public static final String COOKIE_NAME_TOKEN = "currentUser";
+    public static final String COOKIE_TOKEN_NAME = "currentUser";
 
     /**
      * 用户登陆
@@ -96,11 +96,11 @@ public class UserService {
         return registerUserMap;
     }
 
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public boolean logout(HttpServletRequest request, HttpServletResponse response) {
         String loginToken = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
+            if (cookie.getName().equals(COOKIE_TOKEN_NAME)) {
                 loginToken = cookie.getValue();
                 if (redisService.delete(UserKey.loginUserKey, loginToken)) {
                     System.out.println("token刪除成功");
@@ -109,18 +109,23 @@ public class UserService {
             }
         }
 
-        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, "");
+        Cookie cookie = new Cookie(COOKIE_TOKEN_NAME, "");
         cookie.setPath("/");
+        // 清除浏览器端的cookie
         cookie.setMaxAge(0);
         response.addCookie(cookie);
 
-        return loginToken;
+        // 清除 缓存中的cookie
+        boolean delSuceess = redisService.delete(UserKey.loginUserKey, loginToken);
+
+        return delSuceess;
     }
 
 
     private void autoGenCookie(HttpServletResponse response, String userId, Boolean rememberMe) {
+        // 每次登录生成一个随机码，存到缓存中去
         String loginToken = UUIDUtil.uuid();
-        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, loginToken);
+        Cookie cookie = new Cookie(COOKIE_TOKEN_NAME, loginToken);
         cookie.setPath("/");
         if (rememberMe) {
             // 过期时间设置为一天
@@ -211,8 +216,14 @@ public class UserService {
 
     }
 
-    public List<User> getollowingUserByUserId(String userId) {
-        return userDao.getollowingUserByUserId(userId);
+    public Page<User> getollowingUserByUserId(String userId, Integer pageNo) {
+        int pageSize = 30;
+
+        int totalFollowingUserNum = userDao.getTotalFollowingUserNum(userId);
+
+        List<User> userList = userDao.getollowingUserByUserId(userId, (pageNo - 1) * pageSize, pageSize);
+
+        return new Page<User>(pageSize, pageNo, totalFollowingUserNum, userList);
     }
 
     public Integer updateUsernameByUserId(String userId, String newContent) {

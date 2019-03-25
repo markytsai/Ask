@@ -62,7 +62,7 @@ public interface UserDao {
 
     Integer updateUserFollowStatus(@Param("userId") String userId, @Param("userIdToBeFollowed") String userIdToBeFollowed, @Param("followStatus") Integer followStatus, @Param("createTime") Timestamp createTime);
 
-    List<User> getollowingUserByUserId(@Param("userId") String userId);
+    List<User> getollowingUserByUserId(@Param("userId") String userId, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
     Integer updateFirstLoginStatus(@Param("userId") String userId, @Param("firstLogin") String continueLogin);
 
@@ -81,5 +81,6 @@ public interface UserDao {
     Integer updateUserFullDescByUserId(@Param("userId") String userId, @Param("newFullDesc") String newFullDesc);
 
 
+    Integer getTotalFollowingUserNum(@Param("userId") String  userId);
 }
 

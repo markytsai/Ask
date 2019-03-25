@@ -131,7 +131,7 @@
         update mid_user_follow_topic set follow_topic_status = 1
         where topic_id in
         <foreach collection="topicIds" item="item" index="index" open="(" close=")" separator=",">
-        #{item}
+            #{item}
         </foreach>
         and user_id = #{userId}
     </update>
@@ -183,8 +183,17 @@
         select t.topic_id, t.topic_name, topic_image, followed_count, topic_followed from topic as t
         inner join mid_user_follow_topic as muft on t.topic_id = muft.topic_id
         where muft.user_id = #{userId} and muft.follow_topic_status = 1
+        <if test="offset != null or limit != null">
+            limit ${offset}, ${limit}
+        </if>
     </select>
 
+    <select id="getFollowingTopicNum" resultType="Integer">
+        select count(t.topic_id)
+        from topic as t
+        inner join mid_user_follow_topic as muft on t.topic_id = muft.topic_id
+        where muft.user_id = #{userId} and muft.follow_topic_status = 1
+    </select>
     <insert id="insertFollowTopicWhenFirstLogin" parameterType="java.util.List">
         insert into mid_user_follow_topic(user_id, topic_id, follow_topic_status)
         values
@@ -194,11 +203,11 @@
             )
         </foreach>
     </insert>
-    
+
     <delete id="deleteFollowTopicByUserId" parameterType="java.util.List">
         delete from mid_user_follow_topic
-        where user_id = #{userId} 
-        and 
+        where user_id = #{userId}
+        and
         <foreach collection="topicIds" item="item" index="index" separator=",">
             topic_id = #{item}
         </foreach>

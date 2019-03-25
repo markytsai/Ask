@@ -73,45 +73,34 @@
                         </div>
 
                         <div class="follow-other" id="follow-other">
-                            <ul class="list-group">
+                            <ul th:if="${isLoginUser} == 'true'" class="list-group">
                                 <li class="list-group-item list-item" style="margin-top: 4px;padding: 10px 2px;">
-                                    <a id="sidebar-following-topic" href="/profileFollowTopic/" style="color: #333333;">
+                                    <a id="sidebar-following-topic"
+                                       th:href="@{'/userHome/followingTopic/' + ${homeUser.userId} + '?page=1'}"
+                                       style="color: #333333;">
                                         <span style="margin-right: 110px;">关注的话题</span>
-                                        <span style="color: #d9534f" th:text="2222"></span>
+                                        <span style="color: #d9534f" th:text="0"></span>
                                     </a>
                                 </li>
                                 <li class="list-group-item list-item" style="margin-top: 4px;padding: 10px 2px;">
-                                    <a id="sidebar-following-question" href="/profileFollowQuestion/" style="color: #333333;">
+                                    <a id="sidebar-following-question"
+                                       th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId} + '?page=1'}"
+                                       style="color: #333333;">
                                         <span style="margin-right: 110px;">关注的问题</span>
-                                        <span style="color: #d9534f" th:text="222"></span>
+                                        <span style="color: #d9534f" th:text="0"></span>
                                     </a>
                                 </li>
                                 <li class="list-group-item list-item" style="margin-top: 4px;padding: 10px 2px; ">
-                                    <a id="sidebar-following-collection" href="/profileFollowCollection/" style="color: #333333;">
-                                        <span style="margin-right: 110px;">关注的收藏夹</span>
-                                        <span style="color: #d9534f" th:text="23232"></span>
+                                    <a id="sidebar-following-collection"
+                                       th:href="@{'/userHome/followingUser/' + ${homeUser.userId} + '?page=1'}"
+                                       style="color: #333333;">
+                                        <span style="margin-right: 110px;">关注的用户</span>
+                                        <span style="color: #d9534f" th:text="0"></span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <!--<div class="follow-info">-->
-                    <!--<div class="follow-people">-->
-                    <!--<div class="wrap">-->
-                    <!--<div style="display:inline;">-->
-                    <!--<h4>-->
-                    <!--<p class="glyphicon label label-default" th:text="12333关注"></p>-->
-                    <!--</h4>-->
-                    <!--</div><br/>-->
-                    <!--<div style="display:inline;">-->
-                    <!--<h4>-->
-                    <!--<span class="glyphicon label label-default" th:text="12333粉丝"></span>-->
-                    <!--</h4>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
                 </div>
             </div>
 

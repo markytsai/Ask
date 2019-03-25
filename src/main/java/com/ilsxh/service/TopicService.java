@@ -3,6 +3,7 @@ package com.ilsxh.service;
 import com.ilsxh.dao.*;
 import com.ilsxh.entity.*;
 import com.ilsxh.redis.TopicKey;
+import com.ilsxh.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -67,7 +68,8 @@ public class TopicService {
         // 侧边栏相关优秀回答用户
         List<User> relatedExcellentUsers = redisService.getList(TopicKey.relatedExcellentUserKey, topicId.toString(), User.class);
         if (relatedExcellentUsers == null) {
-            relatedExcellentUsers = userHelperService.getollowingUserByUserId(userId);
+            // 这里获取优秀回答用户要用其他算法实现，这个只是暂时的
+            relatedExcellentUsers = userHelperService.getollowingUserByUserId(userId, 10);
             redisService.setList(TopicKey.relatedExcellentUserKey, "topicId:" + topicId.toString(), relatedExcellentUsers);
         }
         model.addAttribute("relatedExcellentUsers", relatedExcellentUsers);
@@ -256,7 +258,7 @@ public class TopicService {
      */
     public void updateUserFollowTopics(String userId, Set<Integer> newTopicIdsSet) {
 
-        List<Topic> followedTopicList = topicDao.getFollowingTopicByUserId(userId);
+        List<Topic> followedTopicList = topicDao.getFollowingTopicByUserId(userId, null, null);
         Set<Integer> followedTopicSet = new HashSet<>();
 
         // 已关注的话题集合
@@ -325,11 +327,14 @@ public class TopicService {
     }
 
 
-    public List<Topic> getFollowingTopicByUserId(String userId) {
+    public Page<Topic> getFollowingTopicByUserId(String userId, Integer pageNo) {
 
-        List<Topic> retList = topicDao.getFollowingTopicByUserId(userId);
-        return retList;
+        int totalFolowingTopicNum = topicDao.getFollowingTopicNum(userId);
+        int pageSize = 30;
 
+        List<Topic> retList = topicDao.getFollowingTopicByUserId(userId, (pageNo - 1) * pageSize, pageSize);
 
+        Page<Topic> page = new Page<Topic>(pageSize, pageNo, totalFolowingTopicNum, retList);
+        return page;
     }
 }

@@ -25,7 +25,16 @@
           inner join mid_user_collect_answer as muca on muca.answer_id = a.answer_id
 --           inner join question as q on q.question_id = a.question_id
           where muca.user_id = #{userId}
+          limit ${offset}, ${limit}
     </select>
 
+
+    <select id="getTotalCollectionNum" resultType="Integer">
+
+        select count(a.answer_id)
+          from answer as a
+          inner join mid_user_collect_answer as muca on muca.answer_id = a.answer_id
+          where muca.user_id = #{userId}
+    </select>
 </mapper>
 

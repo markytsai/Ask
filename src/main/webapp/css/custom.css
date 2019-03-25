@@ -59,7 +59,12 @@ a:focus {
 }
 
 .topicItem:hover {
-    background-color: #cbcbd8;
+    /*background-color: #cbcbd8;*/
+    border-color: #337ab7;
+}
+
+.topicItem a:hover {
+    color: #337ab7;
 }
 
 .text-title:hover {

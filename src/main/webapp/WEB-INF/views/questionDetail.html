@@ -120,8 +120,8 @@
                                       style="cursor: pointer"
                                       th:text="${localUserAnswer == 0} ? '我要回答' : '修改回答'">我要回答</span>&nbsp;
                                 <span class="icon-pencil" id="inviteOtherAnswer" style="cursor: pointer">邀请回答</span>
-                                <span id="readLater" style="cursor: pointer;float: right">稍后阅读<i
-                                        class="icon-circle-arrow-right"/></span>
+                                <!--<span id="readLater" style="cursor: pointer;float: right">稍后阅读<i-->
+                                        <!--class="icon-circle-arrow-right"/></span>-->
 
                                 <input id="getQuestionId" th:type="hidden" th:value="${questionDetail.questionId}"/>
                             </div>
@@ -146,10 +146,6 @@
                             <div style="margin-left: 55px">
                                 <span th:text="${user.simpleDesc}"/>
                             </div>
-                            <!--&nbsp;<a th:href="@{'/userHome/question/' + ${user.userId}}">-->
-                            <!--<span class="glyphicon glyphicon-user"></span></a>-->
-                            <!--<span th:text="${user.username}"/>于-->
-                            <!--<span th:text="${#dates.format(answer.createTime, 'yyyy年MM月dd日HH:mm')}"/>回答了该问题-->
                         </div>
 
                         <!--回答具体内容输入框-->
@@ -194,13 +190,6 @@
                                 <div class="foldContent">
                                     <p id="answerContent" class="card-text hideContent"/>
                                 </div>
-                            </div>
-                            <!--回答修改按钮-->
-                            <div id="modifyAfterAnswerBtn" data-id="0">
-                                <a style="cursor: pointer;">
-                                    <i class="icon-pencil"/>
-                                    <span class="AnswerItem-editButtonText">修改</span>
-                                </a>
                             </div>
                             <div th:id="answerId" class="card-text" style="margin-top: 4px;">
 
@@ -251,9 +240,6 @@
                                         </a>&nbsp;
                                         <span th:text="${answer.user.position}"/>&nbsp;
                                         <span th:text="${answer.user.simpleDesc}"/>
-                                        <!--<span th:id="userId + '-' + ${answer.user.userId}"-->
-                                        <!--class="glyphicon label label-primary followUser" style="float:right"-->
-                                        <!--th:text="${answer.user.followStatus == 1} ? '已关注答主' : '关注答主'">关注答主</span>-->
                                     </h5>
                                 </div>
                                 &nbsp;<a th:href="@{'/userHome/activity/' + ${answer.user.userId}}" target="_blank">
@@ -266,26 +252,9 @@
                             </div>
                             <!--回答正文展开折叠功能-->
                             <div class="card-text">
-                                <!--<div class="foldContent" th:if="${answer.answerContent.length() lt 20}">-->
-                                <!--<p class="card-text hideContent" th:text="${answer.answerContent}"-->
-                                <!--style="height: 20px"/>-->
-                                <!--</div>-->
                                 <div class="foldContent">
                                     <p class="card-text hideContent" th:utext="${answer.answerContent}"/>
                                 </div>
-                                <!--<div class="show-more">-->
-                                <!--<p style="float:right;" class="moreContent">展开<span-->
-                                <!--th:id="answerContentId+'-'+${answer.answerId}"-->
-                                <!--class="glyphicon glyphicon-menu-down"></span></p>-->
-                                <!--</div>-->
-                            </div>
-                            <!--回答修改按钮-->
-                            <div id="modifyAnswerBtn" data-id="${answer.answerId}"
-                                 th:if="${answer.user.userId} eq ${user.userId}">
-                                <a style="cursor: pointer;">
-                                    <i class="icon-pencil"/>
-                                    <span class="AnswerItem-editButtonText">修改</span>
-                                </a>
                             </div>
 
                             <div th:id="answerId+'-'+${answer.answerId}" class="card-text" style="margin-top: 4px;">

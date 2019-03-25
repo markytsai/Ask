@@ -119,7 +119,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/userHome/activity/{userId}")
-    public String userHomeActivity(@PathVariable String userId, @RequestParam("page") Integer pageNo,  HttpServletRequest request, Model model) {
+    public String userHomeActivity(@PathVariable String userId, @RequestParam(value = "page", defaultValue = "1") Integer pageNo,  HttpServletRequest request, Model model) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
         Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
@@ -145,7 +145,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/userHome/answer/{userId}")
-    public String userHomeAnswer(@PathVariable String userId, @RequestParam("page") Integer pageNo, HttpServletRequest request, Model model) {
+    public String userHomeAnswer(@PathVariable String userId, @RequestParam(value = "page", defaultValue = "1") Integer pageNo, HttpServletRequest request, Model model) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
         Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
@@ -170,7 +170,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/userHome/question/{userId}")
-    public String userHomeRaisedQuestion(@PathVariable String userId, @RequestParam("page") Integer pageNo, HttpServletRequest request, Model model) {
+    public String userHomeRaisedQuestion(@PathVariable String userId, @RequestParam(value = "page", defaultValue = "1") Integer pageNo, HttpServletRequest request, Model model) {
 
         String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
@@ -194,14 +194,19 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/userHome/followingQuestion/{userId}")
-    public String userHomeFollowingQuestion(@PathVariable String userId, HttpServletRequest request, Model model) {
+    public String userHomeFollowingQuestion(@PathVariable String userId, @RequestParam(value = "page", defaultValue = "1") Integer pageNo, HttpServletRequest request, Model model) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
         Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
+        int pageSize = 30;
         // 获取关注问题列表
-        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId, 1, 1);
-        map.put("questionList", questionList);
+        List<Question> questionList = questionService.getFollowingQuestionByUserId(userId, pageNo, pageSize);
+        int totalCount = questionService.getTotalQuestionNum(userId);
+        Page<Question> page = new Page<>(pageNo, pageSize, totalCount, questionList);
+
+        map.put("page", page);
+        map.put("type", "followingQuestion");
 
         model.addAllAttributes(map);
 
@@ -217,30 +222,30 @@ public class IndexController {
      * @return
      */
     @RequestMapping(value = "/userHome/followingUser/{userId}")
-    public String userHomeFollowingUser(@PathVariable String userId, HttpServletRequest request, Model model) {
+    public String userHomeFollowingUser(@PathVariable String userId, @RequestParam(value = "page", defaultValue = "1") Integer pageNo, HttpServletRequest request, Model model) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
         Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
         // 获取关注用户列表
-        List<User> followingUserList = userService.getollowingUserByUserId(userId);
-        map.put("followingUserList", followingUserList);
-
+        Page<User> page = userService.getollowingUserByUserId(userId, pageNo);
+        map.put("page", page);
+        map.put("type", "followingUser");
         model.addAllAttributes(map);
 
         return "user/userHome-following-user";
     }
 
     @RequestMapping("/userHome/followingTopic/{userId}")
-    public String userHomeFollowingTopic(@PathVariable String userId, HttpServletRequest request, Model model) {
+    public String userHomeFollowingTopic(@PathVariable String userId, @RequestParam(value = "page", defaultValue = "1") Integer pageNo,HttpServletRequest request, Model model) {
         String localUserId = userHelperService.getUserIdFromRedis(request);
         // 获取用户信息,userId from parameter, localhost from token
         Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
 
-        List<Topic> followingTopicList = topicService.getFollowingTopicByUserId(userId);
-        map.put("followingTopicList", followingTopicList);
+        Page<Topic> page = topicService.getFollowingTopicByUserId(userId, pageNo);
+        map.put("page", page);
+        map.put("type", "followingTopic");
         model.addAllAttributes(map);
-
         return "user/userHome-following-topic";
     }
 

@@ -46,16 +46,16 @@
 
                     <ul class="nav nav-tabs">
                         <li role="presentation" class="active"><a
-                                th:href="@{'/userHome/activity/' + ${homeUser.userId}} + '?page=1'">动态</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId}} + '?page=1'">问题</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/answer/' + ${homeUser.userId}} + '?page=1'">回答</a></li>
-                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId}} + '?page=1'">收藏</a></li>
+                                th:href="@{'/userHome/activity/' + ${homeUser.userId} + '?page=1'}">动态</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId} + '?page=1'}">问题</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/answer/' + ${homeUser.userId} + '?page=1'}">回答</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId} + '?page=1'}">收藏</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId}} + '?page=1'">关注问题</a></li>
+                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId} + '?page=1'}">关注问题</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId}} + '?page=1'">关注用户</a></li>
+                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId} + '?page=1'}">关注用户</a></li>
                         <li role="presentation"><a
-                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId}} + '?page=1'">关注话题</a></li>
+                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId} + '?page=1'}">关注话题</a></li>
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
                         <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-pencil"/>我的<span

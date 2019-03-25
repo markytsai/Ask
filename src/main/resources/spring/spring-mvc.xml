@@ -69,6 +69,8 @@
         <mvc:interceptor>
             <!-- 拦截所有URL中的请求 -->
             <mvc:mapping path="/*"/>
+            <mvc:mapping path="/*/*"/>
+            <mvc:mapping path="/*/*/*"/>
             <bean class="com.ilsxh.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
         <!--<mvc:interceptor>-->

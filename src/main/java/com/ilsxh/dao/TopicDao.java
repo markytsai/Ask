@@ -49,9 +49,11 @@ public interface TopicDao {
 
     void zeroAllTopicByUserId(String userId);
 
-    List<Topic> getFollowingTopicByUserId(String userId);
+    List<Topic> getFollowingTopicByUserId(@Param("userId") String userId, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
     Integer insertFollowTopicWhenFirstLogin(@Param("userId") String userId, @Param("topicIds") List<Integer> chosedTopicIds);
 
     void deleteFollowTopicByUserId(@Param("userId") String userId, @Param("topicIds") List<Integer> unfollowTopicIds);
+
+    Integer getFollowingTopicNum(@Param("userId") String userId);
 }

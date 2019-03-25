@@ -7,6 +7,7 @@ import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
 import com.ilsxh.entity.User;
+import com.ilsxh.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,16 +35,17 @@ public class CollectionService {
 
     /**
      * 获取用户的回答收藏列表
+     *
      * @param userId
      * @param request
      * @return
      */
-    public Map getAnswerCollectionByUserId(String userId, HttpServletRequest request) {
+    public Page<Answer> getAnswerCollectionByUserId(String userId, Integer pageNo) {
 
-        String localUserId = userHelperService.getUserIdFromRedis(request);
-        // 获取用户信息,userId from parameter, localhost from token
-        Map<String, Object> map = userHelperService.getUserProfile(userId, localUserId);
-        List<Answer> answerCollectionList = collectionDao.getAnswerCollectionByUserId(userId);
+        int tatalCollectionNum = collectionDao.getTotalCollectionNum(userId);
+        int pageSize = 30;
+
+        List<Answer> answerCollectionList = collectionDao.getAnswerCollectionByUserId(userId, (pageNo - 1) * pageSize, pageSize);
 
         for (Answer answer : answerCollectionList) {
             Question question = questionDao.selectQuestionByQuestionId(answer.getQuestionId());
@@ -73,7 +75,6 @@ public class CollectionService {
 
             answer.setUser(user);
         }
-        map.put("answerCollectionList", answerCollectionList);
-        return map;
+        return new Page<>(pageNo, pageSize, tatalCollectionNum, answerCollectionList);
     }
 }

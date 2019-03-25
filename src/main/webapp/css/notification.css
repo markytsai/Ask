@@ -7,3 +7,7 @@
     border: 0px solid #ddd;
     padding: 5px 1px;
 }
+
+.list-item a:hover {
+    text-decoration: none;
+}

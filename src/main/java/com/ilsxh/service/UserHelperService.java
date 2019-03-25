@@ -6,12 +6,14 @@ import com.ilsxh.redis.UserKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static com.ilsxh.service.UserService.COOKIE_NAME_TOKEN;
+
+import static com.ilsxh.service.UserService.COOKIE_TOKEN_NAME;
 
 @Service
 public class UserHelperService {
@@ -27,6 +29,7 @@ public class UserHelperService {
 
     /**
      * 从缓存中获取登录用户信息
+     *
      * @param request
      * @return
      */
@@ -34,7 +37,7 @@ public class UserHelperService {
         String loginToken = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(COOKIE_NAME_TOKEN)) {
+            if (cookie.getName().equals(COOKIE_TOKEN_NAME)) {
                 loginToken = cookie.getValue();
                 break;
             }
@@ -57,7 +60,7 @@ public class UserHelperService {
         Map<String, Object> map = new HashMap<>();
         // 登录用户
         User loginUser = userDao.selectUserByUserId(localUserId);
-        User homeUser = null;
+        User homeUser;
         homeUser = userDao.selectUserByUserId(userId);
 
         if (userId.equals(localUserId)) {
@@ -80,6 +83,7 @@ public class UserHelperService {
 
     /**
      * 获取用户之间的关注情况
+     *
      * @param userId
      * @param localUserId
      * @return
@@ -90,6 +94,7 @@ public class UserHelperService {
 
     /**
      * 获取用户信息
+     *
      * @param userId
      * @return
      */
@@ -99,15 +104,18 @@ public class UserHelperService {
 
     /**
      * 获取用户的粉丝列表
+     *
      * @param userId
      * @return
      */
-    public List<User> getollowingUserByUserId(String userId) {
-        return userDao.getollowingUserByUserId(userId);
+    public List<User> getollowingUserByUserId(String userId, int pageNo) {
+        int pageSize = 30;
+        return userDao.getollowingUserByUserId(userId, (pageNo - 1) * pageSize, pageSize);
     }
 
     /**
      * 公共数据
+     *
      * @param userId
      * @param model
      * @return
@@ -126,11 +134,12 @@ public class UserHelperService {
 
     /**
      * 获取用户与目标用户的关注情况：已关注-未关注
+     *
      * @param userId
      * @param answerUserId
      * @return
      */
-    public Integer getUserFollowStatus(String userId, String answerUserId){
+    public Integer getUserFollowStatus(String userId, String answerUserId) {
         return userDao.getUserFollowStatus(userId, answerUserId);
     }
 
