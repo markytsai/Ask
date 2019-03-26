@@ -35,10 +35,20 @@ public class MainController {
 
     /**
      * 返回注册页面
+     *
      * @return
      */
     @RequestMapping(value = {"register"}, method = RequestMethod.GET)
     public ModelAndView register() {
         return new ModelAndView("register", "", null);
+    }
+
+    /**
+     * 未登录用户首页地址
+     * @return
+     */
+    @RequestMapping(value = "/tourist", method = RequestMethod.GET)
+    public String touristLogin() {
+        return "redirect:/moreHotQuestion";
     }
 }

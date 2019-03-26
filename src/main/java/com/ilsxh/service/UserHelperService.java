@@ -3,6 +3,7 @@ package com.ilsxh.service;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.User;
 import com.ilsxh.redis.UserKey;
+import com.ilsxh.util.MyConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -35,7 +36,11 @@ public class UserHelperService {
      */
     public String getUserIdFromRedis(HttpServletRequest request) {
         String loginToken = null;
+        String userId = MyConstant.TOURIST_USERID;
         Cookie[] cookies = request.getCookies();
+        if (null == cookies || cookies.length <= 0) {
+            return userId;
+        }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(COOKIE_TOKEN_NAME)) {
                 loginToken = cookie.getValue();
@@ -43,7 +48,7 @@ public class UserHelperService {
             }
         }
 
-        String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
+        userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
 
         return userId;
     }

@@ -10,6 +10,7 @@ import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.exception.CustomException;
 import com.ilsxh.service.UserHelperService;
 import com.ilsxh.util.IPUtils;
+import com.ilsxh.util.MyConstant;
 import javassist.ClassClassPath;
 import javassist.ClassPool;
 import javassist.CtMethod;
@@ -81,11 +82,11 @@ public class WebLogAspect {
         // 从cookie中取出用户id，查询数据库
         String userId = userHelperService.getUserIdFromRedis(request);
         User loginUser = userHelperService.getUserByUserId(userId);
-        if (loginUser == null) {
+        if (loginUser == null && !userId.equals(MyConstant.TOURIST_USERID)) {
             throw new CustomException(StatusEnum.OPERATION_ERROR);
         }
         // 设置访问用户名称
-        logMessage.setLogUsername(loginUser.getUsername());
+        logMessage.setLogUsername(loginUser != null ? loginUser.getUsername() : "未登录");
 
         // 从切点上获取目标方法
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

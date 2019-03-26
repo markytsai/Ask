@@ -90,6 +90,8 @@ public class QuestionController {
         String userId = userHelperService.getUserIdFromRedis(request);
         questionService.getQuestionDetail(userId, questionId, model);
         questionService.getCommonHotData(model);
+
+        model.addAttribute("currentUrl", "/question/" + questionId);
         return "questionDetail";
     }
 

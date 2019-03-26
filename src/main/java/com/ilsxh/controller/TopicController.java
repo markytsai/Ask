@@ -47,6 +47,7 @@ public class TopicController {
         String userId = userHelperService.getUserIdFromRedis(request);
         topicService.getSideCardInfo(topicId, userId, model);
         topicService.getTopicDetail(topicId, userId, model);
+        model.addAttribute("currentUrl", "/topic/" + topicId + "/introduction");
         return "topic/topic-introduction";
     }
 
@@ -66,6 +67,7 @@ public class TopicController {
 
         List<Question> withTopicQuestionList = topicService.getQuestionWithThisTopic(topicId);
         model.addAttribute("withTopicQuestionList", withTopicQuestionList);
+        model.addAttribute("currentUrl", "/topic/" + topicId + "/question");
 
         return "topic/topic-question";
     }
@@ -86,6 +88,7 @@ public class TopicController {
 
         List<Answer> answerList = topicService.getAnswersByTopicId(localUserId, topicId);
         model.addAttribute("answerList", answerList);
+        model.addAttribute("currentUrl", "/topic/" + topicId + "/answer");
 
         return "topic/topic-exAnswer";
     }
@@ -106,7 +109,7 @@ public class TopicController {
 
         List<User> excellentUserList = topicService.getExcellentUsersByTopicId(topicId);
         model.addAttribute("ExcellentUserList", excellentUserList);
-
+        model.addAttribute("currentUrl", "/topic/" + topicId + "/users");
         return "topic/topic-user";
     }
 

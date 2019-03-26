@@ -443,7 +443,11 @@ public class QuestionService {
 
     @OperAnnotation(descpition = "获取问题详情", include = "userid, questionId, model")
     public void getQuestionDetail(String userId, Integer questionId, Model model) {
+
+        // 如果是游客身份访问，那么传过来的userId为null，得到的user也是null
         User user = userHelperService.getUserByUserId(userId);
+
+        // 如果是游客身份访问，得到的是"false"
         String hasFollowQuestion = this.hasUserFollowQuestion(userId, questionId);
 
         List<Answer> answerList = this.getAnswersByQuestionId(questionId, userId);

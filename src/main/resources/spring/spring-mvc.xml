@@ -69,14 +69,12 @@
         <mvc:interceptor>
             <!-- 拦截所有URL中的请求 -->
             <mvc:mapping path="/*"/>
-            <mvc:mapping path="/*/*"/>
-            <mvc:mapping path="/*/*/*"/>
             <bean class="com.ilsxh.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
-        <!--<mvc:interceptor>-->
-        <!--<mvc:mapping path="/*"/>-->
-        <!--<bean class="com.ilsxh.interceptor.QuestionVisitTimesInteceptor"/>-->
-        <!--</mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/question/**"/>
+        <bean class="com.ilsxh.interceptor.TouristInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>

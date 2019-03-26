@@ -30,7 +30,8 @@
 
 <!--删除评论确认框-->
 <div th:fragment="delCommentConfirm" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="modal fade" id="delComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="delComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -53,6 +54,7 @@
     </div>
 </div>
 
+<!--提问面板-->
 <div th:fragment="ask" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -84,11 +86,6 @@
                                         style="color: red;"> 至少添加一个话题</span></h5></span>
                             </div>
                             <ul id="ask-topic-list" style="margin-top:10px;margin-bottom: -10px;margin-left: -39px;">
-                                <!--<span class="topicItem"-->
-                                      <!--style="border-radius: 40%;background-color: #cbcbd8;padding: 1px;">-->
-                                    <!--<a th:href="@{'/topic/2/introduction'}" data-id="1"-->
-                                       <!--th:text="互联网"/>-->
-                                    <!--<i th:id="2" class="icon-remove"/></span>-->
                             </ul>
                         </div>
 
@@ -107,7 +104,94 @@
     </div>
 </div>
 
-<!-- Static navbar -->
+<!--面板登录-->
+<div th:fragment="login" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" style="padding-right: 0;padding-top: 100px;">
+        <div class="modal-dialog" role="document" style="width: 350px;">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align: center;">
+                    <h4 class="modal-title" id="exampleModalLabel-login" style="display: inline;color: #c00000;font-weight: bold;">AnswerPedia</h4>
+                    <p>登录AnswerPeida，发掘更多知识</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -55px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-signin" style="margin-top: -9px;">
+                        <h5 class="form-signin-heading">请登录</h5>
+                        <label for="inputEmail" class="sr-only">电子邮件</label>
+
+                        <input type="email" id="inputEmail" style="width: 320px;height: 35px;padding-bottom: 8px;"
+                               class="form-control" placeholder="电子邮件" required="true"
+                               autofocus="true"/><br/>
+                        <label for="inputPassword" class="sr-only">登录密码</label>
+                        <input type="password" id="inputPassword"
+                               style="width: 320px;height: 35px;padding-bottom: 8px;"
+                               class="form-control" placeholder="登录密码" required="true"/>
+                        <div class="checkbox">
+                            <label>
+                                <input id="rememberMe" type="checkbox" value="remember-me"/>三天内保持登录
+                            </label>
+                        </div>
+                        <span id="login-email-error" class="text-danger"></span>
+                        <span id="login-password-error" class="text-danger"></span>
+                        <button th:id="loginButton" style="width: 320px;height: 35px;padding-top: 5px;border-radius: 0;"
+                                class="btn btn-lg btn-primary btn-block login-modal" th:value="0"
+                                type="button">登录
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--面板注册-->
+<div th:fragment="register" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true" style="padding-right: 0;padding-top: 100px;">
+        <div class="modal-dialog" role="document" style="width: 350px;">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align: center;">
+                    <h4 class="modal-title" id="exampleModalLabel-register" style="display: inline;color: #c00000;font-weight: bold;">AnswerPedia</h4>
+                    <p>注册AnswerPeida，发掘更多知识</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -55px;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-signin" style="margin-top: -9px;">
+                        <h5 class="form-signin-heading">注册你的账号</h5>
+
+                        <label for="inputEmailReg" class="sr-only">Email address</label>
+                        <input type="email" id="inputEmailReg" style="width: 318px;height: 35px;padding-bottom: 8px;"
+                               class="form-control" placeholder="电子邮箱" required="true" autocomplete="off" autofocus="true"/><br/>
+
+                        <label for="inputUsernameReg" class="sr-only">Username</label>
+                        <input id="inputUsernameReg" class="form-control"
+                               style="width: 318px;height: 35px;padding-bottom: 8px;" placeholder="用户名" autocomplete="off"
+                               required="true"/><br/>
+
+                        <label for="inputPasswordReg" class="sr-only" autocomplete="off">Password</label>
+                        <input type="password" id="inputPasswordReg"
+                               style="width: 318px;height: 35px;padding-bottom: 8px;"
+                               class="form-control" placeholder="密码" required="true"/><br/>
+
+                        <span id="regi-username-error" class="text-danger"></span>
+                        <span id="regi-email-error" class="text-danger"></span>
+                        <span id="regi-password-error" class="text-danger"></span>
+                        <button id="registerButton" class="btn btn-lg btn-primary btn-block"
+                                style="width: 318px;height: 35px;padding-top: 5px;border-radius: 0;" type="button">注册
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 首部导航栏 -->
 <div th:fragment="nav" xmlns:th="http://www.w3.org/1999/xhtml">
 
     <nav id="nbar" class="navbar navbar-default navbar-fixed-top" style='background-color: #fff;position: fixed;'>
@@ -133,8 +217,17 @@
                     <input type="text" id="keyword" class="form-control" placeholder="输入关键字" th:value="${keyword}"/>
                 </div>
                 <input id="searchBtn" type="button" class="btn btn-default" value="搜索"/>&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"
+                <button th:if="${user} != null" type="button" class="btn btn-danger" data-toggle="modal"
+                        data-target="#exampleModal"
                         data-whatever="@mdo" style="float: right">我要提问
+                </button>
+                <button th:if="${user} == null" type="button" class="btn btn-danger" data-toggle="modal"
+                        data-target="#registerModal"
+                        data-whatever="@mdo">注册
+                </button>
+                <button th:if="${user} == null" type="button" class="btn btn-danger login-btn" data-toggle="modal"
+                        data-target="#loginModal" th:id="${currentUrl}"
+                        data-whatever="@mdo">登录
                 </button>
             </div>
 
@@ -150,13 +243,13 @@
                     </a></li>
                 </ul>
 
-                <div class="nav-profile">
+                <div th:if="${user} != null" class="nav-profile">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true"
                                aria-expanded="false"><span
-                                    th:text="${user.username != null} ? ${user.username} : '我的'">游客</span><span
+                                    th:text=" ${user.username}"/><span
                                     class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
@@ -176,5 +269,5 @@
 </div>
 
 <!--不要包含任何js文件-->
-
+<script type="text/javascript" src="http://localhost:8088/js/loginReg.js"></script>
 

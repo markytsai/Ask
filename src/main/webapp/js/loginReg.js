@@ -18,8 +18,16 @@
 //     }
 // });
 
+// 点击导航栏中的登录按钮
+$(".login-btn").on("click", function (event) {
+    var currentUrl = event.target.id;
+    $("#loginButton").val(currentUrl);
+});
 
+// 点击modal上的登录按钮 ，或者登录页面中的登录按钮
 $("#loginButton").on("click", function () {
+
+    var currentUrl = $(".login-modal").val();
 
     var userData = {
         "email": $("#inputEmail").val(),
@@ -34,10 +42,19 @@ $("#loginButton").on("click", function () {
         async: false,
         dataType: 'json',
         success: function (response) {
+            // 首次登录
             if (response.code == "103") {
-                window.location.href = "/chooseTopic";
+                if (currentUrl != null && currentUrl.length > 0) {
+                    window.location.href = currentUrl;
+                } else {
+                    window.location.href = "/chooseTopic";
+                }
             } else if (response.code == "104") {
-                window.location.href = "/index";
+                if (currentUrl != null && currentUrl.length > 0) {
+                    window.location.href = currentUrl;
+                } else {
+                    window.location.href = "/index";
+                }
             } else {
                 $("#login-password-error").text(response.message);
             }
@@ -45,6 +62,10 @@ $("#loginButton").on("click", function () {
     });
 });
 
+//游客登录
+$(".touristLogin").on("click", function () {
+    window.location.href = "/tourist";
+});
 
 /* 注册处理 */
 var registerInputEmail = $("#inputEmailReg");

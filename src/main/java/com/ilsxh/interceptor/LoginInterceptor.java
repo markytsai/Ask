@@ -22,28 +22,37 @@ import static com.ilsxh.service.UserService.COOKIE_TOKEN_NAME;
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    private List<String> excludedUrls = Arrays.asList("/login", "/toLogin", "/register", "/doRegister");
+    private static List<String> excludedUrls = Arrays.asList("/login", "/toLogin", "/register", "/doRegister", "/search",
+            "/moreHotQuestion", "/tourist");
+
+    private String rootUrl = "/";
 
     @Autowired
     private RedisService redisService;
 
+    public static boolean isLoginOrReg(String requestUrl) {
+        // 如果是登录和注册的操作，不用拦截
+        for (String s : excludedUrls) {
+            if (requestUrl.startsWith(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
         String requestUri = request.getRequestURI();
 
-        // 是否需要拦截
-        for (String s : excludedUrls) {
-            if (requestUri.endsWith(s)) {
-                return true;
-            }
+        if (isLoginOrReg(requestUri)) {
+            return true;
         }
 
         String loginToken = null;
-        // 是否有cookie
+        // 判断HTTTP请求头中是否有cookies
         Cookie[] cookies = request.getCookies();
         if (ArrayUtils.isEmpty(cookies)) {
-            response.sendRedirect("http://localhost:8088/login");
+            request.getRequestDispatcher("login").forward(request, response);
             return false;
         } else {
             for (Cookie cookie : cookies) {
@@ -54,21 +63,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             }
         }
 
-        // cookie中是否有loginToken
+        // 判断HTTTP请求头中是否有本系统指定的cookie
         if (StringUtils.isEmpty(loginToken)) {
-            response.sendRedirect("http://localhost:8088/login");
+            request.getRequestDispatcher("login").forward(request, response);
             return false;
         }
 
+        // 根据loginToken是否能从redis中获取userId，判断缓存中的cookie值是否过期
         String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
-
-        // 根据loginToken是否能从redis中获取userId
         if (StringUtils.isEmpty(userId)) {
-            response.sendRedirect("http://localhost:8088/login");
+            request.getRequestDispatcher("login").forward(request, response);
             return false;
         } else {
-            if ("/".equals(requestUri)) {
-                // 会改变URL
+            if (rootUrl.equals(requestUri)) {
                 response.sendRedirect("/following");
             }
         }

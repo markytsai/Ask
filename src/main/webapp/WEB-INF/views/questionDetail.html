@@ -77,7 +77,9 @@
 <body class="body-color">
 
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
-<div th:include="navigator :: ask"></div>
+<div th:if="${user} != null" th:include="navigator :: ask"></div>
+<div th:if="${user} == null" th:include="navigator :: login"></div>
+<div th:if="${user} == null" th:include="navigator :: register"></div>
 <div th:include="navigator :: delConfirm"></div>
 <div th:include="navigator :: delCommentConfirm"></div>
 
@@ -128,7 +130,7 @@
                         </div>
                         <!--<br/>-->
                         <!--富文本编辑器的作者显示-->
-                        <div id="authorEditting" class="card-title answer-meta" style="display: none">
+                        <div th:if="${user != null}" id="authorEditting" class="card-title answer-meta" style="display: none">
                             <div class="avatarImg" style="float:left; width:45px; height:45px;">
                                 <img th:src="${user.avatarUrl}" width="45px" height="45px"
                                      style="border-radius: 100%"/>
@@ -160,7 +162,7 @@
                     </div>
                     <!--<br/>-->
                     <!--提交回答后，直接显示回答内容，没有请求后台-->
-                    <div id="afterAnswerCard" class="card mb-4" style="display: none;margin-bottom: 30px;">
+                    <div th:if="${user != null}" id="afterAnswerCard" class="card mb-4" style="display: none;margin-bottom: 30px;">
                         <div class="card-block">
                             <div class="card-title answer-meta">
                                 <div class="avatarImg" style="float:left; width:45px; height:45px;">
@@ -316,7 +318,7 @@
                                     </div>
                                 </div>
 
-                                <button th:if="${user.userId == answer.answerUserId}"
+                                <button th:if="${user != null} and ${user.userId == answer.answerUserId}"
                                         class="btn btn-xs delBtn glyphicon glyphicon-trash"
                                         data-toggle="modal" data-target="#delConfirmModal">
                                     <!--<span class=""></span>-->
@@ -334,7 +336,9 @@
                                     <!--评论作者头像-->
 
                                     <div style="float: left;margin-right: 6px;">
-                                        <img th:src="${user.avatarUrl}" width="35px" height="35px"
+                                        <img th:if="${user} != null" th:src="${user.avatarUrl}" width="35px" height="35px"
+                                             style="border-radius: 100%"/>
+                                        <img th:if="${user} == null" th:src="@{http://localhost:8088/images/author.jpg}" width="35px" height="35px"
                                              style="border-radius: 100%"/>
                                     </div>
                                     <!--评论输入框-->
@@ -535,6 +539,7 @@
 <script type="text/javascript" src="http://localhost:8088/js/popper.min.js"></script>
 <script type="text/javascript" src="http://localhost:8088/js/askFrame.js"></script>
 <script type="text/javascript" src="http://localhost:8088/js/quill.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/loginReg.js"></script>
 
 <!--<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>-->
 
