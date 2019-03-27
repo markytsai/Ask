@@ -16,7 +16,7 @@
                             <!-- Default Image -->
                             <!-- <i class="fa fa-user fa-5x"></i> -->
                         </div>
-                        <div th:if="${user.userId} == ${homeUser.userId}" class="p-image"
+                        <div th:if="${user != null} and ${user.userId} == ${homeUser.userId}" class="p-image"
                              style="display: none;margin-top: -94px;margin-right: 40px;">
                             <i class="fa fa-camera icon-3x upload-button"></i>
                             <div id="changeAvatar" style="margin-right: -5px;display: none"><span>更改头像</span></div>

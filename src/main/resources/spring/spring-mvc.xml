@@ -69,11 +69,23 @@
         <mvc:interceptor>
             <!-- 拦截所有URL中的请求 -->
             <mvc:mapping path="/*"/>
+            <mvc:mapping path="/topic/**"/>
+            <mvc:mapping path="/userHome/*/*"/>
             <bean class="com.ilsxh.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/question/**"/>
-        <bean class="com.ilsxh.interceptor.TouristInterceptor"/>
+            <!--<mvc:mapping path="/index"/>-->
+            <!--<mvc:mapping path="/following"/>-->
+            <!--<mvc:mapping path="/recommend"/>-->
+            <mvc:mapping path="/followUser/*"/>
+            <mvc:mapping path="/followQuestion/*"/>
+            <mvc:mapping path="/followTopic/*"/>
+            <mvc:mapping path="/submitAnswer/*"/>
+            <mvc:mapping path="/updateAnswer/*"/>
+            <mvc:mapping path="/deleteAnswer/*"/>
+            <mvc:mapping path="/addQuestion/*"/>
+            <mvc:mapping path="/collectAnswer/*"/>
+            <bean class="com.ilsxh.interceptor.TouristInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

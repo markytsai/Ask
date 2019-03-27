@@ -58,10 +58,10 @@
                     </ul>
                     <div class="tab-title" th:switch="${isLoginUser}">
                         <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-transfer"/> 我关注的<span
-                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>用户
+                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>话题
                         </h4>
                         <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-transfer"/>他关注的<span
-                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>用户
+                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>话题
                         </h4>
                     </div>
 
@@ -88,7 +88,7 @@
                                         </a>&nbsp;
                                         <!--<span th:text="${user.position}"/>&nbsp;-->
                                         <!--<span th:text="${user.simpleDesc}"/>-->
-                                        <span th:id="userId + '-' + ${user.userId}"
+                                        <span th:if="${user != null} and ${user.userId} == ${homeUser.userId}" th:id="userId + '-' + ${user.userId}"
                                               class="glyphicon label label-primary followUser" style="float:right"
                                               th:text="${topic.topicFollowd == 0} ? '取消关注' : '关注话题'">关注话题</span>
                                     </h5>

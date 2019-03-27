@@ -184,3 +184,27 @@ function topFunction(event) {
 $(".nomore-hint").on("click", function () {
     $("#preference-hint").hide();
 });
+
+//后置增强Ajax方法
+$.ajaxSetup({
+    statusCode: {
+        // 499 代表未登录用户进行了需要token的操作
+        499: function (data) {
+            //这里我写.parent.因为我的页面是在iframe中的
+            $('#loginModal').modal('toggle');
+            var currentUrl = $(".login-btn")[0].id;
+            $("#loginButton").val(currentUrl);
+            // window.parent.location.href = data.responseText;
+        }
+    }
+});
+
+$(".toLogin").on("click", function () {
+    $("#registerModal").modal("toggle");
+    $("#loginModal").modal("toggle");
+});
+
+$(".toRegister").on("click", function () {
+    $("#loginModal").modal("toggle");
+    $("#registerModal").modal("toggle");
+});

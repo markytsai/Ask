@@ -45,7 +45,7 @@
     </select>
 
     <insert id="regiterNewUser">
-        insert into user(user_id, username, email, password) values(#{userId}, #{username}, #{email}, #{password});
+        insert into user(user_id, username, email, password, join_time) values(#{userId}, #{username}, #{email}, #{password}, #{joinTime});
 
     </insert>
 
