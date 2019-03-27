@@ -86,7 +86,7 @@ public class WebLogAspect {
             throw new CustomException(StatusEnum.OPERATION_ERROR);
         }
         // 设置访问用户名称
-        logMessage.setLogUsername(loginUser != null ? loginUser.getUsername() : "未登录");
+        logMessage.setLogUsername(loginUser != null ? loginUser.getUsername() : "游客登录");
 
         // 从切点上获取目标方法
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

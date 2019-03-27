@@ -5,16 +5,18 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.ilsxh.interceptor.LoginInterceptor.isLoginOrReg;
 
+/**
+ * @author Tsaizhenya
+ */
 public class TouristInterceptor extends HandlerInterceptorAdapter {
 
-    List<String> needTokenUrlList = Arrays.asList("/", "/index", "/following", "/recommend", "/followUser", "/followTopic");
-
-    private List<String> touristRequestUrlList = Arrays.asList("/question/", "/topic/", "/userHome/", "/search/");
+    private List<String> touristRequestUrlList = Arrays.asList("/question/", "/topic/", "/userHome/");
 
     boolean isNeedTokenUrls(String requestUrl) {
         for (String s : touristRequestUrlList) {
@@ -38,17 +40,28 @@ public class TouristInterceptor extends HandlerInterceptorAdapter {
         if (!isNeedTokenUrls(requestURL)) {
             return true;
         }
-        request.getRequestDispatcher("login").forward(request, response);
+        // 通过请求头判断请求是否来自Ajax
+        if (request.getHeader("x-requested-with") != null && "XMLHttpRequest".equalsIgnoreCase(
+                request.getHeader("x-requested-with"))) {
+            //ajax方法
+            PrintWriter printWriter = response.getWriter();
+            response.setStatus(499);
+            printWriter.print(requestURL);
+        } else {
+            request.getRequestDispatcher("/login").forward(request, response);
+        }
         return false;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView
+            modelAndView) throws Exception {
         super.postHandle(request, response, handler, modelAndView);
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception
+            ex) throws Exception {
         super.afterCompletion(request, response, handler, ex);
     }
 }

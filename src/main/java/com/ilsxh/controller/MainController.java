@@ -51,4 +51,9 @@ public class MainController {
     public String touristLogin() {
         return "redirect:/moreHotQuestion";
     }
+
+    @RequestMapping(value = "/notification", method = RequestMethod.GET)
+    public String notification() {
+        return "redirect:/notification/user";
+    }
 }

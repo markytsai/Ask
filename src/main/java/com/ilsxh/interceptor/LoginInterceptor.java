@@ -23,7 +23,7 @@ import static com.ilsxh.service.UserService.COOKIE_TOKEN_NAME;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     private static List<String> excludedUrls = Arrays.asList("/login", "/toLogin", "/register", "/doRegister", "/search",
-            "/moreHotQuestion", "/tourist");
+            "/moreHotQuestion", "/tourist", "/topic");
 
     private String rootUrl = "/";
 
@@ -52,7 +52,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // 判断HTTTP请求头中是否有cookies
         Cookie[] cookies = request.getCookies();
         if (ArrayUtils.isEmpty(cookies)) {
-            request.getRequestDispatcher("login").forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
             return false;
         } else {
             for (Cookie cookie : cookies) {
@@ -65,14 +65,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         // 判断HTTTP请求头中是否有本系统指定的cookie
         if (StringUtils.isEmpty(loginToken)) {
-            request.getRequestDispatcher("login").forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
             return false;
         }
 
         // 根据loginToken是否能从redis中获取userId，判断缓存中的cookie值是否过期
         String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
         if (StringUtils.isEmpty(userId)) {
-            request.getRequestDispatcher("login").forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
             return false;
         } else {
             if (rootUrl.equals(requestUri)) {

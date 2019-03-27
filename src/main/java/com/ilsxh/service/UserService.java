@@ -88,7 +88,7 @@ public class UserService {
         Map<String, Object> registerUserMap = new HashMap<>();
 
         String userId = UUIDUtil.uuid();
-        Integer effectRow = userDao.regiterNewUser(userId, email, username, password);
+        Integer effectRow = userDao.regiterNewUser(userId, email, username, password, new Timestamp(System.currentTimeMillis()));
         if (effectRow == null) {
             registerUserMap.put("loginError", "用户名或密码错误");
         }

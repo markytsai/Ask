@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为AnswerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.NotificateDao">
+
+    <resultMap id="messageMap" type="Message">
+        <id column="message_id" property="messsageId" javaType="Integer"/>
+        <result column="message_type" property="messageType" javaType="Integer"/>
+        <result column="message_from" property="messageFrom" javaType="String"/>
+        <result column="message_to" property="messageTo" javaType="String"/>
+        <result column="message_content" property="messageContent" javaType="String"/>
+    </resultMap>
+
+
+
+    <select id="getPeriodSysNotifications" resultMap="messageMap">
+        select * from message_sys
+        where message_to = #{userId}
+        and
+        message_time &lt;= ( NOW() - INTERVAL #{nearDay} DAY)
+        AND message_time &gt;= ( NOW() - INTERVAL #{farDay} DAY)
+    </select>
+
+    <select id="getPeriodUserNotifications" resultMap="messageMap">
+        select * from message_user
+        where message_to = #{userId}
+        and
+        message_time &lt;= ( NOW() - INTERVAL #{nearDay} DAY)
+        AND message_time &gt;= ( NOW() - INTERVAL #{farDay} DAY)
+    </select>
+
+</mapper>
+

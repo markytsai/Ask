@@ -44,7 +44,7 @@ public interface UserDao {
 
     String selectUsernameByUserId(@Param("userId") String userId);
 
-    Integer regiterNewUser(@Param("userId") String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password);
+    Integer regiterNewUser(@Param("userId") String userId, @Param("email") String email, @Param("username") String username, @Param("password") String password, @Param("joinTime") Timestamp joinTime);
 
     List<Answer> getAnswersByUserId(@Param("userId") String userId, @Param("offSet") Integer offSet, @Param("pageSize") Integer pageSize);
 
