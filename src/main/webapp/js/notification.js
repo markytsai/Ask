@@ -2,19 +2,32 @@ $("#loadSysMore").on("click", function () {
     var curPeriodDaysNo = document.getElementById("loadSysMore").dataset.value;
     var nextPeriodDayNo = parseInt(curPeriodDaysNo) + 1;
     document.getElementById("loadSysMore").dataset.value = nextPeriodDayNo;
-    $("#loadSysMore").val("加载中...");
+
+    // mode为查询对象，1：sys  2：user
+    var mode = $("#hiddenType").text().split('-')[0];
+    var type = $("#hiddenType").text().split('-')[1];
+
+    if ($("#hiddenCurrCount").text() == $("#hiddenTotalCount").text()) {
+        $("#loadSysMore").val("已经到底了");
+        return;
+
+    } else {
+        $("#loadSysMore").val("加载中...");
+    }
 
     $.ajax({
-        url: "/loadMore/sys?periodNo=" + nextPeriodDayNo,
+        url: "/loadMore?periodNo=" + nextPeriodDayNo + "&type=" + type + "&mode=" + mode,
         type: "get",
         dataType: 'json',
         success: function (response) {
             if (response.code == 1) {
 
+                var currCount = response.message;
+                $("#hiddenCurrCount").text(parseInt(currCount) + parseInt($("#hiddenCurrCount").text()));
+
                 $("#loadSysMore").val("加载更多");
 
                 var dayList = response.dataBody;
-
 
                 for (var i = 0; i < dayList.length; i++) {
                     var rootDiv = document.createElement('div');
@@ -44,4 +57,8 @@ $("#loadSysMore").on("click", function () {
         }
     });
 
+});
+
+$(".list-item").on("click", function () {
+    this.firstChild.click();
 });

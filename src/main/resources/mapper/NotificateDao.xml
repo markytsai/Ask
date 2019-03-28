@@ -13,13 +13,14 @@
     </resultMap>
 
 
-
     <select id="getPeriodSysNotifications" resultMap="messageMap">
         select * from message_sys
-        where message_to = #{userId}
-        and
+        where
         message_time &lt;= ( NOW() - INTERVAL #{nearDay} DAY)
         AND message_time &gt;= ( NOW() - INTERVAL #{farDay} DAY)
+        <if test="type != 0">
+            and message_type = #{type}
+        </if>
     </select>
 
     <select id="getPeriodUserNotifications" resultMap="messageMap">
@@ -28,6 +29,23 @@
         and
         message_time &lt;= ( NOW() - INTERVAL #{nearDay} DAY)
         AND message_time &gt;= ( NOW() - INTERVAL #{farDay} DAY)
+        <if test="type != 0">
+            and message_type = #{type}
+        </if>
+    </select>
+
+    <select id="getTotalMessagNum" resultType="java.lang.Integer">
+        select count(*)
+        <if test="notiType == 1">
+            from message_sys
+        </if>
+        <if test="notiType == 2">
+            from message_user
+        </if>
+        <if test="type != 0">
+            where message_to = #{userId}
+            and message_type = #{type}
+        </if>
     </select>
 
 </mapper>

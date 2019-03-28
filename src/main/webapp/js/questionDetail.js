@@ -634,7 +634,7 @@ $('.modifyBtn').click(function (event) {
     var id = event.target.id;
     var userId = id.split('-')[1];
 
-    window.location.href = "/settings";
+    window.location.href = "/user/settings";
 });
 
 $(".moreContent").on("click", function (event) {

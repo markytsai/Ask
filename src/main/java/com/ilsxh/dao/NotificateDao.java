@@ -16,7 +16,7 @@ public interface NotificateDao {
      * @param farDay
      * @return
      */
-    List<Message> getPeriodSysNotifications(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay);
+    List<Message> getPeriodSysNotifications(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay, @Param("type") Integer type);
 
 
     /** read message from message_user
@@ -25,5 +25,13 @@ public interface NotificateDao {
      * @param farDay
      * @return
      */
-    List<Message> getPeriodUserNotifications(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay);
+    List<Message> getPeriodUserNotifications(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay, @Param("type")  Integer type);
+
+    /**
+     * @param userId
+     * @param notiType
+     * @param type
+     * @return
+     */
+    Integer getTotalMessagNum(@Param("userId") String userId, @Param("notiType") int notiType, @Param("type") int type);
 }

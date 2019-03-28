@@ -7,6 +7,7 @@ public class Day {
 
     private Timestamp date;
     List<Message> messageList;
+    private int totalCountInDay;
 
     public Day() {
     }
@@ -25,5 +26,13 @@ public class Day {
 
     public void setMessageList(List<Message> messageList) {
         this.messageList = messageList;
+    }
+
+    public int getTotalCountInDay() {
+        return totalCountInDay;
+    }
+
+    public void setTotalCountInDay(int totalCountInDay) {
+        this.totalCountInDay = totalCountInDay;
     }
 }
