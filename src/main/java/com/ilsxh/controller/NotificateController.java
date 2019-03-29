@@ -91,19 +91,49 @@ public class NotificateController {
     @ResponseBody
     public BaseResponse loadSysMore(HttpServletRequest request, Model model,
                                     @RequestParam(value = "periodNo") Integer periodNo,
-                                    @RequestParam(value = "type") Integer type,
-                                    @RequestParam(value = "mode") Integer mode) {
+                                    @RequestParam(value = "tableType", defaultValue = "2") Integer tableType,
+                                    @RequestParam(value = "type", defaultValue = "0") Integer type) {
         String userId = userHelperService.getUserIdFromRedis(request);
         User user = userHelperService.getUserByUserId(userId);
         model.addAttribute("user", user);
 
-        List<Day> dayList = notificateService.getNotifications(userId, periodNo, mode, type);
+        List<Day> dayList = notificateService.getNotifications(userId, periodNo, tableType, type);
         int totalCount = 0;
         for (Day day : dayList) {
             totalCount += day.getTotalCountInDay();
         }
         model.addAttribute("hiddenCurrCount", totalCount);
 
-        return new BaseResponse("1", totalCount + "", dayList);
+        if (totalCount == 0) {
+            return new BaseResponse("2", "", "");
+
+        } else {
+            return new BaseResponse("1", totalCount + "", dayList);
+        }
+    }
+
+
+    /**
+     * 消息提示框中的第一个tab，显示的消息type 是1， 2， 3
+     *
+     * @param request
+     * @param model
+     * @param periodNo
+     * @param tableType
+     * @param type
+     * @return
+     */
+    @RequestMapping(value = "/loadMoreCard", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse loadMoreCard(HttpServletRequest request, Model model,
+                                     @RequestParam(value = "periodNo") Integer periodNo,
+                                     @RequestParam(value = "tableType", defaultValue = "2") Integer tableType,
+                                     @RequestParam(value = "type", defaultValue = "0") String type) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        User user = userHelperService.getUserByUserId(userId);
+        model.addAttribute("user", user);
+
+        List<Day> dayList = notificateService.getNotificationsCard(userId, periodNo, type);
+        return new BaseResponse("1", "" + "", dayList);
     }
 }

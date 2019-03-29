@@ -16,7 +16,7 @@ $("#loadSysMore").on("click", function () {
     }
 
     $.ajax({
-        url: "/loadMore?periodNo=" + nextPeriodDayNo + "&type=" + type + "&mode=" + mode,
+        url: "/loadMore?periodNo=" + nextPeriodDayNo + "&type=" + type + "&tableType=" + mode,
         type: "get",
         dataType: 'json',
         success: function (response) {

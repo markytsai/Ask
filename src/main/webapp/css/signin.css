@@ -56,17 +56,17 @@ registershow {
 
 .toRegister {
     cursor: pointer;
-    color: #2b689c;
+    color: #948f94;
 }
 
 .cancelReg {
     cursor: pointer;
-    color: #2b689c;
+    color: #948f94;
 }
 
 .touristLogin {
     cursor: pointer;
-    color: #2b689c;
+    color: #948f94;
 }
 
 .choices:hover{

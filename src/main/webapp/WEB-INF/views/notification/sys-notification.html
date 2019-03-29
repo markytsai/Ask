@@ -41,7 +41,7 @@
                         <li role="presentation"><a
                                 th:href="@{/notification/user}">用户消息</a></li>
                         <li role="presentation" class="active"><a
-                                th:href="@{/notification/#}">系统消息</a></li>
+                                th:href="@{/notification/sys}">系统消息</a></li>
                     </ul>
 
 
@@ -58,37 +58,15 @@
                     </div>
                     <div>
                         <input id="loadSysMore" type="button" class="btn btn-default" value="加载更多" data-value="0"/>
+                        <span id="hiddenType" th:text="${type}" style="display: none;"/>
+                        <span id="hiddenTotalCount" th:text="${hiddenTotalCount}" style="display: none;"/>
+                        <span id="hiddenCurrCount" th:text="${hiddenCurrCount}" style="display: none;"/>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3 ">
-            <!-- 热门问题 根据关注量排序-->
-            <div class="card my-4" style='background-color: #fff;padding: 6px;'>
-                <span class="card-header"><i class="fa fa-fire" aria-hidden="true"></i>热门问题</span>
-
-                <ul class="list-group" style="margin-bottom: 3px;">
-                    <div class="card-block border-black">
-                    </div>
-                </ul>
-            </div>
-            <br/>
-            <!-- 热门用户 根据关注量排序-->
-
-            <div class="card my-4" style='background-color: #fff;padding: 6px;'>
-                <span class="card-header"><i class="fa fa-users" aria-hidden="true"></i>活跃用户</span>
-                <div class="card-block">
-                    <div class="row">
-                        <div class="col-lg-12">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br/>
-
-        </div>
+        <div class="col-md-3"/>
 
     </div>
 </div>

@@ -10,7 +10,9 @@ import java.util.List;
 public interface NotificateDao {
 
 
-    /** read message from message_sys
+    /**
+     * read message from message_sys
+     *
      * @param userId
      * @param nearDay
      * @param farDay
@@ -19,19 +21,17 @@ public interface NotificateDao {
     List<Message> getPeriodSysNotifications(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay, @Param("type") Integer type);
 
 
-    /** read message from message_user
+    /**
+     * read message from message_user
+     *
      * @param userId
      * @param nearDay
      * @param farDay
      * @return
      */
-    List<Message> getPeriodUserNotifications(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay, @Param("type")  Integer type);
+    List<Message> getPeriodUserNotifications(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay, @Param("type") Integer type);
 
-    /**
-     * @param userId
-     * @param notiType
-     * @param type
-     * @return
-     */
-    Integer getTotalMessagNum(@Param("userId") String userId, @Param("notiType") int notiType, @Param("type") int type);
+    Integer getTotalMessagNum(@Param("messageTo") String userId, @Param("notiType") int notiType, @Param("type") int type);
+
+    List<Message> getPeriodUserNotificationsCard(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay, @Param("typeList") List<Integer> typeList);
 }

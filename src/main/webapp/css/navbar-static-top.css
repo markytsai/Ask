@@ -31,6 +31,117 @@ body {
     /*background-color: #f5f8f9;*/
 }
 
-/*#myBtn:hover {*/
-    /*background-color: #555;*/
+.notificate span {
+    font-size: large;
+    position: relative;
+    display: block;
+    /*padding: 15px 15px;*/
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #777;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.notificate span:hover {
+    color: #333;
+}
+
+.fade {
+    max-width: 100%;
+}
+
+.popover-content {
+    padding: 0px;
+}
+
+/*消息弹出框样式*/
+/*.Popover-content {*/
+/*position: absolute;*/
+/*background: #fff;*/
+/*border: 1px solid #ebebeb;*/
+/*border-radius: 4px;*/
+/*box-shadow: 0 5px 20px rgba(26, 26, 26, .1);*/
+/*z-index: 203;*/
 /*}*/
+/*.Popover-content--fixed {*/
+/*position: fixed;*/
+/*}*/
+
+/*.Popover-arrow {*/
+/*position: absolute;*/
+/*overflow: hidden;*/
+/*pointer-events: none;*/
+/*}*/
+
+/*.Popover-arrow--bottom {*/
+/*width: 32px;*/
+/*height: 16px;*/
+/*-webkit-transform: translate(-50%,-100%);*/
+/*transform: translate(-50%,-100%);*/
+/*}*/
+
+.PushNotifications-menu {
+    width: 360px;
+    padding: 0;
+    overflow: hidden;
+}
+
+/*.Menu {*/
+/*padding: 6px 0;*/
+/*}*/
+.PushNotifications-header {
+    display: flex;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.Button--link, .Button--plain {
+    height: auto;
+    padding: 0;
+    line-height: inherit;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+}
+
+.PushNotifications-tab {
+    position: relative;
+    flex: 1 1;
+    height: 48px;
+    cursor: pointer;
+    box-shadow: none !important;
+    color: #8590a6;
+}
+
+/*选中显示蓝色*/
+.PushNotifications-selectedTabIcon {
+    fill: #0084ff;
+}
+
+.PushNotifications-list {
+    height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.PushNotifications-item {
+    position: relative;
+    padding: 5px 14px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #1a1a1a;
+}
+
+.Notifications-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    line-height: 40px;
+    background: #fff;
+    border-top: 1px solid #ebebeb;
+    box-sizing: border-box;
+}
