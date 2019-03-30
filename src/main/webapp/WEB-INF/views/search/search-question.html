@@ -1,11 +1,12 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <link rel="icon" href="../../favicon.ico"/>
+    <meta name="description" content="AnswerPeida is a Q and A website for all users who want to explore more in subjects"/>
+    <meta name="author" content="tsaizhenya"/>
+    <link rel="icon" href="/images/title.png"/>
 
     <title>个人主页</title>
 
@@ -29,6 +30,8 @@
 
 <div th:include="navigator :: nav" style='background-color: #fff;'></div>
 <div th:include="navigator :: ask"></div>
+<div th:if="${user} == null" th:include="navigator :: login"></div>
+<div th:if="${user} == null" th:include="navigator :: register"></div>
 
 
 <div class="container">
@@ -111,6 +114,7 @@
 <script type="text/javascript" src="http://localhost:8088/js/notify.js"></script>
 <script type="text/javascript" src="http://localhost:8088/js/askFrame.js"></script>
 <script type="text/javascript" src="http://localhost:8088/js/quill.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/loginReg.js"></script>
 
 </body>
 </html>

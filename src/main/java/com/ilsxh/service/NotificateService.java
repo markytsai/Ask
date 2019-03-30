@@ -3,6 +3,8 @@ package com.ilsxh.service;
 import com.ilsxh.dao.NotificateDao;
 import com.ilsxh.entity.Day;
 import com.ilsxh.entity.Message;
+import com.ilsxh.enums.StatusEnum;
+import com.ilsxh.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +66,8 @@ public class NotificateService {
     public List<Day> getNotificationsCard(String userId, Integer periodDaysNo, String type) {
         String[] types = type.split("-");
         List<Integer> typeList = new ArrayList<>();
+        List<Integer> toUpdateMessageIds = new ArrayList<>();
+
         for (String s : types) {
             typeList.add(Integer.valueOf(s));
         }
@@ -79,6 +83,13 @@ public class NotificateService {
             day.setMessageList(tmpList);
             day.setTotalCountInDay(tmpList.size());
             retList.add(day);
+            day.getMessageList().stream().forEach(x -> toUpdateMessageIds.add(x.getMesssageId()));
+        }
+        if (toUpdateMessageIds.size() > 0) {
+            Integer updateNum = notificateDao.updateMessageStatusToAlreadyRead(toUpdateMessageIds);
+            if (updateNum.intValue() != toUpdateMessageIds.size()) {
+                throw new CustomException(StatusEnum.FAIL, "更新消息状态异常");
+            }
         }
         return retList;
     }

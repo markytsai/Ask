@@ -442,10 +442,10 @@ public class QuestionService {
     }
 
     @OperAnnotation(descpition = "获取问题详情", include = "userid, questionId, model")
-    public void getQuestionDetail(String userId, Integer questionId, Model model) {
+    public Model getQuestionDetail(String userId, Integer questionId, Model model) {
 
         // 如果是游客身份访问，那么传过来的userId为null，得到的user也是null
-        User user = userHelperService.getUserByUserId(userId);
+        model = userHelperService.getUserDetails(userId, model);
 
         // 如果是游客身份访问，得到的是"false"
         String hasFollowQuestion = this.hasUserFollowQuestion(userId, questionId);
@@ -454,7 +454,6 @@ public class QuestionService {
         Question question = this.getQuestionByQuestionid(questionId);
 
         Integer localUserAnswerId = this.isQuestionAnswered(userId, questionId);
-        model.addAttribute("user", user);
         model.addAttribute("localUserAnswer", localUserAnswerId);
 
         List<Topic> relatedTopicList = this.getRelatedTopics(questionId);
@@ -463,6 +462,7 @@ public class QuestionService {
         model.addAttribute("hasFollowQuestion", hasFollowQuestion);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionDetail", question);
+        return model;
     }
 
     /**

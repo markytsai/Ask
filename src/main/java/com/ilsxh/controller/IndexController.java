@@ -48,8 +48,7 @@ public class IndexController {
     @RequestMapping("/user/settings")
     public String setting(HttpServletRequest request, Model model) {
         String userId = userHelperService.getUserIdFromRedis(request);
-        User user = indexService.getProfileInfo(userId);
-        model.addAttribute("user", user);
+        userHelperService.getUserDetails(userId, model);
         return "setting/updateProfile";
     }
 
@@ -63,8 +62,7 @@ public class IndexController {
     @RequestMapping("/user/preference")
     public String preference(HttpServletRequest request, Model model) {
         String userId = userHelperService.getUserIdFromRedis(request);
-        User user = indexService.getProfileInfo(userId);
-        model.addAttribute("user", user);
+        model = userHelperService.getUserDetails(userId, model);
 
         List<Topic> topicList = topicService.getPreference(userId);
         model.addAttribute("topicList", topicList);

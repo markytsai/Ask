@@ -34,4 +34,8 @@ public interface NotificateDao {
     Integer getTotalMessagNum(@Param("messageTo") String userId, @Param("notiType") int notiType, @Param("type") int type);
 
     List<Message> getPeriodUserNotificationsCard(@Param("userId") String userId, @Param("nearDay") Integer nearDay, @Param("farDay") Integer farDay, @Param("typeList") List<Integer> typeList);
+
+    Integer getUnreadMessageCount(@Param("userId") String userId);
+
+    Integer updateMessageStatusToAlreadyRead(@Param("idList") List<Integer> toUpdateMessageIds);
 }

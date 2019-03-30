@@ -1,5 +1,6 @@
 package com.ilsxh.service;
 
+import com.ilsxh.dao.NotificateDao;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.User;
 import com.ilsxh.redis.UserKey;
@@ -16,16 +17,21 @@ import java.util.Map;
 
 import static com.ilsxh.service.UserService.COOKIE_TOKEN_NAME;
 
+/**
+ * @author Tsaizhenya
+ */
 @Service
 public class UserHelperService {
 
     private RedisService redisService;
     private UserDao userDao;
+    private NotificateDao notificateDao;
 
     @Autowired
-    public UserHelperService(RedisService redisService, UserDao userDao) {
+    public UserHelperService(RedisService redisService, UserDao userDao, NotificateDao notificateDao) {
         this.redisService = redisService;
         this.userDao = userDao;
+        this.notificateDao = notificateDao;
     }
 
     /**
@@ -83,6 +89,7 @@ public class UserHelperService {
 
         map.put("user", loginUser);
         map.put("homeUser", homeUser);
+        map.put("unreadMessageCount", notificateDao.getUnreadMessageCount(localUserId));
         return map;
     }
 
@@ -130,6 +137,10 @@ public class UserHelperService {
         User user = this.getUserByUserId(userId);
         model.addAttribute("user", user);
         model.addAttribute("username", user.getUsername());
+
+        // 这里获取消息未读个数
+        Integer unreadMessageCount = notificateDao.getUnreadMessageCount(userId);
+        model.addAttribute("unreadMessageCount", unreadMessageCount);
         return model;
     }
 

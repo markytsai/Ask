@@ -81,6 +81,9 @@ public class WebLogAspect {
 
         // 从cookie中取出用户id，查询数据库
         String userId = userHelperService.getUserIdFromRedis(request);
+        if (userId == null) {
+            userId = MyConstant.TOURIST_USERID;
+        }
         User loginUser = userHelperService.getUserByUserId(userId);
         if (loginUser == null && !userId.equals(MyConstant.TOURIST_USERID)) {
             throw new CustomException(StatusEnum.OPERATION_ERROR);

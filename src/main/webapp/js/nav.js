@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    if ($(".PushNotifications-count").text() != 0) {
+        $(".PushNotifications-count").removeClass("hide")
+    }
+    //弹出消息提示框
     $('.notificate').popover({
         html: true,
         placement: 'bottom',
@@ -24,21 +28,23 @@ $(document).ready(function () {
 //     });
 });
 
+// 先加载 消息框的tab 和 footer
 function details_in_popup() {
 
     return $('#popover_content_wrapper').html();
 
 }
 
-$(".notificate").on('mouseleave', '.popover', function () {
-    $(this).hide();
-});
+// $(".notificate").on('mouseleave', '.popover', function () {
+//     $(this).hide();
+// });
 
-// 弹框显示的时候触发 getIems 方法
+// 弹框显示的时候触发 getIems 方法， 默认获取第一个tab的内容
 $('.notificate').on('show.bs.popover', function () {
     getIems("1-2-3", "/loadMoreCard");
 });
 
+//获取第一个tab的内容
 $(document).on("click", ".questionBtn", function () {
     $(".followBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
     $(".voteBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
@@ -46,19 +52,22 @@ $(document).on("click", ".questionBtn", function () {
     getIems("1-2-3", "/loadMoreCard");
 })
 
+//获取第二个tab的内容
 $(document).on("click", ".followBtn", function () {
     $(".questionBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
     $(".voteBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
     $(".followBtn svg:first-child").addClass("PushNotifications-selectedTabIcon");
-    getIems(4, "/loadMore");
+    getIems(4, "/loadMoreCard");
 });
 
+//获取第三个tab的内容
 $(document).on("click", ".voteBtn", function () {
     $(".questionBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
     $(".followBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
     $(".voteBtn svg:first-child").addClass("PushNotifications-selectedTabIcon");
-    getIems(5, "/loadMore");
+    getIems(5, "/loadMoreCard");
 });
+
 
 function getIems(type, url) {
 
@@ -76,6 +85,11 @@ function getIems(type, url) {
             if (response.code == 1) {
 
                 var dayList = response.dataBody;
+                if ($(".PushNotifications-count") != null) {
+                    var initCount = $(".PushNotifications-count").text();
+                }
+                // 计算已经获取的消息数量，在红色圆点中 减去这个数量
+                var counter = 0;
 
                 var fullHtml = "";
 
@@ -87,6 +101,7 @@ function getIems(type, url) {
 
                     var messages = day.messageList;
                     for (var j = 0; j < messages.length; j++) {
+                        counter += 1;
                         var message = messages[j];
                         var innerHtml = " <div class=\"PushNotifications-item\">\n" + message.messageContent + "</div>";
                         fullHtml += innerHtml;
@@ -94,11 +109,17 @@ function getIems(type, url) {
                 }
 
                 $(".PushNotifications-list").html(fullHtml);
+
+                if (parseInt(initCount) - counter == 0) {
+                    $(".PushNotifications-count").addClass("hide")
+                } else {
+                    $(".PushNotifications-count").text(parseInt(initCount) - counter);
+                }
             } else if (response.code == 2) {
 
                 var fullHtml = "<div class=\"EmptyState\">\n" +
                     "\t<div class=\"EmptyState-inner\">\n" +
-                    "\t\t<svg width=\"150\" height=\"120\" viewbox=\"0 0 150 120\" class=\"EmptyState-image\" fill=\"curr" +
+                    "\t\t<svg width=\"100%\" height=\"80%\" viewbox=\"0 0 150 120\" class=\"EmptyState-image\" fill=\"curr" +
                     "entColor\"><path fill=\"#EBEEF5\" d=\"M46.76 78.71a1.895 1.895 0 0 0-1.378 2.092c.13.948.94 1.648 " +
                     "1.904 1.635h55.468a1.882 1.882 0 0 0 1.884-1.635c.13-.95-.46-1.846-1.367-2.09a8.61 8.61 0 0 " +
                     "1-6.4-7.872l-2.473-20.928c-.96-7.872-6.567-14.37-14.178-16.435l-.986-.267-.113-1.014c-.24-2.106-2.01-3.696-4.11-3.696s-3.87" +
@@ -108,7 +129,7 @@ function getIems(type, url) {
                     " 3.58-5.4 5.614 5.614 0 0 0 4.17-5.168l2.49-21.093c1.068-8.77 7.135-16.06 15.46-18.7.807-3.11 3.615-5.35" +
                     " 6.9-5.35s6.094 2.24 6.9 5.35c8.325 2.64 14.393 9.93 15.46 18.7zm-16.417 38.91c-.288 3.184-3.007 " +
                     "5.36-5.943 5.36-2.936 0-5.655-2.176-5.943-5.36l-2.988.27c.43 4.82 4.52 8.09 8.93 8.09s8.49-3.27 " +
-                    "8.93-8.09l-2.99-.27z\"></path></svg>还没有消息\n" +
+                    "8.93-8.09l-2.99-.27z\"></path></svg><div style='text-align: center;font-weight: bold;font-size: 15px;'>还没有消息</div>\n" +
                     "\t</div>\n" +
                     "</div>";
 
@@ -313,3 +334,59 @@ $(".toRegister").on("click", function () {
     $("#loginModal").modal("toggle");
     $("#registerModal").modal("toggle");
 });
+
+initSocket("user");
+
+function initSocket(myWebsocket) {
+
+    var webSocket = null;
+
+    window.onbeforeunload = function () {
+        //离开页面时的其他操作
+    };
+
+    if (!window.WebSocket) {
+        console("您的浏览器不支持websocket！");
+        return false;
+    }
+
+    var target = 'ws://' + window.location.host + "/websocket";
+
+    if ('WebSocket' in window) {
+        console.log("准备连接websocket");
+        webSocket = new WebSocket(target);
+    } else if ('MozWebSocket' in window) {
+        webSocket = new MozWebSocket(target);
+    } else {
+        alert('WebSocket is not supported by this browser.');
+        return;
+    }
+
+
+    // 收到服务端消息
+    webSocket.onmessage = function (msg) {
+        console.log("收到服务端消息");
+        alert(msg.data);
+        // 关闭连接
+        webSocket.onclose();
+        console.log(msg);
+    };
+
+    // 异常
+    webSocket.onerror = function (event) {
+        console.log("出现异常");
+        console.log(event);
+    };
+
+    // 建立连接
+    webSocket.onopen = function (event) {
+        console.log("建立连接")
+        console.log(event);
+    };
+
+    // 断线
+    webSocket.onclose = function () {
+
+        console.log("websocket断开连接");
+    };
+}

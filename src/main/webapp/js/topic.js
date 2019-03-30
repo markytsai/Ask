@@ -223,3 +223,20 @@ function getSocialScienceTopics(rootTopicId) {
     })
 }
 
+
+$(window).scroll(function () {
+    if ($(document).scrollTop() >= $(document).height() - window.screen.height) {   //判断是否已经滚动到页面底部
+        $.ajax({
+            url: 'jsonObj.json',
+            success: function (data) {
+                var str = "";
+                $.each(data, function (i, item) { //遍历出来json里边的内容；i，表示当前遍历到第几条内容；item，表示当前遍历的对象；
+                    str += "<li>" + '姓名：' + item.name + '  年龄：' + item.age + '  性别：' + item.sex + "</li>"
+                });
+                $("#txt").append(str);
+                $("#loading").css("display", "none");//切换正在加载数据图片状态为不显示；
+            }
+        });
+    }
+});
+

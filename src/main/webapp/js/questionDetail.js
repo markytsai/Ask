@@ -900,7 +900,6 @@ $('.commentBtn').on('click', function (event) {
 });
 
 
-
 //删除评论按钮
 $('.delComment').on("click", function (event) {
 
@@ -1076,3 +1075,5 @@ $('.replyBtn').on('click', function (event) {
 //     // timer();
 //     setInterval(timer, 1000);
 // }
+
+

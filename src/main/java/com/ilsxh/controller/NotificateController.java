@@ -134,6 +134,14 @@ public class NotificateController {
         model.addAttribute("user", user);
 
         List<Day> dayList = notificateService.getNotificationsCard(userId, periodNo, type);
-        return new BaseResponse("1", "" + "", dayList);
+        int totalCount = 0;
+        for (Day day : dayList) {
+            totalCount += day.getTotalCountInDay();
+        }
+        if (totalCount == 0) {
+            return new BaseResponse("2", "", "");
+        } else {
+            return new BaseResponse("1", totalCount + "", dayList);
+        }
     }
 }

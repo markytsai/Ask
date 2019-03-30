@@ -88,7 +88,7 @@ public class QuestionController {
     public String QuestionDetail(@PathVariable("questionId") Integer questionId, HttpServletRequest request, Model model) {
 
         String userId = userHelperService.getUserIdFromRedis(request);
-        questionService.getQuestionDetail(userId, questionId, model);
+        model = questionService.getQuestionDetail(userId, questionId, model);
         questionService.getCommonHotData(model);
 
         model.addAttribute("currentUrl", "/question/" + questionId);
@@ -234,6 +234,8 @@ public class QuestionController {
         String userId = userHelperService.getUserIdFromRedis(request);
         List<Question> questionList = questionService.getRecommendedQuestionByUserId(userId);
         model.addAttribute("questionList", questionList);
+
+        model.addAttribute("currentUrl", "/moreHotQuestion");
         return "hotQuestionDetail";
     }
 

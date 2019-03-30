@@ -31,7 +31,7 @@ body {
     /*background-color: #f5f8f9;*/
 }
 
-.notificate span {
+.notificate span:first-child {
     font-size: large;
     position: relative;
     display: block;
@@ -144,4 +144,16 @@ body {
     background: #fff;
     border-top: 1px solid #ebebeb;
     box-sizing: border-box;
+}
+
+.PushNotifications-count {
+    position: absolute;
+    bottom: 50%;
+    left: 70%;
+    padding: 0px 4px;
+    font-size: 11px;
+    color: #fff;
+    background-color: #d9534f;
+    border: 2px solid #fff;
+    border-radius: 16px;
 }

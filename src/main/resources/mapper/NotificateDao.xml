@@ -54,6 +54,7 @@
         and
         message_time &lt;= ( NOW() - INTERVAL #{nearDay} DAY)
         AND message_time &gt;= ( NOW() - INTERVAL #{farDay} DAY)
+        and message_status = 0
         <if test="null != typeList and typeList.size != 0">
             and message_type in
             <foreach collection="typeList" item="type" open="(" separator="," close=")">
@@ -62,6 +63,25 @@
         </if>
         order by message_time desc
     </select>
+
+    <select id="getUnreadMessageCount" resultType="Integer">
+        select count(*)
+        from message_user
+        where message_to = #{userId}
+        and message_status = 0
+    </select>
+
+    <update id="updateMessageStatusToAlreadyRead">
+        update message_user
+        set message_status = 1
+        where 1 = 1
+        <if test="idList.size != 0">
+            and message_id IN
+            <foreach collection="idList" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </update>
 
 </mapper>
 

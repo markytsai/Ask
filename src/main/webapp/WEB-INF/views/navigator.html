@@ -242,8 +242,7 @@
                         data-whatever="@mdo">注册
                 </button>
                 <button th:if="${user} == null" type="button" class="btn btn-danger login-btn" data-toggle="modal"
-                        data-target="#loginModal" th:id="${currentUrl}"
-                        data-whatever="@mdo">登录
+                        data-target="#loginModal" th:id="${currentUrl}">登录
                 </button>
             </div>
 
@@ -255,9 +254,7 @@
                     <li><a th:href="@{/recommend}" style="font-size: large"><i class=""/>推荐</a></li>
                     <li class="notificate" data-toggle="popover">
                         <span>消息</span>
-                        <!--<a th:href="@{/notification}" style="font-size: large"><i class=""/>消息</a>-->
-                        <!--<span class="badge badge-warning" style="margin-top: -25px;margin-left: -10px;border-radius: 100%;-->
-                        <!--background-color: #d9534f;text-align: center;" th:text="10"/>-->
+                        <span class="PushNotifications-count hide" th:text="${unreadMessageCount}"/>
                     </li>
                 </ul>
 
@@ -365,7 +362,7 @@
                                                   4.479 0 0 0-.37 1.825c0 .644.124 1.248.37 1.81a4.62 4.62 0 0 0 1 1.495c.425.426.918.768 1.48 1.016a4.677
                                                    4.677 0 0 0 1.809.356z" fill-rule="evenodd"></path>
                                </svg></span>设置</a>
-                                <a th:href="@{/notification/user}" type="button" class="Button Button--plain">查看全部消息</a>
+                                <a th:href="@{/notification/user}" type="button" class="Button Button--plain">查看所有消息</a>
                             </div>
                            </div>
                         </div>
@@ -378,4 +375,6 @@
 
 <!--不要包含任何js文件-->
 <script type="text/javascript" src="http://localhost:8088/js/loginReg.js"></script>
+
+
 
