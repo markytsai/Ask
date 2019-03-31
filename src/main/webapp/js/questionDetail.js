@@ -65,12 +65,12 @@ $('#focusQuestion').click(function () {
     var btnFocusQuestion = $("#focusQuestion");
     followQuestion();
     // 取消关注问题
-    if (btnFocusQuestion.text() == '关注问题') {
-        btnFocusQuestion.text('取消关注');
-
-    } else {
-        btnFocusQuestion.text('关注问题');
-    }
+    // if (btnFocusQuestion.text() == '关注问题') {
+    //     btnFocusQuestion.text('取消关注');
+    //
+    // } else {
+    //     btnFocusQuestion.text('关注问题');
+    // }
     btnFocusQuestion.blur();
 });
 
@@ -417,8 +417,10 @@ function followQuestion() {
         type: "get",
         dataType: 'json',
         success: function (response) {
-            if (response.code == 1) {
+            if (response.code == 3) {
+                $("#focusQuestion").text('取消关注');
             } else {
+                $("#focusQuestion").text('关注问题');
             }
         }
     });
@@ -590,21 +592,21 @@ $('.followUser').click(function (event) {
     });
 });
 
-function followQuestion() {
-
-    var questionId = $('#getQuestionId').val();
-
-    $.ajax({
-        url: "/followQuestion/" + questionId,
-        type: "get",
-        dataType: 'json',
-        success: function (response) {
-            if (response.code == 1) {
-            } else {
-            }
-        }
-    });
-}
+// function followQuestion() {
+//
+//     var questionId = $('#getQuestionId').val();
+//
+//     $.ajax({
+//         url: "/followQuestion/" + questionId,
+//         type: "get",
+//         dataType: 'json',
+//         success: function (response) {
+//             if (response.code == 1) {
+//             } else {
+//             }
+//         }
+//     });
+// }
 
 $('.followHimclass').click(function (event) {
     var followStatus = $('.followHimclass:first-child').text().trim();

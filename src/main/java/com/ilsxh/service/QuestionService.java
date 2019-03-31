@@ -290,6 +290,7 @@ public class QuestionService {
      * @param userId
      * @return
      */
+    @OperAnnotation(descpition = "提出问题", include = "questionTitle, topicString, userId")
     public Question addQuestion(String questionTitle, String questionContent, String topicString, String userId) {
 
         Question question = new Question();

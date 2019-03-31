@@ -83,5 +83,10 @@
         </if>
     </update>
 
+    <insert id="insertMessage" parameterType="Message">
+        insert into message_user (message_type, message_from, message_to, message_content, message_time, message_status)
+        values(#{msg.messageType}, #{msg.messageFrom}, #{msg.messageTo}, #{msg.messageContent}, #{msg.messageTime}, 0)
+    </insert>
+
 </mapper>
 

@@ -61,6 +61,7 @@ public class UserService {
      * @param response
      * @return
      */
+    @OperAnnotation(descpition = "用户登录",include = "email, rememberMe")
     public Map<String, Object> login(String email, String password, Boolean rememberMe, HttpServletResponse response) {
         Map<String, Object> loginUserMap = new HashMap<>();
 
@@ -84,6 +85,15 @@ public class UserService {
         return loginUserMap;
     }
 
+    /**
+     * 用户注册
+     * @param email
+     * @param username
+     * @param password
+     * @param response
+     * @return
+     */
+    @OperAnnotation(descpition = "用户注册", include = "email, username")
     public Map<String, Object> registerNewUser(String email, String username, String password, HttpServletResponse response) {
         Map<String, Object> registerUserMap = new HashMap<>();
 
@@ -96,7 +106,14 @@ public class UserService {
         return registerUserMap;
     }
 
-    public boolean logout(HttpServletRequest request, HttpServletResponse response) {
+    /**
+     * 用户推出登录
+     * @param request
+     * @param response
+     * @return
+     */
+    @OperAnnotation(descpition = "用户推出登录", include = "userId")
+    public boolean logout(String userId, HttpServletRequest request, HttpServletResponse response) {
         String loginToken = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
@@ -198,7 +215,14 @@ public class UserService {
         return new Page<>(pageNo, pageSize, answerTotal, answerList);
     }
 
-
+    /**
+     * 关注用户
+     * @param userId
+     * @param userIdToBeFollowed
+     * @param createTime
+     * @return
+     */
+    @OperAnnotation(descpition = "关注用户", include = "userId, userIdToBeFollowed")
     public BaseResponse followUser(String userId, String userIdToBeFollowed, Timestamp createTime) {
 
         Integer effectRow = 0;
@@ -230,6 +254,13 @@ public class UserService {
         return userDao.updateUsernameByUserId(userId, newContent);
     }
 
+    /**
+     * 用户修改性别
+     * @param userId
+     * @param newContent
+     * @return
+     */
+    @OperAnnotation(descpition = "用户修改性别", include = "userId, newContent")
     public Integer updateUserGenderByUserId(String userId, String newContent) {
         if ("女".equals(newContent)) {
             return userDao.updateUserGenderByUserId(userId, 1);
@@ -238,23 +269,63 @@ public class UserService {
         }
     }
 
+    /**
+     * 用户修改邮箱
+     * @param userId
+     * @param newContent
+     * @return
+     */
+    @OperAnnotation(descpition = "用户修改邮箱", include = "userId, newContent")
     public Integer updateUserEmailByUserId(String userId, String newContent) {
         return userDao.updateUserEmailByUserId(userId, newContent);
     }
 
+    /**
+     * 用户修改用户名
+     * @param userId
+     * @param newContent
+     * @return
+     */
+    @OperAnnotation(descpition = "用户修改用户名", include = "userId, newContent")
     public Integer updateUserIndustryByUserId(String userId, String newContent) {
         return userDao.updateUserIndustryByUserId(userId, newContent);
     }
 
+    /**
+     * 用户修改职位
+     * @param userId
+     * @param newContent
+     * @return
+     */
+    @OperAnnotation(descpition = "用户修改职位", include = "userId, newContent")
     public Integer updateUserPositionByUserId(String userId, String newContent) {
         return userDao.updateUserPositionByUserId(userId, newContent);
     }
 
+
+    /**
+     * 用户修改简介
+     * @param userId
+     * @param newContent
+     * @return
+     */
+    @OperAnnotation(descpition = "用户修改简介", include = "userId, newContent")
     public Integer updateUserSimpleDescByUserId(String userId, String newContent) {
         return userDao.updateUserSimpleDescByUserId(userId, newContent);
     }
 
+    /**
+     * 用户修改详细介绍
+     * @param userId
+     * @param newContent
+     * @return
+     */
+    @OperAnnotation(descpition = "用户修改详细介绍", include = "userId, newContent")
     public Integer updateUserFullDescByUserId(String userId, String newContent) {
         return userDao.updateUserFullDescByUserId(userId, newContent);
+    }
+
+    public Integer getUserFollowStatus(String userId, String userIdToBeFollowed) {
+        return userDao.getUserFollowStatus(userId, userIdToBeFollowed);
     }
 }

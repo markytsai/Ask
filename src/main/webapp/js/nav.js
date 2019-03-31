@@ -365,8 +365,18 @@ function initSocket(myWebsocket) {
 
     // 收到服务端消息
     webSocket.onmessage = function (msg) {
+
+        var countElement = $(".PushNotifications-count");
+        // 如果标号数量为0， 直接显示传来的数量，并且使其显示出来；不为0，直接加上
+        if (countElement.text() != 0) {
+            countElement.text(parseInt(msg.data) + parseInt(countElement.text()));
+        } else if (msg.data.length <= 2) {
+            countElement.text(parseInt(msg.data));
+            countElement.removeClass("hide");
+        }
+
         console.log("收到服务端消息");
-        alert(msg.data);
+        console.log("message: " + msg.data);
         // 关闭连接
         webSocket.onclose();
         console.log(msg);
@@ -380,6 +390,7 @@ function initSocket(myWebsocket) {
 
     // 建立连接
     webSocket.onopen = function (event) {
+        webSocket.send("from client:connecting....");
         console.log("建立连接")
         console.log(event);
     };

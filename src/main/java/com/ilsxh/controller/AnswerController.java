@@ -3,6 +3,7 @@ package com.ilsxh.controller;
 import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.AnswerService;
+import com.ilsxh.service.UserHelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +18,12 @@ import static com.ilsxh.service.AnswerService.NOT_VOTE_FOR_ANSWER;
 public class AnswerController {
 
     private AnswerService answerService;
+    private UserHelperService userHelperService;
 
     @Autowired
-    public AnswerController(AnswerService answerService) {
+    public AnswerController(AnswerService answerService, UserHelperService userHelperService) {
         this.answerService = answerService;
+        this.userHelperService = userHelperService;
     }
 
     /**
@@ -63,11 +66,12 @@ public class AnswerController {
     @RequestMapping("/collectAnswer/{answerId}")
     @ResponseBody
     public BaseResponse collectAnswer(@PathVariable("answerId") Integer answerId, @RequestParam("isCollect") Boolean isCollect, HttpServletRequest request) {
+        String localUserId = userHelperService.getUserIdFromRedis(request);
         // 默认不成功
         Integer effectRow = 0;
         BaseResponse<String> response = new BaseResponse();
         if (isCollect == Boolean.TRUE) {
-            effectRow = answerService.cancelCollectAnswer(answerId, request);
+            effectRow = answerService.cancelCollectAnswer(answerId, localUserId);
             if (effectRow != null && effectRow == 0) {
                 return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "取消收藏失败", "");
             }
@@ -75,7 +79,7 @@ public class AnswerController {
             response.setMessage("你取消了收藏此回答");
             return response;
         } else {
-            effectRow = answerService.collectAnswer(answerId, request);
+            effectRow = answerService.collectAnswer(answerId, localUserId);
             if (effectRow != null && effectRow == 0) {
                 return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "取消收藏失败", "");
             }

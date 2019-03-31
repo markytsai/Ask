@@ -49,7 +49,7 @@
     </insert>
 
     <!--<update id="downvoteAnswer">-->
-        <!--update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}-->
+    <!--update mid_user_vote_answer set vote = 0 where user_id = #{userId} and answer_id = #{answerId}-->
     <!--</update>-->
 
     <select id="isCollectAnswer" resultType="Integer">
@@ -63,5 +63,17 @@
     <insert id="collectAnswer">
         insert into mid_user_collect_answer(user_id, answer_id, favorite_id, create_time) values(#{userId}, #{answerId}, 1, #{createTime})
     </insert>
+
+    <select id="getQuestionIdByAnswerId" resultType="Integer">
+      select question_id
+      from answer
+      where answer_id = #{answerId}
+    </select>
+
+    <select id="getUserIdByAnswerId" resultType="String">
+        select answer_user_id
+        from answer
+        where answer_id = #{answerId}
+    </select>
 </mapper>
 

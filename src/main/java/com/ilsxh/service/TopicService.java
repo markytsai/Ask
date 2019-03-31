@@ -1,5 +1,6 @@
 package com.ilsxh.service;
 
+import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.dao.*;
 import com.ilsxh.entity.*;
 import com.ilsxh.redis.TopicKey;
@@ -35,6 +36,7 @@ public class TopicService {
      * @param topicId
      * @return
      */
+    @OperAnnotation(descpition = "获取话题详情", include = "topicId")
     public Topic getTopicByTopicId(Integer topicId) {
         return topicDao.getTopicByTopicId(topicId);
     }
@@ -104,6 +106,7 @@ public class TopicService {
      * @param topicId
      * @return
      */
+    @OperAnnotation(descpition = "获取话题相关的问题列表")
     public List<Question> getQuestionWithThisTopic(Integer topicId) {
         return topicDao.getQuestionWithThisTopic(topicId);
     }
@@ -115,6 +118,7 @@ public class TopicService {
      * @param topicId
      * @return
      */
+    @OperAnnotation(descpition = "获取话题下相关的回答")
     public List<Answer> getAnswersByTopicId(String userId, Integer topicId) {
         List<Answer> answerList = topicDao.getAnswersByTopicId(topicId);
         for (Answer answer : answerList) {
@@ -129,6 +133,7 @@ public class TopicService {
      * @param topicId
      * @return
      */
+    @OperAnnotation(descpition = "获取话题下优秀的回答用户")
     public List<User> getExcellentUsersByTopicId(Integer topicId) {
         return topicDao.getollowingUserByUserId(topicId);
     }
@@ -139,6 +144,7 @@ public class TopicService {
      * @param partialWord
      * @return
      */
+    @OperAnnotation(descpition = "获取话题页面下相关的话题列表")
     public List<Topic> getProbablyRelativeTopics(String partialWord) {
         return topicDao.getProbablyRelativeTopics(partialWord);
     }
@@ -150,6 +156,7 @@ public class TopicService {
      * @param topicId
      * @return
      */
+    @OperAnnotation(descpition = "关注话题")
     public Integer followTopic(String localUserId, Integer topicId) {
         Integer retStat = -1;
 
@@ -170,6 +177,7 @@ public class TopicService {
      * @param topicId
      * @return
      */
+    @OperAnnotation(descpition = "取消关注话题")
     public Integer unfollowTopic(String localUserId, Integer topicId) {
         Integer retStat = -1;
         retStat = topicDao.updateFollowTopic(localUserId, topicId, 0);

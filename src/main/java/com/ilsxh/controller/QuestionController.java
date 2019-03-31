@@ -103,6 +103,7 @@ public class QuestionController {
      */
     @RequestMapping("/followQuestion/{questionId}")
     @ResponseBody
+
     public BaseResponse followQuestion(@PathVariable("questionId") Integer questionId, HttpServletRequest request) {
 
         String localUserId = userHelperService.getUserIdFromRedis(request);
@@ -113,12 +114,12 @@ public class QuestionController {
         if (hasUserFollowQuestion != null && hasUserFollowQuestion == "true") {
             effectRow = questionService.unfollowQuestion(localUserId, questionId);
             if (effectRow != null && effectRow == 1) {
-                return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功取消关注问题", "");
+                return new BaseResponse(StatusEnum.UNFOLLOW_QUESTION.getCode(), "成功取消关注问题", "");
             }
         } else {
             effectRow = questionService.followQuestion(localUserId, questionId);
             if (effectRow != null && effectRow == 1) {
-                return new BaseResponse(StatusEnum.SUCCESS.getCode(), "成功关注问题", "");
+                return new BaseResponse(StatusEnum.FOLLOW_QUESTION.getCode(), "成功关注问题", "");
             }
         }
         return new BaseResponse(StatusEnum.OPERATION_ERROR.getCode(), "操作失败", "");

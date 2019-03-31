@@ -1,5 +1,6 @@
 package com.ilsxh.controller;
 
+import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.UserHelperService;
@@ -99,7 +100,8 @@ public class UserController {
      */
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        userService.logout(request, response);
+        String userId = userHelperService.getUserIdFromRedis(request);
+        userService.logout(userId, request, response);
         return "redirect:/login";
     }
 

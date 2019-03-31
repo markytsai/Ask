@@ -136,7 +136,11 @@ public class UserHelperService {
 
         User user = this.getUserByUserId(userId);
         model.addAttribute("user", user);
-        model.addAttribute("username", user.getUsername());
+        if (null == user) {
+            model.addAttribute("username", "游客登录");
+        } else {
+            model.addAttribute("username", user.getUsername());
+        }
 
         // 这里获取消息未读个数
         Integer unreadMessageCount = notificateDao.getUnreadMessageCount(userId);

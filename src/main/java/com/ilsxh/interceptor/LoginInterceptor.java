@@ -30,8 +30,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private RedisService redisService;
 
+    public LoginInterceptor() {
+    }
+
     public static boolean isLoginOrReg(String requestUrl) {
-        // 如果是登录和注册的操作，不用拦截
+        // 如果是excluedUrls，不用拦截
         for (String s : excludedUrls) {
             if (requestUrl.startsWith(s)) {
                 return true;
@@ -39,20 +42,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
         return false;
     }
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
-        String requestUri = request.getRequestURI();
-
-        if (isLoginOrReg(requestUri)) {
-            return true;
-        }
-
+    public boolean isExistToken(HttpServletRequest request, String requestUri) {
         String loginToken = null;
         // 判断HTTTP请求头中是否有cookies
         Cookie[] cookies = request.getCookies();
         if (ArrayUtils.isEmpty(cookies)) {
-            request.getRequestDispatcher("/login").forward(request, response);
             return false;
         } else {
             for (Cookie cookie : cookies) {
@@ -65,19 +60,68 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         // 判断HTTTP请求头中是否有本系统指定的cookie
         if (StringUtils.isEmpty(loginToken)) {
-            request.getRequestDispatcher("/login").forward(request, response);
             return false;
         }
 
         // 根据loginToken是否能从redis中获取userId，判断缓存中的cookie值是否过期
         String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
         if (StringUtils.isEmpty(userId)) {
-            request.getRequestDispatcher("/login").forward(request, response);
             return false;
         } else {
+//            if (rootUrl.equals(requestUri)) {
+//                return true;
+//            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+
+        String requestUri = request.getRequestURI();
+
+        if (isLoginOrReg(requestUri)) {
+            return true;
+        }
+
+//        String loginToken = null;
+//        // 判断HTTTP请求头中是否有cookies
+//        Cookie[] cookies = request.getCookies();
+//        if (ArrayUtils.isEmpty(cookies)) {
+//            request.getRequestDispatcher("/login").forward(request, response);
+//            return false;
+//        } else {
+//            for (Cookie cookie : cookies) {
+//                if (cookie.getName().equals(COOKIE_TOKEN_NAME)) {
+//                    loginToken = cookie.getValue();
+//                    break;
+//                }
+//            }
+//        }
+//
+//        // 判断HTTTP请求头中是否有本系统指定的cookie
+//        if (StringUtils.isEmpty(loginToken)) {
+//            request.getRequestDispatcher("/login").forward(request, response);
+//            return false;
+//        }
+//
+//        // 根据loginToken是否能从redis中获取userId，判断缓存中的cookie值是否过期
+//        String userId = redisService.get(UserKey.loginUserKey, loginToken, String.class);
+//        if (StringUtils.isEmpty(userId)) {
+//            request.getRequestDispatcher("/login").forward(request, response);
+//            return false;
+//        } else {
+//            if (rootUrl.equals(requestUri)) {
+//                response.sendRedirect("/following");
+//            }
+//        }
+        if (isExistToken(request, requestUri)) {
             if (rootUrl.equals(requestUri)) {
                 response.sendRedirect("/following");
             }
+        } else {
+            request.getRequestDispatcher("/login").forward(request, response);
+            return false;
         }
         return true;
     }

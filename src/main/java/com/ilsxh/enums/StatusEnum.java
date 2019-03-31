@@ -29,6 +29,9 @@ public enum StatusEnum {
 
     UPDATE_USERNAME_SUCCESS("105", "更新用户名成功"),
     UPDATE_USERNAME_FAIL("106", "更新用户名失败"),
+
+    FOLLOW_QUESTION("3", "成功关注问题"),
+    UNFOLLOW_QUESTION("4", "成功取消关注问题"),
     ;
 
 

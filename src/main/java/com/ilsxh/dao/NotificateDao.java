@@ -38,4 +38,6 @@ public interface NotificateDao {
     Integer getUnreadMessageCount(@Param("userId") String userId);
 
     Integer updateMessageStatusToAlreadyRead(@Param("idList") List<Integer> toUpdateMessageIds);
+
+    void insertMessage(@Param("msg") Message message);
 }

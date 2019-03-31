@@ -30,11 +30,12 @@ public class Message {
         this.messageType = messageType;
     }
 
-    public String getUserId() {
+
+    public String getMessageFrom() {
         return messageFrom;
     }
 
-    public void setUserId(String messageFrom) {
+    public void setMessageFrom(String messageFrom) {
         this.messageFrom = messageFrom;
     }
 

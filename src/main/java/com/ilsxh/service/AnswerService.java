@@ -1,5 +1,6 @@
 package com.ilsxh.service;
 
+import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.dao.AnswerDao;
 import com.ilsxh.redis.AnswerKey;
 import com.ilsxh.util.Response;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
 
+/**
+ * @author Tsaizhenya
+ */
 @Service
 public class AnswerService {
 
@@ -31,27 +35,31 @@ public class AnswerService {
 
     /**
      * 投票活动（点赞，反对）bug:
+     *
      * @param request
      * @param answerId
      * @param currVoteStatus currrent status for answers
      * @param upOrDownClick  点击了赞同按钮(Integer:1) or 反对按钮(Integer:-1)
      */
+    @OperAnnotation(descpition = "对回答投票", include = "answerId, currVoteStatus, upOrDownClick")
     public void vote(HttpServletRequest request, Integer answerId, Integer currVoteStatus, Integer upOrDownClick) {
 
         String userId = userHelperService.getUserIdFromRedis(request);
         Timestamp createTime = new Timestamp(System.currentTimeMillis());
 
         Integer voteExisted = answerDao.userVoteExisted(answerId, userId);
-        if (voteExisted != null && voteExisted == 1) { // 曾经进行过投票活动,数据库中存在记录
-
-            if (upOrDownClick == 1) { // 点击赞同按钮
-
-                if (currVoteStatus != null && currVoteStatus == UPVOTE_FOR_ANSWER) { // 已经赞同
+        // 曾经进行过投票活动,数据库中存在记录
+        if (voteExisted != null && voteExisted == 1) {
+            // 点击赞同按钮
+            if (upOrDownClick == 1) {
+                // 已经赞同
+                if (currVoteStatus != null && currVoteStatus == UPVOTE_FOR_ANSWER) {
                     // mid_user_vote_answer中间表更新vote字段为1，赞同
                     answerDao.voteAnswer(userId, answerId, NOT_VOTE_FOR_ANSWER, createTime);
                     // 更新answer表赞同反对统计次数
                     answerDao.decreAnswerUpVoteOnly(answerId);
-                } else if (currVoteStatus == NOT_VOTE_FOR_ANSWER) { // 未投票
+                    // 未投票
+                } else if (currVoteStatus == NOT_VOTE_FOR_ANSWER) {
                     answerDao.voteAnswer(userId, answerId, UPVOTE_FOR_ANSWER, createTime);
                     answerDao.increAnswerUpVoteOnly(answerId);
                 } else {                                        // 反对
@@ -76,9 +84,11 @@ public class AnswerService {
         } else { // 数据库中不存在记录
             if (upOrDownClick == 1) {
                 answerDao.increAnswerUpVoteOnly(answerId);
-                answerDao.insertVoteAnswer(userId, answerId, UPVOTE_FOR_ANSWER, createTime); // 赞成或者反对，根据voteToWhich判断
+                // 赞成或者反对，根据voteToWhich判断
+                answerDao.insertVoteAnswer(userId, answerId, UPVOTE_FOR_ANSWER, createTime);
             } else {
-                answerDao.insertVoteAnswer(userId, answerId, DOWNVOTE_FOR_ANSWER, createTime); // 赞成或者反对，根据voteToWhich判断
+                // 赞成或者反对，根据voteToWhich判断
+                answerDao.insertVoteAnswer(userId, answerId, DOWNVOTE_FOR_ANSWER, createTime);
                 answerDao.increAnswerDownVoteOnly(answerId);
             }
         }
@@ -87,28 +97,31 @@ public class AnswerService {
 
     /**
      * 取消收藏回答
+     *
      * @param answerId
      * @param request
      */
-    public Integer cancelCollectAnswer(Integer answerId, HttpServletRequest request) {
-        String localUserId = userHelperService.getUserIdFromRedis(request);
-        Integer delEffectRow = answerDao.cancelCollectAnswer(localUserId, answerId);
+    @OperAnnotation(descpition = "取消收藏回答", include = "userId, answerId")
+    public Integer cancelCollectAnswer(Integer answerId, String userId) {
+        Integer delEffectRow = answerDao.cancelCollectAnswer(userId, answerId);
         return delEffectRow;
     }
 
     /**
      * 收藏回答
+     *
      * @param answerId
      * @param request
      */
-    public Integer collectAnswer(Integer answerId, HttpServletRequest request) {
-        String localUserId = userHelperService.getUserIdFromRedis(request);
+    @OperAnnotation(descpition = "收藏回答", include = "userId, answerId")
+    public Integer collectAnswer(Integer answerId, String localUserId) {
         Integer effectRow = answerDao.collectAnswer(localUserId, answerId, new Timestamp(System.currentTimeMillis()));
         return effectRow;
     }
 
     /**
      * 获取回答详情
+     *
      * @param questionId
      * @param request
      * @return
@@ -121,4 +134,11 @@ public class AnswerService {
     }
 
 
+    public Integer getQuestionIdByAnswerId(Integer answerId) {
+        return answerDao.getQuestionIdByAnswerId(answerId);
+    }
+
+    public String getUserIdByAnswerId(Integer answerId) {
+        return answerDao.getUserIdByAnswerId(answerId);
+    }
 }

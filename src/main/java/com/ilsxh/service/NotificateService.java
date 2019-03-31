@@ -93,4 +93,8 @@ public class NotificateService {
         }
         return retList;
     }
+
+    public void insertMessage(Message message) {
+        notificateDao.insertMessage(message);
+    }
 }

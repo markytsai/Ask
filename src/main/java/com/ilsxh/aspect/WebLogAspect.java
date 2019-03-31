@@ -11,6 +11,7 @@ import com.ilsxh.exception.CustomException;
 import com.ilsxh.service.UserHelperService;
 import com.ilsxh.util.IPUtils;
 import com.ilsxh.util.MyConstant;
+import com.ilsxh.websocket.WebSocketEndPoint;
 import javassist.ClassClassPath;
 import javassist.ClassPool;
 import javassist.CtMethod;
@@ -40,7 +41,7 @@ import static com.ilsxh.util.MyConstant.PrintLogInConsole;
 
 @Aspect
 @Component
-public class WebLogAspect {
+public class WebLogAspect extends BaseAspect{
 
     @Autowired
     private UserHelperService userHelperService;
@@ -103,6 +104,12 @@ public class WebLogAspect {
         }
         String reqParam = JSON.toJSONString(Collections.emptyMap());
         Map<String, Object> params = getArgsMap(joinPoint, paramMap);
+        params.remove("request");
+        params.remove("response");
+        if (params.get("userId") == null) {
+            params.put("userId", userHelperService.getUserIdFromRedis(request));
+
+        }
         if (params != null) {
             //序列化参数列表
             reqParam = JSON.toJSONString(params);
@@ -189,20 +196,20 @@ public class WebLogAspect {
         }
     }
 
-    private Map getArgsMap(ProceedingJoinPoint point, Map<String, Object> methodParamNames) {
-        Object[] args = point.getArgs();
-        if (null == methodParamNames) {
-            return Collections.EMPTY_MAP;
-        }
-        for (Map.Entry<String, Object> entry : methodParamNames.entrySet()) {
-            int index = Integer.valueOf(String.valueOf(entry.getValue()));
-            if (args != null && args.length > 0) {
-                Object arg = (null == args[index] ? "" : args[index]);
-                methodParamNames.put(entry.getKey(), arg);
-            }
-        }
-        return methodParamNames;
-    }
+//    public Map getArgsMap(ProceedingJoinPoint point, Map<String, Object> methodParamNames) {
+//        Object[] args = point.getArgs();
+//        if (null == methodParamNames) {
+//            return Collections.EMPTY_MAP;
+//        }
+//        for (Map.Entry<String, Object> entry : methodParamNames.entrySet()) {
+//            int index = Integer.valueOf(String.valueOf(entry.getValue()));
+//            if (args != null && args.length > 0) {
+//                Object arg = (null == args[index] ? "" : args[index]);
+//                methodParamNames.put(entry.getKey(), arg);
+//            }
+//        }
+//        return methodParamNames;
+//    }
 
     private void handleResponseLog(String logSwitch, LogMessage logMessage, OperAnnotation methodLogAnnon, Object result) {
         // 处理切点返回值
@@ -218,13 +225,14 @@ public class WebLogAspect {
             logMessage.setResResult(JSON.toJSONString(tempMap));
         }
         endTime = System.currentTimeMillis();
-        logMessage.setLogDuration(new Date().getTime() - startTime);
+        logMessage.setLogDuration(new Timestamp(System.currentTimeMillis()).getTime() - startTime);
         //是否输出日志
         if (methodLogAnnon.loggable()
                 && methodLogAnnon.logScope().contains(LogScopeEnum.AFTER)) {
             //判断是否入库
             if (methodLogAnnon.db()) {
                 logDao.insertLog(logMessage);
+                WebSocketEndPoint.sendAsynMessage(logMessage.getLogDesc());
             }
             //判断是否输出到控制台
             if (methodLogAnnon.console()

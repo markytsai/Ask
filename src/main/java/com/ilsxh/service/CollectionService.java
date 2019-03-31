@@ -37,7 +37,7 @@ public class CollectionService {
      * 获取用户的回答收藏列表
      *
      * @param userId
-     * @param request
+     * @param pageNo
      * @return
      */
     public Page<Answer> getAnswerCollectionByUserId(String userId, Integer pageNo) {

@@ -32,4 +32,8 @@ public interface AnswerDao {
     Integer cancelCollectAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId);
 
     Integer collectAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("createTime") Timestamp createTime);
+
+    Integer getQuestionIdByAnswerId(@Param("answerId") Integer answerId);
+
+    String getUserIdByAnswerId(@Param("answerId") Integer answerId);
 }

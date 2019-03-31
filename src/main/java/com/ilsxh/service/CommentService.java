@@ -1,5 +1,6 @@
 package com.ilsxh.service;
 
+import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.dao.CommentDao;
 import com.ilsxh.dao.UserDao;
 import com.ilsxh.entity.AnswerComment;
@@ -30,6 +31,7 @@ public class CommentService {
      * @param userId
      * @return
      */
+    @OperAnnotation(descpition = "对回答进行评论")
     public AnswerComment commentAnswer(Integer answerId, String commentContent, String userId) {
         AnswerComment comment = new AnswerComment();
         comment.setLikedCount(0);
@@ -83,6 +85,7 @@ public class CommentService {
      * @param userId
      * @return
      */
+    @OperAnnotation(descpition = "删除对回答的评论")
     public Integer delComment(Integer commentId, String userId) {
         commentDao.delComment(commentId, userId);
         return Integer.valueOf(1);
