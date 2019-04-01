@@ -6,6 +6,7 @@ import com.ilsxh.entity.User;
 import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.NotificateService;
 import com.ilsxh.service.UserHelperService;
+import com.ilsxh.websocket.WebSocketEndPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -104,12 +105,12 @@ public class NotificateController {
         }
         model.addAttribute("hiddenCurrCount", totalCount);
 
-        if (totalCount == 0) {
-            return new BaseResponse("2", "", "");
+//        if (totalCount == 0) {
+//            return new BaseResponse("2", "", "");
 
-        } else {
-            return new BaseResponse("1", totalCount + "", dayList);
-        }
+//        } else {
+        return new BaseResponse("1", totalCount + "", dayList);
+//        }
     }
 
 
@@ -138,6 +139,9 @@ public class NotificateController {
         for (Day day : dayList) {
             totalCount += day.getTotalCountInDay();
         }
+
+        WebSocketEndPoint.sendAsynMessage(userId, -totalCount + "");
+
         if (totalCount == 0) {
             return new BaseResponse("2", "", "");
         } else {

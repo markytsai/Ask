@@ -41,30 +41,43 @@ function details_in_popup() {
 
 // 弹框显示的时候触发 getIems 方法， 默认获取第一个tab的内容
 $('.notificate').on('show.bs.popover', function () {
+    focusOnQuestionBtn();
     getIems("1-2-3", "/loadMoreCard");
 });
 
-//获取第一个tab的内容
-$(document).on("click", ".questionBtn", function () {
+function focusOnQuestionBtn() {
     $(".followBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
     $(".voteBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
     $(".questionBtn svg:first-child").addClass("PushNotifications-selectedTabIcon");
+}
+
+function focusOnFollowBtn() {
+    $(".questionBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
+    $(".voteBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
+    $(".followBtn svg:first-child").addClass("PushNotifications-selectedTabIcon");
+}
+
+function focusOnVoteBtn() {
+    $(".questionBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
+    $(".followBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
+    $(".voteBtn svg:first-child").addClass("PushNotifications-selectedTabIcon");
+}
+
+//获取第一个tab的内容
+$(document).on("click", ".questionBtn", function () {
+    focusOnQuestionBtn();
     getIems("1-2-3", "/loadMoreCard");
 })
 
 //获取第二个tab的内容
 $(document).on("click", ".followBtn", function () {
-    $(".questionBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
-    $(".voteBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
-    $(".followBtn svg:first-child").addClass("PushNotifications-selectedTabIcon");
+    focusOnFollowBtn();
     getIems(4, "/loadMoreCard");
 });
 
 //获取第三个tab的内容
 $(document).on("click", ".voteBtn", function () {
-    $(".questionBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
-    $(".followBtn svg:first-child").removeClass("PushNotifications-selectedTabIcon");
-    $(".voteBtn svg:first-child").addClass("PushNotifications-selectedTabIcon");
+    focusOnVoteBtn();
     getIems(5, "/loadMoreCard");
 });
 
@@ -110,11 +123,11 @@ function getIems(type, url) {
 
                 $(".PushNotifications-list").html(fullHtml);
 
-                if (parseInt(initCount) - counter == 0) {
-                    $(".PushNotifications-count").addClass("hide")
-                } else {
-                    $(".PushNotifications-count").text(parseInt(initCount) - counter);
-                }
+                // if (parseInt(initCount) - counter == 0) {
+                //     $(".PushNotifications-count").addClass("hide")
+                // } else {
+                //     $(".PushNotifications-count").text(parseInt(initCount) - counter);
+                // }
             } else if (response.code == 2) {
 
                 var fullHtml = "<div class=\"EmptyState\">\n" +
@@ -350,10 +363,10 @@ function initSocket(myWebsocket) {
         return false;
     }
 
-    var target = 'ws://' + window.location.host + "/websocket";
+    var target = 'ws://' + window.location.host + "/websocket" + "?" + document.cookie.split(";")[9].trim();
 
     if ('WebSocket' in window) {
-        console.log("准备连接websocket");
+        console.log("客户端准备连接websocket");
         webSocket = new WebSocket(target);
     } else if ('MozWebSocket' in window) {
         webSocket = new MozWebSocket(target);
@@ -366,20 +379,32 @@ function initSocket(myWebsocket) {
     // 收到服务端消息
     webSocket.onmessage = function (msg) {
 
+        // 发过来的数字带上正负号，正数是产生新的消息；负号是读取了消息
         var countElement = $(".PushNotifications-count");
-        // 如果标号数量为0， 直接显示传来的数量，并且使其显示出来；不为0，直接加上
-        if (countElement.text() != 0) {
-            countElement.text(parseInt(msg.data) + parseInt(countElement.text()));
-        } else if (msg.data.length <= 2) {
-            countElement.text(parseInt(msg.data));
-            countElement.removeClass("hide");
+        // countElement.removeClass("hide");
+        // countElement.text(msg.data);
+        // 如果参数是负数，说明是读取了消息
+        if (parseInt(msg.data) < 0) {
+            var diff = parseInt(countElement.text()) + parseInt(msg.data);
+            if (diff == 0) {
+                countElement.addClass("hide");
+                countElement.text(0);
+            } else {
+                countElement.text(diff);
+            }
+            // 如果是正数，说明了产生了新的消息
+        } else if (parseInt(msg.data) > 0) {
+            if (countElement.text() == 0) {
+                countElement.text(parseInt(msg.data));
+                countElement.removeClass("hide");
+            } else {
+                countElement.text(parseInt(msg.data) + parseInt(countElement.text()));
+            }
         }
+        // 如果标号数量为0， 直接显示传来的数量，并且使其显示出来；不为0，直接加上
 
-        console.log("收到服务端消息");
-        console.log("message: " + msg.data);
-        // 关闭连接
+        console.log("客户端收到服务端消息: " + msg.data);
         webSocket.onclose();
-        console.log(msg);
     };
 
     // 异常
@@ -390,14 +415,14 @@ function initSocket(myWebsocket) {
 
     // 建立连接
     webSocket.onopen = function (event) {
-        webSocket.send("from client:connecting....");
-        console.log("建立连接")
+        console.log("客户端成功建立连接")
+        webSocket.send("客户端发送到服务端的消息: " + "message from client.....");
         console.log(event);
     };
 
     // 断线
     webSocket.onclose = function () {
 
-        console.log("websocket断开连接");
+        console.log("客户端websocket断开连接");
     };
 }

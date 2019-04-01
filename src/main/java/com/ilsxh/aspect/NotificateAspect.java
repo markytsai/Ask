@@ -8,6 +8,7 @@ import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.exception.CustomException;
 import com.ilsxh.service.*;
 import com.ilsxh.util.MyConstant;
+import com.ilsxh.websocket.WebSocketEndPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -107,6 +108,9 @@ public class NotificateAspect extends BaseAspect {
             Question question = questionService.getQuestionByQuestionid(questionId);
             message.setMessageTo(question.getUserId());
 
+            // 增加一个提交回答的消息
+            WebSocketEndPoint.sendAsynMessage(question.getUserId(), "1");
+
             msgContent = "" +
                     "<span>\n" +
                     "  <span class='PushNotifications-actor'><a href='http://localhost:8088/userHome/activity/" + user.getUserId() + "'>" + user.getUsername() + "</a></span>\n" +
@@ -124,6 +128,10 @@ public class NotificateAspect extends BaseAspect {
             Question question = questionService.getQuestionByQuestionid(questionId);
             String userId = answerService.getUserIdByAnswerId(answerId);
             message.setMessageTo(userId);
+
+            // 增加一个评论回答的消息
+            WebSocketEndPoint.sendAsynMessage(userId, "1");
+
             msgContent = "" +
                     "<span>\n" +
                     "  <span class='PushNotifications-actor'><a href='http://localhost:8088/userHome/activity/" + user.getUserId() + "'>" + user.getUsername() + "</a></span>\n" +
@@ -137,7 +145,11 @@ public class NotificateAspect extends BaseAspect {
         } else if (actionType.equals("关注用户")) {
             String userIdToBeFollowed = (String) params.get("userIdToBeFollowed");
             Integer followExisted = userService.getUserFollowStatus(user.getUserId(), userIdToBeFollowed);
-            if ( followExisted == 1) {
+
+
+            if (followExisted == null || followExisted == 0) {
+                // 增加一个关注用户的消息
+                WebSocketEndPoint.sendAsynMessage(userIdToBeFollowed, "1");
                 message.setMessageTo(userIdToBeFollowed);
                 msgContent = "" +
                         "<span>\n" +
@@ -155,6 +167,10 @@ public class NotificateAspect extends BaseAspect {
                 Question question = questionService.getQuestionByQuestionid(questionId);
                 String userId = answerService.getUserIdByAnswerId(answerId);
                 message.setMessageTo(userId);
+
+                // 增加一个给回答投票的消息
+                WebSocketEndPoint.sendAsynMessage(userId, "1");
+
                 msgContent = "" +
                         "<span>\n" +
                         "  <span class='PushNotifications-actor'><a href='http://localhost:8088/userHome/activity/" + user.getUserId() + "'>" + user.getUsername() + "</a></span>\n" +

@@ -42,8 +42,8 @@
         <if test="notiType == 2">
             from message_user
         </if>
+        where message_to = #{messageTo} or message_to = 'all'
         <if test="type != 0">
-            where message_to = #{messageTo}
             and message_type = #{type}
         </if>
     </select>

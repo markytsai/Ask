@@ -232,7 +232,7 @@ public class WebLogAspect extends BaseAspect{
             //判断是否入库
             if (methodLogAnnon.db()) {
                 logDao.insertLog(logMessage);
-                WebSocketEndPoint.sendAsynMessage(logMessage.getLogDesc());
+//                WebSocketEndPoint.sendAsynMessage(logMessage.getLogDesc());
             }
             //判断是否输出到控制台
             if (methodLogAnnon.console()

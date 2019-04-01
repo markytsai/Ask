@@ -1,12 +1,15 @@
 package com.ilsxh.websocket;
 
+import com.ilsxh.redis.UserKey;
+import com.ilsxh.service.RedisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -15,7 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint(value = "/websocket", configurator = SpringConfigurator.class)
 public class WebSocketEndPoint {
 
-    private static int onlineCounter = 0;
+    @Autowired
+    private RedisService redisService;
 
     public WebSocketEndPoint() {
     }
@@ -24,8 +28,9 @@ public class WebSocketEndPoint {
      * 与客户端的连接会话，需要通过它来给客户端发送数据
      */
     public Session session;
+    public String tokenUserId;
 
-    public static Map<String, Session> clients = new ConcurrentHashMap<String, Session>();
+    public static Map<String, List<Session>> clients = new ConcurrentHashMap<>();
 
 
     /**
@@ -36,7 +41,12 @@ public class WebSocketEndPoint {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        clients.put(session.getId(), session);
+        String tokenName = session.getRequestURI().getQuery().split("=")[1];
+        this.tokenUserId = redisService.get(UserKey.loginUserKey, tokenName, String.class);
+        if (clients.get(tokenUserId) == null) {
+            clients.put(tokenUserId, new ArrayList<Session>());
+        }
+        clients.get(tokenUserId).add(this.session);
         System.out.println("有新连接加入！当前在线人数为" + clients.size());
     }
 
@@ -45,7 +55,7 @@ public class WebSocketEndPoint {
      */
     @OnClose
     public void onClose() {
-        clients.remove(session.getId(), session);
+        clients.get(tokenUserId).remove(this.session);
         System.out.println("有一连接关闭！当前在线人数为" + clients.size());
     }
 
@@ -79,16 +89,26 @@ public class WebSocketEndPoint {
      * @param message
      * @throws IOException
      */
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(String userId, String message) throws IOException {
+
         //保存数据到数据库
         this.session.getBasicRemote().sendText(message);
         //this.session.getAsyncRemote().sendText(message);
     }
 
-    public static synchronized void sendAsynMessage(String message) {
-        Set<Map.Entry<String, Session>> set = clients.entrySet();
-        for (Map.Entry<String, Session> item : set) {
-            item.getValue().getAsyncRemote().sendText(message);
+    /**
+     * 发送给指定的用户ID，取出相同的token值
+     *
+     * @param messageTo
+     * @param message
+     */
+    public static synchronized void sendAsynMessage(String messageTo, String message) {
+        Set<Map.Entry<String, List<Session>>> set = clients.entrySet();
+        for (Map.Entry<String, List<Session>> item : set) {
+            if (item.getKey().equals(messageTo)) {
+                System.out.println("发送了消息：" + message);
+                item.getValue().forEach(session1 -> session1.getAsyncRemote().sendText(message));
+            }
         }
     }
 }
