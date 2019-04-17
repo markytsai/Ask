@@ -67,7 +67,7 @@ public class UserController {
     @RequestMapping(value = "/doRegister")
     public BaseResponse register(@RequestParam("email") String email, @RequestParam("username") String username,
                                  @RequestParam("password") String password, HttpServletResponse response) {
-        Map<String, Object> userInfoMap = userService.registerNewUser(email, username, password, response);
+        Map<String, Object> userInfoMap = userService.registerNewUser(email, username, password);
         if (userInfoMap.get("errorInfo") == null) {
             return new BaseResponse(StatusEnum.REGISTER_SUCCESS.getCode(), "成功注册", userInfoMap);
         } else {

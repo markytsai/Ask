@@ -3,6 +3,8 @@ package com.ilsxh.service;
 import com.ilsxh.dao.IndexDao;
 import com.ilsxh.entity.Activity;
 import com.ilsxh.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import java.util.*;
 public class IndexService {
 
     private IndexDao indexDao;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public IndexService(IndexDao indexDao) {
@@ -26,6 +29,9 @@ public class IndexService {
     public User getProfileInfo(String userId) {
 
         User user = indexDao.selectProfileInfoByUserId(userId);
+        if (null == user) {
+            logger.info("获取用户信息失败：用户序号{}", userId);
+        }
 
         return user;
     }
@@ -50,6 +56,7 @@ public class IndexService {
         Map<String, String> map = new HashMap<>();
         Integer userCount = indexDao.selectUserCountByUserIdAndPassword(userId, password);
         if (userCount == null) {
+            logger.info("修改密码出现错误，原始密码不正确：用户序号{}", userId);
             map.put("error", "原密码不正确");
             return map;
         }
@@ -64,6 +71,9 @@ public class IndexService {
      */
     public Integer updateAvatarUrl(String userId, String avatarUrl) {
         Integer updEffectRow = indexDao.updateAvatarUrl(userId, avatarUrl);
+        if (null == updEffectRow || updEffectRow.intValue() == 0) {
+            logger.info("更新头像失败: 用户序号{}", userId);
+        }
         return updEffectRow;
     }
 

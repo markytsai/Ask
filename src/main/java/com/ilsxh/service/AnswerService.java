@@ -4,6 +4,8 @@ import com.ilsxh.annotation.OperAnnotation;
 import com.ilsxh.dao.AnswerDao;
 import com.ilsxh.redis.AnswerKey;
 import com.ilsxh.util.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,8 @@ public class AnswerService {
     public final static Integer UPVOTE_FOR_ANSWER = 1;
     public final static Integer DOWNVOTE_FOR_ANSWER = -1;
     public final static Integer NOT_VOTE_FOR_ANSWER = 0;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private AnswerDao answerDao;
     private UserHelperService userHelperService;
@@ -99,11 +103,14 @@ public class AnswerService {
      * 取消收藏回答
      *
      * @param answerId
-     * @param request
+     * @param userId
      */
     @OperAnnotation(descpition = "取消收藏回答", include = "userId, answerId")
     public Integer cancelCollectAnswer(Integer answerId, String userId) {
         Integer delEffectRow = answerDao.cancelCollectAnswer(userId, answerId);
+        if (null == delEffectRow || delEffectRow.intValue() == 0) {
+            logger.info("用户取消收藏回答失：用户序号{}, 回答序号{}", userId, answerId);
+        }
         return delEffectRow;
     }
 
@@ -111,11 +118,14 @@ public class AnswerService {
      * 收藏回答
      *
      * @param answerId
-     * @param request
+     * @param localUserId
      */
     @OperAnnotation(descpition = "收藏回答", include = "userId, answerId")
     public Integer collectAnswer(Integer answerId, String localUserId) {
         Integer effectRow = answerDao.collectAnswer(localUserId, answerId, new Timestamp(System.currentTimeMillis()));
+        if (null == effectRow || effectRow.intValue() == 0) {
+            logger.info("用户收藏回答失：用户序号{}, 回答序号{}", localUserId, answerId);
+        }
         return effectRow;
     }
 
@@ -130,6 +140,9 @@ public class AnswerService {
 
         String localUserId = userHelperService.getUserIdFromRedis(request);
         Integer answerId = redisService.get(AnswerKey.answerKey, "-" + localUserId + "-" + questionId, Integer.class);
+        if (null == answerId || answerId.intValue() == 0) {
+            logger.info("获取回答详情失败: 问题序号{}", questionId);
+        }
         return answerId;
     }
 

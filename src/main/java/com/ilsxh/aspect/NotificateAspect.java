@@ -42,6 +42,11 @@ public class NotificateAspect extends BaseAspect {
     @Autowired
     private UserService userService;
 
+    private final static String MSG_SUBMIT_ANSWER = "提交回答";
+    private final static String MSG_COMMENT_ON_ANSWER = "对回答进行评论";
+    private final static String MSG_FOLLOW_USRE = "关注用户";
+    private final static String MSG_VOTE_ON_ANSWER = "对回答投票";
+
     @Pointcut("execution(* com.ilsxh.service.*.*(..))")
     public void notificatePointerCut() {
     }
@@ -70,13 +75,13 @@ public class NotificateAspect extends BaseAspect {
 
         // 从切点上获取目标方法
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
 
         String[] paramNames = signature.getParameterNames();
         Map<String, Object> paramMap = new HashMap<>(paramNames.length);
         for (int i = 0; i < paramNames.length; i++) {
             paramMap.put(paramNames[i], i);
         }
+
         Map<String, Object> params = getArgsMap(joinPoint, paramMap);
 
 
@@ -102,7 +107,7 @@ public class NotificateAspect extends BaseAspect {
         message.setMessageTime(new Timestamp(System.currentTimeMillis()));
         message.setMessageFrom("system");
 
-        if (actionType != null && actionType.equals("提交回答")) {
+        if (actionType != null && actionType.equals(MSG_SUBMIT_ANSWER)) {
             message.setMessageType(2);
             Integer questionId = (Integer) params.get("questionId");
             Question question = questionService.getQuestionByQuestionid(questionId);
@@ -122,7 +127,7 @@ public class NotificateAspect extends BaseAspect {
             message.setMessageType(2);
             notificateService.insertMessage(message);
             // 评论回答
-        } else if (actionType.equals("对回答进行评论")) {
+        } else if (actionType.equals(MSG_COMMENT_ON_ANSWER)) {
             Integer answerId = (Integer) params.get("answerId");
             Integer questionId = answerService.getQuestionIdByAnswerId(answerId);
             Question question = questionService.getQuestionByQuestionid(questionId);
@@ -142,7 +147,7 @@ public class NotificateAspect extends BaseAspect {
             message.setMessageContent(msgContent);
             message.setMessageType(3);
             notificateService.insertMessage(message);
-        } else if (actionType.equals("关注用户")) {
+        } else if (actionType.equals(MSG_FOLLOW_USRE)) {
             String userIdToBeFollowed = (String) params.get("userIdToBeFollowed");
             Integer followExisted = userService.getUserFollowStatus(user.getUserId(), userIdToBeFollowed);
 
@@ -159,7 +164,7 @@ public class NotificateAspect extends BaseAspect {
                 message.setMessageType(4);
                 notificateService.insertMessage(message);
             }
-        } else if (actionType.equals("对回答投票")) {
+        } else if (actionType.equals(MSG_VOTE_ON_ANSWER)) {
             if ((Integer) params.get("upOrDownClick") == 1 && (Integer) params.get("currVoteStatus") != 1) {
 
                 Integer answerId = (Integer) params.get("answerId");

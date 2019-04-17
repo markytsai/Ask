@@ -5,6 +5,8 @@ import com.ilsxh.entity.Day;
 import com.ilsxh.entity.Message;
 import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.exception.CustomException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ import java.util.List;
 @Service
 public class NotificateService {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private NotificateDao notificateDao;
 
@@ -95,6 +98,9 @@ public class NotificateService {
     }
 
     public void insertMessage(Message message) {
-        notificateDao.insertMessage(message);
+        Integer effectNum = notificateDao.insertMessage(message);
+        if (null == effectNum || effectNum.intValue() == 0) {
+            logger.info("插入消息失败");
+        }
     }
 }

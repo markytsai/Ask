@@ -5,6 +5,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import java.util.Collections;
 import java.util.Map;
 
+/** 用来被继承，因为getArgsMap方法需要被多次使用
+ * @author Tsaizhenya
+ */
 public class BaseAspect {
 
     public Map getArgsMap(ProceedingJoinPoint point, Map<String, Object> methodParamNames) {

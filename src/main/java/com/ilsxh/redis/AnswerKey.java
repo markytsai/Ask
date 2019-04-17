@@ -1,5 +1,8 @@
 package com.ilsxh.redis;
 
+/**
+ * @author Tsaizhenya
+ */
 public class AnswerKey extends BasePrefix {
 
     private AnswerKey(String prefix) {

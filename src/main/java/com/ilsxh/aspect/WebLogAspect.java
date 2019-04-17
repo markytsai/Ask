@@ -22,6 +22,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -39,6 +40,9 @@ import static com.ilsxh.util.MyConstant.NotPintLogInConsole;
 import static com.ilsxh.util.MyConstant.PrintLogInConsole;
 
 
+/**
+ * @author Tsaizhenya
+ */
 @Aspect
 @Component
 public class WebLogAspect extends BaseAspect{
@@ -146,7 +150,7 @@ public class WebLogAspect extends BaseAspect{
     private void handleRequstLog(ProceedingJoinPoint point, OperAnnotation methodLogAnnon, HttpServletRequest request,
                                  LogMessage logMessage, String logSwitch) throws Exception {
 
-        Logger LOGGER = Logger.getLogger("WebLogAspect");
+        Logger logger = Logger.getLogger("WebLogAspect");
         String reqParam = "";
 
         //判断是否输出日志
@@ -155,7 +159,7 @@ public class WebLogAspect extends BaseAspect{
                 && methodLogAnnon.console()
                 && StringUtils.equals(logSwitch, PrintLogInConsole)) {
             //打印入参日志
-            LOGGER.info("-- " + methodLogAnnon.descpition().toString() + point.getSignature().getName() + reqParam);
+            logger.info("-- " + methodLogAnnon.descpition().toString() + point.getSignature().getName() + reqParam);
         }
         startTime = System.currentTimeMillis();
         //接口描述
@@ -196,21 +200,6 @@ public class WebLogAspect extends BaseAspect{
         }
     }
 
-//    public Map getArgsMap(ProceedingJoinPoint point, Map<String, Object> methodParamNames) {
-//        Object[] args = point.getArgs();
-//        if (null == methodParamNames) {
-//            return Collections.EMPTY_MAP;
-//        }
-//        for (Map.Entry<String, Object> entry : methodParamNames.entrySet()) {
-//            int index = Integer.valueOf(String.valueOf(entry.getValue()));
-//            if (args != null && args.length > 0) {
-//                Object arg = (null == args[index] ? "" : args[index]);
-//                methodParamNames.put(entry.getKey(), arg);
-//            }
-//        }
-//        return methodParamNames;
-//    }
-
     private void handleResponseLog(String logSwitch, LogMessage logMessage, OperAnnotation methodLogAnnon, Object result) {
         // 处理切点返回值
         if (null != result) {
@@ -232,9 +221,8 @@ public class WebLogAspect extends BaseAspect{
             //判断是否入库
             if (methodLogAnnon.db()) {
                 logDao.insertLog(logMessage);
-//                WebSocketEndPoint.sendAsynMessage(logMessage.getLogDesc());
             }
-            //判断是否输出到控制台
+            // 判断是否输出到控制台
             if (methodLogAnnon.console()
                     && StringUtils.equals(logSwitch, PrintLogInConsole)) {
                 System.out.println(logMessage.toString());

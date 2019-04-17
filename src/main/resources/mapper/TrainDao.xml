@@ -12,7 +12,7 @@
     <select id="getAllUserTopic" resultType="com.ilsxh.vo.UserTopicVo">
         select id, user_id, topic_id
         from mid_user_follow_topic
-        where follow_topic_status = 1 limit 1000
+        where follow_topic_status = 1 limit 10000
     </select>
 
     <select id="getUserCollectAnswer" resultMap="userQuestionMap">
@@ -38,25 +38,25 @@
     </select>
 
     <insert id="insertUserRecommendQuestion">
-        insert into user_recommend_question(user_id, question_ids)
+        insert into user_recommend_data(user_id, question_ids)
         values(#{userId}, #{questionIds})
     </insert>
 
     <update id="updateUserRecommendQuestion">
-        update user_recommend_question
+        update user_recommend_data
         set question_ids = #{questionIds}
         where user_id = #{userId}
     </update>
 
     <select id="getRecommendQuestionByUserId" resultType="String">
         select question_ids
-        from user_recommend_question
+        from user_recommend_data
         where user_id = #{userId}
     </select>
     
     <select id="getUserInterestedQuestionIds" resultType="Integer">
         select id
-        from user_recommend_question
+        from user_recommend_data
         where user_id = #{userId}
     </select>
     

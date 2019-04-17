@@ -1,6 +1,7 @@
 package com.ilsxh.controller;
 
 import com.ilsxh.annotation.OperAnnotation;
+import com.ilsxh.entity.User;
 import com.ilsxh.enums.StatusEnum;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
@@ -11,6 +12,8 @@ import com.ilsxh.service.*;
 import java.util.*;
 
 import com.ilsxh.util.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +34,9 @@ public class QuestionController {
         this.searchService = searchService;
         this.userHelperService = userHelperService;
     }
+
+
+    private Logger logger = LoggerFactory.getLogger("QuestionController.class");
 
     /**
      * 获取用户关注列表，并返回到关注列表页面
@@ -135,7 +141,6 @@ public class QuestionController {
     @RequestMapping("/submitAnswer/{questionId}")
     @ResponseBody
     public BaseResponse submitAnswer(@RequestParam("answerContent") String answerContent, @PathVariable("questionId") Integer questionId, HttpServletRequest request) {
-
         String localUserId = userHelperService.getUserIdFromRedis(request);
         Answer answer = questionService.submitAnswer(answerContent, questionId, localUserId);
         if (answer != null) {
@@ -178,8 +183,9 @@ public class QuestionController {
     @RequestMapping("/deleteAnswer/{answerId}")
     @ResponseBody
     public BaseResponse deleteAnswer(@PathVariable("answerId") String answerId, HttpServletRequest request) {
+        String userId = userHelperService.getUserIdFromRedis(request);
         Integer effectRow = 0;
-        effectRow = questionService.deleteAnswer(answerId);
+        effectRow = questionService.deleteAnswer(answerId, userId);
         if (effectRow != null && effectRow == 1) {
             return new BaseResponse(StatusEnum.SUCCESS.getCode(), "已成功删除你的回答", effectRow);
         } else {

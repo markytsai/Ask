@@ -14,6 +14,8 @@ import com.ilsxh.util.MyUtil;
 import com.ilsxh.util.Page;
 import com.ilsxh.vo.UserQuestionVo;
 import com.ilsxh.vo.UserTopicVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 /**
+ * @author Tsaizhenya
  * @ClassName: QuestionService
  * @Description TODO
  * @Auther: Caizhenya
@@ -54,6 +57,8 @@ public class QuestionService {
         this.trainDao = trainDao;
     }
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /**
      * 获取用户的关注问题列表
      *
@@ -84,6 +89,10 @@ public class QuestionService {
 
         // 获取登录用户的相似用户集合，选取其中两个最高的
         Set<String> similarUsers = this.getSimilarUserSet(2, userId);
+
+        // 持久化相似用户列表
+//        trainDao.storeSimilarUser2Db(userId, similarUsers);
+
 
         // 用来存 相似用户 所感兴趣的问题集合
 //        Map<String, Set<Integer>> userRecommendQuestionMap = new HashMap<>();
@@ -126,6 +135,8 @@ public class QuestionService {
             user.setUsername(userHelperService.selectUsernameByUserId(question.getUserId()));
             question.setUser(user);
         }
+        logger.info("用户{}成功获取推荐问题列表{}", userId, recommendQuestionIdList);
+
         return questionList;
     }
 
@@ -217,7 +228,11 @@ public class QuestionService {
      */
     @OperAnnotation(descpition = "关注问题")
     public Integer followQuestion(String localUserId, Integer questionId) {
-        return questionDao.followQuestion(localUserId, questionId, new Timestamp(System.currentTimeMillis()));
+        Integer effectNum = questionDao.followQuestion(localUserId, questionId, new Timestamp(System.currentTimeMillis()));
+        if (null == effectNum || effectNum.intValue() == 0) {
+            logger.info("关注问题出现错误: 用户序号{}, 问题序号{}", localUserId, questionId);
+        }
+        return effectNum;
     }
 
     /**
@@ -230,6 +245,9 @@ public class QuestionService {
     @OperAnnotation(descpition = "取消关注问题")
     public Integer unfollowQuestion(String localUserId, Integer questionId) {
         Integer effectRow = questionDao.unfollowQuestion(localUserId, questionId);
+        if (null == effectRow || effectRow.intValue() == 0) {
+            logger.info("取消关注问题出现错误: 用户序号{}, 问题序号{}", localUserId, questionId);
+        }
         return effectRow;
     }
 
@@ -252,7 +270,13 @@ public class QuestionService {
         answer.setQuestionId(questionId);
         answer.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
-        questionDao.submitAnswer(answer);
+        Integer effectNum = questionDao.submitAnswer(answer);
+        if (null == effectNum || effectNum.intValue() == 0) {
+            logger.info("提交回答出现错误: 用户序号{}, 问题序号{}", localUserId, questionId);
+        }
+
+        List<Answer> answerList = this.getAnswersByQuestionId(questionId, localUserId);
+        redisService.set(HotDataKey.hotQuestionAnswerListKey, "hotQuestionId-" + questionId, answerList);
 
         redisService.set(AnswerKey.answerKey, "-" + localUserId + "-" + questionId, answer.getAnswerId());
         return answer;
@@ -268,6 +292,12 @@ public class QuestionService {
      */
     public Integer updateAnswer(String userId, Integer answerId, String answerContent, Integer questionId) {
         Integer effectRow = questionDao.updateAnswer(userId, answerId, answerContent, new Timestamp(System.currentTimeMillis()), questionId);
+        if (null == effectRow || effectRow.intValue() == 0) {
+            logger.info("更新回答出现错误: 用户序号{}, 问题序号{}, 回答序号{}", userId, questionId, answerId);
+        }
+
+        List<Answer> answerList = this.getAnswersByQuestionId(questionId, userId);
+        redisService.set(HotDataKey.hotQuestionAnswerListKey, "hotQuestionId-" + questionId, answerList);
         return effectRow;
     }
 
@@ -276,8 +306,16 @@ public class QuestionService {
      *
      * @param answerId
      */
-    public Integer deleteAnswer(String answerId) {
+    public Integer deleteAnswer(String answerId, String userId) {
+
+        Integer questionId = questionDao.getQuestionIdByAnswerId(userId, answerId);
         Integer effectRow = questionDao.deleteAnswer(answerId);
+        if (null == effectRow || effectRow.intValue() == 0) {
+            logger.info("删除回答出现错误: 用户序号{}, 问题序号{}, 回答序号{}", userId, questionId, answerId);
+        }
+        List<Answer> answerList = this.getAnswersByQuestionId(questionId, userId);
+        redisService.set(HotDataKey.hotQuestionAnswerListKey, "hotQuestionId-" + questionId, answerList);
+
         return effectRow;
     }
 
@@ -302,7 +340,10 @@ public class QuestionService {
         question.setCreateTime(new Timestamp(System.currentTimeMillis()));
 
         List<Integer> topicIdList = this.addQuestionTopics(question, topicString);
-        questionDao.addQuestion(question, userId, JSON.toJSONString(topicIdList), new Timestamp(System.currentTimeMillis()));
+        Integer effectRow = questionDao.addQuestion(question, userId, JSON.toJSONString(topicIdList), new Timestamp(System.currentTimeMillis()));
+        if (null == effectRow || effectRow.intValue() == 0) {
+            logger.info("提出问题出现错误: 用户序号{}, 问题序号{}", userId, question.getQuestionId());
+        }
         questionDao.followQuestion(userId, question.getQuestionId(), new Timestamp(System.currentTimeMillis()));
 
         for (Integer topicId : topicIdList) {
@@ -324,7 +365,6 @@ public class QuestionService {
         for (int i = 0; i < topicStrings.length; i++) {
             Integer topicId = topicDao.getTopicIdByTopicName(topicStrings[i]);
             topicIds.add(topicId);
-
         }
         return topicIds;
     }
@@ -451,7 +491,13 @@ public class QuestionService {
         // 如果是游客身份访问，得到的是"false"
         String hasFollowQuestion = this.hasUserFollowQuestion(userId, questionId);
 
-        List<Answer> answerList = this.getAnswersByQuestionId(questionId, userId);
+        List<Answer> answerList = redisService.getList(HotDataKey.hotQuestionAnswerListKey, "hotQuestionId-" + questionId, Answer.class);
+        if (answerList == null) {
+            answerList = this.getAnswersByQuestionId(questionId, userId);
+            redisService.set(HotDataKey.hotQuestionAnswerListKey, "hotQuestionId-" + questionId, answerList);
+        }
+        model.addAttribute("answerList", answerList);
+
         Question question = this.getQuestionByQuestionid(questionId);
 
         Integer localUserAnswerId = this.isQuestionAnswered(userId, questionId);
@@ -461,8 +507,9 @@ public class QuestionService {
         model.addAttribute("relatedTopicList", relatedTopicList);
 
         model.addAttribute("hasFollowQuestion", hasFollowQuestion);
-        model.addAttribute("answerList", answerList);
+
         model.addAttribute("questionDetail", question);
+
         return model;
     }
 
@@ -479,7 +526,7 @@ public class QuestionService {
         List<UserTopicVo> list = trainDao.getAllUserTopic();
 
         // 通过set获取人数，共存在用户的数量
-        Set<String> set = new HashSet<>();
+        Set<String> set = new HashSet<>(list.size());
         for (UserTopicVo userTopicVo : list) {
             set.add(userTopicVo.getUserId());
         }
@@ -562,12 +609,12 @@ public class QuestionService {
                 }
             }
         }
-
+        logger.info("用户{}成功获取相似用户列表", targetUserId);
         return retUsers;
     }
 
     /**
-     * 返回用户强关注问题序号列表
+     * 返回用户强关注问题序号列表，指的是三种关注同时存在的问题：用户关注的问题，问题下的回答有收藏行为和点赞行为
      *
      * @param userId
      * @return
@@ -684,5 +731,9 @@ public class QuestionService {
 
     public Integer getTotalQuestionNum(String userId) {
         return questionDao.getTotalQuestionNum(userId);
+    }
+
+    public Integer increQuestionFollowedCount(Integer questionId, Integer increCount) {
+        return questionDao.increQuestionFollowedCount(questionId, increCount);
     }
 }

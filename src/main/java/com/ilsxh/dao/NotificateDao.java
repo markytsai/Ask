@@ -39,5 +39,5 @@ public interface NotificateDao {
 
     Integer updateMessageStatusToAlreadyRead(@Param("idList") List<Integer> toUpdateMessageIds);
 
-    void insertMessage(@Param("msg") Message message);
+    Integer insertMessage(@Param("msg") Message message);
 }

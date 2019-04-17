@@ -14,6 +14,8 @@ import com.ilsxh.response.BaseResponse;
 import com.ilsxh.util.Page;
 import com.ilsxh.util.UUIDUtil;
 import com.ilsxh.vo.FirstLoginVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,9 @@ import static com.ilsxh.enums.StatusEnum.CONTINUE_LOGIN;
 import static com.ilsxh.enums.StatusEnum.FIRST_LOGIN;
 import static com.ilsxh.util.MyConstant.FIRST_LOGIN_STATUS;
 
+/**
+ * @author Tsaizhenya
+ */
 @Service
 public class UserService {
 
@@ -38,6 +43,7 @@ public class UserService {
     private QuestionDao questionDao;
     private RedisService redisService;
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     public UserService(UserDao userDao, AnswerDao answerDao, QuestionDao questionDao, RedisService redisService) {
         this.userDao = userDao;
@@ -67,7 +73,8 @@ public class UserService {
 
         FirstLoginVo user = userDao.selectUserIdByEmailAndPassword(email, password);
         if (user == null || user.getUserId() == null) {
-            throw new CustomException(StatusEnum.LOGIN_ERROR);
+            logger.info("登录失败: 登录邮箱账号{}", email);
+            throw new CustomException(StatusEnum.LOGIN_ERROR, "用户名或密码不正确");
         }
 
         // 用户首次登录，更新状态码
@@ -94,12 +101,13 @@ public class UserService {
      * @return
      */
     @OperAnnotation(descpition = "用户注册", include = "email, username")
-    public Map<String, Object> registerNewUser(String email, String username, String password, HttpServletResponse response) {
+    public Map<String, Object> registerNewUser(String email, String username, String password) {
         Map<String, Object> registerUserMap = new HashMap<>();
 
         String userId = UUIDUtil.uuid();
         Integer effectRow = userDao.regiterNewUser(userId, email, username, password, new Timestamp(System.currentTimeMillis()));
         if (effectRow == null) {
+            logger.info("注册失败: 注册邮箱账号{}, 用户名{}", email, username);
             registerUserMap.put("loginError", "用户名或密码错误");
         }
         User user = userDao.selectUserByUserId(userId);
@@ -112,7 +120,7 @@ public class UserService {
      * @param response
      * @return
      */
-    @OperAnnotation(descpition = "用户推出登录", include = "userId")
+    @OperAnnotation(descpition = "用户退出登录", include = "userId")
     public boolean logout(String userId, HttpServletRequest request, HttpServletResponse response) {
         String loginToken = null;
         Cookie[] cookies = request.getCookies();
@@ -120,7 +128,7 @@ public class UserService {
             if (cookie.getName().equals(COOKIE_TOKEN_NAME)) {
                 loginToken = cookie.getValue();
                 if (redisService.delete(UserKey.loginUserKey, loginToken)) {
-                    System.out.println("token刪除成功");
+                    logger.info("token刪除成功，用户退出: 用户序号{}", userId);
                 }
                 break;
             }

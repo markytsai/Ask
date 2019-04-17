@@ -46,13 +46,13 @@ public interface QuestionDao {
 
     Integer unfollowQuestion(@Param("userId") String userId, @Param("questionId") Integer questionId);
 
-    void submitAnswer(@Param("answer") Answer answer);
+    Integer submitAnswer(@Param("answer") Answer answer);
 
     Integer updateAnswer(@Param("userId") String userId, @Param("answerId") Integer answerId, @Param("answerContent") String answerContent, @Param("createTime") Timestamp createTime, @Param("questionId") Integer questionId);
 
     Integer deleteAnswer(@Param("answerId") String answerId);
 
-    void addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("topicJson") String topicString, @Param("createTime") Timestamp createTime);
+    Integer addQuestion(@Param("question") Question question, @Param("userId") String userId, @Param("topicJson") String topicString, @Param("createTime") Timestamp createTime);
 
     void addQuestionTopic(@Param("questionId") Integer questionId, @Param("topicId") Integer topicId);
 
@@ -65,4 +65,8 @@ public interface QuestionDao {
     List<Question> getQuestionListById(List<Integer> list);
 
     Integer getTotalQuestionNum(@Param("userId") String userId);
+
+    Integer increQuestionFollowedCount(@Param("questionId") Integer questionId, @Param("increCount") Integer increCount);
+
+    Integer getQuestionIdByAnswerId(@Param("userId") String userId, @Param("answerId") String answerId);
 }

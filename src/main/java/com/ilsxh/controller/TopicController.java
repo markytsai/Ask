@@ -9,6 +9,7 @@ import com.ilsxh.response.BaseResponse;
 import com.ilsxh.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -186,6 +187,7 @@ public class TopicController {
         return new BaseResponse<>("1", "成功保存用户话题偏好");
     }
 
+    @Transactional
     @RequestMapping("/doUpdateTopic")
     @ResponseBody
     public BaseResponse<String> updateChosenTopics(HttpServletRequest request, @RequestParam(value = "topicIds[]") Integer[] topicIds, Model model) {
