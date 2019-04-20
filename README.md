@@ -1,36 +1,110 @@
 # Ask
-* Ask is a web-based Q/A System with Recommendation.
+     
+> ***AnswerPedia***是一款专注于提供学科类知识问答社区网站。主要包括六大学科主题：社会科学、
+自然科学、理科、人文学科、形式科学和技术与应用科学。使用推荐技术给用户提供个性化的问题
+推荐，来减少僵尸问题的数量，提高问题的回答率。
+>
 
-* It works with Spring, Spring MVC and MyBatis frameworks and MySql and Redis in the backend.
+系统具有垂直类问答社区的角色，在功能方面覆盖了绝大部分问答网站应有的功能。系统主要实现了如下的功能：
 
-* The recommendation module is implemented by user-based and item-based algorithms.
+（1）注册、登录、查看个人信息，修改个人信息，退出登录。
 
-Here are several rederings.
+（2）查看关注问题，查看推荐问题，查看热门问题。
 
-1. Login page (with register page in same style)
-![](http://pknhrkp8l.bkt.clouddn.com/login.jpg)
+（3）关注、提出、回答问题，点赞、评论、收藏回答。
 
-2. Question index page (shows followed questions by login user)
-![](http://pknhrkp8l.bkt.clouddn.com/index-following.png)
+（4）根据话题，问题，回答，用户四种类型进行全局搜索。
 
-3. Question detail page (shows question detail and answers details)
-![](http://pknhrkp8l.bkt.clouddn.com/question-detail.jpg)
+（5）修改个人偏好。
 
-4. User home page (with only five tabs finished out of seven)
-![](http://pknhrkp8l.bkt.clouddn.com/user-homepage.jpg)
+（6）接收消息，按照系统和用户两种类型查看消息。
 
-5. Search result pages (with four tabs)
-![](http://pknhrkp8l.bkt.clouddn.com/search-pages.png)
+（7）游客登录
 
-#### To-do list
+#### 使用技术介绍
+后端使用的技术如下：   
+- Spring
+- Spring MVC
+- MyBatis
+- MySQL
+- Redis
+     
+前端使用的技术如下：     
+- Bootstrap
+- Thymeleaf模板引擎
+- jquery
+- summernote.js富文本编辑器
+- popper.min.js提示插件
 
-1. collection function, put the answer into favorites;
-4. full text search including username and question name as search target;
-5. pop out a favorites box for user to choose which favorite to store answers for themselves;
-8. global exceptions capture;
-10. top the newest answers;
-11. folding extra contents of answer(in the process);
-12. foreign Q&A community analysis including algorithm, product feature;
-13. personal home page with collection tab, for one more submenu distinguishing answers from different favorites;
-15. uploaded avatar must support being cropped;
-17. tourist login;
+#### 推荐方法使用说明
+系统采用了四种经典的推荐算法，它们分别是UserCF,ItemCF,基于Context的推荐和基于标签的推荐。
+          
+#### 平台部署和配置说明
+1. 下载项目源码，安装JDK、Tomca、MySQL、Redis。
+2. 创建mysql用户和数据库，运行/ask下对应ask.sql。
+3. 设置数据库配置文件application.yml。
+4. 部署有三种方式：（1）直接在IDEA中运行即可访问；（2）在项目的根目录中执行
+`mvn -Dmaven.test.skip=true package`命令，之后在target文件夹中找到
+warName.war，之后将该war包放在tomcat的/webapps目录中，启动tomcat，即可访问。
+
+
+#### 项目源码地址     
+GitHub地址：<https://github.com/markytsai/Ask>
+     
+#### 效果演示截图
+
+登录
+![登录](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_login.png)
+
+注册
+![注册](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_register.png)
+
+关注页面
+![关注页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_following.png)
+
+推荐页面
+![推荐页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_recommend.png)
+
+问题详情页面
+![问题详情页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_questionDetal.png)
+
+用户主页面
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_activity.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_answer.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_collect.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_follouser.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_followquestion.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_followtopic.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_question.png)
+
+搜索页面
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_question.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_topic.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_user.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_answer.png)
+
+话题页面
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/_topic_intro.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/_topic_question.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/_topic_answer.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/__topic_user.png)
+
+热门问题页面
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/popular/_popular_day.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/popular/_popular_week.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/popular/_popular_month.png)
+
+消息页面
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/notification/_notification_sys.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/notification/_notification_user.png)
+
+设置页面
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/setting/_setting_profile.png)
+![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/setting/_setting_preferece.png)
+
+![写回答页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_writeAnswer.png)
+     
+     
+     
+     
+     
