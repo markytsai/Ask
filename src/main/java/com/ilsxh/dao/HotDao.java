@@ -15,4 +15,10 @@ public interface HotDao {
     List<Topic> getHotTopics();
 
     List<Question> getNewestRaisedQuestions();
+
+    List<Question> getHotQuestionInDay();
+
+    List<Question> getHotQuestionInWeek();
+
+    List<Question> getHotQuestionInMonth();
 }

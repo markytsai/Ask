@@ -4,6 +4,7 @@ import com.ilsxh.dao.NotificateDao;
 import com.ilsxh.dao.SearchDao;
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import com.ilsxh.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class SearchService {
             model.addAttribute("page", page);
 
             return "search/search-user";
-        } else {
+        } else if ("answer".equals(type)){
             this.getCommonData(request, keyword, model);
             List<Answer> searchAnswerList = searchDao.globalSearchAnswer(keyword, (pageNo - 1) * pageSize);
             for (Answer answer : searchAnswerList) {
@@ -75,6 +76,19 @@ public class SearchService {
             Page<Answer> page = new Page<>(pageNo, pageSize, searchAnswerTotal, searchAnswerList);
             model.addAttribute("page", page);
             return "search/search-answer";
+        } else {
+            this.getCommonData(request, keyword, model);
+            List<Topic> searchTopicList = searchDao.globalSearchTopic(keyword, (pageNo - 1) * pageSize);
+            searchTopicList.stream().forEach(
+                    topic -> {
+                        Integer followStatus = searchDao.getFollowStatus(userHelperService.getUserIdFromRedis(request), topic.getTopicId());
+                        topic.setTopicFollowd(followStatus == null ? 0 : followStatus);
+                    }
+            );
+            Integer searchTopicTotal = searchDao.getSearchTopicTotal(keyword);
+            Page<Topic> page = new Page<>(pageNo, pageSize, searchTopicTotal, searchTopicList);
+            model.addAttribute("page", page);
+            return "search/search-topic";
         }
     }
 

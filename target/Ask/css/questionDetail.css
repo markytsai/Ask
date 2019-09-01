@@ -1,0 +1,64 @@
+/*悬浮框悬浮在光标附近*/
+.floatingCard {
+    background-color: white;
+    border-style: ridge;
+    border-width: thin;
+    position: absolute;
+    width: 362px;
+    height: 305px;
+    margin: 53px 100px 100px -1px;
+    display: block;
+    z-index: 1;
+}
+
+/*悬浮框加载提示*/
+.spining {
+    position:absolute; /*it can be fixed too*/
+    margin: 56px 50px 52px 106px;
+}
+
+.info-piece {
+    margin-top: 10px;
+}
+.info-piece-fontsize {
+    font-size: 4;
+}
+
+.usernameLink:hover{
+    text-decoration: underline;
+}
+
+.title-color {
+    color: black;
+}
+
+/*评论窗口样式*/
+.input-bar {
+    display: table;
+    /*width: 100%;*/
+}
+
+.input-bar-item > button {
+    margin-left: 5px;
+}
+
+.input-bar-item >  {
+    margin-left: 5px;
+}
+
+.width100 {
+    width: 100%;
+}
+.input-bar .form-group {
+    float: left;
+    vertical-align: middle;
+    width: 90%;
+}
+.input-bar-item-btn {
+    float: left;
+    width:10%;
+}
+
+.commentOpt span:hover {
+    text-decoration: underline;
+}

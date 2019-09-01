@@ -1,0 +1,157 @@
+<div th:fragment="search-page" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+    <nav th:if="${page.totalPage le 8 and page.totalPage gt 1}" aria-label="Page navigation">
+        <ul class="pagination other-pagination">
+            <li th:if="${page.currentPage gt 1}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' + ${page.currentPage - 1}}"
+                >
+                    <span aria-hidden="true" th:text="上一页" ></span>
+                </a>
+            </li>
+            <li th:each="pageNo :  ${#numbers.sequence(1, page.totalPage)}">
+                <a th:if="${page.currentPage == pageNo}"
+                   th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${pageNo }}"
+                   style="color: #337ab7;">
+                    <span th:text="${pageNo}" />
+                </a>
+                <a th:if="${page.currentPage != pageNo}"
+                   th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' + ${pageNo }}"
+                >
+                    <span th:text="${pageNo}" />
+                </a>
+            </li>
+            <li th:if="${page.currentPage lt page.totalPage}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${page.currentPage + 1}}"
+                   aria-label="Next" >
+                    <span aria-hidden="true" >下一页</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <nav th:if="${page.totalPage ge 9}" aria-label="Page navigation">
+        <ul class="pagination other-pagination" th:if="${page.currentPage ge 3 and page.currentPage le page.totalPage - 2}">
+            <li th:if="${page.currentPage gt 1}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${page.currentPage - 1}}"
+                >
+                    <span aria-hidden="true" th:text="上一页" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=1'}"
+                >
+                    <span aria-hidden="true" th:text="1" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/#'}" >
+                    <span aria-hidden="true" th:text="..." ></span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' + ${page.currentPage}}"
+                   style="color: #337ab7;margin-right: 0;">
+                    <span aria-hidden="true" th:text="${page.currentPage}" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/#'}" >
+                    <span aria-hidden="true" th:text="..." ></span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' + ${page.totalPage}}"
+                >
+                    <span aria-hidden="true" th:text="${page.totalPage}" ></span>
+                </a>
+            </li>
+
+            <li th:if="${page.currentPage lt page.totalPage}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${page.currentPage + 1}}"
+                   aria-label="Next" >
+                    <span aria-hidden="true" >下一页</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="pagination other-pagination" th:if="${page.currentPage le 2}">
+            <li th:if="${page.currentPage gt 1}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${page.currentPage - 1}}"
+                >
+                    <span aria-hidden="true" th:text="上一页" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=1'}"
+                >
+                    <span aria-hidden="true" th:text="1" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=2'}"
+                >
+                    <span aria-hidden="true" th:text="2" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/#'}" >
+                    <span aria-hidden="true" th:text="..." ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' + ${page.totalPage}}"
+                >
+                    <span aria-hidden="true" th:text="${page.totalPage}" ></span>
+                </a>
+            </li>
+            <li th:if="${page.currentPage lt page.totalPage}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${page.currentPage + 1}}"
+                   aria-label="Next" >
+                    <span aria-hidden="true" >下一页</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="pagination other-pagination" th:if="${page.currentPage ge page.totalPage - 1}">
+
+            <li th:if="${page.currentPage gt 1}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${page.currentPage - 1}}"
+                >
+                    <span aria-hidden="true" th:text="上一页" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=1'}"
+                >
+                    <span aria-hidden="true" th:text="1" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/#'}" >
+                    <span aria-hidden="true" th:text="..." ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' + ${page.totalPage - 1}}"
+                >
+                    <span aria-hidden="true" th:text="${page.totalPage - 1}" ></span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' + ${page.totalPage}}"
+                >
+                    <span aria-hidden="true" th:text="${page.totalPage}" ></span>
+                </a>
+            </li>
+            <li th:if="${page.currentPage lt page.totalPage}">
+                <a th:href="@{'/search?keyword=' + ${keyword} + '&amp;type=' + ${type} + '&amp;page=' +${page.currentPage + 1}}"
+                   aria-label="Next" >
+                    <span aria-hidden="true" >下一页</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+
+</div>

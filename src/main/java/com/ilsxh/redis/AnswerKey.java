@@ -14,4 +14,6 @@ public class AnswerKey extends BasePrefix {
     }
 
     public static AnswerKey answerKey = new AnswerKey("");
+    public static AnswerKey publicQuestionCountInDayKey = new AnswerKey("questionCountInDay");
+    public static AnswerKey publicAnswerCountInDayKey = new AnswerKey("answerCountInDay");
 }

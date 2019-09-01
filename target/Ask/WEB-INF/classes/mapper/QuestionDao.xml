@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为QuestionDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.QuestionDao">
+
+    <resultMap id="QuestionList" type="com.ilsxh.entity.Question">
+        <id property="questionId" column="question_id"/>
+        <result property="questionTitle" column="question_title"/>
+        <result property="questionContent" column="question_content"/>
+        <result property="followedCount" column="followed_count"/>
+        <result property="scannedCount" column="scanned_count"/>
+        <result property="createTime" column="create_time"/>
+        <result property="userId" column="user_id"/>
+        <result property="answerCount" column="answer_count"/>
+        <!--<association property="user" javaType="com.ilsxh.entity.User">-->
+        <!--<id property="userId" column="user_id"/>-->
+        <!--<result property="username" column="username"/>-->
+
+        <!--</association>-->
+    </resultMap>
+
+    <select id="selectFollowingQuestionByUserId" parameterType="String" resultMap="QuestionList">
+
+        SELECT
+            q.question_id,
+            q.question_title,
+            q.question_content,
+            q.followed_count,
+            q.scanned_count,
+            q.create_time,
+            q.user_id,
+            q.answer_count
+        FROM
+            question AS q
+            INNER JOIN mid_user_follow_question AS qum ON qum.question_id = q.question_id
+        WHERE
+            qum.user_id = #{userId}
+        limit ${pageNo}, ${limit}
+    </select>
+
+    <select id="selectRecommendedQuestionByUserId" parameterType="String" resultMap="QuestionList">
+
+        SELECT
+        question_id,
+        question_title,
+        question_content,
+        followed_count,
+        scanned_count,
+        create_time,
+        user_id,
+        answer_count
+        FROM
+        question
+        limit 10
+
+    </select>
+
+    <select id="getRaisedQuestionByUserId" resultType="Question">
+          SELECT
+            q.question_id,
+            q.question_title,
+            q.question_content,
+            q.followed_count,
+            q.scanned_count,
+            q.create_time,
+            q.user_id,
+            q.answer_count
+        FROM
+            question AS q
+        WHERE
+            user_id = #{userId}
+        limit ${offset}, ${limit}
+    </select>
+
+    <select id="getTotalQuestions" resultType="Integer">
+        select count(*)
+        from question
+        where user_id = #{userId}
+    </select>
+
+
+    <select id="selectAnswersByQuestionId" resultType="com.ilsxh.entity.Answer">
+
+        select answer_id, answer_content, liked_count, disliked_count, create_time, answer_user_id
+        from answer
+        where question_id = #{questionId}
+    </select>
+
+    <select id="selectQuestionByQuestionId" resultType="com.ilsxh.entity.Question">
+
+        select question_id, question_title, question_content, followed_count, scanned_count, answer_count, create_time, user_id
+        from question
+        where question_id = #{questionId}
+    </select>
+
+    <select id="selectRaisedQuestionByUserId" resultType="Question">
+          SELECT
+            question_id,
+            question_title,
+            question_content,
+            followed_count,
+            scanned_count,
+            create_time,
+            user_id,
+            answer_count
+        FROM
+            question
+        WHERE
+            user_id = #{userId}
+
+    </select>
+
+    <select id="hasUserFollowQuestion" resultType="Integer">
+        select count(1)
+        from mid_user_follow_question
+        where user_id = #{userId}
+        and  question_id = #{questionId}
+    </select>
+
+    <insert id="followQuestion">
+        insert into mid_user_follow_question(user_id, question_id, create_time) values(#{userId}, #{questionId}, #{createTime})
+    </insert>
+
+    <delete id="unfollowQuestion">
+        delete from mid_user_follow_question where user_id = #{userId} and question_id = #{questionId}
+    </delete>
+
+
+    <insert id="submitAnswer" useGeneratedKeys="true" keyProperty="answer.answerId">
+        insert into answer(answer_content, question_id, answer_user_id, create_time) values(#{answer.answerContent}, #{answer.questionId}, #{answer.answerUserId}, #{answer.createTime})
+    </insert>
+
+    <update id="updateAnswer">
+        update answer set answer_content = #{answerContent}, create_time = #{createTime} where answer_id = #{answerId}
+    </update>
+
+    <delete id="deleteAnswer">
+        delete from answer where answer_id = #{answerId}
+    </delete>
+
+    <insert id="addQuestion" useGeneratedKeys="true" keyProperty="question.questionId">
+        insert into question(question_title, question_content, user_id, topic_list, create_time) values(#{question.questionTitle}, #{question.questionContent}, #{question.userId}, #{topicJson}, #{question.createTime})
+    </insert>
+
+    <insert id="addQuestionTopic" parameterType="Integer">
+        INSERT INTO
+        mid_question_topic(question_id, topic_id)
+        VALUES
+        ( #{questionId}, #{topicId} )
+    </insert>
+
+    <select id="getRelatedTopics" resultType="Topic">
+        select
+        t.topic_id,
+        t.topic_name
+        from topic as t
+        inner join mid_question_topic as mqt on t.topic_id = mqt.topic_id
+        where mqt.question_id = #{questionId}
+    </select>
+
+    <select id="getProbablyRelativeQestions" resultType="Question">
+        select question_id, question_title, answer_count
+        from question
+        where question_title like CONCAT(CONCAT('%',#{partialWord}),'%')
+        limit 3
+    </select>
+
+
+    <select id="isQuestionAnswered" resultType="Integer">
+        select answer_id from answer
+        where answer_user_id = #{userId} and question_id = #{questionId}
+    </select>
+
+    <select id="getQuestionListById" resultMap="QuestionList" parameterType="java.util.List">
+        select
+        question_id,
+        question_title,
+        question_content,
+        followed_count,
+        scanned_count,
+        create_time,
+        user_id,
+        answer_count
+        FROM
+        question
+        WHERE 1 = 2
+        <if test="list.size > 0">
+            or question_id in
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="getTotalQuestionNum" resultType="Integer">
+
+        select count(q.question_id) from question as q
+        inner join mid_user_follow_question as mufq on q.question_id = mufq.question_id
+        where mufq.user_id = #{userId}
+    </select>
+
+    <update id="increQuestionFollowedCount">
+        update question
+        set scanned_count = scanned_count + #{increCount}
+        where question_id = #{questionId}
+    </update>
+
+    <select id="getQuestionIdByAnswerId" resultType="Integer">
+        select question_id
+        from answer
+        where answer_user_id = #{userId}
+        and answer_id = #{answerId}
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

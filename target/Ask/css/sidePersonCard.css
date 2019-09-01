@@ -1,0 +1,92 @@
+.personcard {
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+    max-width: 100%;
+    max-height: 3000px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+}
+
+.persontitle {
+    color: grey;
+    font-size: 18px;
+}
+
+.personbutton {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+ .floatInfo {
+     background-color: Transparent;
+     background-repeat:no-repeat;
+     border: none;
+     cursor:pointer;
+     overflow: hidden;
+     outline:none;
+ }
+
+.persona {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+button:hover, a:hover {
+    /*opacity: 0.7;*/
+}
+
+.profile-pic {
+    margin-left: 30px;
+    margin-top: 10px;
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+}
+
+.file-upload {
+    display: none;
+}
+
+.circle {
+    border-radius: 1000px !important;
+    overflow: hidden;
+    /*width: 128px;*/
+    /*height: 128px;*/
+    border: 8px solid rgba(255, 255, 255, 0.7);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    /*max-height: 100%;*/
+}
+
+.p-image {
+    position: absolute;
+    top: 186px;
+    right: 76px;
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+.p-image:hover {
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+.upload-button {
+    font-size: 1.2em;
+}
+
+.upload-button:hover {
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    color: #999;
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为AnswerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.CommentDao">
+
+
+    <select id="listAnswerCommentByAnswerId" resultType="AnswerComment">
+        select
+        answer_comment_id,answer_comment_content,liked_count,create_time,at_answer_comment_id,at_user_id,at_user_name,answer_id,user_id
+        from answer_comment
+        where answer_id = #{answerId} and at_user_id = 0
+    </select>
+
+
+    <select id="listAnswerCommentByAnswerId1" resultType="AnswerComment">
+        select
+        answer_comment_id,answer_comment_content,liked_count,create_time,at_user_id,at_user_name,answer_id,user_id
+        from answer_comment
+        where answer_id = #{answerId} and at_user_id != 0
+    </select>
+
+    <insert id="insertAnswerComment">
+        <selectKey resultType="int" order="AFTER" keyProperty="answerCommentId">
+            select last_insert_id() as answerCommentId
+        </selectKey>
+        insert into answer_comment(answer_comment_id,answer_comment_content,create_time,answer_id,user_id)
+        values(#{answerCommentId},#{answerCommentContent},#{createTime},#{answerId},#{userId})
+    </insert>
+
+    <insert id="insertAnswerCommentReply">
+        <selectKey resultType="int" order="AFTER" keyProperty="answerCommentId">
+            select last_insert_id() as answerCommentId
+        </selectKey>
+        insert into
+        answer_comment(answer_comment_id,answer_comment_content,create_time,answer_id,user_id,at_user_id,at_user_name)
+        values(#{answerCommentId},#{answerCommentContent},#{createTime},#{answerId},#{userId},#{atUserId},#{atUserName})
+    </insert>
+
+    <select id="selectCommentByCommentId" resultType="AnswerComment">
+        select
+        answer_comment_id,answer_comment_content,liked_count,create_time,at_answer_comment_id,at_user_id,at_user_name,answer_id,user_id
+        from answer_comment
+        where answer_comment_id = #{answerCommentId}
+    </select>
+
+    <select id="selectAnswerCommentCountByAnswerId" resultType="int">
+        select count(answer_comment_id) from answer_comment
+        where answer_id = #{answerId}
+    </select>
+
+    <delete id="delComment">
+        delete from answer_comment
+        where answer_comment_id = #{commentId} and user_id = #{userId}
+    </delete>
+
+</mapper>
+

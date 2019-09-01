@@ -43,7 +43,7 @@ public class NotificateService {
     public List<Day> getNotifications(String userId, int periodDaysNo, int tableType, Integer type) {
 
         // 以5天作为一次查询
-        int dateGap = 2;
+        int dateGap = 10;
         List<Day> retList = new ArrayList<>();
         for (int i = periodDaysNo * dateGap; i < dateGap + periodDaysNo * dateGap; i++) {
             List<Message> tmpList;
@@ -76,7 +76,7 @@ public class NotificateService {
         }
 
         // 以5天作为一次查询
-        int dateGap = 2;
+        int dateGap = 10;
         List<Day> retList = new ArrayList<>();
         for (int i = periodDaysNo * dateGap; i < dateGap + periodDaysNo * dateGap; i++) {
             List<Message> tmpList = notificateDao.getPeriodUserNotificationsCard(userId, i, i + 1, typeList);

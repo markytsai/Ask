@@ -20,14 +20,16 @@ public class HotDataKey extends BasePrefix {
         return super.getPrefix();
     }
 
-//    侧边栏，热门模块
-    public static final HotDataKey hotQuestionKey = new HotDataKey("hotQuestionKey", 129600);
-    public static final HotDataKey hotUserKey = new HotDataKey("hotUserKey", 129600);
-    public static final HotDataKey hotTopicsKey = new HotDataKey("hotTopicKey", 129600);
-    public static final HotDataKey newestQuestionKey = new HotDataKey("newestQuestionKey", 129600);
+    /**
+     * 侧边栏，热门模块
+     */
+    public static final HotDataKey hotQuestionKey = new HotDataKey("hotQuestionKey", 120);
+    public static final HotDataKey hotUserKey = new HotDataKey("hotUserKey", 120);
+    public static final HotDataKey hotTopicsKey = new HotDataKey("hotTopicKey", 120);
+    public static final HotDataKey newestQuestionKey = new HotDataKey("newestQuestionKey", 120);
 
-    public static final HotDataKey hotQuestionDetailKey = new HotDataKey("hotQuestionDetailKey", 10000);
+    public static final HotDataKey hotQuestionDetailKey = new HotDataKey("hotQuestionDetailKey", 120);
 
-    public static final HotDataKey hotQuestionAnswerListKey = new HotDataKey("hotQuestionAnswerListKey", 10000);
+    public static final HotDataKey hotQuestionAnswerListKey = new HotDataKey("hotQuestionAnswerListKey", 120);
 
 }

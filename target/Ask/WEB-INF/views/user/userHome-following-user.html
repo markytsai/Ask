@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="AnswerPeida is a Q and A website for all users who want to explore more in subjects"/>
+    <meta name="author" content="tsaizhenya"/>
+    <link rel="icon" href="/images/title.png"/>
+
+    <title>个人主页</title>
+
+    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/answer.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/jquery.smartbox.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/profile.css"/>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8088/css/sidePersonCard.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
+    <link href="http://localhost:8088/css/questionDetail.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/askFrame.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/quill.snow.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/notification.css" rel="stylesheet"/>
+
+</head>
+
+<body class="body-color">
+
+<div th:include="navigator :: nav" style='background-color: #fff;'></div>
+<div th:include="navigator :: ask"></div>
+
+<div th:include="floatingDiv :: floatingDiv"></div>
+
+<div class="container">
+    <div class="row">
+
+        <!-- 左侧个人信息 -->
+        <div th:include="user/sidePersonInfo :: sidePersonInfo"></div>
+
+        <div class="col-md-7" style='background-color: #fff;'>
+            <div id="mainContainer">
+                <div id="mainContainerRepleace">
+
+                    <ul class="nav nav-tabs">
+                        <li role="presentation"><a th:href="@{'/userHome/activity/' + ${homeUser.userId} + '?page=1'}">动态</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/question/' + ${homeUser.userId} + '?page=1'}">问题</a></li>
+                        <li role="presentation"><a
+                                th:href="@{'/userHome/answer/' + ${homeUser.userId} + '?page=1'}">回答</a></li>
+                        <li role="presentation"><a th:href="@{'/userHome/collection/' + ${homeUser.userId} + '?page=1'}">收藏</a></li>
+                        <li role="presentation"><a
+                                th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId} + '?page=1'}">关注问题</a></li>
+                        <li role="presentation" class="active"><a
+                                th:href="@{'/userHome/followingUser/' + ${homeUser.userId} + '?page=1'}">关注用户</a></li>
+                        <li role="presentation"><a
+                                th:href="@{'/userHome/followingTopic/' + ${homeUser.userId} + '?page=1'}">关注话题</a></li>
+                    </ul>
+                    <div class="tab-title" th:switch="${isLoginUser}">
+                        <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-transfer"/> 我关注的<span
+                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>用户
+                        </h4>
+                        <h4 th:if="${isLoginUser} == 'false'"><p class="glyphicon glyphicon-transfer"/>他关注的<span
+                                th:if="${page.dataList.size() != 0}" th:text="${page.dataList.size() + '个'}"/>用户
+                        </h4>
+                    </div>
+
+                    <!--底部提示信息-->
+                    <div th:if="${page.dataList.size() == 0}" style="text-align: center;">
+                        <span th:if="${isLoginUser} == 'true'">你还没有关注任何人哦(⊙⊙！) &nbsp;</span>
+                        <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的用户吧</span>
+                        <span th:if="${isLoginUser} == 'false'">他还没有关注任何人(⊙⊙！) &nbsp;</span>
+                    </div>
+                    <div class="card mb-4" th:each="user : ${page.dataList}">
+                        <div class="card-block">
+                            <div class="card-title answer-meta">
+                                <div class="avatarImg" style="float:left; width:45px; height:45px;">
+                                    <a th:href="@{'/userHome/activity/' + ${user.userId}}">
+                                        <img th:src="${user.avatarUrl}" width="100%" height="100%"
+                                             style="border-radius: 100%"/>
+                                    </a>
+                                </div>
+                                <div style="margin-left: 55px">
+                                    <h5>
+                                        <a href="'/userHome/question/' + ${user.userId}"
+                                           th:href="@{'/userHome/question/' + ${user.userId}}"
+                                           class="card-link"
+                                           th:text="${user.username}">
+                                        </a>&nbsp;
+                                        <span th:text="${user.position}"/>&nbsp;
+                                        <span th:text="${user.simpleDesc}"/>
+                                        <span th:id="userId + '-' + ${user.userId}"
+                                              class="glyphicon label label-primary followUser" style="float:right"
+                                              th:text="${user.followStatus == 1} ? '取消关注' : '关注答主'">关注答主</span>
+                                    </h5>
+                                </div>
+                                <div style="margin-left: 55px">&nbsp;
+                                    <span th:text="'回答' + ${user.likedCount} + '条'"></span>
+                                    <span class="vertical-line" style="width: px; height: 15px;border: 2px inset;"/>
+
+                                    <span th:text="'关注' + ${user.followCount} + '人'"></span>
+                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+
+                                    <span th:text="'被关注量' + ${user.followedCount}"></span>
+                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+                                </div>
+                            </div>
+                            <hr color="#f8f8f8"/>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <span th:if="${isLoginUser} == 'true' and ${page.dataList.size() != 0}">你只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
+                        <span th:if="${isLoginUser} == 'false' and ${page.dataList.size() != 0}">他只有这么多关注的人了(๑¯ิε ¯ิ๑)</span>
+                    </div>
+
+                    <div class="pagination-parent" th:include="user/user-page :: user-page"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="http://localhost:8088/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/nav.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/askFrame.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/questionDetail.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/quill.js"></script>
+
+
+</body>
+</html>
+

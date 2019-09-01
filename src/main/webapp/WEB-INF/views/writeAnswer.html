@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>回答问题</title>
+    <link href="http://localhost:8088/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/answer.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/topic.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="http://localhost:8088/css/custom.css"/>
+    <link href="http://localhost:8088/css/questionDetail.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/sidePersonCard.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/askFrame.css" rel="stylesheet"/>
+    <link href="http://localhost:8088/css/quill.snow.css" rel="stylesheet"/>
+</head>
+<body class="body-color">
+<div th:include="navigator :: nav"></div>
+<div th:include="navigator :: ask"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            <div class="card-write">
+                <div class="Creator-menuItem Creator-menuItem--noContent" style="padding-bottom: 0;">
+                    <div class="card-write-item">
+                        <span style="display: inline-flex; align-items: center;padding-right: 10px;">
+                            ​<svg class="Zi Zi--Creator" fill="currentColor"
+                                  viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M15.075 15.388l-3.024 3.024a4.041 4.041 0 0 0-1.014 1.697l-.26.868C7.844 20.986 4.91 21
+                            2 21c.026-3.325 0-3.304.59-3.956 1.237-1.368 6.251-.68 6.44-2.976.043-.518-.36-1.06-.725-1.69C6.285
+                            8.87 5.512 2 11.5 2c5.988 0 5.15 7.072 3.246 10.378-.357.62-.795 1.217-.724 1.77.073.571.477.958
+                            1.053 1.24zm5.402 1.672c.523.55.523.646.523 3.94a535.11 535.11 0 0 0-4.434-.028l3.911-3.912zm-7.88
+                            2.699c.111-.37.312-.705.584-.978l4.76-4.76a.291.291 0 0 1 .412 0l1.626 1.626a.291.291 0 0 1
+                             0 .411l-4.76 4.76c-.272.273-.608.474-.978.585l-1.96.588a.219.219 0 0 1-.272-.272l.589-1.96zm9.157-6.742a.839.839
+                             0 0 1 0 1.187l-.94.94a.28.28 0 0 1-.395 0l-1.563-1.563a.28.28 0 0 1 0-.395l.94-.94a.839.839 0 0 1 1.187 0l.771.771z"
+                                  fill-rule="evenodd">
+                                </path>
+                        </svg>
+                        </span>问题回答中心
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7" style='background-color: #fff;box-shadow: 0 1px 3px rgba(26,26,26,.1);'>
+            <div id="mainContainer">
+                <div id="mainContainerRepleace">
+                    <div class="card mb-4" th:each="question : ${recommendQuestionList}"
+                         style="border-bottom: 1px solid #ebebeb;">
+                        <div class="card-block border-dark" style="padding: 20px 0;">
+                            <h4 class="card-title text-dark" style="font-weight: bolder;">
+                                <a th:href="@{'/question/' + ${question.questionId}}" class="text-title"
+                                   th:text="${question.questionTitle}" target="_blank">
+                                </a>
+                            </h4>
+                            <div class="card-title text-dark">
+                                <p class="card-text " th:utext="${question.questionContent}"/>
+                            </div>
+
+                            <div class="card-text">
+                                <a href="/userHome/question/${question.userId}"
+                                   th:href="@{'/userHome/question/' + ${question.userId}}"
+                                   class="card-link"
+                                   th:text="${question.user.username}">waylau</a>
+                                发表于<span th:text="${#dates.format(question.createTime, 'yyyy年MM月dd日HH:mm')}"></span>&nbsp;&nbsp;
+
+                            </div>
+                            <div class="ToolsQuestionItem-tool" style="display: flex;margin-top: 15px;">
+                                <div class="ToolsQuestionItem-toolLeft" style="display: flex;">
+                                    <span th:id="${question.questionId}" type="button" class="Button answerBtn">
+                                        <span style="display: inline-flex; align-items: center;">​
+                                            <svg class="Zi Zi--Edit Button-zi" fill="currentColor" viewBox="0 0 24 24"
+                                             width="24" height="24">
+                                            <path d="M4.076 16.966a4.19 4.19 0 0 1 1.05-1.76l8.568-8.569a.524.524 0 0 1 .741 0l2.928 2.927a.524.524 0 0 1 0 .74l-8.568 8.57c-.49.49-1.096.852-1.761 1.051l-3.528 1.058a.394.394 0 0 1-.49-.488l1.06-3.53zM20.558 4.83c.59.59.59 1.546 0 2.136l-1.693 1.692a.503.503 0 0 1-.712 0l-2.812-2.812a.504.504 0 0 1 0-.712l1.693-1.693a1.51 1.51 0 0 1 2.135 0l1.389 1.389z"></path></svg>
+                                        </span>写回答
+                                    </span>
+                                </div>&nbsp;&nbsp;
+                                <div class="ToolsQuestionItem-toolRight"></div>
+                                <div style="display: inline;padding: 3px 0;">
+                                    <span class="glyphicon glyphicon-eye-open"></span>围观<span>0</span>次&nbsp;&nbsp;
+                                    <i class="glyphicon glyphicon-apple" aria-hidden="true">关注<span>2</span>人</i>&nbsp;&nbsp;
+                                    <i class="glyphicon glyphicon-menu-hamburger"
+                                       aria-hidden="true">回答<span>0</span>条</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="pagination-parent" th:include="user/user-page :: user-page"></div>-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="http://localhost:8088/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/nav.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/questionDetail.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/jquery-ui.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/notify.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/popper.min.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/askFrame.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/quill.js"></script>
+<script type="text/javascript" src="http://localhost:8088/js/summernote.js"></script>
+
+<script>
+    $(".answerBtn").on("click", function (event) {
+        sessionStorage.setItem("showEditWindow", "true");
+
+        window.open('/question/' + event.target.id);
+    });
+
+</script>
+</body>
+</html>

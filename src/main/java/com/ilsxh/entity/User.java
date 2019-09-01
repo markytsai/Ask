@@ -112,6 +112,14 @@ public class User {
 
     private List<Question> followingQustionList;
 
+    public User() {
+    }
+
+    public User(String userId, String username) {
+        this.userId = userId;
+        this.username = username;
+    }
+
     public String getUserId() {
         return userId;
     }

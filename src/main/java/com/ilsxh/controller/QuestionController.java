@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author Tsaizhenya
+ */
 @Controller
 public class QuestionController {
 
@@ -235,15 +238,25 @@ public class QuestionController {
      *
      * @return
      */
-    @RequestMapping("/moreHotQuestion")
-    public String getMoreHotQuestion(HttpServletRequest request, Model model) {
+    @RequestMapping("/popular")
+    public String getMoreHotQuestion(@RequestParam(value = "type", defaultValue = "day") String type,  HttpServletRequest request, Model model) {
         searchService.getCommonData(request, "", model);
         String userId = userHelperService.getUserIdFromRedis(request);
-        List<Question> questionList = questionService.getRecommendedQuestionByUserId(userId);
+        List<Question> questionList = questionService.getHotQuestion(type);
         model.addAttribute("questionList", questionList);
 
         model.addAttribute("currentUrl", "/moreHotQuestion");
-        return "hotQuestionDetail";
+        return "/popular/popular-" + type;
+    }
+
+    @RequestMapping("/write")
+    public String writeNewAnswer( HttpServletRequest request, Model model) {
+        String userId = userHelperService.getUserIdFromRedis(request);
+        userHelperService.getUserDetails(userId, model);
+        List<Question> questionList = questionService.getRecommendedQuestionByUserId(userId);
+        model.addAttribute("recommendQuestionList", questionList);
+        questionService.getCommonHotData(model);
+        return "writeAnswer";
     }
 
 

@@ -1,0 +1,110 @@
+<div th:fragment="sidePersonInfo" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <div class="col-md-3 col-md-offset-1">
+        <div class="card my-4" style='background-color: #fff;'>
+            <div class="personinfo" th:id="personInfoCard">
+                <div class="personcard" style="overflow: hidden;">
+                    <!--<img src="/images/avatar-defualt.jpg" th:src="${homeUser.avatarUrl}"-->
+                    <!--style="width: 200px;height: 200px;border-radius: 100%;"/>-->
+
+                    <div class="small-12 medium-2 large-2 columns avatarInfo">
+                        <div class="circle">
+                            <!-- User Profile Image -->
+                            <img class="profile-pic" style="width: 200px;height: 200px;border-radius: 100%;"
+                                 th:src="${homeUser.avatarUrl}"/>
+
+                            <!-- Default Image -->
+                            <!-- <i class="fa fa-user fa-5x"></i> -->
+                        </div>
+                        <div th:if="${user != null} and ${user.userId} == ${homeUser.userId}" class="p-image"
+                             style="display: none;margin-top: -94px;margin-right: 40px;">
+                            <i class="fa fa-camera icon-3x upload-button"></i>
+                            <div id="changeAvatar" style="margin-right: -5px;display: none"><span>更改头像</span></div>
+                            <input id="upload" style="display: none" class="file-upload" type="file" accept="image/*"/>
+                        </div>
+                    </div>
+
+                    <h3 th:text="${homeUser.username}">caizhenya</h3>
+                    <p>个人简介：<span th:text="${homeUser.simpleDesc}"></span></p>
+                    <!--<p>居住地：<span th:text="${homeUser.residencePlace}"></span></p>-->
+                    <p>现从事：<span th:text="${homeUser.industry}"></span></p>
+                    <p>教育经历：<span th:text="${homeUser.education}"></span></p>
+                    <div style="margin: 24px 0;">
+                        <a href="#" class="persona"><i class="fa fa-dribbble"></i></a>
+                        <a href="#" class="persona"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="persona"><i class="fa fa-linkedin"></i></a>
+                        <a href="#" class="persona"><i class="fa fa-facebook"></i></a>
+                    </div>
+                    <div th:switch="${isLoginUser}">
+                        <p th:case="'true'">
+                            <button th:id="modify + '-' + ${homeUser.userId}" class="personbutton modifyBtn"
+                                    th:type="button" style="width: 50%; float: left;"
+                                    th:text="修改信息"/>
+                            <button class="personbutton" style="width: 50%; float: right;" th:text="通知我"/>
+                        </p>
+                        <p th:case="'false'">
+                            <button th:id="followHim + '-' + ${homeUser.userId}" class="personbutton followHimclass"
+                                    style="width: 50%; float: left;"
+                                    th:text="${homeUser.followStatus} == 1 ? '取消关注' : '关注他'"/>
+                            <button class="personbutton" style="width: 50%; float: right;" th:text="通知我"/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card my-4" style='background-color: #fff;'>
+
+
+            <div class="personinfo" th:id="personInfoCard">
+                <div class="personcard" style="overflow: hidden;">
+
+                    <div class="follow-info">
+                        <div class="follow-people">
+                            <div class="wrap" style="padding-top: 20px;">
+                                <h4 style="display: inline-block;padding-right: 70px;">
+                                    <p>关注了</p>
+                                    <p th:text="1111"></p>
+                                </h4>
+                                <h4 style="display: inline-block;padding-right: 0;">
+                                    <p>关注者</p>
+                                    <p th:text="11111"></p>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="follow-other" id="follow-other">
+                            <ul th:if="${isLoginUser} == 'true'" class="list-group">
+                                <li class="list-group-item list-item" style="margin-top: 4px;padding: 10px 2px;">
+                                    <a id="sidebar-following-topic"
+                                       th:href="@{'/userHome/followingTopic/' + ${homeUser.userId} + '?page=1'}"
+                                       style="color: #333333;">
+                                        <span style="margin-right: 110px;">关注的话题</span>
+                                        <span style="color: #d9534f" th:text="0"></span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item list-item" style="margin-top: 4px;padding: 10px 2px;">
+                                    <a id="sidebar-following-question"
+                                       th:href="@{'/userHome/followingQuestion/' + ${homeUser.userId} + '?page=1'}"
+                                       style="color: #333333;">
+                                        <span style="margin-right: 110px;">关注的问题</span>
+                                        <span style="color: #d9534f" th:text="0"></span>
+                                    </a>
+                                </li>
+                                <li class="list-group-item list-item" style="margin-top: 4px;padding: 10px 2px; ">
+                                    <a id="sidebar-following-collection"
+                                       th:href="@{'/userHome/followingUser/' + ${homeUser.userId} + '?page=1'}"
+                                       style="color: #333333;">
+                                        <span style="margin-right: 110px;">关注的用户</span>
+                                        <span style="color: #d9534f" th:text="0"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

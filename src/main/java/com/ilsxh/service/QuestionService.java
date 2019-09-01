@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -87,54 +88,23 @@ public class QuestionService {
     @OperAnnotation(descpition = "获取用户推荐问题列表")
     public List<Question> getRecommendedQuestionByUserId(String userId) {
 
-        // 获取登录用户的相似用户集合，选取其中两个最高的
-        Set<String> similarUsers = this.getSimilarUserSet(2, userId);
-
-        // 持久化相似用户列表
-//        trainDao.storeSimilarUser2Db(userId, similarUsers);
-
-
-        // 用来存 相似用户 所感兴趣的问题集合
-//        Map<String, Set<Integer>> userRecommendQuestionMap = new HashMap<>();
-
-        List<Integer> recommendQuestionIdList = new ArrayList<>();
-
-        // 遍历得到的相似用户集合，集合为userId
-        for (Iterator iterator = similarUsers.iterator(); iterator.hasNext(); ) {
-            String userId1 = (String) iterator.next();
-
-            // 遍历相似用户集合，计算得到单个用户感兴趣的话题，作为推荐问题给目标用户
-            Set<Integer> set = this.getUserInterestedQuestions(userId1);
-//            userRecommendQuestionMap.put(userId1, set);
-
-            // 推荐的问题 持久化，， 这里持久化只存了 userCF 的推荐结果
-            if (trainDao.getUserInterestedQuestionIds(userId1) == null) {
-                trainDao.insertUserRecommendQuestion(userId1, JSONArray.toJSONString((set)));
-            } else {
-                trainDao.updateUserRecommendQuestion(userId1, JSONArray.toJSONString(set));
-            }
-
-            // 从数据库中获取推荐的问题集合，添加到待返回的集合中去
-            String questionIds = trainDao.getRecommendQuestionByUserId(userId1);
-            List<Integer> questionIdList = JSONObject.parseArray(questionIds, Integer.class);
-            recommendQuestionIdList.addAll(questionIdList);
-        }
-
-        // ItemCF算法得到的问题推荐集合
-//        Set<Integer> recommendQuestionIdsSet = this.questionCF(1, userId);
-
-        // 暂时把userCF和ItemCF的推荐结果放在一起
-//        recommendQuestionIdsSet.stream().forEach(x -> recommendQuestionIdList.add(x));
+        String questionIds = trainDao.getRecommendQuestionByUserId(userId);
+        List<Integer> recommendQuestionIdList = JSONObject.parseArray(questionIds, Integer.class);
 
         // 获取具体问题实体信息
         List<Question> questionList = questionDao.getQuestionListById(recommendQuestionIdList);
 
-        for (Question question : questionList) {
-            User user = new User();
-            user.setUserId(question.getUserId());
-            user.setUsername(userHelperService.selectUsernameByUserId(question.getUserId()));
-            question.setUser(user);
-        }
+        questionList.stream().forEach(
+                question -> {
+                    question.setUser(new User(question.getUserId(), userHelperService.selectUsernameByUserId(question.getUserId())));
+                }
+        );
+//        for (Question question : questionList) {
+//            User user = new User();
+//            user.setUserId(question.getUserId());
+//            user.setUsername(userHelperService.selectUsernameByUserId(question.getUserId()));
+//            question.setUser(user);
+//        }
         logger.info("用户{}成功获取推荐问题列表{}", userId, recommendQuestionIdList);
 
         return questionList;
@@ -279,7 +249,10 @@ public class QuestionService {
         redisService.set(HotDataKey.hotQuestionAnswerListKey, "hotQuestionId-" + questionId, answerList);
 
         redisService.set(AnswerKey.answerKey, "-" + localUserId + "-" + questionId, answer.getAnswerId());
-        return answer;
+
+        // 回答数量加一，更新到缓存
+        redisService.incr(AnswerKey.publicAnswerCountInDayKey, "answerCount");
+  return answer;
     }
 
     /**
@@ -346,6 +319,8 @@ public class QuestionService {
         }
         questionDao.followQuestion(userId, question.getQuestionId(), new Timestamp(System.currentTimeMillis()));
 
+        // 问题数量加一，更新到缓存
+        redisService.incr(AnswerKey.publicQuestionCountInDayKey, "questionCount");
         for (Integer topicId : topicIdList) {
             questionDao.addQuestionTopic(question.getQuestionId(), topicId);
         }
@@ -423,6 +398,11 @@ public class QuestionService {
             redisService.setList(HotDataKey.newestQuestionKey, "newestQuestions", newestQuestions);
         }
         model.addAttribute("newestQuestions", newestQuestions);
+
+        int publicQuestionCount = redisService.get(AnswerKey.publicQuestionCountInDayKey, "questionCount", Integer.class);
+        int publicAnswerCount = redisService.get(AnswerKey.publicAnswerCountInDayKey, "answerCount", Integer.class);
+        model.addAttribute("publicQuestionCount", publicQuestionCount);
+        model.addAttribute("publicAnswerCount", publicAnswerCount);
     }
 
     /**
@@ -735,5 +715,23 @@ public class QuestionService {
 
     public Integer increQuestionFollowedCount(Integer questionId, Integer increCount) {
         return questionDao.increQuestionFollowedCount(questionId, increCount);
+    }
+
+    public List<Question> getHotQuestion(@NotNull String type) {
+        List<Question> questionList;
+        if ("day".equals(type)) {
+            questionList =  hotDao.getHotQuestionInDay();
+        } else if ("week".equals(type)) {
+            questionList =  hotDao.getHotQuestionInWeek();
+        } else {
+            questionList =  hotDao.getHotQuestionInMonth();
+        }
+        for (Question question : questionList) {
+            User user = new User();
+            user.setUserId(question.getUserId());
+            user.setUsername(userHelperService.selectUsernameByUserId(question.getUserId()));
+            question.setUser(user);
+        }
+        return questionList;
     }
 }

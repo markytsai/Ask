@@ -12,6 +12,9 @@ import redis.clients.jedis.ScanResult;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Tsaizhenya
+ */
 @Service
 public class RedisService {
 

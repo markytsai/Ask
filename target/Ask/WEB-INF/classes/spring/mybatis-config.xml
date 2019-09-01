@@ -1,0 +1,19 @@
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- 开启驼峰映射 ，为自定义的SQL语句服务-->
+    <!--设置启用数据库字段下划线映射到java对象的驼峰式命名属性，默认为false-->
+    <settings>
+        <!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
+        <!--<setting name="useGeneratedKeys" value="true"/>-->
+
+        <!-- 使用列别名替换列名 默认:true -->
+        <!--<setting name="useColumnLabel" value="true"/>-->
+
+        <!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+</configuration>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为AnswerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.ilsxh.dao.TrainDao">
+
+    <resultMap id="userQuestionMap" type="com.ilsxh.vo.UserQuestionVo">
+        <result property="userId" column="user_id"/>
+        <result property="questionId" column="question_id"/>
+    </resultMap>
+
+    <select id="getAllUserTopic" resultType="com.ilsxh.vo.UserTopicVo">
+        select id, user_id, topic_id
+        from mid_user_follow_topic
+        where follow_topic_status = 1 limit 10000
+    </select>
+
+    <select id="getUserCollectAnswer" resultMap="userQuestionMap">
+        select muca.user_id, q.question_id
+        from mid_user_collect_answer as muca
+        inner join answer as a on a.answer_id = muca.answer_id
+        inner join question as q on q.question_id = a.question_id
+        where muca.user_id = #{userId}
+    </select>
+
+    <select id="getUserVoteUpAnswer" resultMap="userQuestionMap">
+        select muva.user_id, q.question_id
+        from mid_user_vote_answer as muva
+        inner join answer as a on a.answer_id = muva.answer_id
+        inner join question as q on q.question_id = a.question_id
+        where muva.vote = 1 and muva.user_id = #{userId}
+    </select>
+
+    <select id="getUserFollowQuestion" resultMap="userQuestionMap">
+        select user_id, question_id
+        from mid_user_follow_question
+        where user_id = #{userId}
+    </select>
+
+    <insert id="insertUserRecommendQuestion">
+        insert into user_recommend_data(user_id, question_ids)
+        values(#{userId}, #{questionIds})
+    </insert>
+
+    <update id="updateUserRecommendQuestion">
+        update user_recommend_data
+        set question_ids = #{questionIds}
+        where user_id = #{userId}
+    </update>
+
+    <select id="getRecommendQuestionByUserId" resultType="String">
+        select question_ids
+        from user_recommend_data
+        where user_id = #{userId}
+    </select>
+    
+    <select id="getUserInterestedQuestionIds" resultType="Integer">
+        select id
+        from user_recommend_data
+        where user_id = #{userId}
+    </select>
+    
+    <select id="getAllUserFollowQuestion" resultMap="userQuestionMap">
+        select user_id, question_id
+        from mid_user_follow_question
+    </select>
+
+</mapper>
+

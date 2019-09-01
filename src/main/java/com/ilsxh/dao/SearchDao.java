@@ -2,6 +2,7 @@ package com.ilsxh.dao;
 
 import com.ilsxh.entity.Answer;
 import com.ilsxh.entity.Question;
+import com.ilsxh.entity.Topic;
 import com.ilsxh.entity.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,9 @@ public interface SearchDao {
 
     Integer getSearchAnswerTotal(@Param("queryKeyWord") String queryKeyWord);
 
+    List<Topic> globalSearchTopic(@Param("queryKeyWord") String queryKeyWord, @Param("pageNo") Integer pageNo);
+
+    Integer getSearchTopicTotal(@Param("queryKeyWord") String keyword);
+
+    Integer getFollowStatus(@Param("userId") String userId, @Param("topicId") Integer topicId);
 }
