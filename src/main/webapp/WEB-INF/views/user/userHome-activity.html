@@ -40,7 +40,7 @@
         <!-- 左侧个人信息 -->
         <div th:include="user/sidePersonInfo :: sidePersonInfo"></div>
 
-        <div class="col-md-7" style='background-color: #fff;'>
+        <div class="col-md-7" style='background-color: #fff;padding: 0px 0px;'>
             <div id="mainContainer">
                 <div id="mainContainerRepleace">
 
@@ -57,7 +57,7 @@
                         <li role="presentation"><a
                                 th:href="@{'/userHome/followingTopic/' + ${homeUser.userId} + '?page=1'}">关注话题</a></li>
                     </ul>
-                    <div class="tab-title" th:switch="${isLoginUser}">
+                    <div class="tab-title" style="padding: 0 10px;" th:switch="${isLoginUser}">
                         <h4 th:if="${isLoginUser} == 'true'"><p class="glyphicon glyphicon-pencil"/>我的<span
                                 th:if="${activityList.size() != 0}" th:text="${activityList.size() + '条'}"/>动态
                         </h4>
@@ -72,7 +72,7 @@
                         <span th:if="${isLoginUser} == 'true'">到<a th:href="@{/recommend}" target="_blank">这里</a>去看一看推荐的问题吧</span>
                         <span th:if="${isLoginUser} == 'false'">他还没有任何动态(⊙⊙！) &nbsp;</span>
                     </div>
-                    <div th:each="activity : ${page.dataList}">
+                    <div style="padding: 5px 10px;" th:each="activity : ${page.dataList}">
                         <div class="card mb-4">
                             <div th:switch="${activity.activityStaus}">
 
