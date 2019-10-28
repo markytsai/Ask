@@ -6,7 +6,7 @@
 
     <groupId>com.ilsxh</groupId>
     <artifactId>Ask</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-RELEASE</version>
     <packaging>war</packaging>
 
     <name>Ask Maven Webapp</name>
