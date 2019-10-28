@@ -30,18 +30,18 @@
 - Redis
      
 前端使用的技术如下：     
-- Bootstrap
-- Thymeleaf模板引擎
+- Bootstrap 3
+- Thymeleaf
 - jquery
-- summernote.js富文本编辑器
-- popper.min.js提示插件
+- summernote.js
+- popper.min.js
 
 #### 推荐方法使用说明
 系统采用了四种经典的推荐算法，它们分别是UserCF,ItemCF,基于Context的推荐和基于标签的推荐。
           
 #### 平台部署和配置说明
 1. 下载项目源码，安装JDK、Tomca、MySQL、Redis。
-2. 创建mysql用户和数据库，运行/ask下对应ask.sql。
+2. 创建mysql用户和数据库，运行/sql下对应ask.sql。
 3. 设置数据库配置文件application.yml。
 4. 部署有三种方式：（1）直接在IDEA中运行即可访问；（2）在项目的根目录中执行
 `mvn -Dmaven.test.skip=true package`命令，之后在target文件夹中找到
@@ -51,7 +51,8 @@ warName.war，之后将该war包放在tomcat的/webapps目录中，启动tomcat�
 #### 项目源码地址     
 GitHub地址：<https://github.com/markytsai/Ask>
      
-#### 效果演示截图
+#### 效果演示截图（链接可以访问，加载不出图片，暂时未找到解决方案）
+如果下方图片无法显示，可以到移步到[here](https://github.com/markytsai/Readme_pictures/tree/master/readme-pic)查看实例图片
 
 登录
 ![登录](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_login.png)
