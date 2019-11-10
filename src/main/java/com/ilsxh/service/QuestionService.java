@@ -399,8 +399,8 @@ public class QuestionService {
         }
         model.addAttribute("newestQuestions", newestQuestions);
 
-        int publicQuestionCount = redisService.get(AnswerKey.publicQuestionCountInDayKey, "questionCount", Integer.class);
-        int publicAnswerCount = redisService.get(AnswerKey.publicAnswerCountInDayKey, "answerCount", Integer.class);
+        Integer publicQuestionCount = redisService.get(AnswerKey.publicQuestionCountInDayKey, "questionCount", Integer.class);
+        Integer publicAnswerCount = redisService.get(AnswerKey.publicAnswerCountInDayKey, "answerCount", Integer.class);
         model.addAttribute("publicQuestionCount", publicQuestionCount);
         model.addAttribute("publicAnswerCount", publicAnswerCount);
     }
