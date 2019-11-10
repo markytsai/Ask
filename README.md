@@ -51,61 +51,32 @@ warName.war，之后将该war包放在tomcat的/webapps目录中，启动tomcat�
 #### 项目源码地址     
 GitHub地址：<https://github.com/markytsai/Ask>
      
-#### 效果演示截图（链接可以访问，加载不出图片，暂时未找到解决方案）
-如果下方图片无法显示，可以到移步到[here](https://github.com/markytsai/Readme_pictures/tree/master/readme-pic)查看实例图片
+#### 效果部分演示截图，颜色样式后续还需要调整。
 
 登录
-![登录](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_login.png)
-
-注册
-![注册](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_register.png)
+![登录](http://q02inkx4r.bkt.clouddn.com/login.png)
 
 关注页面
-![关注页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_following.png)
+![关注页面](http://q02inkx4r.bkt.clouddn.com/following.png)
 
 推荐页面
-![推荐页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_recommend.png)
+![推荐页面](http://q02inkx4r.bkt.clouddn.com/recommend.png)
 
 问题详情页面
-![问题详情页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_questionDetal.png)
+![问题详情页面](http://q02inkx4r.bkt.clouddn.com/question-detail.png)
 
 用户主页面
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_activity.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_answer.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_collect.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_follouser.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_followquestion.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_followtopic.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/user/_userhome_question.png)
+![活动详情](http://q02inkx4r.bkt.clouddn.com/self-home.png)
 
 搜索页面
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_question.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_topic.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_user.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/search/_search_answer.png)
+![活动详情](http://q02inkx4r.bkt.clouddn.com/search-info.png)
 
 话题页面
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/_topic_intro.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/_topic_question.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/_topic_answer.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/topic/__topic_user.png)
-
-热门问题页面
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/popular/_popular_day.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/popular/_popular_week.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/popular/_popular_month.png)
-
-消息页面
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/notification/_notification_sys.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/notification/_notification_user.png)
+![活动详情](http://q02inkx4r.bkt.clouddn.com/topic-info.png)
 
 设置页面
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/setting/_setting_profile.png)
-![活动详情](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/setting/_setting_preferece.png)
+![活动详情](http://q02inkx4r.bkt.clouddn.com/setting.png)
 
-![写回答页面](http://github.com/markytsai/Readme_pictures/raw/master/readme-pic/_writeAnswer.png)
-     
-     
      
      
      
