@@ -57,25 +57,25 @@ GitHub地址：<https://github.com/markytsai/Ask>
 ![登录](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/_login.png)
 
 关注页面
-![关注页面](http://q02inkx4r.bkt.clouddn.com/following.png)
+![关注页面](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/_following.png)
 
 推荐页面
-![推荐页面](http://q02inkx4r.bkt.clouddn.com/recommend.png)
+![推荐页面](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/_recommend.png)
 
 问题详情页面
-![问题详情页面](http://q02inkx4r.bkt.clouddn.com/question-detail.png)
+![问题详情页面](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/_questionDetal.png)
 
 用户主页面
-![活动详情](http://q02inkx4r.bkt.clouddn.com/self-home.png)
+![活动详情](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/user/_userhome_activity.pngg)
 
 搜索页面
-![活动详情](http://q02inkx4r.bkt.clouddn.com/search-info.png)
+![活动详情](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/search/_search_answer.png)
 
 话题页面
-![活动详情](http://q02inkx4r.bkt.clouddn.com/topic-info.png)
+![活动详情](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/topic/_topic_intro.png)
 
 设置页面
-![活动详情](http://q02inkx4r.bkt.clouddn.com/setting.png)
+![活动详情](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/setting/_setting_profile.png)
 
      
      
