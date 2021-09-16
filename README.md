@@ -54,7 +54,7 @@ GitHub地址：<https://github.com/markytsai/Ask>
 #### 效果部分演示截图，颜色样式后续还需要调整。
 
 登录
-![登录](http://q02inkx4r.bkt.clouddn.com/login.png)
+![登录](https://github.com/markytsai/Readme_pictures/blob/master/readme-pic/_login.png)
 
 关注页面
 ![关注页面](http://q02inkx4r.bkt.clouddn.com/following.png)
