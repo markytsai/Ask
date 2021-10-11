@@ -4,7 +4,7 @@
 <!-- 设置为AnswerDao接口方法提供sql语句配置 -->
 <mapper namespace="com.ilsxh.dao.NotificateDao">
 
-    <resultMap id="messageMap" type="Message">
+    <resultMap id="messageMap" type="com.ilsxh.entity.Message">
         <id column="message_id" property="messsageId" javaType="Integer"/>
         <result column="message_type" property="messageType" javaType="Integer"/>
         <result column="message_from" property="messageFrom" javaType="String"/>
@@ -68,7 +68,7 @@
         select count(*)
         from message_user
         where message_to = #{userId}
-        and message_status = 0
+          and message_status = 0
     </select>
 
     <update id="updateMessageStatusToAlreadyRead">
@@ -85,7 +85,7 @@
 
     <insert id="insertMessage" parameterType="Message">
         insert into message_user (message_type, message_from, message_to, message_content, message_time, message_status)
-        values(#{msg.messageType}, #{msg.messageFrom}, #{msg.messageTo}, #{msg.messageContent}, #{msg.messageTime}, 0)
+        values (#{msg.messageType}, #{msg.messageFrom}, #{msg.messageTo}, #{msg.messageContent}, #{msg.messageTime}, 0)
     </insert>
 
 </mapper>

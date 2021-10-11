@@ -35,10 +35,10 @@ public interface UserDao {
 
     /**
      * @param email
-     * @param passworde
+     * @param password
      * @return
      */
-    FirstLoginVo selectUserIdByEmailAndPassword(@Param("email") String email, @Param("password") String passworde);
+    FirstLoginVo selectUserIdByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
     User selectUserByEmail(@Param("email") String email);
 
