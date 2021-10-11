@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="AnswerPeida is a Q and A website for all users who want to explore more in subjects"/>
+    <meta name="author" content="tsaizhenya"/>
+    <link rel="icon" href="/images/title.png"/>
+
+    <title>个人主页</title>
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="/static/css/answer.css" rel="stylesheet"/>
+    <link href="/static/css/jquery.smartbox.css" rel="stylesheet"/>
+    <link href="/static/css/topic.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/profile.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/sidePersonCard.css"/>
+    <link rel="stylesheet" href="/static/css/custom.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css"/>
+    <link href="/static/css/askFrame.css" rel="stylesheet"/>
+    <link href="/static/css/quill.snow.css" rel="stylesheet"/>
+
+</head>
+
+<body class="body-color">
+
+<div th:include="navigator :: nav" style='background-color: #fff;'></div>
+<div th:include="navigator :: ask"></div>
+<div th:if="${user} == null" th:include="navigator :: login"></div>
+<div th:if="${user} == null" th:include="navigator :: register"></div>
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-7 col-md-offset-1" style='background-color: #fff;'>
+            <div id="mainContainer">
+                <div id="mainContainerRepleace">
+
+                    <p><h4 style="margin-left: 15px;">搜索结果</h4></p>
+                    <ul class="nav nav-tabs">
+                        <li role="presentation"><a
+                                th:href="@{'/search'(keyword=${keyword}, type=question, page=1)}">问题</a></li>
+                        <li role="presentation"><a
+                                th:href="@{'/search'(keyword=${keyword}, type=answer, page=1)}">回答</a></li>
+                        <li role="presentation" class="active"><a th:href="@{'/search'(keyword=${keyword}, type=user, page=1)}">用户</a></li>
+                        <li role="presentation"><a th:href="@{'/search'(keyword=${keyword}, type=topic, page=1)}">话题</a></li>
+                    </ul>
+
+                    <!--底部提示信息-->
+                    <div th:if="${page.dataList.size() == 0}" style="margin: 100px;">
+                        <div style="text-align: center;">
+                            <span style="font-size: large;">暂无任何搜索结果(⊙⊙！）</span>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4" th:each="user : ${page.dataList}">
+                        <div class="card-block">
+                            <div class="card-title answer-meta">
+                                <div class="avatarImg" style="float:left; width:45px; height:45px;">
+                                    <img th:src="${user.avatarUrl}" width="100%" height="100%"
+                                         style="border-radius: 100%"/>
+                                </div>
+                                <div style="margin-left: 55px">
+                                    <h5>
+                                        <a href="'/userHome/question/' + ${user.userId}"
+                                           th:href="@{'/userHome/question/' + ${user.userId}}"
+                                           class="card-link"
+                                           th:text="${user.username}">
+                                        </a>&nbsp;
+                                        <span th:text="${user.position}"/>&nbsp;
+                                        <span th:text="${user.simpleDesc}"/>
+                                        <span th:id="userId + '-' + ${user.userId}"
+                                              class="glyphicon label label-primary followUser" style="float:right"
+                                              th:text="${user.followStatus == 1} ? '取消关注' : '关注答主'">关注答主</span>
+                                    </h5>
+                                </div>
+                                <div style="margin-left: 55px">&nbsp;
+                                    <span th:text="'回答' + ${user.likedCount} + '条'"></span>
+                                    <span class="vertical-line" style="width: px; height: 15px;border: 2px inset;"/>
+
+                                    <span th:text="'关注' + ${user.followCount} + '人'"></span>
+                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+
+                                    <span th:text="'被关注量' + ${user.followedCount}"></span>
+                                    <span class="vertical-line" style="width: 1px; height: 15px;border: 2px inset;"/>
+                                </div>
+                            </div>
+                            <hr color="#f8f8f8"/>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <span th:if="${isLoginUser} == 'true' and ${page.dataList.size() != 0}">到底了(๑¯ิε ¯ิ๑)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination-parent" th:include="search/search-page :: search-page"></div>
+        </div>
+
+        <!-- 右侧栏目 -->
+        <div th:include="sideHotCards :: sideCards"></div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/nav.js"></script>
+<!--<script type="text/javascript" src="/js/jquery.smartbox.js"></script>-->
+<script type="text/javascript" src="/js/questionDetail.js"></script>
+<script type="text/javascript" src="/js/notify.js"></script>
+<script type="text/javascript" src="/js/askFrame.js"></script>
+<script type="text/javascript" src="/js/quill.js"></script>
+<script type="text/javascript" src="/js/loginReg.js"></script>
+
+</body>
+</html>
+

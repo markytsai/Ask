@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="10 seconds" debug="false">
-    <property name="log_dir" value="D:/logs/ask/"/>
+    <property name="log_dir" value="~/logs/ask/"/>
     <property name="maxHistory" value="30"/>
 
     <!-- ConsoleAppender 控制台输出日志 -->

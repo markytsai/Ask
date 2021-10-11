@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description"
+          content="AnswerPeida is a Q and A website for all users who want to explore more in subjects"/>
+    <meta name="author" content="tsaizhenya"/>
+    <link rel="icon" href="/images/title.png"/>
+
+    <title>AnswerPedia</title>
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/css/navbar-static-top.css" rel="stylesheet"/>
+    <link href="/static/css/answer.css" rel="stylesheet"/>
+    <link href="/static/css/topic.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/jquery-ui.css"/>
+    <link rel="stylesheet" href="/static/css/custom.css"/>
+    <link href="/static/css/questionDetail.css" rel="stylesheet"/>
+    <link href="/static/css/sidePersonCard.css" rel="stylesheet"/>
+    <link href="/static/css/askFrame.css" rel="stylesheet"/>
+    <link href="/static/css/quill.snow.css" rel="stylesheet"/>
+    <link href="/static/css/editProfile.css" rel="stylesheet"/>
+</head>
+
+<body class="body-color">
+
+<div th:include="navigator :: nav"></div>
+<div th:include="navigator :: ask"></div>
+
+<div th:include="floatingDiv :: floatingDiv"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            <div class="list-group ">
+                <a href="/user/settings" class="list-group-item list-group-item-action active">个人资料</a>
+                <a href="/user/preference" class="list-group-item list-group-item-action">我的偏好</a>
+                <!--<a href="#" class="list-group-item list-group-item-action">界面设置</a>-->
+            </div>
+        </div>
+        <div class="col-md-7"
+             style="background-color: #fff;box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);margin-bottom: 15px;border-radius: 2px;">
+            <div class="card">
+                <div class="card-body" style="padding: 0 50px">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-md-12" style="margin-left: -17px;border-bottom: 1px solid #eee;">
+                            <h4 style="font-weight: bold;">你的资料</h4>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12">
+                            <form class="person-info">
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">用户唯一标识</label>
+
+                                    <div class="col-8">
+                                        <span class="userId" th:text="${user.userId}" title="标识无法修改"
+                                              style="font-size: 15px;float: none;"/>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">用户名</label>
+                                    <span th:text="内容不可为空" style="margin-left: 13px;color: red;display: none"/>
+                                    <div id="saveUsername" style="display: none;">
+                                        <input id="usernameInput" class="form-control here" type="text"/>
+                                        <input type="button" class="btn btn-default saveBtn"
+                                               style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
+                                        <input type="button" class="btn btn-default cancelSave"
+                                               style="margin-top: 10px;" value="取消"/>
+                                    </div>
+                                    <div id="showUsername" class="col-8 showModify">
+                                        <span class="username" th:text="${user.username}" style="font-size: 15px;"/>
+                                        <span class="modifyButton" th:text="修改"/>
+                                        <img data-v-10703faa=""
+                                             src="https://b-gold-cdn.xitu.io/v3/static/img/edit-icon.6d6382b.svg"
+                                             class="icon"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">性别</label>
+                                    <span th:text="内容不可为空" style="margin-left: 13px;color: red;display: none"/>
+                                    <div id="saveGender" style="display: none;">
+                                        <input id="genderInput" class="form-control here" type="text"/>
+                                        <input type="button" class="btn btn-default saveBtn"
+                                               style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
+                                        <input type="button" class="btn btn-default cancelSave"
+                                               style="margin-top: 10px;" value="取消"/>
+                                    </div>
+                                    <div id="showGender" class="col-8 showModify">
+                                        <span class="gender" th:text="${user.gender == 1 ? '女' : '男'}"
+                                              style="font-size: 15px;"/>
+                                        <span class="modifyButton" th:text="修改"/>
+                                        <img data-v-10703faa=""
+                                             src="https://b-gold-cdn.xitu.io/v3/static/img/edit-icon.6d6382b.svg"
+                                             class="icon"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">登录邮箱</label>
+                                    <span th:text="内容不可为空" style="margin-left: 13px;color: red;display: none"/>
+                                    <div id="saveEmail" style="display: none;">
+                                        <input id="emailInput" class="form-control here" type="text"/>
+                                        <input type="button" class="btn btn-default saveBtn"
+                                               style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
+                                        <input type="button" class="btn btn-default cancelSave"
+                                               style="margin-top: 10px;" value="取消"/>
+                                    </div>
+                                    <div id="showEmail" class="col-8 showModify">
+                                        <span class="email" th:text="${user.email}" style="font-size: 15px;"/>
+                                        <span class="modifyButton" th:text="修改"/>
+                                        <img data-v-10703faa=""
+                                             src="https://b-gold-cdn.xitu.io/v3/static/img/edit-icon.6d6382b.svg"
+                                             class="icon"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">所在行业</label>
+                                    <span th:text="内容不可为空" style="margin-left: 13px;color: red;display: none"/>
+                                    <div id="saveIndustry" style="display: none;">
+                                        <input id="industryInput" class="form-control here" type="text"/>
+                                        <input type="button" class="btn btn-default saveBtn"
+                                               style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
+                                        <input type="button" class="btn btn-default cancelSave"
+                                               style="margin-top: 10px;" value="取消"/>
+                                    </div>
+                                    <div id="showIndustry" class="col-8 showModify">
+                                        <span class="industry" th:text="${user.industry}" style="font-size: 15px;"/>
+                                        <span class="modifyButton" th:text="修改"/>
+                                        <img data-v-10703faa=""
+                                             src="https://b-gold-cdn.xitu.io/v3/static/img/edit-icon.6d6382b.svg"
+                                             class="icon"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">职业</label>
+                                    <span th:text="内容不可为空" style="margin-left: 13px;color: red;display: none"/>
+                                    <div id="savePosition" style="display: none;">
+                                        <input id="positionInput" class="form-control here" type="text"/>
+                                        <input type="button" class="btn btn-default saveBtn"
+                                               style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
+                                        <input type="button" class="btn btn-default cancelSave"
+                                               style="margin-top: 10px;" value="取消"/>
+                                    </div>
+                                    <div id="showPosition" class="col-8 showModify">
+                                        <span class="position" th:text="${user.position}" style="font-size: 15px;"/>
+                                        <span class="modifyButton" th:text="修改"/>
+                                        <img data-v-10703faa=""
+                                             src="https://b-gold-cdn.xitu.io/v3/static/img/edit-icon.6d6382b.svg"
+                                             class="icon"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">个人简介</label>
+                                    <span th:text="内容不可为空" style="margin-left: 13px;color: red;display: none"/>
+                                    <div id="saveSimpleDesc" style="display: none;">
+                                        <input id="simpleDescInput" class="form-control here" type="text"/>
+                                        <input type="button" class="btn btn-default saveBtn"
+                                               style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
+                                        <input type="button" class="btn btn-default cancelSave"
+                                               style="margin-top: 10px;" value="取消"/>
+                                    </div>
+                                    <div id="showSimpleDesc" class="col-8 showModify">
+                                        <span class="simpleDesc" th:text="${user.simpleDesc}" style="font-size: 15px;"/>
+                                        <span class="modifyButton" th:text="修改"/>
+                                        <img data-v-10703faa=""
+                                             src="https://b-gold-cdn.xitu.io/v3/static/img/edit-icon.6d6382b.svg"
+                                             class="icon"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row1">
+                                    <label class="col-4 col-form-label">详细介绍</label>
+                                    <span th:text="内容不可为空" style="margin-left: 13px;color: red;display: none"/>
+                                    <div id="saveFullDesc" style="display: none;">
+                                        <textarea id="fullDescInput" class="form-control here" type="text"/>
+                                        <input type="button" class="btn btn-default saveBtn"
+                                               style="margin-top: 10px;background-color: #337ab7;" value="保存"/>
+                                        <input type="button" class="btn btn-default cancelSave"
+                                               style="margin-top: 10px;" value="取消"/>
+                                    </div>
+                                    <div id="showFullDesc" class="col-8 showModify">
+                                        <span class="simpleDesc" th:text="${user.fullDesc}" style="font-size: 15px;"/>
+                                        <span class="modifyButton" th:text="修改"/>
+                                        <img data-v-10703faa=""
+                                             src="https://b-gold-cdn.xitu.io/v3/static/img/edit-icon.6d6382b.svg"
+                                             class="icon"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/nav.js"></script>
+<script type="text/javascript" src="/js/questionDetail.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/notify.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/askFrame.js"></script>
+<script type="text/javascript" src="/js/quill.js"></script>
+<script type="text/javascript" src="/js/modifyInfo.js"></script>
+
+
+</body>
+</html>
+

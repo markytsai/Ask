@@ -5,9 +5,8 @@ package com.ilsxh.util;
  */
 public class MyConstant {
     // 七牛云相关
-    public static final String QINIU_IMAGE_URL = "";
-    public static final String QINIU_ACCESS_KEY = "";
-    public static final String QINIU_SECRET_KEY = "";
+    public static final String QINIU_ACCESS_KEY = "1";
+    public static final String QINIU_SECRET_KEY = "1";
     public static final String QINIU_BUCKET_NAME = "";
 
     /**

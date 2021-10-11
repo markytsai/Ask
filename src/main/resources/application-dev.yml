@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: web-authority
+  datasource:
+    tomcat: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      max-active: 100
+      query-timeout: 50
+      url: jdbc:mysql://127.0.0.1:3306/ask?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+      username: root
+      password: root
+  redis:
+    database: 0
+    host: localhost
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    port: 6379
+    timeout: 5000
+
+server:
+  port: 80
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.ilsxh.entity  # 注意：对应实体类的路径
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
